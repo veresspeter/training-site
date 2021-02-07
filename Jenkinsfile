@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Frontend Build') {
-            agent { docker 'node:6-alpine' }
+            agent { docker 'node:12-alpine' }
             steps {
                 sh 'npm install'
                 sh 'npm run build'
