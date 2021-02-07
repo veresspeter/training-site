@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav class="navbar navbar-expand-md">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
         <span class="navbar-title">Maxmove</span> <span class="navbar-version">{{ version }}</span>
@@ -11,8 +11,28 @@
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
                     <span>
-                        <fa-icon icon="home"></fa-icon>
-                        <span>Home</span>
+                        <span>Kezdőlap</span>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link" routerLink="/orarend" (click)="collapseNavbar()">
+                    <span>
+                        <span>Órarend</span>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link" routerLink="/oktatok" (click)="collapseNavbar()">
+                    <span>
+                        <span>Oktatók</span>
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item mr-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a class="nav-link" routerLink="/arak" (click)="collapseNavbar()">
+                    <span>
+                        <span>Árak</span>
                     </span>
                 </a>
             </li>
@@ -34,50 +54,50 @@
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
                         <fa-icon icon="user-plus"></fa-icon>
-                        <span>Administration</span>
+                        <span>Adminisztráció</span>
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
                     <li>
                         <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
-                            <span>User management</span>
+                            <span>Felhasználók</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/tracker" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="eye" [fixedWidth]="true"></fa-icon>
-                            <span>User tracker</span>
+                            <span>Aktivitások</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
-                            <span>Metrics</span>
+                            <span>Metrikák</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
-                            <span>Health</span>
+                            <span>Egészség</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="list" [fixedWidth]="true"></fa-icon>
-                            <span>Configuration</span>
+                            <span>Konfiguráció</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="bell" [fixedWidth]="true"></fa-icon>
-                            <span>Audits</span>
+                            <span>Események</span>
                         </a>
                     </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
-                            <span>Logs</span>
+                            <span>Naplózás</span>
                         </a>
                     </li>
                     <li *ngIf="swaggerEnabled">
@@ -90,17 +110,17 @@
                     <li *ngIf="!inProduction">
                         <a class="dropdown-item" href='./h2-console' target="_tab" (click)="collapseNavbar()">
                             <fa-icon icon="hdd" [fixedWidth]="true"></fa-icon>
-                            <span>Database</span>
+                            <span>Adatbázis</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <li ngbDropdown class="nav-item dropdown pointer"  *ngSwitchCase="true" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                     <span *ngIf="!getImageUrl()">
                         <fa-icon icon="user"></fa-icon>
                         <span>
-                            Account
+                            Profilom
                         </span>
                     </span>
                     <span *ngIf="getImageUrl()">
@@ -108,43 +128,41 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-                    <li *ngSwitchCase="true">
+                    <li>
                         <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
                             <span>Settings</span>
                         </a>
                     </li>
-                    <li *ngSwitchCase="true">
+                    <li>
                         <a class="dropdown-item" routerLink="account/password" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
                             <span>Password</span>
                         </a>
                     </li>
-                    <li *ngSwitchCase="true">
+                    <li>
                         <a class="dropdown-item" routerLink="account/sessions" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="cloud" [fixedWidth]="true"></fa-icon>
                             <span>Sessions</span>
                         </a>
                     </li>
-                    <li *ngSwitchCase="true">
+                    <li>
                         <a class="dropdown-item" (click)="logout()" id="logout">
                             <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
                             <span>Sign out</span>
                         </a>
                     </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" (click)="login()" id="login">
-                            <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
-                            <span>Sign in</span>
-                        </a>
-                    </li>
-                    <li *ngSwitchCase="false">
-                        <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
-                            <span>Register</span>
-                        </a>
-                    </li>
                 </ul>
+            </li>
+            <li *ngSwitchCase="false" class="nav-item">
+                <a class="nav-link" (click)="login()" id="login">
+                    <span>Bejelentkezés</span>
+                </a>
+            </li>
+            <li *ngSwitchCase="false" class="nav-item">
+                <a class="nav-link" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()">
+                    <span>Regisztráció</span>
+                </a>
             </li>
         </ul>
     </div>
