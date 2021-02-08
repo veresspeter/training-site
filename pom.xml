@@ -610,10 +610,7 @@
                         </from>
                         <to>
                             <image>veresspeter/maxmove:latest</image>
-                            <auth>
-                                <username>${env.CI_USERNAME}</username>
-                                <password>${env.CI_PASSWORD}</password>
-                            </auth>
+                            <image>veresspeter/maxmove:${buildNo}</image>
                         </to>
                         <container>
                             <entrypoint>
