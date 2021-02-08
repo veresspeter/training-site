@@ -20,7 +20,7 @@ pipeline {
       }
       steps {
         sh 'chmod go-w+x -R .'
-        sh './mvnw package -Pdev -D CI_PASSWORD=$DOCKERHUB_PSW -D CI_USERNAME=$DOCKERHUB_USR verify jib:build'
+        sh './mvnw package -Pdev -Djib.to.auth.password=$DOCKERHUB_PSW -Djib.to.auth.username=$DOCKERHUB_USR verify jib:build'
       }
     }
 
