@@ -1,7 +1,6 @@
 pipeline {
   agent none
   stages {
-    /*
     stage('Frontend Build') {
       agent {
         docker 'node:12-alpine'
@@ -11,7 +10,6 @@ pipeline {
         sh 'npm run build'
       }
     }
-    */
 
     stage('Backend Build') {
       agent {
@@ -19,6 +17,7 @@ pipeline {
       }
       environment {
           DOCKERHUB = credentials('dockerhubId')
+          DB = credentials('postgresql')
       }
       steps {
         sh 'chmod go-w+x -R .'

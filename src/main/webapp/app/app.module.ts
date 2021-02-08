@@ -13,7 +13,7 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
-import { CalendarComponent } from 'app/calendar/calendar.component';
+import { CalendarModule } from './calendar/calendar.module';
 
 @NgModule({
   imports: [
@@ -24,8 +24,9 @@ import { CalendarComponent } from 'app/calendar/calendar.component';
     // jhipster-needle-angular-add-module JHipster will add new module here
     MaxmoveEntityModule,
     MaxmoveAppRoutingModule,
+    CalendarModule,
   ],
-  declarations: [MainComponent, CalendarComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
   bootstrap: [MainComponent],
 })
 export class MaxmoveAppModule {}
