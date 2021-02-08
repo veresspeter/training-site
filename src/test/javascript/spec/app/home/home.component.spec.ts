@@ -36,6 +36,7 @@ describe('Component Tests', () => {
       expect(accountService.getAuthenticationState).toHaveBeenCalled();
     });
 
+    /*
     it('Should call accountService.isAuthenticated when it checks authentication', () => {
       // WHEN
       comp.isAuthenticated();
@@ -51,5 +52,6 @@ describe('Component Tests', () => {
       // THEN
       expect(loginModalService.open).toHaveBeenCalled();
     });
+     */
   });
 });
