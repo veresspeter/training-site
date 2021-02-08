@@ -31,6 +31,7 @@
   },
   "defaultProject": "maxmove",
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "05466496-f65d-4cf4-b513-344f0774f60b"
   }
 }
