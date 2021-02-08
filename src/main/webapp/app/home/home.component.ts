@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ActivityService } from 'app/entities/activity/activity.service';
 import { Activity } from 'app/shared/model/activity.model';
+import { ActivityTypeService } from 'app/entities/activity-type/activity-type.service';
 
 @Component({
   selector: 'jhi-home',
@@ -9,14 +9,14 @@ import { Activity } from 'app/shared/model/activity.model';
   styleUrls: ['home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  activities: Activity[] = [];
+  activityTypes: Activity[] = [];
 
-  constructor(private activityService: ActivityService) {}
+  constructor(private activityTypeService: ActivityTypeService) {}
 
   ngOnInit(): void {
-    this.activityService.query().subscribe(res => {
+    this.activityTypeService.query().subscribe(res => {
       if (res.body) {
-        this.activities = res.body;
+        this.activityTypes = res.body;
       }
     });
   }
