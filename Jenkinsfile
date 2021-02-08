@@ -30,11 +30,12 @@ pipeline {
     stage('Deploy') {
         agent any
         environment {
-            KP = credentials('aws-frankfurt-default-kp')
+            KP = credentials('')
         }
         steps {
-            sh 'echo $KP_KEY > ./id_dsa'
-            sh 'ssh -i ./id_dsa ubuntu@maxmove.hu'
+            withCredentials([sshUserPrivateKey(credentialsId: 'aws-frankfurt-default-kp', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USR')]) {
+                sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu'
+            }
         }
     }
 
