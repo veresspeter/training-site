@@ -33,8 +33,8 @@ pipeline {
             KP = credentials('aws-frankfurt-default-kp')
         }
         steps {
-            sh 'echo $KP_KEY > ~/.ssh/id_dsa'
-            sh 'ssh -i ~/.ssh/id_dsa ubuntu@maxmove.hu'
+            sh 'echo $KP_KEY > ./id_dsa'
+            sh 'ssh -i ./id_dsa ubuntu@maxmove.hu'
         }
     }
 
