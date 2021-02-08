@@ -884,7 +884,6 @@
                         <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
                         -->
                     </configuration>
-
                 </plugin>
                 <!-- jhipster-needle-maven-add-plugin-management -->
             </plugins>
