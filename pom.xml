@@ -609,7 +609,11 @@
                             <image>adoptopenjdk:11-jre-hotspot</image>
                         </from>
                         <to>
-                            <image>maxmove:latest</image>
+                            <image>veresspeter/maxmove:latest</image>
+                            <auth>
+                                <username>${env.CI_USERNAME}</username>
+                                <password>${env.CI_PASSWORD}</password>
+                            </auth>
                         </to>
                         <container>
                             <entrypoint>
