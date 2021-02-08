@@ -34,8 +34,6 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://maxmove.hu:5432/maxmove
-    username: maxmove
-    password: MTdyZsBHAR
     hikari:
       poolName: Hikari
       auto-commit: false
