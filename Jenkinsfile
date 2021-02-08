@@ -31,11 +31,11 @@ pipeline {
         agent any
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'aws-frankfurt-default-kp', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USR')]) {
-                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker stop maxmove'
-                // sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker rm maxmove'
-                // sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
-                // sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker pull veresspeter/maxmove'
-                // sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker run --name maxmove -p 80:8080 veresspeter/maxmove'
+                // sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker stop maxmove'
+                // sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rm maxmove'
+                // sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
+                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker pull veresspeter/maxmove'
+                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker run --name maxmove -p 80:8080 veresspeter/maxmove'
             }
         }
     }
