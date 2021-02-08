@@ -16,7 +16,7 @@ pipeline {
         docker 'openjdk:8-jre'
       }
       steps {
-        sh 'chmod go-w -R .'
+        sh 'chmod go-w+x -R .'
         sh './mvnw package -Pdev verify jib:build'
       }
     }
