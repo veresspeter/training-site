@@ -1,7 +1,6 @@
 pipeline {
   agent none
   stages {
-    /*
     stage('Frontend Build') {
       agent {
         docker 'node:12-alpine'
@@ -22,10 +21,9 @@ pipeline {
       }
       steps {
         sh 'chmod go-w+x -R .'
-        sh './mvnw package -Pdev -Djib.to.auth.password=$DOCKERHUB_PSW -Djib.to.auth.username=$DOCKERHUB_USR -DbuildNo=$BUILD_NUMBER verify jib:build'
+        sh './mvnw package -Dspring.profiles.active=prod -Djib.to.auth.password=$DOCKERHUB_PSW -Djib.to.auth.username=$DOCKERHUB_USR -DbuildNo=$BUILD_NUMBER verify jib:build'
       }
     }
-    */
 
     stage('Deploy') {
         agent any
