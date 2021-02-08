@@ -35,7 +35,7 @@ pipeline {
                 sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rm maxmove'
                 sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
                 sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker pull veresspeter/maxmove'
-                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker run --name maxmove -p 80:8080 -p 5432:5432 veresspeter/maxmove'
+                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker run --name maxmove --network host veresspeter/maxmove'
             }
         }
     }
