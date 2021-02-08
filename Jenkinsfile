@@ -15,10 +15,12 @@ pipeline {
       agent {
         docker 'openjdk:8'
       }
-      withCredentials([usernamePassword(credentialsId: 'dockerhubId', usernameVariable: 'CI_USERNAME', passwordVariable: 'CI_PASSWORD')])
+      environment {
+          DOCKERHUB = credentials('dockerhubId')
+      }
       steps {
         sh 'chmod go-w+x -R .'
-        sh './mvnw package -Pdev -D CI_PASSWORD=$CI_PASSWORD CI_USERNAME=$CI_USERNAME verify jib:build'
+        sh './mvnw package -Pdev -D CI_PASSWORD=$DOCKERHUB_PSW CI_USERNAME=$DOCKERHUB_USR verify jib:build'
       }
     }
 
