@@ -1,6 +1,7 @@
 pipeline {
   agent none
   stages {
+    /*
     stage('Frontend Build') {
       agent {
         docker 'node:12-alpine'
@@ -24,6 +25,7 @@ pipeline {
         sh './mvnw package -Pprod -Djib.to.auth.password=$DOCKERHUB_PSW -Djib.to.auth.username=$DOCKERHUB_USR -DbuildNo=$BUILD_NUMBER verify jib:build'
       }
     }
+    */
 
     stage('Deploy') {
         agent any
