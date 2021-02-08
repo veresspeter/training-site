@@ -1,12 +1,13 @@
-import { Route } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { CalendarComponent } from './calendar.component';
 
-export const CALENDAR_ROUTE: Route = {
-  path: 'calendar',
-  component: CalendarComponent,
-  data: {
-    authorities: [],
-    pageTitle: 'Órarend',
+export const calendarRoutes: Routes = [
+  {
+    path: '',
+    component: CalendarComponent,
+    data: {
+      pageTitle: 'Órarend',
+    },
   },
-};
+];

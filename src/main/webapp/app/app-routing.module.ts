@@ -14,6 +14,22 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
     RouterModule.forRoot(
       [
         {
+          path: '',
+          loadChildren: () => import('./home/home.module').then(m => m.MaxmoveHomeModule),
+        },
+        {
+          path: 'calendar',
+          loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule),
+        },
+        {
+          path: 'trainers',
+          loadChildren: () => import('./trainer/trainer.module').then(m => m.TrainerModule),
+        },
+        {
+          path: 'prices',
+          loadChildren: () => import('./prices/prices.module').then(m => m.PricesModule),
+        },
+        {
           path: 'admin',
           data: {
             authorities: [Authority.ADMIN],

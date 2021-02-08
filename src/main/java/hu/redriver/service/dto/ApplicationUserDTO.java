@@ -1,0 +1,137 @@
+package hu.redriver.service.dto;
+
+import java.time.LocalDate;
+import javax.validation.constraints.*;
+import java.io.Serializable;
+import hu.redriver.domain.enumeration.Sex;
+
+/**
+ * A DTO for the {@link hu.redriver.domain.ApplicationUser} entity.
+ */
+public class ApplicationUserDTO implements Serializable {
+    
+    private Long id;
+
+    @NotNull
+    private Integer credit;
+
+    private Sex sex;
+
+    private LocalDate birthDay;
+
+    private String googleToken;
+
+    private String facebookToken;
+
+    private String imageUrl;
+
+    private String introduction;
+
+
+    private Long internalUserId;
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Integer credit) {
+        this.credit = credit;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public LocalDate getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(LocalDate birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getGoogleToken() {
+        return googleToken;
+    }
+
+    public void setGoogleToken(String googleToken) {
+        this.googleToken = googleToken;
+    }
+
+    public String getFacebookToken() {
+        return facebookToken;
+    }
+
+    public void setFacebookToken(String facebookToken) {
+        this.facebookToken = facebookToken;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public Long getInternalUserId() {
+        return internalUserId;
+    }
+
+    public void setInternalUserId(Long userId) {
+        this.internalUserId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ApplicationUserDTO)) {
+            return false;
+        }
+
+        return id != null && id.equals(((ApplicationUserDTO) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31;
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "ApplicationUserDTO{" +
+            "id=" + getId() +
+            ", credit=" + getCredit() +
+            ", sex='" + getSex() + "'" +
+            ", birthDay='" + getBirthDay() + "'" +
+            ", googleToken='" + getGoogleToken() + "'" +
+            ", facebookToken='" + getFacebookToken() + "'" +
+            ", imageUrl='" + getImageUrl() + "'" +
+            ", introduction='" + getIntroduction() + "'" +
+            ", internalUserId=" + getInternalUserId() +
+            "}";
+    }
+}

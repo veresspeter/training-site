@@ -21,7 +21,7 @@ Navbar
   padding: 1px 1rem;
   height: 32px;
   background-color: $mv-navbar;
-  box-shadow: 0 0 5px #a78b66;
+  box-shadow: 0 0 5px 3px #a78b66;
 
   & > .navbar-collapse > ul {
     width: 100%;
@@ -38,6 +38,9 @@ Navbar
     a.nav-link {
       padding: 10px;
       font-weight: 700;
+      @media (min-width: 768px) {
+        width: 125px;
+      }
     }
   }
 
@@ -57,7 +60,7 @@ Navbar
     }
 
     &.show {
-      box-shadow: 0 5px 5px -3px #a78b66;
+      box-shadow: 0 5px 5px 0px #a78b66;
     }
   }
 

@@ -1,0 +1,74 @@
+{
+  "name": "Event",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "start",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "end",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "limit",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "streamLink",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "streamLinkType",
+      "fieldType": "LinkType",
+      "fieldValues": "ZOOM,SKYPE,GOOGLE_MEET,OTHER"
+    },
+    {
+      "fieldName": "comment",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "applicationUser",
+      "otherEntityRelationshipName": "event",
+      "relationshipValidateRules": "required",
+      "relationshipName": "organizer",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "activity",
+      "otherEntityRelationshipName": "event",
+      "relationshipValidateRules": "required",
+      "relationshipName": "activity",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "applicationUser",
+      "otherEntityRelationshipName": "events",
+      "relationshipName": "participants",
+      "otherEntityField": "id",
+      "ownerSide": true
+    }
+  ],
+  "changelogDate": "20210208200931",
+  "entityTableName": "event",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

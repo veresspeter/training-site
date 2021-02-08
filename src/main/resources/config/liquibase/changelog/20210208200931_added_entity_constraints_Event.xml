@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <!--
+        Added the constraints for entity Event.
+    -->
+    <changeSet id="20210208200931-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="organizer_id"
+                                 baseTableName="event"
+                                 constraintName="fk_event_organizer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="application_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="activity_id"
+                                 baseTableName="event"
+                                 constraintName="fk_event_activity_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="activity"/>
+
+        <addForeignKeyConstraint baseColumnNames="event_id"
+                                 baseTableName="event_participants"
+                                 constraintName="fk_event_participants_event_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="event"/>
+
+        <addForeignKeyConstraint baseColumnNames="participants_id"
+                                 baseTableName="event_participants"
+                                 constraintName="fk_event_participants_participants_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="application_user"/>
+        
+    </changeSet>
+</databaseChangeLog>

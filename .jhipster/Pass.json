@@ -1,0 +1,52 @@
+{
+  "name": "Pass",
+  "fields": [
+    {
+      "fieldName": "purchased",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "usageNo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "validFrom",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "validTo",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "passType",
+      "otherEntityRelationshipName": "pass",
+      "relationshipValidateRules": "required",
+      "relationshipName": "passType",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "applicationUser",
+      "otherEntityRelationshipName": "pass",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210208201131",
+  "entityTableName": "pass",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,99 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-application-user-heading">Create or edit a Application User</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_credit">Credit</label>
+                    <input type="number" class="form-control" name="credit" id="field_credit"
+                           formControlName="credit"/>
+                    <div *ngIf="editForm.get('credit')!.invalid && (editForm.get('credit')!.dirty || editForm.get('credit')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('credit')?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('credit')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sex">Sex</label>
+                    <select class="form-control" name="sex" formControlName="sex" id="field_sex">
+                        <option value="MAN">MAN</option>
+                        <option value="WOMAN">WOMAN</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_birthDay">Birth Day</label>
+                    <div class="input-group">
+                        <input id="field_birthDay" type="text" class="form-control" name="birthDay" ngbDatepicker #birthDayDp="ngbDatepicker" formControlName="birthDay"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="birthDayDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_googleToken">Google Token</label>
+                    <input type="text" class="form-control" name="googleToken" id="field_googleToken"
+                           formControlName="googleToken"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_facebookToken">Facebook Token</label>
+                    <input type="text" class="form-control" name="facebookToken" id="field_facebookToken"
+                           formControlName="facebookToken"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_imageUrl">Image Url</label>
+                    <input type="text" class="form-control" name="imageUrl" id="field_imageUrl"
+                           formControlName="imageUrl"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_introduction">Introduction</label>
+                    <input type="text" class="form-control" name="introduction" id="field_introduction"
+                           formControlName="introduction"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_internalUser">Internal User</label>
+                    <select class="form-control" id="field_internalUser" name="internalUser" formControlName="internalUserId">
+                        <option *ngIf="!editForm.get('internalUserId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.id }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('internalUserId')!.invalid && (editForm.get('internalUserId')!.dirty || editForm.get('internalUserId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('internalUserId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

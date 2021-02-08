@@ -1,0 +1,65 @@
+{
+  "name": "ApplicationUser",
+  "fields": [
+    {
+      "fieldName": "credit",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sex",
+      "fieldType": "Sex",
+      "fieldValues": "MAN,WOMAN,OTHER"
+    },
+    {
+      "fieldName": "birthDay",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "googleToken",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "facebookToken",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "imageUrl",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "introduction",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "applicationUser",
+      "relationshipValidateRules": "required",
+      "relationshipName": "internalUser",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "event",
+      "otherEntityRelationshipName": "participants",
+      "relationshipName": "events",
+      "otherEntityField": "id",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20210208200631",
+  "entityTableName": "application_user",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

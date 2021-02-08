@@ -50,6 +50,14 @@ public class CacheConfiguration {
             createCache(cm, hu.redriver.domain.User.class.getName() + ".authorities");
             createCache(cm, hu.redriver.domain.PersistentToken.class.getName());
             createCache(cm, hu.redriver.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, hu.redriver.domain.ApplicationUser.class.getName());
+            createCache(cm, hu.redriver.domain.ApplicationUser.class.getName() + ".events");
+            createCache(cm, hu.redriver.domain.ActivityType.class.getName());
+            createCache(cm, hu.redriver.domain.Activity.class.getName());
+            createCache(cm, hu.redriver.domain.Event.class.getName());
+            createCache(cm, hu.redriver.domain.Event.class.getName() + ".participants");
+            createCache(cm, hu.redriver.domain.PassType.class.getName());
+            createCache(cm, hu.redriver.domain.Pass.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

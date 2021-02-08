@@ -1,0 +1,81 @@
+<div>
+    <h2 id="page-heading">
+        <span>Pass Types</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-pass-type" [routerLink]="['/pass-type/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Pass Type
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="passTypes?.length === 0">
+        <span>No passTypes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="passTypes && passTypes.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span>ID</span></th>
+                    <th scope="col" ><span>Name</span></th>
+                    <th scope="col" ><span>Description</span></th>
+                    <th scope="col" ><span>Duration Days</span></th>
+                    <th scope="col" ><span>Price</span></th>
+                    <th scope="col" ><span>Occasions</span></th>
+                    <th scope="col" ><span>Available For Type</span></th>
+                    <th scope="col" ><span>Available For Activity</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let passType of passTypes ;trackBy: trackId">
+                    <td><a [routerLink]="['/pass-type', passType.id, 'view']">{{ passType.id }}</a></td>
+                    <td>{{ passType.name }}</td>
+                    <td>{{ passType.description }}</td>
+                    <td>{{ passType.durationDays }}</td>
+                    <td>{{ passType.price }}</td>
+                    <td>{{ passType.occasions }}</td>
+                    <td>
+                        <div *ngIf="passType.availableForTypeId">
+                            <a [routerLink]="['/activity-type', passType.availableForTypeId , 'view']" >{{ passType.availableForTypeId }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="passType.availableForActivityId">
+                            <a [routerLink]="['/activity', passType.availableForActivityId , 'view']" >{{ passType.availableForActivityId }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/pass-type', passType.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/pass-type', passType.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(passType)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

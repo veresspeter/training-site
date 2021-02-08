@@ -21,3 +21,9 @@ Main page styles
     background-size: contain;
   }
 }
+
+:host {
+  img.activity-img {
+    width: inherit;
+  }
+}

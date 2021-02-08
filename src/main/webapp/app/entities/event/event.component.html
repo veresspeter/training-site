@@ -1,0 +1,91 @@
+<div>
+    <h2 id="page-heading">
+        <span>Events</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-event" [routerLink]="['/event/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Event
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="events?.length === 0">
+        <span>No events found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="events && events.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr>
+                    <th scope="col" ><span>ID</span></th>
+                    <th scope="col" ><span>Name</span></th>
+                    <th scope="col" ><span>Start</span></th>
+                    <th scope="col" ><span>End</span></th>
+                    <th scope="col" ><span>Limit</span></th>
+                    <th scope="col" ><span>Stream Link</span></th>
+                    <th scope="col" ><span>Stream Link Type</span></th>
+                    <th scope="col" ><span>Comment</span></th>
+                    <th scope="col" ><span>Organizer</span></th>
+                    <th scope="col" ><span>Activity</span></th>
+                    <th scope="col" ><span>Participants</span></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let event of events ;trackBy: trackId">
+                    <td><a [routerLink]="['/event', event.id, 'view']">{{ event.id }}</a></td>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.start | date:'mediumDate' }}</td>
+                    <td>{{ event.end | date:'mediumDate' }}</td>
+                    <td>{{ event.limit }}</td>
+                    <td>{{ event.streamLink }}</td>
+                    <td>{{ event.streamLinkType }}</td>
+                    <td>{{ event.comment }}</td>
+                    <td>
+                        <div *ngIf="event.organizerId">
+                            <a [routerLink]="['/application-user', event.organizerId , 'view']" >{{ event.organizerId }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="event.activityId">
+                            <a [routerLink]="['/activity', event.activityId , 'view']" >{{ event.activityId }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <span *ngFor="let participants of event.participants; let last = last">
+                            <a class="form-control-static" [routerLink]="['/application-user', participants?.id, 'view']">{{ participants.id }}</a>{{ last ? '' : ', ' }}
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/event', event.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/event', event.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(event)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

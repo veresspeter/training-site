@@ -1,0 +1,92 @@
+relationship OneToOne {
+  ApplicationUser{internalUser required} to User
+}
+
+enum Sex {
+  MAN, WOMAN, OTHER
+}
+
+entity ApplicationUser {
+  credit Integer required
+  sex Sex
+  birthDay LocalDate
+  googleToken String
+  facebookToken String
+  imageUrl String
+  introduction String
+}
+
+relationship ManyToMany {
+  Event{participants} to ApplicationUser{events}
+}
+
+entity ActivityType {
+  name String required
+  imageUrl String required
+}
+
+entity Activity {
+  name String required
+  description String required
+  imageUrl String required
+}
+
+relationship ManyToOne {
+  Activity{activityType required} to ActivityType
+}
+
+enum LinkType {
+  ZOOM, SKYPE, GOOGLE_MEET, OTHER
+}
+
+entity Event {
+  name String required
+  start LocalDate required
+  end LocalDate required
+  limit Integer
+  streamLink String
+  streamLinkType LinkType
+  comment String
+}
+
+relationship ManyToOne {
+  Event{organizer required} to ApplicationUser
+}
+
+relationship ManyToOne {
+  Event{activity required} to Activity
+}
+
+entity PassType {
+  name String required
+  description String
+  durationDays Integer
+  price String required
+  occasions Integer required
+}
+
+relationship ManyToOne {
+  PassType{availableForType required} to ActivityType
+}
+
+relationship ManyToOne {
+  PassType{availableForActivity} to Activity
+}
+
+entity Pass {
+  purchased LocalDate required
+  usageNo Integer required
+  validFrom LocalDate
+  validTo LocalDate
+}
+
+relationship ManyToOne {
+  Pass{passType required} to PassType
+}
+
+relationship ManyToOne {
+  Pass{user required} to ApplicationUser
+}
+
+dto * with mapstruct
+service * with serviceClass
