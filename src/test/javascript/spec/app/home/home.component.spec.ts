@@ -22,7 +22,7 @@ describe('Component Tests', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(HomeComponent);
       comp = fixture.componentInstance;
-      activityService = TestBed.get(ActivityService);
+      activityService = fixture.debugElement.injector.get(ActivityService);
     });
 
     it('Should call activityService.query on init', () => {
