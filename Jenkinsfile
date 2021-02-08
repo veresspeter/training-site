@@ -32,7 +32,8 @@ pipeline {
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'aws-frankfurt-default-kp', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USR')]) {
                 sh 'echo $SSH_KEY > kp.pem'
-                sh 'ssh -oStrictHostKeyChecking=no ${SSH_USR}@maxmove.hu docker stop maxmove'
+                sh 'ssh-copy-id -i kp.pem'
+                sh 'ssh ${SSH_USR}@maxmove.hu docker stop maxmove'
                 sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker rm maxmove'
                 sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
                 sh 'ssh -i $SSH_KEY ${SSH_USR}@maxmove.hu docker pull veresspeter/maxmove'
