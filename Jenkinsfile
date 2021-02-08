@@ -1,6 +1,7 @@
 pipeline {
   agent none
   stages {
+    /*
     stage('Frontend Build') {
       agent {
         docker 'node:12-alpine'
@@ -23,6 +24,17 @@ pipeline {
         sh 'chmod go-w+x -R .'
         sh './mvnw package -Pdev -Djib.to.auth.password=$DOCKERHUB_PSW -Djib.to.auth.username=$DOCKERHUB_USR -DbuildNo=$BUILD_NUMBER verify jib:build'
       }
+    }
+    */
+
+    stage('Deploy') {
+        agent any
+        environment {
+            KP = credentials('aws-frankfurt-default-kp')
+        }
+        steps {
+            sh 'echo $KP_KEY | ssh -i /dev/stdin ubuntu@maxmove.hu'
+        }
     }
 
   }
