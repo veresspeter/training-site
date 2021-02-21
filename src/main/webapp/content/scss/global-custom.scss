@@ -1,0 +1,72 @@
+* {
+  color: $mv-dark;
+  font-family: 'Poppins', sans-serif;
+
+  &:focus {
+    outline-color: $mv-shadow-primary;
+  }
+}
+
+body {
+  background-color: $mv-bg;
+
+  footer {
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  .modal-content {
+    background-color: $mv-bg;
+
+    .modal-header {
+      border: none;
+
+      .modal-title {
+        margin: auto;
+      }
+    }
+
+    .modal-footer {
+      border: none;
+    }
+  }
+}
+
+.btn {
+  width: 175px;
+  height: 35px;
+  border-radius: 0;
+  box-shadow: 0 0 0.4rem $mv-shadow-primary;
+
+  &.btn-icon {
+    width: auto;
+    height: auto;
+    color: $mv-text-primary;
+    fa-icon * {
+      color: $mv-text-primary;
+    }
+  }
+
+  &.btn-primary {
+    color: $mv-text-primary;
+    background-color: $mv-btn-primary;
+    border-color: $mv-btn-primary;
+
+    &:hover {
+      background-color: $mv-btn-hover-primary;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0.1rem 0.1rem opacify($mv-dark, 0.5);
+    }
+
+    &:active {
+      background-color: $mv-btn-activate-primary !important;
+      border-color: $mv-dark !important;
+    }
+  }
+}
+
+.jh-card {
+  background-color: rgba(0, 0, 0, 0);
+}
