@@ -4,6 +4,7 @@ import hu.redriver.service.ActivityTypeService;
 import hu.redriver.web.rest.errors.BadRequestAlertException;
 import hu.redriver.service.dto.ActivityTypeDTO;
 
+import hu.redriver.web.utils.CustomHeaderUtil;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class ActivityTypeResource {
 
     private final Logger log = LoggerFactory.getLogger(ActivityTypeResource.class);
 
-    private static final String ENTITY_NAME = "activityType";
+    private static final String ENTITY_NAME = "foglalkozas";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -53,7 +54,7 @@ public class ActivityTypeResource {
         }
         ActivityTypeDTO result = activityTypeService.save(activityTypeDTO);
         return ResponseEntity.created(new URI("/api/activity-types/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(CustomHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString(), activityTypeDTO.getName()))
             .body(result);
     }
 
@@ -74,7 +75,7 @@ public class ActivityTypeResource {
         }
         ActivityTypeDTO result = activityTypeService.save(activityTypeDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, activityTypeDTO.getId().toString()))
+            .headers(CustomHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, activityTypeDTO.getId().toString(), activityTypeDTO.getName()))
             .body(result);
     }
 
@@ -112,6 +113,6 @@ public class ActivityTypeResource {
     public ResponseEntity<Void> deleteActivityType(@PathVariable Long id) {
         log.debug("REST request to delete ActivityType : {}", id);
         activityTypeService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent().headers(CustomHeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
     }
 }

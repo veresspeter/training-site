@@ -4,7 +4,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
+import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IActivityType, ActivityType } from 'app/shared/model/activity-type.model';
 import { AlertError } from 'app/shared/alert/alert-error.model';

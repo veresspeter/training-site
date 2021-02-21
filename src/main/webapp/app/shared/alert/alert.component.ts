@@ -5,9 +5,9 @@ import { JhiAlertService, JhiAlert } from 'ng-jhipster';
   selector: 'jhi-alert',
   template: ` <div class="alerts" role="alert">
     <ng-container *ngFor="let alert of alerts; let i = index">
-      <div [ngClass]="setClasses(alert)" [style.top.px]="50 + i * 60">
+      <div [ngClass]="setClasses(alert)" [style.top.px]="75 + i * 60">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="close(alert)">
-          <pre [innerHTML]="alert.msg"></pre>
+          <pre><fa-icon icon="check-circle"></fa-icon>{{alert.msg}}</pre>
         </ngb-alert>
       </div>
     </ng-container>

@@ -25,7 +25,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
     NgJhipsterModule.forRoot({
       // set below to true to make alerts look like toast
       alertAsToast: true,
-      alertTimeout: 5000,
+      alertTimeout: 50000,
     }),
   ],
   providers: [

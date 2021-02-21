@@ -2,24 +2,6 @@
 Custom alerts for notification
 ========================================================================== */
 
-.alert-ci-icon {
-  font-family: 'coolicons' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  font-size: 24px;
-  position: relative;
-  top: 4px;
-  background: #000;
-  margin-right: 18px;
-
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 @keyframes slide-in {
   0% {
     margin-right: -1280px;
@@ -30,8 +12,6 @@ Custom alerts for notification
 }
 
 .alerts {
-  z-index: 50000;
-
   & .alert {
     text-overflow: ellipsis;
 
@@ -79,7 +59,7 @@ Custom alerts for notification
         }
 
         &:hover {
-          color: #ffffff;
+          color: $mv-btn-light;
         }
       }
 
@@ -91,61 +71,51 @@ Custom alerts for notification
       }
 
       &.alert-success {
-        background: #000;
+        background: $mv-alert-bg;
         color: #ffffff;
 
-        & pre:before {
-          @extend .alert-ci-icon;
-          color: #0f0;
-          content: '\e9db';
+        fa-icon {
+          margin-right: 15px;
+          font-size: 20px;
+
+          svg > path {
+            color: $mv-success !important;
+          }
         }
       }
 
       &.alert-danger {
-        background: #000;
+        background: $mv-alert-bg;
         color: #ffffff;
 
-        & pre:before {
-          @extend .alert-ci-icon;
-          color: #f00;
-          content: '\e91d';
+        fa-icon {
+          margin-right: 15px;
+          font-size: 20px;
+
+          svg > path {
+            color: $mv-danger !important;
+          }
         }
       }
 
       &.alert-warning {
-        background: #000;
+        background: $mv-alert-bg;
         color: #ffffff;
-
-        & pre:before {
-          @extend .alert-ci-icon;
-          color: #f00;
-          content: '\e91b';
-        }
       }
 
       &.alert-info {
-        background: #000;
+        background: $mv-alert-bg;
         color: #ffffff;
-
-        & pre:before {
-          @extend .alert-ci-icon;
-          color: #a0a;
-          content: '\e919';
-        }
       }
     }
 
     &.right {
-      right: calc(50% - 608px) !important;
+      right: 100px !important;
     }
 
     &.left {
       left: 5px;
     }
-
-    //&.top {
-    //  top: 55px;
-    //}
 
     &.bottom {
       bottom: 55px;
@@ -155,14 +125,8 @@ Custom alerts for notification
 
 .alert {
   &.alert-warning {
-    background: #000;
+    background: $mv-alert-bg;
     color: #ffffff;
-
-    & span:before {
-      @extend .alert-ci-icon;
-      color: #f8c555;
-      content: '\e91b';
-    }
   }
 }
 

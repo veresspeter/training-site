@@ -9,9 +9,9 @@ import { AlertError } from './alert-error.model';
   selector: 'jhi-alert-error',
   template: ` <div class="alerts" role="alert">
     <ng-container *ngFor="let alert of alerts; let i = index">
-      <div [ngClass]="setClasses(alert)" [style.top.px]="50 + i * 60">
+      <div [ngClass]="setClasses(alert)" [style.top.px]="75 + i * 60">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="close(alert)">
-          <pre [innerHTML]="alert.msg"></pre>
+          <pre><fa-icon icon="exclamation-circle"></fa-icon>{{alert.msg}}</pre>
         </ngb-alert>
       </div>
     </ng-container>
