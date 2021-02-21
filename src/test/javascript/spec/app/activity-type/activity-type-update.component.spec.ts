@@ -3,10 +3,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 
-import { MaxmoveTestModule } from '../../../test.module';
-import { ActivityTypeUpdateComponent } from 'app/entities/activity-type/activity-type-update.component';
+import { MaxmoveTestModule } from '../../test.module';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { ActivityType } from 'app/shared/model/activity-type.model';
+import { ActivityTypeUpdateComponent } from 'app/activity-type/activity-type-update/activity-type-update.component';
 
 describe('Component Tests', () => {
   describe('ActivityType Management Update Component', () => {

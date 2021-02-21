@@ -3,11 +3,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { MaxmoveTestModule } from '../../../test.module';
-import { MockEventManager } from '../../../helpers/mock-event-manager.service';
-import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
-import { ActivityTypeDeleteDialogComponent } from 'app/entities/activity-type/activity-type-delete-dialog.component';
+import { MaxmoveTestModule } from '../../test.module';
+import { MockEventManager } from '../../helpers/mock-event-manager.service';
+import { MockActiveModal } from '../../helpers/mock-active-modal.service';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
+import { ActivityTypeDeleteDialogComponent } from 'app/activity-type/activity-type-delete/activity-type-delete-dialog.component';
 
 describe('Component Tests', () => {
   describe('ActivityType Management Delete Component', () => {

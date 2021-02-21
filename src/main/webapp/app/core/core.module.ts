@@ -33,7 +33,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
     CookieService,
     {
       provide: LOCALE_ID,
-      useValue: 'en',
+      useValue: 'hu',
     },
     { provide: NgbDateAdapter, useClass: NgbDateMomentAdapter },
     DatePipe,
