@@ -2,6 +2,7 @@ package hu.redriver.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import javax.persistence.Lob;
 
 /**
  * A DTO for the {@link hu.redriver.domain.Activity} entity.
@@ -16,9 +17,11 @@ public class ActivityDTO implements Serializable {
     @NotNull
     private String description;
 
-    @NotNull
-    private String imageUrl;
+    
+    @Lob
+    private byte[] image;
 
+    private String imageContentType;
 
     private Long activityTypeId;
     
@@ -46,12 +49,20 @@ public class ActivityDTO implements Serializable {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
 
     public Long getActivityTypeId() {
@@ -86,7 +97,7 @@ public class ActivityDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
+            ", image='" + getImage() + "'" +
             ", activityTypeId=" + getActivityTypeId() +
             "}";
     }

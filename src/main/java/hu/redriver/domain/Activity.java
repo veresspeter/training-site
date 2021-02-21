@@ -32,9 +32,13 @@ public class Activity implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @NotNull
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    
+    @Lob
+    @Column(name = "image", nullable = false)
+    private byte[] image;
+
+    @Column(name = "image_content_type", nullable = false)
+    private String imageContentType;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -76,17 +80,30 @@ public class Activity implements Serializable {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public byte[] getImage() {
+        return image;
     }
 
-    public Activity imageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Activity image(byte[] image) {
+        this.image = image;
         return this;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public Activity imageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+        return this;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
 
     public ActivityType getActivityType() {
@@ -126,7 +143,8 @@ public class Activity implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
+            ", image='" + getImage() + "'" +
+            ", imageContentType='" + getImageContentType() + "'" +
             "}";
     }
 }

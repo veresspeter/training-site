@@ -12,7 +12,7 @@ entity ApplicationUser {
   birthDay LocalDate
   googleToken String
   facebookToken String
-  imageUrl String
+  image ImageBlob
   introduction String
 }
 
@@ -22,13 +22,13 @@ relationship ManyToMany {
 
 entity ActivityType {
   name String required
-  imageUrl String required
+  image ImageBlob required
 }
 
 entity Activity {
   name String required
   description String required
-  imageUrl String required
+  image ImageBlob required
 }
 
 relationship ManyToOne {

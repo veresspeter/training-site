@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -36,8 +37,10 @@ public class ActivityTypeResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_IMAGE_URL = "AAAAAAAAAA";
-    private static final String UPDATED_IMAGE_URL = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
     @Autowired
     private ActivityTypeRepository activityTypeRepository;
@@ -65,7 +68,8 @@ public class ActivityTypeResourceIT {
     public static ActivityType createEntity(EntityManager em) {
         ActivityType activityType = new ActivityType()
             .name(DEFAULT_NAME)
-            .imageUrl(DEFAULT_IMAGE_URL);
+            .image(DEFAULT_IMAGE)
+            .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE);
         return activityType;
     }
     /**
@@ -77,7 +81,8 @@ public class ActivityTypeResourceIT {
     public static ActivityType createUpdatedEntity(EntityManager em) {
         ActivityType activityType = new ActivityType()
             .name(UPDATED_NAME)
-            .imageUrl(UPDATED_IMAGE_URL);
+            .image(UPDATED_IMAGE)
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
         return activityType;
     }
 
@@ -102,7 +107,8 @@ public class ActivityTypeResourceIT {
         assertThat(activityTypeList).hasSize(databaseSizeBeforeCreate + 1);
         ActivityType testActivityType = activityTypeList.get(activityTypeList.size() - 1);
         assertThat(testActivityType.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testActivityType.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
+        assertThat(testActivityType.getImage()).isEqualTo(DEFAULT_IMAGE);
+        assertThat(testActivityType.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
     }
 
     @Test
@@ -148,26 +154,6 @@ public class ActivityTypeResourceIT {
 
     @Test
     @Transactional
-    public void checkImageUrlIsRequired() throws Exception {
-        int databaseSizeBeforeTest = activityTypeRepository.findAll().size();
-        // set the field null
-        activityType.setImageUrl(null);
-
-        // Create the ActivityType, which fails.
-        ActivityTypeDTO activityTypeDTO = activityTypeMapper.toDto(activityType);
-
-
-        restActivityTypeMockMvc.perform(post("/api/activity-types").with(csrf())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(activityTypeDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<ActivityType> activityTypeList = activityTypeRepository.findAll();
-        assertThat(activityTypeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllActivityTypes() throws Exception {
         // Initialize the database
         activityTypeRepository.saveAndFlush(activityType);
@@ -178,7 +164,8 @@ public class ActivityTypeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(activityType.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)));
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))));
     }
     
     @Test
@@ -193,7 +180,8 @@ public class ActivityTypeResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(activityType.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL));
+            .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)));
     }
     @Test
     @Transactional
@@ -217,7 +205,8 @@ public class ActivityTypeResourceIT {
         em.detach(updatedActivityType);
         updatedActivityType
             .name(UPDATED_NAME)
-            .imageUrl(UPDATED_IMAGE_URL);
+            .image(UPDATED_IMAGE)
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE);
         ActivityTypeDTO activityTypeDTO = activityTypeMapper.toDto(updatedActivityType);
 
         restActivityTypeMockMvc.perform(put("/api/activity-types").with(csrf())
@@ -230,7 +219,8 @@ public class ActivityTypeResourceIT {
         assertThat(activityTypeList).hasSize(databaseSizeBeforeUpdate);
         ActivityType testActivityType = activityTypeList.get(activityTypeList.size() - 1);
         assertThat(testActivityType.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testActivityType.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
+        assertThat(testActivityType.getImage()).isEqualTo(UPDATED_IMAGE);
+        assertThat(testActivityType.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
     }
 
     @Test

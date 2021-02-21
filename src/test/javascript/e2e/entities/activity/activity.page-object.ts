@@ -31,7 +31,7 @@ export class ActivityUpdatePage {
 
   nameInput = element(by.id('field_name'));
   descriptionInput = element(by.id('field_description'));
-  imageUrlInput = element(by.id('field_imageUrl'));
+  imageInput = element(by.id('file_image'));
 
   activityTypeSelect = element(by.id('field_activityType'));
 
@@ -55,12 +55,12 @@ export class ActivityUpdatePage {
     return await this.descriptionInput.getAttribute('value');
   }
 
-  async setImageUrlInput(imageUrl: string): Promise<void> {
-    await this.imageUrlInput.sendKeys(imageUrl);
+  async setImageInput(image: string): Promise<void> {
+    await this.imageInput.sendKeys(image);
   }
 
-  async getImageUrlInput(): Promise<string> {
-    return await this.imageUrlInput.getAttribute('value');
+  async getImageInput(): Promise<string> {
+    return await this.imageInput.getAttribute('value');
   }
 
   async activityTypeSelectLastOption(): Promise<void> {

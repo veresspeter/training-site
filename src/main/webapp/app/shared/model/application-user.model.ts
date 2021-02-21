@@ -9,7 +9,8 @@ export interface IApplicationUser {
   birthDay?: Moment;
   googleToken?: string;
   facebookToken?: string;
-  imageUrl?: string;
+  imageContentType?: string;
+  image?: any;
   introduction?: string;
   internalUserId?: number;
   events?: IEvent[];
@@ -23,7 +24,8 @@ export class ApplicationUser implements IApplicationUser {
     public birthDay?: Moment,
     public googleToken?: string,
     public facebookToken?: string,
-    public imageUrl?: string,
+    public imageContentType?: string,
+    public image?: any,
     public introduction?: string,
     public internalUserId?: number,
     public events?: IEvent[]

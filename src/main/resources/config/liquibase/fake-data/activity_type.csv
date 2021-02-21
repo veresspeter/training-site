@@ -1,4 +1,4 @@
-id;name;image_url
-1;Edzés;asd
-2;Masszázs;asd
-3;Rehabilitáció;asd
+id;name;image;image_content_type
+1;Edzés;../fake-data/blob/hipster.png;image/png
+2;Masszázs;../fake-data/blob/hipster.png;image/png
+3;Rehabilitáció;../fake-data/blob/hipster.png;image/png

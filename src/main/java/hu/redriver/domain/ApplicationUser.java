@@ -46,8 +46,12 @@ public class ApplicationUser implements Serializable {
     @Column(name = "facebook_token")
     private String facebookToken;
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Lob
+    @Column(name = "image")
+    private byte[] image;
+
+    @Column(name = "image_content_type")
+    private String imageContentType;
 
     @Column(name = "introduction")
     private String introduction;
@@ -136,17 +140,30 @@ public class ApplicationUser implements Serializable {
         this.facebookToken = facebookToken;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public byte[] getImage() {
+        return image;
     }
 
-    public ApplicationUser imageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public ApplicationUser image(byte[] image) {
+        this.image = image;
         return this;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public ApplicationUser imageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+        return this;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
 
     public String getIntroduction() {
@@ -227,7 +244,8 @@ public class ApplicationUser implements Serializable {
             ", birthDay='" + getBirthDay() + "'" +
             ", googleToken='" + getGoogleToken() + "'" +
             ", facebookToken='" + getFacebookToken() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
+            ", image='" + getImage() + "'" +
+            ", imageContentType='" + getImageContentType() + "'" +
             ", introduction='" + getIntroduction() + "'" +
             "}";
     }

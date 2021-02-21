@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -52,8 +53,10 @@ public class ApplicationUserResourceIT {
     private static final String DEFAULT_FACEBOOK_TOKEN = "AAAAAAAAAA";
     private static final String UPDATED_FACEBOOK_TOKEN = "BBBBBBBBBB";
 
-    private static final String DEFAULT_IMAGE_URL = "AAAAAAAAAA";
-    private static final String UPDATED_IMAGE_URL = "BBBBBBBBBB";
+    private static final byte[] DEFAULT_IMAGE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_IMAGE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_IMAGE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_IMAGE_CONTENT_TYPE = "image/png";
 
     private static final String DEFAULT_INTRODUCTION = "AAAAAAAAAA";
     private static final String UPDATED_INTRODUCTION = "BBBBBBBBBB";
@@ -88,7 +91,8 @@ public class ApplicationUserResourceIT {
             .birthDay(DEFAULT_BIRTH_DAY)
             .googleToken(DEFAULT_GOOGLE_TOKEN)
             .facebookToken(DEFAULT_FACEBOOK_TOKEN)
-            .imageUrl(DEFAULT_IMAGE_URL)
+            .image(DEFAULT_IMAGE)
+            .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
             .introduction(DEFAULT_INTRODUCTION);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
@@ -110,7 +114,8 @@ public class ApplicationUserResourceIT {
             .birthDay(UPDATED_BIRTH_DAY)
             .googleToken(UPDATED_GOOGLE_TOKEN)
             .facebookToken(UPDATED_FACEBOOK_TOKEN)
-            .imageUrl(UPDATED_IMAGE_URL)
+            .image(UPDATED_IMAGE)
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
             .introduction(UPDATED_INTRODUCTION);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
@@ -145,7 +150,8 @@ public class ApplicationUserResourceIT {
         assertThat(testApplicationUser.getBirthDay()).isEqualTo(DEFAULT_BIRTH_DAY);
         assertThat(testApplicationUser.getGoogleToken()).isEqualTo(DEFAULT_GOOGLE_TOKEN);
         assertThat(testApplicationUser.getFacebookToken()).isEqualTo(DEFAULT_FACEBOOK_TOKEN);
-        assertThat(testApplicationUser.getImageUrl()).isEqualTo(DEFAULT_IMAGE_URL);
+        assertThat(testApplicationUser.getImage()).isEqualTo(DEFAULT_IMAGE);
+        assertThat(testApplicationUser.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testApplicationUser.getIntroduction()).isEqualTo(DEFAULT_INTRODUCTION);
     }
 
@@ -206,7 +212,8 @@ public class ApplicationUserResourceIT {
             .andExpect(jsonPath("$.[*].birthDay").value(hasItem(DEFAULT_BIRTH_DAY.toString())))
             .andExpect(jsonPath("$.[*].googleToken").value(hasItem(DEFAULT_GOOGLE_TOKEN)))
             .andExpect(jsonPath("$.[*].facebookToken").value(hasItem(DEFAULT_FACEBOOK_TOKEN)))
-            .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGE_URL)))
+            .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
             .andExpect(jsonPath("$.[*].introduction").value(hasItem(DEFAULT_INTRODUCTION)));
     }
     
@@ -226,7 +233,8 @@ public class ApplicationUserResourceIT {
             .andExpect(jsonPath("$.birthDay").value(DEFAULT_BIRTH_DAY.toString()))
             .andExpect(jsonPath("$.googleToken").value(DEFAULT_GOOGLE_TOKEN))
             .andExpect(jsonPath("$.facebookToken").value(DEFAULT_FACEBOOK_TOKEN))
-            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGE_URL))
+            .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
             .andExpect(jsonPath("$.introduction").value(DEFAULT_INTRODUCTION));
     }
     @Test
@@ -255,7 +263,8 @@ public class ApplicationUserResourceIT {
             .birthDay(UPDATED_BIRTH_DAY)
             .googleToken(UPDATED_GOOGLE_TOKEN)
             .facebookToken(UPDATED_FACEBOOK_TOKEN)
-            .imageUrl(UPDATED_IMAGE_URL)
+            .image(UPDATED_IMAGE)
+            .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
             .introduction(UPDATED_INTRODUCTION);
         ApplicationUserDTO applicationUserDTO = applicationUserMapper.toDto(updatedApplicationUser);
 
@@ -273,7 +282,8 @@ public class ApplicationUserResourceIT {
         assertThat(testApplicationUser.getBirthDay()).isEqualTo(UPDATED_BIRTH_DAY);
         assertThat(testApplicationUser.getGoogleToken()).isEqualTo(UPDATED_GOOGLE_TOKEN);
         assertThat(testApplicationUser.getFacebookToken()).isEqualTo(UPDATED_FACEBOOK_TOKEN);
-        assertThat(testApplicationUser.getImageUrl()).isEqualTo(UPDATED_IMAGE_URL);
+        assertThat(testApplicationUser.getImage()).isEqualTo(UPDATED_IMAGE);
+        assertThat(testApplicationUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testApplicationUser.getIntroduction()).isEqualTo(UPDATED_INTRODUCTION);
     }
 

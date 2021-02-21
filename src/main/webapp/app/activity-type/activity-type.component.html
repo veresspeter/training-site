@@ -1,0 +1,27 @@
+<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary" [routerLink]="['/activity-type', 'new']">
+    Létrehozás
+</button>
+
+<ul class="row justify-content-center align-items-center">
+    <li class="col-12 col-md-6 col-xl-4" *ngFor="let activityType of activityTypes; trackBy: trackId">
+        <div class="card mx-md-3">
+            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
+                <button type="submit" class="btn btn-icon btn-primary"
+                        [routerLink]="['/activity-type', activityType.id, 'edit']">
+                    <fa-icon icon="pen"></fa-icon>
+                </button>
+                <button class="btn btn-icon btn-primary" (click)="delete(activityType)">
+                    <fa-icon icon="trash"></fa-icon>
+                </button>
+            </div>
+            <a routerLink="">
+                <div class="card-header">{{activityType.name}}</div>
+                <div class="card-img">
+                    <img class="activity-img"
+                         src="data:{{activityType.imageContentType}};base64,{{activityType.image}}"
+                         alt="">
+                </div>
+            </a>
+        </div>
+    </li>
+</ul>

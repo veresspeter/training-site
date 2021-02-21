@@ -30,7 +30,10 @@
             <column name="facebook_token" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="image_url" type="varchar(255)">
+            <column name="image" type="longblob">
+                <constraints nullable="true" />
+            </column>
+            <column name="image_content_type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="introduction" type="varchar(255)">
@@ -67,7 +70,8 @@
             <column name="birth_day" type="date"/>
             <column name="google_token" type="string"/>
             <column name="facebook_token" type="string"/>
-            <column name="image_url" type="string"/>
+            <column name="image" type="blob"/>
+            <column name="image_content_type" type="string"/>
             <column name="introduction" type="string"/>
             <column name="internal_user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

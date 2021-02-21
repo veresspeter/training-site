@@ -28,7 +28,7 @@
                     <th scope="col" ><span>Birth Day</span></th>
                     <th scope="col" ><span>Google Token</span></th>
                     <th scope="col" ><span>Facebook Token</span></th>
-                    <th scope="col" ><span>Image Url</span></th>
+                    <th scope="col" ><span>Image</span></th>
                     <th scope="col" ><span>Introduction</span></th>
                     <th scope="col" ><span>Internal User</span></th>
                     <th scope="col"></th>
@@ -42,7 +42,12 @@
                     <td>{{ applicationUser.birthDay | date:'mediumDate' }}</td>
                     <td>{{ applicationUser.googleToken }}</td>
                     <td>{{ applicationUser.facebookToken }}</td>
-                    <td>{{ applicationUser.imageUrl }}</td>
+                    <td>
+                        <a *ngIf="applicationUser.image" (click)="openFile(applicationUser.imageContentType, applicationUser.image)">
+                            <img [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image" style="max-height: 30px;" alt="applicationUser image"/>
+                        </a>
+                        <span *ngIf="applicationUser.image">{{ applicationUser.imageContentType }}, {{ byteSize(applicationUser.image) }}</span>
+                    </td>
                     <td>{{ applicationUser.introduction }}</td>
                     <td>
                         {{ applicationUser.internalUserId }}

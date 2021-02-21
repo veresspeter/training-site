@@ -6,6 +6,7 @@ import {
   /* ActivityDeleteDialog, */
   ActivityUpdatePage,
 } from './activity.page-object';
+import * as path from 'path';
 
 const expect = chai.expect;
 
@@ -15,6 +16,9 @@ describe('Activity e2e test', () => {
   let activityComponentsPage: ActivityComponentsPage;
   let activityUpdatePage: ActivityUpdatePage;
   /* let activityDeleteDialog: ActivityDeleteDialog; */
+  const fileNameToUpload = 'logo-jhipster.png';
+  const fileToUpload = '../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
+  const absolutePath = path.resolve(__dirname, fileToUpload);
 
   before(async () => {
     await browser.get('/');
@@ -47,13 +51,13 @@ describe('Activity e2e test', () => {
         await promise.all([
             activityUpdatePage.setNameInput('name'),
             activityUpdatePage.setDescriptionInput('description'),
-            activityUpdatePage.setImageUrlInput('imageUrl'),
+            activityUpdatePage.setImageInput(absolutePath),
             activityUpdatePage.activityTypeSelectLastOption(),
         ]);
 
         expect(await activityUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
         expect(await activityUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
-        expect(await activityUpdatePage.getImageUrlInput()).to.eq('imageUrl', 'Expected ImageUrl value to be equals to imageUrl');
+        expect(await activityUpdatePage.getImageInput()).to.endsWith(fileNameToUpload, 'Expected Image value to be end with ' + fileNameToUpload);
 
         await activityUpdatePage.save();
         expect(await activityUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

@@ -16,9 +16,14 @@
                 <dd>
                     <span>{{ activity.description }}</span>
                 </dd>
-                <dt><span>Image Url</span></dt>
+                <dt><span>Image</span></dt>
                 <dd>
-                    <span>{{ activity.imageUrl }}</span>
+                    <div *ngIf="activity.image">
+                        <a (click)="openFile(activity.imageContentType, activity.image)">
+                            <img [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" style="max-width: 100%;" alt="activity image"/>
+                        </a>
+                        {{ activity.imageContentType }}, {{ byteSize(activity.image) }}
+                    </div>
                 </dd>
                 <dt><span>Activity Type</span></dt>
                 <dd>

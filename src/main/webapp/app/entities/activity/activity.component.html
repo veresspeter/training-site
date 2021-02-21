@@ -25,7 +25,7 @@
                     <th scope="col" ><span>ID</span></th>
                     <th scope="col" ><span>Name</span></th>
                     <th scope="col" ><span>Description</span></th>
-                    <th scope="col" ><span>Image Url</span></th>
+                    <th scope="col" ><span>Image</span></th>
                     <th scope="col" ><span>Activity Type</span></th>
                     <th scope="col"></th>
                 </tr>
@@ -35,7 +35,12 @@
                     <td><a [routerLink]="['/activity', activity.id, 'view']">{{ activity.id }}</a></td>
                     <td>{{ activity.name }}</td>
                     <td>{{ activity.description }}</td>
-                    <td>{{ activity.imageUrl }}</td>
+                    <td>
+                        <a *ngIf="activity.image" (click)="openFile(activity.imageContentType, activity.image)">
+                            <img [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" style="max-height: 30px;" alt="activity image"/>
+                        </a>
+                        <span *ngIf="activity.image">{{ activity.imageContentType }}, {{ byteSize(activity.image) }}</span>
+                    </td>
                     <td>
                         <div *ngIf="activity.activityTypeId">
                             <a [routerLink]="['/activity-type', activity.activityTypeId , 'view']" >{{ activity.activityTypeId }}</a>

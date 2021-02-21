@@ -3,6 +3,7 @@ package hu.redriver.service.dto;
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import javax.persistence.Lob;
 import hu.redriver.domain.enumeration.Sex;
 
 /**
@@ -23,8 +24,10 @@ public class ApplicationUserDTO implements Serializable {
 
     private String facebookToken;
 
-    private String imageUrl;
+    @Lob
+    private byte[] image;
 
+    private String imageContentType;
     private String introduction;
 
 
@@ -78,12 +81,20 @@ public class ApplicationUserDTO implements Serializable {
         this.facebookToken = facebookToken;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
 
     public String getIntroduction() {
@@ -129,7 +140,7 @@ public class ApplicationUserDTO implements Serializable {
             ", birthDay='" + getBirthDay() + "'" +
             ", googleToken='" + getGoogleToken() + "'" +
             ", facebookToken='" + getFacebookToken() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
+            ", image='" + getImage() + "'" +
             ", introduction='" + getIntroduction() + "'" +
             ", internalUserId=" + getInternalUserId() +
             "}";

@@ -28,9 +28,14 @@
                 <dd>
                     <span>{{ applicationUser.facebookToken }}</span>
                 </dd>
-                <dt><span>Image Url</span></dt>
+                <dt><span>Image</span></dt>
                 <dd>
-                    <span>{{ applicationUser.imageUrl }}</span>
+                    <div *ngIf="applicationUser.image">
+                        <a (click)="openFile(applicationUser.imageContentType, applicationUser.image)">
+                            <img [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image" style="max-width: 100%;" alt="applicationUser image"/>
+                        </a>
+                        {{ applicationUser.imageContentType }}, {{ byteSize(applicationUser.image) }}
+                    </div>
                 </dd>
                 <dt><span>Introduction</span></dt>
                 <dd>

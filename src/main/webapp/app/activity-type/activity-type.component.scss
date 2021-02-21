@@ -1,0 +1,76 @@
+@import '../../content/scss/variables';
+
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.hipster {
+  display: inline-block;
+  width: 347px;
+  height: 497px;
+  background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
+  background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  .hipster {
+    background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
+    background-size: contain;
+  }
+}
+
+:host {
+  text-align: right;
+
+  ul {
+    margin: 5vmin 0 10vmin 0;
+    padding: 0;
+    list-style: none;
+
+    .card {
+      margin: 6vmin 0;
+      padding: 5vmin 7.5vmin;
+      border: none;
+      background-color: $mv-navbar;
+      box-shadow: 0 0 25px 0 $mv-shadow-primary;
+
+      .card-header {
+        position: absolute;
+        top: calc(50% - 1em);
+        left: 0;
+        border: 0;
+        width: 100%;
+        color: #fff;
+        font-size: 1.8rem;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0);
+      }
+
+      .card-img {
+        margin: -7.5vmin 0;
+        padding: 5vmin;
+        border: solid 3px #000;
+
+        img.activity-img {
+          width: inherit;
+          border: solid 10px #fff;
+        }
+      }
+    }
+
+    .card-edit {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      button.btn-icon {
+        margin-top: 0.2rem;
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
 import { ActivityTypeUpdateComponent } from 'app/entities/activity-type/activity-type-update.component';
-import { ActivityTypeService } from 'app/entities/activity-type/activity-type.service';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { ActivityType } from 'app/shared/model/activity-type.model';
 
 describe('Component Tests', () => {

@@ -15,7 +15,12 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
       [
         {
           path: '',
-          loadChildren: () => import('./home/home.module').then(m => m.MaxmoveHomeModule),
+          redirectTo: 'calendar',
+          pathMatch: 'full',
+        },
+        {
+          path: 'activity-type',
+          loadChildren: () => import('./activity-type/activity-type.module').then(m => m.MaxmoveActivityTypeModule),
         },
         {
           path: 'calendar',

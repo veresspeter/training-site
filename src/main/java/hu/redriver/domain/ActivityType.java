@@ -27,9 +27,13 @@ public class ActivityType implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    
+    @Lob
+    @Column(name = "image", nullable = false)
+    private byte[] image;
+
+    @Column(name = "image_content_type", nullable = false)
+    private String imageContentType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -53,17 +57,30 @@ public class ActivityType implements Serializable {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public byte[] getImage() {
+        return image;
     }
 
-    public ActivityType imageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public ActivityType image(byte[] image) {
+        this.image = image;
         return this;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public ActivityType imageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+        return this;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -89,7 +106,8 @@ public class ActivityType implements Serializable {
         return "ActivityType{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", imageUrl='" + getImageUrl() + "'" +
+            ", image='" + getImage() + "'" +
+            ", imageContentType='" + getImageContentType() + "'" +
             "}";
     }
 }

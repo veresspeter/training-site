@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
+import { ActivityTypeComponent } from './activity-type.component';
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IActivityType, ActivityType } from 'app/shared/model/activity-type.model';
-import { ActivityTypeService } from './activity-type.service';
-import { ActivityTypeComponent } from './activity-type.component';
-import { ActivityTypeDetailComponent } from './activity-type-detail.component';
-import { ActivityTypeUpdateComponent } from './activity-type-update.component';
+import { Injectable } from '@angular/core';
+import { ActivityType, IActivityType } from 'app/shared/model/activity-type.model';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
+import { EMPTY, Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
+import { ActivityTypeUpdateComponent } from 'app/activity-type/activity-type-update/activity-type-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class ActivityTypeResolve implements Resolve<IActivityType> {
@@ -34,27 +32,13 @@ export class ActivityTypeResolve implements Resolve<IActivityType> {
   }
 }
 
-export const activityTypeRoute: Routes = [
+export const activityTypeRoutes: Routes = [
   {
     path: '',
     component: ActivityTypeComponent,
     data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ActivityTypes',
+      pageTitle: 'Foglalkozások',
     },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: ActivityTypeDetailComponent,
-    resolve: {
-      activityType: ActivityTypeResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ActivityTypes',
-    },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
@@ -63,8 +47,8 @@ export const activityTypeRoute: Routes = [
       activityType: ActivityTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ActivityTypes',
+      authorities: [Authority.ADMIN],
+      pageTitle: 'Új foglalkozás',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -75,8 +59,8 @@ export const activityTypeRoute: Routes = [
       activityType: ActivityTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ActivityTypes',
+      authorities: [Authority.ADMIN],
+      pageTitle: 'Foglalkozás szerkesztése',
     },
     canActivate: [UserRouteAccessService],
   },

@@ -6,6 +6,7 @@ import {
   /* ApplicationUserDeleteDialog, */
   ApplicationUserUpdatePage,
 } from './application-user.page-object';
+import * as path from 'path';
 
 const expect = chai.expect;
 
@@ -15,6 +16,9 @@ describe('ApplicationUser e2e test', () => {
   let applicationUserComponentsPage: ApplicationUserComponentsPage;
   let applicationUserUpdatePage: ApplicationUserUpdatePage;
   /* let applicationUserDeleteDialog: ApplicationUserDeleteDialog; */
+  const fileNameToUpload = 'logo-jhipster.png';
+  const fileToUpload = '../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
+  const absolutePath = path.resolve(__dirname, fileToUpload);
 
   before(async () => {
     await browser.get('/');
@@ -53,7 +57,7 @@ describe('ApplicationUser e2e test', () => {
             applicationUserUpdatePage.setBirthDayInput('2000-12-31'),
             applicationUserUpdatePage.setGoogleTokenInput('googleToken'),
             applicationUserUpdatePage.setFacebookTokenInput('facebookToken'),
-            applicationUserUpdatePage.setImageUrlInput('imageUrl'),
+            applicationUserUpdatePage.setImageInput(absolutePath),
             applicationUserUpdatePage.setIntroductionInput('introduction'),
             applicationUserUpdatePage.internalUserSelectLastOption(),
         ]);
@@ -62,7 +66,7 @@ describe('ApplicationUser e2e test', () => {
         expect(await applicationUserUpdatePage.getBirthDayInput()).to.eq('2000-12-31', 'Expected birthDay value to be equals to 2000-12-31');
         expect(await applicationUserUpdatePage.getGoogleTokenInput()).to.eq('googleToken', 'Expected GoogleToken value to be equals to googleToken');
         expect(await applicationUserUpdatePage.getFacebookTokenInput()).to.eq('facebookToken', 'Expected FacebookToken value to be equals to facebookToken');
-        expect(await applicationUserUpdatePage.getImageUrlInput()).to.eq('imageUrl', 'Expected ImageUrl value to be equals to imageUrl');
+        expect(await applicationUserUpdatePage.getImageInput()).to.endsWith(fileNameToUpload, 'Expected Image value to be end with ' + fileNameToUpload);
         expect(await applicationUserUpdatePage.getIntroductionInput()).to.eq('introduction', 'Expected Introduction value to be equals to introduction');
 
         await applicationUserUpdatePage.save();

@@ -25,7 +25,7 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new ApplicationUser(0, 0, Sex.MAN, currentDate, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new ApplicationUser(0, 0, Sex.MAN, currentDate, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -75,7 +75,7 @@ describe('Service Tests', () => {
             birthDay: currentDate.format(DATE_FORMAT),
             googleToken: 'BBBBBB',
             facebookToken: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            image: 'BBBBBB',
             introduction: 'BBBBBB',
           },
           elemDefault
@@ -103,7 +103,7 @@ describe('Service Tests', () => {
             birthDay: currentDate.format(DATE_FORMAT),
             googleToken: 'BBBBBB',
             facebookToken: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            image: 'BBBBBB',
             introduction: 'BBBBBB',
           },
           elemDefault

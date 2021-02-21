@@ -8,7 +8,7 @@ export const errorRoute: Routes = [
     component: ErrorComponent,
     data: {
       authorities: [],
-      pageTitle: 'Error page!',
+      pageTitle: 'Hiba oldal!',
     },
   },
   {
@@ -16,8 +16,8 @@ export const errorRoute: Routes = [
     component: ErrorComponent,
     data: {
       authorities: [],
-      pageTitle: 'Error page!',
-      errorMessage: 'You are not authorized to access this page.',
+      pageTitle: 'Hiba oldal!',
+      errorMessage: 'Nincs jogosultságod ennek az oldalnak a megtekintésére',
     },
   },
   {
@@ -25,8 +25,8 @@ export const errorRoute: Routes = [
     component: ErrorComponent,
     data: {
       authorities: [],
-      pageTitle: 'Error page!',
-      errorMessage: 'The page does not exist.',
+      pageTitle: 'Hiba oldal!',
+      errorMessage: 'A keresett oldal nem található.',
     },
   },
   {

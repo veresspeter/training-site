@@ -1,4 +1,4 @@
-id;name;description;image_url;activity_type_id
-1;Alakformáló edzés;asd;https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F35%2F2020%2F10%2F02%2Ftriceps-workout-with-weights-promo.jpg&w=1200&c=sc&poi=face&q=85;1
-2;Hátmasszázs;asd;https://media-cdn.tripadvisor.com/media/photo-m/1280/13/47/8f/34/atipat-thai-massage.jpg;2
-3;Kinesio tape;asd;https://cdn.shopify.com/s/files/1/0453/0381/files/shutterstock_259032644_large.jpg?16215630615517110614;3
+id;name;description;image;image_content_type;activity_type_id
+1;drive Somoni Accountability;lavender scale;../fake-data/blob/hipster.png;image/png;1
+2;transmit Future;reboot;../fake-data/blob/hipster.png;image/png;2
+3;matrix override;Rubber override;../fake-data/blob/hipster.png;image/png;3

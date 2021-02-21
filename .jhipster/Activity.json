@@ -12,8 +12,9 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "imageUrl",
-      "fieldType": "String",
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image",
       "fieldValidateRules": ["required"]
     }
   ],

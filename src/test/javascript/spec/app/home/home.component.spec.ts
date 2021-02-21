@@ -1,29 +1,29 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { MaxmoveTestModule } from '../../test.module';
-import { HomeComponent } from 'app/home/home.component';
+import { ActivityTypeComponent } from 'app/activity-type/activity-type.component';
 import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { ActivityTypeService } from 'app/entities/activity-type/activity-type.service';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { ActivityType } from 'app/shared/model/activity-type.model';
 
 describe('Component Tests', () => {
   describe('Home Component', () => {
-    let comp: HomeComponent;
-    let fixture: ComponentFixture<HomeComponent>;
+    let comp: ActivityTypeComponent;
+    let fixture: ComponentFixture<ActivityTypeComponent>;
     let activityTypeService: ActivityTypeService;
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [MaxmoveTestModule],
-        declarations: [HomeComponent],
+        declarations: [ActivityTypeComponent],
       })
-        .overrideTemplate(HomeComponent, '')
+        .overrideTemplate(ActivityTypeComponent, '')
         .compileComponents();
     }));
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(HomeComponent);
+      fixture = TestBed.createComponent(ActivityTypeComponent);
       comp = fixture.componentInstance;
       activityTypeService = fixture.debugElement.injector.get(ActivityTypeService);
     });

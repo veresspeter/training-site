@@ -7,7 +7,7 @@ import { MaxmoveTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { ActivityTypeDeleteDialogComponent } from 'app/entities/activity-type/activity-type-delete-dialog.component';
-import { ActivityTypeService } from 'app/entities/activity-type/activity-type.service';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 
 describe('Component Tests', () => {
   describe('ActivityType Management Delete Component', () => {

@@ -2,6 +2,7 @@ import { browser, ExpectedConditions as ec, promise } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import { ActivityTypeComponentsPage, ActivityTypeDeleteDialog, ActivityTypeUpdatePage } from './activity-type.page-object';
+import * as path from 'path';
 
 const expect = chai.expect;
 
@@ -11,6 +12,9 @@ describe('ActivityType e2e test', () => {
   let activityTypeComponentsPage: ActivityTypeComponentsPage;
   let activityTypeUpdatePage: ActivityTypeUpdatePage;
   let activityTypeDeleteDialog: ActivityTypeDeleteDialog;
+  const fileNameToUpload = 'logo-jhipster.png';
+  const fileToUpload = '../../../../../../src/main/webapp/content/images/' + fileNameToUpload;
+  const absolutePath = path.resolve(__dirname, fileToUpload);
 
   before(async () => {
     await browser.get('/');
@@ -43,10 +47,13 @@ describe('ActivityType e2e test', () => {
 
     await activityTypeComponentsPage.clickOnCreateButton();
 
-    await promise.all([activityTypeUpdatePage.setNameInput('name'), activityTypeUpdatePage.setImageUrlInput('imageUrl')]);
+    await promise.all([activityTypeUpdatePage.setNameInput('name'), activityTypeUpdatePage.setImageInput(absolutePath)]);
 
     expect(await activityTypeUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-    expect(await activityTypeUpdatePage.getImageUrlInput()).to.eq('imageUrl', 'Expected ImageUrl value to be equals to imageUrl');
+    expect(await activityTypeUpdatePage.getImageInput()).to.endsWith(
+      fileNameToUpload,
+      'Expected Image value to be end with ' + fileNameToUpload
+    );
 
     await activityTypeUpdatePage.save();
     expect(await activityTypeUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

@@ -34,7 +34,7 @@ export class ApplicationUserUpdatePage {
   birthDayInput = element(by.id('field_birthDay'));
   googleTokenInput = element(by.id('field_googleToken'));
   facebookTokenInput = element(by.id('field_facebookToken'));
-  imageUrlInput = element(by.id('field_imageUrl'));
+  imageInput = element(by.id('file_image'));
   introductionInput = element(by.id('field_introduction'));
 
   internalUserSelect = element(by.id('field_internalUser'));
@@ -87,12 +87,12 @@ export class ApplicationUserUpdatePage {
     return await this.facebookTokenInput.getAttribute('value');
   }
 
-  async setImageUrlInput(imageUrl: string): Promise<void> {
-    await this.imageUrlInput.sendKeys(imageUrl);
+  async setImageInput(image: string): Promise<void> {
+    await this.imageInput.sendKeys(image);
   }
 
-  async getImageUrlInput(): Promise<string> {
-    return await this.imageUrlInput.getAttribute('value');
+  async getImageInput(): Promise<string> {
+    return await this.imageInput.getAttribute('value');
   }
 
   async setIntroductionInput(introduction: string): Promise<void> {

@@ -1,6 +1,6 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ActivityTypeService } from 'app/entities/activity-type/activity-type.service';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { IActivityType, ActivityType } from 'app/shared/model/activity-type.model';
 
 describe('Service Tests', () => {
@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(ActivityTypeService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new ActivityType(0, 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new ActivityType(0, 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -55,7 +55,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            image: 'BBBBBB',
           },
           elemDefault
         );
@@ -73,7 +73,7 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            image: 'BBBBBB',
           },
           elemDefault
         );

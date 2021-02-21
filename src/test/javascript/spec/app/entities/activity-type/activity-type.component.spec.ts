@@ -4,7 +4,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { MaxmoveTestModule } from '../../../test.module';
 import { ActivityTypeComponent } from 'app/entities/activity-type/activity-type.component';
-import { ActivityTypeService } from 'app/entities/activity-type/activity-type.service';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { ActivityType } from 'app/shared/model/activity-type.model';
 
 describe('Component Tests', () => {

@@ -1,25 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { IActivityType } from 'app/shared/model/activity-type.model';
-import { ActivityTypeService } from './activity-type.service';
-import { ActivityTypeDeleteDialogComponent } from './activity-type-delete-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpResponse } from '@angular/common/http';
+import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { ActivityTypeDeleteDialogComponent } from 'app/activity-type/activity-type-delete/activity-type-delete-dialog.component';
 
 @Component({
-  selector: 'jhi-activity-type',
+  selector: 'jhi-home',
   templateUrl: './activity-type.component.html',
+  styleUrls: ['activity-type.component.scss'],
 })
 export class ActivityTypeComponent implements OnInit, OnDestroy {
-  activityTypes?: IActivityType[];
+  activityTypes?: IActivityType[] = [];
   eventSubscriber?: Subscription;
 
   constructor(
     protected activityTypeService: ActivityTypeService,
+    protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected router: Router
   ) {}
 
   loadAll(): void {

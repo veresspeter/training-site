@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(ActivityService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Activity(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA');
+      elemDefault = new Activity(0, 'AAAAAAA', 'AAAAAAA', 'image/png', 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -56,7 +56,7 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             description: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            image: 'BBBBBB',
           },
           elemDefault
         );
@@ -75,7 +75,7 @@ describe('Service Tests', () => {
           {
             name: 'BBBBBB',
             description: 'BBBBBB',
-            imageUrl: 'BBBBBB',
+            image: 'BBBBBB',
           },
           elemDefault
         );

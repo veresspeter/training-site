@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IActivityType } from 'app/shared/model/activity-type.model';
-import { ActivityTypeService } from './activity-type.service';
+import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 
 @Component({
   templateUrl: './activity-type-delete-dialog.component.html',
