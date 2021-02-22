@@ -36,7 +36,7 @@ public class UserMapperTest {
         user.setFirstName("john");
         user.setLastName("doe");
         user.setImageUrl("image_url");
-        user.setLangKey("en");
+        user.setLangKey("hu");
 
         userDto = new UserDTO(user);
     }

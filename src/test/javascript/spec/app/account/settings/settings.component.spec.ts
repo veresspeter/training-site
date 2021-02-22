@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       lastName: 'Doe',
       activated: true,
       email: 'john.doe@mail.com',
-      langKey: 'en',
+      langKey: 'hu',
       login: 'john',
       authorities: [],
       imageUrl: '',

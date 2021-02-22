@@ -47,7 +47,7 @@ public class DomainUserDetailsServiceIT {
         userOne.setEmail(USER_ONE_EMAIL);
         userOne.setFirstName("userOne");
         userOne.setLastName("doe");
-        userOne.setLangKey("en");
+        userOne.setLangKey("hu");
         userRepository.save(userOne);
 
         User userTwo = new User();
@@ -57,7 +57,7 @@ public class DomainUserDetailsServiceIT {
         userTwo.setEmail(USER_TWO_EMAIL);
         userTwo.setFirstName("userTwo");
         userTwo.setLastName("doe");
-        userTwo.setLangKey("en");
+        userTwo.setLangKey("hu");
         userRepository.save(userTwo);
 
         User userThree = new User();
@@ -67,7 +67,7 @@ public class DomainUserDetailsServiceIT {
         userThree.setEmail(USER_THREE_EMAIL);
         userThree.setFirstName("userThree");
         userThree.setLastName("doe");
-        userThree.setLangKey("en");
+        userThree.setLangKey("hu");
         userRepository.save(userThree);
     }
 
