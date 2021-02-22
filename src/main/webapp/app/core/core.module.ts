@@ -6,7 +6,7 @@ import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { CookieService } from 'ngx-cookie-service';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
-import locale from '@angular/common/locales/en';
+import locale from '@angular/common/locales/hu';
 
 import * as moment from 'moment';
 import { NgbDateAdapter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -25,7 +25,7 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
     NgJhipsterModule.forRoot({
       // set below to true to make alerts look like toast
       alertAsToast: true,
-      alertTimeout: 50000,
+      alertTimeout: 5000,
     }),
   ],
   providers: [
