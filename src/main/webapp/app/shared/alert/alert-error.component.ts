@@ -11,7 +11,8 @@ import { AlertError } from './alert-error.model';
     <ng-container *ngFor="let alert of alerts; let i = index">
       <div [ngClass]="setClasses(alert)" [style.top.px]="75 + i * 60">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="close(alert)">
-          <pre><fa-icon icon="exclamation-circle"></fa-icon>{{alert.msg}}</pre>
+          <fa-icon icon="exclamation-circle"></fa-icon>
+          <pre [innerHTML]="alert.msg"></pre>
         </ngb-alert>
       </div>
     </ng-container>

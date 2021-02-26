@@ -64,6 +64,7 @@ Custom alerts for notification
       }
 
       & pre {
+        display: inline;
         height: 32px;
         white-space: nowrap;
         overflow: hidden;
@@ -75,6 +76,7 @@ Custom alerts for notification
         color: #ffffff;
 
         fa-icon {
+          display: inline;
           margin-right: 15px;
           font-size: 20px;
 
@@ -89,6 +91,7 @@ Custom alerts for notification
         color: #ffffff;
 
         fa-icon {
+          display: inline;
           margin-right: 15px;
           font-size: 20px;
 

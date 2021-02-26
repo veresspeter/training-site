@@ -28,7 +28,7 @@ public class ActivityTypeResource {
 
     private final Logger log = LoggerFactory.getLogger(ActivityTypeResource.class);
 
-    private static final String ENTITY_NAME = "foglalkozas";
+    private static final String ENTITY_NAME = "foglalkozás csoport";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
