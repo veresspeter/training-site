@@ -10,7 +10,7 @@ import { PassTypeService } from './pass-type.service';
 import { IActivityType } from 'app/shared/model/activity-type.model';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { IActivity } from 'app/shared/model/activity.model';
-import { ActivityService } from 'app/entities/activity/activity.service';
+import { ActivityService } from 'app/shared/services/activity.service';
 
 type SelectableEntity = IActivityType | IActivity;
 

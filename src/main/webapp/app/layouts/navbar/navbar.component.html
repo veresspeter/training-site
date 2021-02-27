@@ -12,7 +12,7 @@
          [ngSwitch]="isAuthenticated()">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+                <a class="nav-link" routerLink="/activity-type" (click)="collapseNavbar()">
                     <span>
                         <span>Kezdőlap</span>
                     </span>
@@ -58,13 +58,6 @@
                            [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                             <span>Application User</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="activity-type" routerLinkActive="active"
-                           [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span>Activity Type</span>
                         </a>
                     </li>
                     <li>

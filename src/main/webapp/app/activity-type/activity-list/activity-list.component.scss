@@ -1,0 +1,70 @@
+@import '../../../content/scss/variables';
+
+:host {
+  text-align: right;
+
+  h2 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .card {
+    margin: 50px auto;
+    width: 100%;
+    max-width: 1000px;
+    border: none;
+    box-shadow: 0 0 25px 0 $mv-shadow-primary;
+
+    &:nth-child(odd) {
+      background-color: $mv-rose;
+
+      .card-edit {
+        top: 1rem;
+        left: 1rem;
+      }
+
+      .card-img {
+        top: 0;
+        right: 0;
+      }
+    }
+
+    &:nth-child(even) {
+      background-color: $mv-pastel;
+      text-align: left;
+
+      .card-edit {
+        top: 1rem;
+        right: 1rem;
+      }
+
+      .card-body {
+        width: calc(100% - 250px);
+        margin-left: 250px;
+      }
+
+      .card-img {
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .card-body {
+      width: calc(100% - 250px);
+      height: 175px;
+    }
+
+    .card-img {
+      position: absolute;
+      margin: -25px 15px;
+      padding: 35px 10px;
+      height: 225px;
+      width: auto;
+      border: solid 3px $mv-dark;
+    }
+
+    .card-edit {
+      position: absolute;
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
-import { ActivityService } from './activity.service';
+import { ActivityService } from '../../shared/services/activity.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IActivityType } from 'app/shared/model/activity-type.model';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';

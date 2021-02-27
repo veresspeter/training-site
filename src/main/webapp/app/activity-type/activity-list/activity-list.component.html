@@ -1,0 +1,30 @@
+<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary"
+        [routerLink]="['/activity-type', activityType?.id, 'activity', 'new']">
+    Létrehozás
+</button>
+
+<h2 id="page-heading">
+    {{activityType?.name}}
+</h2>
+
+<div class="alert alert-warning" id="no-result" *ngIf="activities?.length === 0">
+    <span>Még nincsenek foglalkozások feltöltve</span>
+</div>
+
+<div class="card" *ngFor="let activity of activities; trackBy: trackId">
+    <div class="card-body">
+        <h3>{{activity.name}}</h3>
+        <p>{{activity.description}}</p>
+    </div>
+    <img *ngIf="activity.image" class="card-img" [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" alt="foglalkozás képe"/>
+
+    <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
+        <button type="submit" class="btn btn-icon btn-primary"
+                [routerLink]="['/activity-type', activityType?.id, 'activity', activity?.id, 'edit']">
+            <fa-icon icon="pen"></fa-icon>
+        </button>
+        <button class="btn btn-icon btn-primary" (click)="delete(activity)">
+            <fa-icon icon="trash"></fa-icon>
+        </button>
+    </div>
+</div>

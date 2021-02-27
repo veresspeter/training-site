@@ -84,9 +84,9 @@ public class ActivityResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of activities in body.
      */
     @GetMapping("/activities")
-    public List<ActivityDTO> getAllActivities() {
+    public List<ActivityDTO> getAllActivities(@RequestParam(required = false) Long activityTypeId) {
         log.debug("REST request to get all Activities");
-        return activityService.findAll();
+        return activityService.findAll(activityTypeId);
     }
 
     /**

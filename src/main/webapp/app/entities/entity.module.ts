@@ -9,10 +9,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./application-user/application-user.module').then(m => m.MaxmoveApplicationUserModule),
       },
       {
-        path: 'activity',
-        loadChildren: () => import('./activity/activity.module').then(m => m.MaxmoveActivityModule),
-      },
-      {
         path: 'event',
         loadChildren: () => import('./event/event.module').then(m => m.MaxmoveEventModule),
       },

@@ -1,0 +1,21 @@
+<form *ngIf="activity" name="deleteForm" (ngSubmit)="confirmDelete(activity?.id!)">
+    <div class="modal-header">
+        <h4 class="modal-title">Törlés megerősítése</h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <p id="jhi-delete-activity-heading">Biztosan törölni szeretnéd ezt a foglalkozást?</p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="cancel()">
+            Mégse
+        </button>
+
+        <button id="jhi-confirm-delete-activityType" type="submit" class="btn btn-danger">
+            Törlés
+        </button>
+    </div>
+</form>
