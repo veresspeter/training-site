@@ -1,6 +1,6 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { ActivityService } from 'app/entities/activity/activity.service';
+import { ActivityService } from 'app/shared/services/activity.service';
 import { IActivity, Activity } from 'app/shared/model/activity.model';
 
 describe('Service Tests', () => {

@@ -4,8 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { ActivityUpdateComponent } from 'app/entities/activity/activity-update.component';
-import { ActivityService } from 'app/entities/activity/activity.service';
+import { ActivityUpdateComponent } from 'app/activity-type/activity-update/activity-update.component';
+import { ActivityService } from 'app/shared/services/activity.service';
 import { Activity } from 'app/shared/model/activity.model';
 
 describe('Component Tests', () => {

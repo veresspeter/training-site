@@ -10,7 +10,7 @@ import { EventService } from './event.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
-import { ActivityService } from 'app/entities/activity/activity.service';
+import { ActivityService } from 'app/shared/services/activity.service';
 
 type SelectableEntity = IApplicationUser | IActivity;
 

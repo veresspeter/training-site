@@ -5,30 +5,40 @@ import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IActivity } from 'app/shared/model/activity.model';
-import { ActivityService } from './activity.service';
-import { ActivityDeleteDialogComponent } from './activity-delete-dialog.component';
+import { ActivityService } from 'app/shared/services/activity.service';
+import { ActivityDeleteDialogComponent } from '../activity-delete/activity-delete-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { IActivityType } from 'app/shared/model/activity-type.model';
 
 @Component({
   selector: 'jhi-activity',
-  templateUrl: './activity.component.html',
+  templateUrl: './activity-list.component.html',
+  styleUrls: ['activity-list.component.scss'],
 })
-export class ActivityComponent implements OnInit, OnDestroy {
+export class ActivityListComponent implements OnInit, OnDestroy {
   activities?: IActivity[];
   eventSubscriber?: Subscription;
+  activityType?: IActivityType;
 
   constructor(
     protected activityService: ActivityService,
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
+    protected activatedRoute: ActivatedRoute,
     protected modalService: NgbModal
   ) {}
 
   loadAll(): void {
-    this.activityService.query().subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
+    this.activityService
+      .query({ activityTypeId: this.activityType?.id })
+      .subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
   }
 
   ngOnInit(): void {
-    this.loadAll();
+    this.activatedRoute.data.subscribe(({ activityType }) => {
+      this.activityType = activityType;
+      this.loadAll();
+    });
     this.registerChangeInActivities();
   }
 

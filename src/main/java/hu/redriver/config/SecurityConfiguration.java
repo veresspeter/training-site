@@ -108,7 +108,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com;" +
                     "style-src 'self' https://fonts.googleapis.com 'unsafe-inline';" +
                     "img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com;" +
-                    "img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com;" +
                     "connect-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
@@ -128,6 +127,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/activities").permitAll()
             .antMatchers("/api/activity-types").permitAll()
+            .antMatchers("/api/activity-types/{id}").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()

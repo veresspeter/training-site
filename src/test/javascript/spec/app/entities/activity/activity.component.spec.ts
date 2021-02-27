@@ -3,25 +3,25 @@ import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { ActivityComponent } from 'app/entities/activity/activity.component';
-import { ActivityService } from 'app/entities/activity/activity.service';
+import { ActivityListComponent } from 'app/activity-type/activity-list/activity-list.component';
+import { ActivityService } from 'app/shared/services/activity.service';
 import { Activity } from 'app/shared/model/activity.model';
 
 describe('Component Tests', () => {
   describe('Activity Management Component', () => {
-    let comp: ActivityComponent;
-    let fixture: ComponentFixture<ActivityComponent>;
+    let comp: ActivityListComponent;
+    let fixture: ComponentFixture<ActivityListComponent>;
     let service: ActivityService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [MaxmoveTestModule],
-        declarations: [ActivityComponent],
+        declarations: [ActivityListComponent],
       })
-        .overrideTemplate(ActivityComponent, '')
+        .overrideTemplate(ActivityListComponent, '')
         .compileComponents();
 
-      fixture = TestBed.createComponent(ActivityComponent);
+      fixture = TestBed.createComponent(ActivityListComponent);
       comp = fixture.componentInstance;
       service = fixture.debugElement.injector.get(ActivityService);
     });

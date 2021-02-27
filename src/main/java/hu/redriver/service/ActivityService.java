@@ -52,9 +52,10 @@ public class ActivityService {
      * @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<ActivityDTO> findAll() {
+    public List<ActivityDTO> findAll(Long activityTypeId) {
         log.debug("Request to get all Activities");
         return activityRepository.findAll().stream()
+            .filter(activity -> activityTypeId == null || activity.getActivityType().getId().equals(activityTypeId))
             .map(activityMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
