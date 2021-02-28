@@ -10,6 +10,16 @@
 body {
   background-color: $mv-bg;
 
+  jhi-main {
+    .container-fluid {
+      min-height: calc(100vh - 100px);
+
+      .jh-card {
+        min-height: calc(100vh - 140px);
+      }
+    }
+  }
+
   footer {
     margin-top: 6px;
     text-align: center;
