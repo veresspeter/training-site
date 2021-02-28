@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -12,7 +11,7 @@ import { EventService } from './event.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
-import { ActivityService } from 'app/entities/activity/activity.service';
+import { ActivityService } from 'app/shared/services/activity.service';
 
 type SelectableEntity = IApplicationUser | IActivity;
 
