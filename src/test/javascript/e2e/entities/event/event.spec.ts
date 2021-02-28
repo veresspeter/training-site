@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions as ec /* , promise */ } from 'protractor';
+import { browser, ExpectedConditions as ec /* , protractor, promise */ } from 'protractor';
 import { NavBarPage, SignInPage } from '../../page-objects/jhi-page-objects';
 
 import {
@@ -46,8 +46,8 @@ describe('Event e2e test', () => {
 
         await promise.all([
             eventUpdatePage.setNameInput('name'),
-            eventUpdatePage.setStartInput('2000-12-31'),
-            eventUpdatePage.setEndInput('2000-12-31'),
+            eventUpdatePage.setStartInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
+            eventUpdatePage.setEndInput('01/01/2001' + protractor.Key.TAB + '02:30AM'),
             eventUpdatePage.setLimitInput('5'),
             eventUpdatePage.setStreamLinkInput('streamLink'),
             eventUpdatePage.streamLinkTypeSelectLastOption(),
@@ -58,8 +58,8 @@ describe('Event e2e test', () => {
         ]);
 
         expect(await eventUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
-        expect(await eventUpdatePage.getStartInput()).to.eq('2000-12-31', 'Expected start value to be equals to 2000-12-31');
-        expect(await eventUpdatePage.getEndInput()).to.eq('2000-12-31', 'Expected end value to be equals to 2000-12-31');
+        expect(await eventUpdatePage.getStartInput()).to.contain('2001-01-01T02:30', 'Expected start value to be equals to 2000-12-31');
+        expect(await eventUpdatePage.getEndInput()).to.contain('2001-01-01T02:30', 'Expected end value to be equals to 2000-12-31');
         expect(await eventUpdatePage.getLimitInput()).to.eq('5', 'Expected limit value to be equals to 5');
         expect(await eventUpdatePage.getStreamLinkInput()).to.eq('streamLink', 'Expected StreamLink value to be equals to streamLink');
         expect(await eventUpdatePage.getCommentInput()).to.eq('comment', 'Expected Comment value to be equals to comment');

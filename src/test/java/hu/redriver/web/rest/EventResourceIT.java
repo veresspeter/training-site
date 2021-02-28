@@ -24,11 +24,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import static hu.redriver.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -49,11 +52,11 @@ public class EventResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final LocalDate DEFAULT_START = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_START = LocalDate.now(ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_START = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_START = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
-    private static final LocalDate DEFAULT_END = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_END = LocalDate.now(ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_END = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_END = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     private static final Integer DEFAULT_LIMIT = 1;
     private static final Integer UPDATED_LIMIT = 2;
@@ -287,8 +290,8 @@ public class EventResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(event.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].start").value(hasItem(DEFAULT_START.toString())))
-            .andExpect(jsonPath("$.[*].end").value(hasItem(DEFAULT_END.toString())))
+            .andExpect(jsonPath("$.[*].start").value(hasItem(sameInstant(DEFAULT_START))))
+            .andExpect(jsonPath("$.[*].end").value(hasItem(sameInstant(DEFAULT_END))))
             .andExpect(jsonPath("$.[*].limit").value(hasItem(DEFAULT_LIMIT)))
             .andExpect(jsonPath("$.[*].streamLink").value(hasItem(DEFAULT_STREAM_LINK)))
             .andExpect(jsonPath("$.[*].streamLinkType").value(hasItem(DEFAULT_STREAM_LINK_TYPE.toString())))
@@ -327,8 +330,8 @@ public class EventResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(event.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.start").value(DEFAULT_START.toString()))
-            .andExpect(jsonPath("$.end").value(DEFAULT_END.toString()))
+            .andExpect(jsonPath("$.start").value(sameInstant(DEFAULT_START)))
+            .andExpect(jsonPath("$.end").value(sameInstant(DEFAULT_END)))
             .andExpect(jsonPath("$.limit").value(DEFAULT_LIMIT))
             .andExpect(jsonPath("$.streamLink").value(DEFAULT_STREAM_LINK))
             .andExpect(jsonPath("$.streamLinkType").value(DEFAULT_STREAM_LINK_TYPE.toString()))

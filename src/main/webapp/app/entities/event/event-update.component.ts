@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import * as moment from 'moment';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IEvent, Event } from 'app/shared/model/event.model';
 import { EventService } from './event.service';
@@ -22,8 +23,6 @@ export class EventUpdateComponent implements OnInit {
   isSaving = false;
   applicationusers: IApplicationUser[] = [];
   activities: IActivity[] = [];
-  startDp: any;
-  endDp: any;
 
   editForm = this.fb.group({
     id: [],
@@ -49,6 +48,12 @@ export class EventUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ event }) => {
+      if (!event.id) {
+        const today = moment().startOf('day');
+        event.start = today;
+        event.end = today;
+      }
+
       this.updateForm(event);
 
       this.applicationUserService.query().subscribe((res: HttpResponse<IApplicationUser[]>) => (this.applicationusers = res.body || []));
@@ -61,8 +66,8 @@ export class EventUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: event.id,
       name: event.name,
-      start: event.start,
-      end: event.end,
+      start: event.start ? event.start.format(DATE_TIME_FORMAT) : null,
+      end: event.end ? event.end.format(DATE_TIME_FORMAT) : null,
       limit: event.limit,
       streamLink: event.streamLink,
       streamLinkType: event.streamLinkType,
@@ -92,8 +97,8 @@ export class EventUpdateComponent implements OnInit {
       ...new Event(),
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
-      start: this.editForm.get(['start'])!.value,
-      end: this.editForm.get(['end'])!.value,
+      start: this.editForm.get(['start'])!.value ? moment(this.editForm.get(['start'])!.value, DATE_TIME_FORMAT) : undefined,
+      end: this.editForm.get(['end'])!.value ? moment(this.editForm.get(['end'])!.value, DATE_TIME_FORMAT) : undefined,
       limit: this.editForm.get(['limit'])!.value,
       streamLink: this.editForm.get(['streamLink'])!.value,
       streamLinkType: this.editForm.get(['streamLinkType'])!.value,

@@ -61,6 +61,9 @@ public class ApplicationUserResourceIT {
     private static final String DEFAULT_INTRODUCTION = "AAAAAAAAAA";
     private static final String UPDATED_INTRODUCTION = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_TRAINER = false;
+    private static final Boolean UPDATED_IS_TRAINER = true;
+
     @Autowired
     private ApplicationUserRepository applicationUserRepository;
 
@@ -93,7 +96,8 @@ public class ApplicationUserResourceIT {
             .facebookToken(DEFAULT_FACEBOOK_TOKEN)
             .image(DEFAULT_IMAGE)
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
-            .introduction(DEFAULT_INTRODUCTION);
+            .introduction(DEFAULT_INTRODUCTION)
+            .isTrainer(DEFAULT_IS_TRAINER);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -116,7 +120,8 @@ public class ApplicationUserResourceIT {
             .facebookToken(UPDATED_FACEBOOK_TOKEN)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
-            .introduction(UPDATED_INTRODUCTION);
+            .introduction(UPDATED_INTRODUCTION)
+            .isTrainer(UPDATED_IS_TRAINER);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -153,6 +158,7 @@ public class ApplicationUserResourceIT {
         assertThat(testApplicationUser.getImage()).isEqualTo(DEFAULT_IMAGE);
         assertThat(testApplicationUser.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testApplicationUser.getIntroduction()).isEqualTo(DEFAULT_INTRODUCTION);
+        assertThat(testApplicationUser.isIsTrainer()).isEqualTo(DEFAULT_IS_TRAINER);
     }
 
     @Test
@@ -198,6 +204,26 @@ public class ApplicationUserResourceIT {
 
     @Test
     @Transactional
+    public void checkIsTrainerIsRequired() throws Exception {
+        int databaseSizeBeforeTest = applicationUserRepository.findAll().size();
+        // set the field null
+        applicationUser.setIsTrainer(null);
+
+        // Create the ApplicationUser, which fails.
+        ApplicationUserDTO applicationUserDTO = applicationUserMapper.toDto(applicationUser);
+
+
+        restApplicationUserMockMvc.perform(post("/api/application-users").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(applicationUserDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<ApplicationUser> applicationUserList = applicationUserRepository.findAll();
+        assertThat(applicationUserList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllApplicationUsers() throws Exception {
         // Initialize the database
         applicationUserRepository.saveAndFlush(applicationUser);
@@ -214,7 +240,8 @@ public class ApplicationUserResourceIT {
             .andExpect(jsonPath("$.[*].facebookToken").value(hasItem(DEFAULT_FACEBOOK_TOKEN)))
             .andExpect(jsonPath("$.[*].imageContentType").value(hasItem(DEFAULT_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
-            .andExpect(jsonPath("$.[*].introduction").value(hasItem(DEFAULT_INTRODUCTION)));
+            .andExpect(jsonPath("$.[*].introduction").value(hasItem(DEFAULT_INTRODUCTION)))
+            .andExpect(jsonPath("$.[*].isTrainer").value(hasItem(DEFAULT_IS_TRAINER.booleanValue())));
     }
     
     @Test
@@ -235,7 +262,8 @@ public class ApplicationUserResourceIT {
             .andExpect(jsonPath("$.facebookToken").value(DEFAULT_FACEBOOK_TOKEN))
             .andExpect(jsonPath("$.imageContentType").value(DEFAULT_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
-            .andExpect(jsonPath("$.introduction").value(DEFAULT_INTRODUCTION));
+            .andExpect(jsonPath("$.introduction").value(DEFAULT_INTRODUCTION))
+            .andExpect(jsonPath("$.isTrainer").value(DEFAULT_IS_TRAINER.booleanValue()));
     }
     @Test
     @Transactional
@@ -265,7 +293,8 @@ public class ApplicationUserResourceIT {
             .facebookToken(UPDATED_FACEBOOK_TOKEN)
             .image(UPDATED_IMAGE)
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
-            .introduction(UPDATED_INTRODUCTION);
+            .introduction(UPDATED_INTRODUCTION)
+            .isTrainer(UPDATED_IS_TRAINER);
         ApplicationUserDTO applicationUserDTO = applicationUserMapper.toDto(updatedApplicationUser);
 
         restApplicationUserMockMvc.perform(put("/api/application-users").with(csrf())
@@ -285,6 +314,7 @@ public class ApplicationUserResourceIT {
         assertThat(testApplicationUser.getImage()).isEqualTo(UPDATED_IMAGE);
         assertThat(testApplicationUser.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testApplicationUser.getIntroduction()).isEqualTo(UPDATED_INTRODUCTION);
+        assertThat(testApplicationUser.isIsTrainer()).isEqualTo(UPDATED_IS_TRAINER);
     }
 
     @Test

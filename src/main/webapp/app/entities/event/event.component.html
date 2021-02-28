@@ -40,8 +40,8 @@
                 <tr *ngFor="let event of events ;trackBy: trackId">
                     <td><a [routerLink]="['/event', event.id, 'view']">{{ event.id }}</a></td>
                     <td>{{ event.name }}</td>
-                    <td>{{ event.start | date:'mediumDate' }}</td>
-                    <td>{{ event.end | date:'mediumDate' }}</td>
+                    <td>{{ event.start | date:'medium' }}</td>
+                    <td>{{ event.end | date:'medium' }}</td>
                     <td>{{ event.limit }}</td>
                     <td>{{ event.streamLink }}</td>
                     <td>{{ event.streamLinkType }}</td>

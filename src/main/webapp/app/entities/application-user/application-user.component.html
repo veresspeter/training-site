@@ -30,6 +30,7 @@
                     <th scope="col" ><span>Facebook Token</span></th>
                     <th scope="col" ><span>Image</span></th>
                     <th scope="col" ><span>Introduction</span></th>
+                    <th scope="col" ><span>Is Trainer</span></th>
                     <th scope="col" ><span>Internal User</span></th>
                     <th scope="col"></th>
                 </tr>
@@ -49,6 +50,7 @@
                         <span *ngIf="applicationUser.image">{{ applicationUser.imageContentType }}, {{ byteSize(applicationUser.image) }}</span>
                     </td>
                     <td>{{ applicationUser.introduction }}</td>
+                    <td>{{ applicationUser.isTrainer }}</td>
                     <td>
                         {{ applicationUser.internalUserId }}
                     </td>

@@ -30,6 +30,9 @@ public class ApplicationUserDTO implements Serializable {
     private String imageContentType;
     private String introduction;
 
+    @NotNull
+    private Boolean isTrainer;
+
 
     private Long internalUserId;
     
@@ -105,6 +108,14 @@ public class ApplicationUserDTO implements Serializable {
         this.introduction = introduction;
     }
 
+    public Boolean isIsTrainer() {
+        return isTrainer;
+    }
+
+    public void setIsTrainer(Boolean isTrainer) {
+        this.isTrainer = isTrainer;
+    }
+
     public Long getInternalUserId() {
         return internalUserId;
     }
@@ -142,6 +153,7 @@ public class ApplicationUserDTO implements Serializable {
             ", facebookToken='" + getFacebookToken() + "'" +
             ", image='" + getImage() + "'" +
             ", introduction='" + getIntroduction() + "'" +
+            ", isTrainer='" + isIsTrainer() + "'" +
             ", internalUserId=" + getInternalUserId() +
             "}";
     }

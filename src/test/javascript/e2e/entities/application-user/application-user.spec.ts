@@ -68,6 +68,14 @@ describe('ApplicationUser e2e test', () => {
         expect(await applicationUserUpdatePage.getFacebookTokenInput()).to.eq('facebookToken', 'Expected FacebookToken value to be equals to facebookToken');
         expect(await applicationUserUpdatePage.getImageInput()).to.endsWith(fileNameToUpload, 'Expected Image value to be end with ' + fileNameToUpload);
         expect(await applicationUserUpdatePage.getIntroductionInput()).to.eq('introduction', 'Expected Introduction value to be equals to introduction');
+        const selectedIsTrainer = applicationUserUpdatePage.getIsTrainerInput();
+        if (await selectedIsTrainer.isSelected()) {
+            await applicationUserUpdatePage.getIsTrainerInput().click();
+            expect(await applicationUserUpdatePage.getIsTrainerInput().isSelected(), 'Expected isTrainer not to be selected').to.be.false;
+        } else {
+            await applicationUserUpdatePage.getIsTrainerInput().click();
+            expect(await applicationUserUpdatePage.getIsTrainerInput().isSelected(), 'Expected isTrainer to be selected').to.be.true;
+        }
 
         await applicationUserUpdatePage.save();
         expect(await applicationUserUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;

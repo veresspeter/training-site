@@ -12,6 +12,7 @@ export interface IApplicationUser {
   imageContentType?: string;
   image?: any;
   introduction?: string;
+  isTrainer?: boolean;
   internalUserId?: number;
   events?: IEvent[];
 }
@@ -27,7 +28,10 @@ export class ApplicationUser implements IApplicationUser {
     public imageContentType?: string,
     public image?: any,
     public introduction?: string,
+    public isTrainer?: boolean,
     public internalUserId?: number,
     public events?: IEvent[]
-  ) {}
+  ) {
+    this.isTrainer = this.isTrainer || false;
+  }
 }

@@ -1,6 +1,6 @@
 package hu.redriver.service.dto;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,10 +18,10 @@ public class EventDTO implements Serializable {
     private String name;
 
     @NotNull
-    private LocalDate start;
+    private ZonedDateTime start;
 
     @NotNull
-    private LocalDate end;
+    private ZonedDateTime end;
 
     private Integer limit;
 
@@ -53,19 +53,19 @@ public class EventDTO implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(ZonedDateTime start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public ZonedDateTime getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(ZonedDateTime end) {
         this.end = end;
     }
 

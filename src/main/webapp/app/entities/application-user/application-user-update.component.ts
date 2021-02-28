@@ -31,6 +31,7 @@ export class ApplicationUserUpdateComponent implements OnInit {
     image: [],
     imageContentType: [],
     introduction: [],
+    isTrainer: [null, [Validators.required]],
     internalUserId: [null, Validators.required],
   });
 
@@ -63,6 +64,7 @@ export class ApplicationUserUpdateComponent implements OnInit {
       image: applicationUser.image,
       imageContentType: applicationUser.imageContentType,
       introduction: applicationUser.introduction,
+      isTrainer: applicationUser.isTrainer,
       internalUserId: applicationUser.internalUserId,
     });
   }
@@ -119,6 +121,7 @@ export class ApplicationUserUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       introduction: this.editForm.get(['introduction'])!.value,
+      isTrainer: this.editForm.get(['isTrainer'])!.value,
       internalUserId: this.editForm.get(['internalUserId'])!.value,
     };
   }

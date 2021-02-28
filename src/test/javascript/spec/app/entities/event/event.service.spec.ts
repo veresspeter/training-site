@@ -1,7 +1,7 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as moment from 'moment';
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { EventService } from 'app/entities/event/event.service';
 import { IEvent, Event } from 'app/shared/model/event.model';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
@@ -32,8 +32,8 @@ describe('Service Tests', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            start: currentDate.format(DATE_FORMAT),
-            end: currentDate.format(DATE_FORMAT),
+            start: currentDate.format(DATE_TIME_FORMAT),
+            end: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
@@ -49,8 +49,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             id: 0,
-            start: currentDate.format(DATE_FORMAT),
-            end: currentDate.format(DATE_FORMAT),
+            start: currentDate.format(DATE_TIME_FORMAT),
+            end: currentDate.format(DATE_TIME_FORMAT),
           },
           elemDefault
         );
@@ -74,8 +74,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            start: currentDate.format(DATE_FORMAT),
-            end: currentDate.format(DATE_FORMAT),
+            start: currentDate.format(DATE_TIME_FORMAT),
+            end: currentDate.format(DATE_TIME_FORMAT),
             limit: 1,
             streamLink: 'BBBBBB',
             streamLinkType: 'BBBBBB',
@@ -103,8 +103,8 @@ describe('Service Tests', () => {
         const returnedFromService = Object.assign(
           {
             name: 'BBBBBB',
-            start: currentDate.format(DATE_FORMAT),
-            end: currentDate.format(DATE_FORMAT),
+            start: currentDate.format(DATE_TIME_FORMAT),
+            end: currentDate.format(DATE_TIME_FORMAT),
             limit: 1,
             streamLink: 'BBBBBB',
             streamLinkType: 'BBBBBB',

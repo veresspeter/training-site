@@ -36,6 +36,7 @@ export class ApplicationUserUpdatePage {
   facebookTokenInput = element(by.id('field_facebookToken'));
   imageInput = element(by.id('file_image'));
   introductionInput = element(by.id('field_introduction'));
+  isTrainerInput = element(by.id('field_isTrainer'));
 
   internalUserSelect = element(by.id('field_internalUser'));
 
@@ -101,6 +102,10 @@ export class ApplicationUserUpdatePage {
 
   async getIntroductionInput(): Promise<string> {
     return await this.introductionInput.getAttribute('value');
+  }
+
+  getIsTrainerInput(): ElementFinder {
+    return this.isTrainerInput;
   }
 
   async internalUserSelectLastOption(): Promise<void> {
