@@ -18,10 +18,10 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="start" type="date">
+            <column name="start" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="jhi_end" type="date">
+            <column name="jhi_end" type="datetime">
                 <constraints nullable="false" />
             </column>
             <column name="jhi_limit" type="integer">
@@ -44,6 +44,8 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="event" columnName="start" columnDataType="datetime"/>
+        <dropDefaultValue tableName="event" columnName="jhi_end" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20210208200931-1-relations" author="jhipster">
@@ -77,8 +79,8 @@
                   tableName="event">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>
-            <column name="start" type="date"/>
-            <column name="jhi_end" type="date"/>
+            <column name="start" type="datetime"/>
+            <column name="jhi_end" type="datetime"/>
             <column name="jhi_limit" type="numeric"/>
             <column name="stream_link" type="string"/>
             <column name="stream_link_type" type="string"/>

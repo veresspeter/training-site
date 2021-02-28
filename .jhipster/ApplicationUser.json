@@ -31,6 +31,11 @@
     {
       "fieldName": "introduction",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "isTrainer",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [

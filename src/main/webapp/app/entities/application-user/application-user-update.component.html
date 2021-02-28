@@ -83,6 +83,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" for="field_isTrainer">Is Trainer</label>
+                    <input type="checkbox" class="form-control" name="isTrainer" id="field_isTrainer"
+                           formControlName="isTrainer"/>
+                    <div *ngIf="editForm.get('isTrainer')!.invalid && (editForm.get('isTrainer')!.dirty || editForm.get('isTrainer')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('isTrainer')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" for="field_internalUser">Internal User</label>
                     <select class="form-control" id="field_internalUser" name="internalUser" formControlName="internalUserId">
                         <option *ngIf="!editForm.get('internalUserId')!.value" [ngValue]="null" selected></option>

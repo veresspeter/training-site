@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IEvent } from 'app/shared/model/event.model';
@@ -51,8 +50,8 @@ export class EventService {
 
   protected convertDateFromClient(event: IEvent): IEvent {
     const copy: IEvent = Object.assign({}, event, {
-      start: event.start && event.start.isValid() ? event.start.format(DATE_FORMAT) : undefined,
-      end: event.end && event.end.isValid() ? event.end.format(DATE_FORMAT) : undefined,
+      start: event.start && event.start.isValid() ? event.start.toJSON() : undefined,
+      end: event.end && event.end.isValid() ? event.end.toJSON() : undefined,
     });
     return copy;
   }

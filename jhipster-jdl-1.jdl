@@ -14,6 +14,7 @@ entity ApplicationUser {
   facebookToken String
   image ImageBlob
   introduction String
+  isTrainer Boolean required
 }
 
 relationship ManyToMany {
@@ -41,8 +42,8 @@ enum LinkType {
 
 entity Event {
   name String required
-  start LocalDate required
-  end LocalDate required
+  start ZonedDateTime required
+  end ZonedDateTime required
   limit Integer
   streamLink String
   streamLinkType LinkType

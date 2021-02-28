@@ -8,12 +8,12 @@
     },
     {
       "fieldName": "start",
-      "fieldType": "LocalDate",
+      "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "end",
-      "fieldType": "LocalDate",
+      "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
     },
     {

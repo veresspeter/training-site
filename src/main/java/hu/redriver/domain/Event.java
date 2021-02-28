@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,11 +35,11 @@ public class Event implements Serializable {
 
     @NotNull
     @Column(name = "start", nullable = false)
-    private LocalDate start;
+    private ZonedDateTime start;
 
     @NotNull
     @Column(name = "jhi_end", nullable = false)
-    private LocalDate end;
+    private ZonedDateTime end;
 
     @Column(name = "jhi_limit")
     private Integer limit;
@@ -93,29 +93,29 @@ public class Event implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
 
-    public Event start(LocalDate start) {
+    public Event start(ZonedDateTime start) {
         this.start = start;
         return this;
     }
 
-    public void setStart(LocalDate start) {
+    public void setStart(ZonedDateTime start) {
         this.start = start;
     }
 
-    public LocalDate getEnd() {
+    public ZonedDateTime getEnd() {
         return end;
     }
 
-    public Event end(LocalDate end) {
+    public Event end(ZonedDateTime end) {
         this.end = end;
         return this;
     }
 
-    public void setEnd(LocalDate end) {
+    public void setEnd(ZonedDateTime end) {
         this.end = end;
     }
 

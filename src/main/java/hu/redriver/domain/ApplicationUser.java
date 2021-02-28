@@ -56,6 +56,10 @@ public class ApplicationUser implements Serializable {
     @Column(name = "introduction")
     private String introduction;
 
+    @NotNull
+    @Column(name = "is_trainer", nullable = false)
+    private Boolean isTrainer;
+
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
@@ -179,6 +183,19 @@ public class ApplicationUser implements Serializable {
         this.introduction = introduction;
     }
 
+    public Boolean isIsTrainer() {
+        return isTrainer;
+    }
+
+    public ApplicationUser isTrainer(Boolean isTrainer) {
+        this.isTrainer = isTrainer;
+        return this;
+    }
+
+    public void setIsTrainer(Boolean isTrainer) {
+        this.isTrainer = isTrainer;
+    }
+
     public User getInternalUser() {
         return internalUser;
     }
@@ -247,6 +264,7 @@ public class ApplicationUser implements Serializable {
             ", image='" + getImage() + "'" +
             ", imageContentType='" + getImageContentType() + "'" +
             ", introduction='" + getIntroduction() + "'" +
+            ", isTrainer='" + isIsTrainer() + "'" +
             "}";
     }
 }

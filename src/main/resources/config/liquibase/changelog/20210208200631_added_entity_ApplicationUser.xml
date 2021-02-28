@@ -39,6 +39,9 @@
             <column name="introduction" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="is_trainer" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <column name="internal_user_id" type="bigint">
                 <constraints unique="true" nullable="false" uniqueConstraintName="ux_application_user_internal_user_id" />
             </column>
@@ -73,6 +76,7 @@
             <column name="image" type="blob"/>
             <column name="image_content_type" type="string"/>
             <column name="introduction" type="string"/>
+            <column name="is_trainer" type="boolean"/>
             <column name="internal_user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
