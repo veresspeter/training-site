@@ -3,7 +3,7 @@
 </button>
 
 <ul class="row justify-content-center align-items-center">
-    <li class="col-12 col-md-6 col-xl-4" *ngFor="let activityType of activityTypes; trackBy: trackId">
+    <li class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let activityType of activityTypes; trackBy: trackId">
         <div class="card mx-md-3">
             <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
                 <button type="submit" class="btn btn-icon btn-primary"

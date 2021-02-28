@@ -128,6 +128,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/activities").permitAll()
             .antMatchers("/api/activity-types").permitAll()
             .antMatchers("/api/activity-types/{id}").permitAll()
+            .antMatchers("/api/events").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/websocket/**").permitAll()

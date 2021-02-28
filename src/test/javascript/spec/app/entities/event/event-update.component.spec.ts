@@ -4,8 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { EventUpdateComponent } from 'app/entities/event/event-update.component';
-import { EventService } from 'app/entities/event/event.service';
+import { EventUpdateComponent } from 'app/calendar/event-update/event-update.component';
+import { EventService } from 'app/shared/services/event.service';
 import { Event } from 'app/shared/model/event.model';
 
 describe('Component Tests', () => {

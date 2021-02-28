@@ -73,6 +73,13 @@ public class ApplicationUserService {
             .map(applicationUserMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<ApplicationUserDTO> findOneByInternalUserId(Long id) {
+        log.debug("Request to get ApplicationUser by internalUserId : {}", id);
+        return applicationUserRepository.findByInternalUserId(id)
+            .map(applicationUserMapper::toDto);
+    }
+
     /**
      * Delete the applicationUser by id.
      *

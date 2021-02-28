@@ -1,20 +1,31 @@
 package hu.redriver.service;
 
+import hu.redriver.domain.ApplicationUser;
 import hu.redriver.domain.Event;
 import hu.redriver.repository.EventRepository;
+import hu.redriver.service.dto.ApplicationUserDTO;
 import hu.redriver.service.dto.EventDTO;
 import hu.redriver.service.mapper.EventMapper;
+import hu.redriver.web.utils.CustomHeaderUtil;
+import io.undertow.util.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.el.LambdaExpression;
+import javax.persistence.EntityNotFoundException;
+import java.io.NotActiveException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -26,13 +37,19 @@ public class EventService {
 
     private final Logger log = LoggerFactory.getLogger(EventService.class);
 
+    @Value("${jhipster.clientApp.name}")
+    private String applicationName;
+
     private final EventRepository eventRepository;
-
     private final EventMapper eventMapper;
+    private final UserService userService;
+    private final ApplicationUserService applicationUserService;
 
-    public EventService(EventRepository eventRepository, EventMapper eventMapper) {
+    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, ApplicationUserService applicationUserService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.userService = userService;
+        this.applicationUserService = applicationUserService;
     }
 
     /**
@@ -92,5 +109,38 @@ public class EventService {
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
         eventRepository.deleteById(id);
+    }
+
+    public void join(Long id) throws BadRequestException {
+        log.debug("Request to join Event : {}", id);
+        EventDTO eventDTO = findOne(id).orElseThrow(getNotFoundException());
+
+        if (eventDTO.getLimit() != null && eventDTO.getLimit().compareTo(eventDTO.getParticipants().size() + 1) < 0) {
+            throw new BadRequestException();
+        }
+
+        eventDTO.getParticipants().add(getCurrentAppUser());
+        save(eventDTO);
+    }
+
+    public void quit(Long id) {
+        log.debug("Request to quit Event : {}", id);
+        EventDTO eventDTO = findOne(id).orElseThrow(getNotFoundException());
+        eventDTO.getParticipants().remove(getCurrentAppUser());
+        save(eventDTO);
+    }
+
+    private ApplicationUserDTO getCurrentAppUser() {
+        return applicationUserService.findOneByInternalUserId(
+            userService.getUserWithAuthorities()
+                .orElseThrow(getNotFoundException())
+                .getId()
+        ).orElseThrow(getNotFoundException());
+    }
+
+    private Supplier getNotFoundException() {
+        return () -> {
+            throw new EntityNotFoundException();
+        };
     }
 }

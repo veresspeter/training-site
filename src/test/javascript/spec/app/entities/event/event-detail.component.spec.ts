@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { EventDetailComponent } from 'app/entities/event/event-detail.component';
+import { EventDetailComponent } from 'app/calendar/event-detail/event-detail.component';
 import { Event } from 'app/shared/model/event.model';
 
 describe('Component Tests', () => {

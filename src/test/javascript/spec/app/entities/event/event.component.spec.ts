@@ -3,8 +3,8 @@ import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { EventComponent } from 'app/entities/event/event.component';
-import { EventService } from 'app/entities/event/event.service';
+import { EventComponent } from 'app/calendar/event.component';
+import { EventService } from 'app/shared/services/event.service';
 import { Event } from 'app/shared/model/event.model';
 
 describe('Component Tests', () => {
