@@ -15,6 +15,8 @@ ZoomMtg.prepareJssdk();
   styleUrls: ['event-detail.component.scss'],
 })
 export class EventDetailComponent implements OnInit, OnDestroy {
+  zoomMtg = document.getElementById('zmmtg-root');
+
   event: IEvent | null = null;
   inMeeting = false;
 
@@ -22,13 +24,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   signatureEndpoint = 'http://maxmove.hu';
   apiKey = 'DScn7swaQOKOGka9DZKYBg';
   secret = 'd7rh0zJXPZMcYqdhyGN0DeodLusHvFJNxxpi';
-  meetingNumber = '92614439105';
   role = '0';
   leaveUrl = 'calendar';
   userName = 'felhasználónév';
   email = '';
-  password = 'maxmovepsw';
-  zoomMtg = document.getElementById('zmmtg-root');
+  roomNumber = '';
+  password = '';
 
   constructor(protected activatedRoute: ActivatedRoute, protected accountService: AccountService) {}
 
@@ -47,20 +48,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   initializeCall(): void {
-    if (this.event?.streamLink?.split('/').pop()?.split('?') === undefined) {
-      this.inMeeting = false;
-      return;
-    }
-    const meetingNo = this.event.streamLink.split('/').pop()?.split('?').shift();
-
-    if (meetingNo === undefined) {
-      this.inMeeting = false;
+    if (this.event === null || this.event.zoomRoomNo === undefined) {
       return;
     }
 
-    this.meetingNumber = meetingNo;
     this.signature = ZoomMtg.generateSignature({
-      meetingNumber: meetingNo,
+      meetingNumber: this.event.zoomRoomNo,
       apiKey: this.apiKey,
       apiSecret: this.secret,
       role: this.role,
@@ -74,13 +67,20 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   joinMeeting(): void {
     this.inMeeting = true;
 
+    if (this.event === null || this.event.zoomRoomNo === undefined || this.event.zoomRoomPsw === undefined) {
+      this.inMeeting = false;
+      return;
+    }
+    this.roomNumber = this.event.zoomRoomNo;
+    this.password = this.event.zoomRoomPsw;
+
     ZoomMtg.init({
       leaveUrl: this.leaveUrl,
       isSupportAV: true,
       success: () => {
         ZoomMtg.join({
           signature: this.signature,
-          meetingNumber: this.meetingNumber,
+          meetingNumber: this.roomNumber,
           userName: this.userName,
           apiKey: this.apiKey,
           userEmail: this.email,

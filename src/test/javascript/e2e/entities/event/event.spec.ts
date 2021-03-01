@@ -51,6 +51,9 @@ describe('Event e2e test', () => {
             eventUpdatePage.setLimitInput('5'),
             eventUpdatePage.setStreamLinkInput('streamLink'),
             eventUpdatePage.streamLinkTypeSelectLastOption(),
+            eventUpdatePage.setZoomRoomNoInput('zoomRoomNo'),
+            eventUpdatePage.setZoomRoomPswInput('zoomRoomPsw'),
+            eventUpdatePage.setZoomStartLinkInput('zoomStartLink'),
             eventUpdatePage.setCommentInput('comment'),
             eventUpdatePage.organizerSelectLastOption(),
             eventUpdatePage.activitySelectLastOption(),
@@ -62,6 +65,9 @@ describe('Event e2e test', () => {
         expect(await eventUpdatePage.getEndInput()).to.contain('2001-01-01T02:30', 'Expected end value to be equals to 2000-12-31');
         expect(await eventUpdatePage.getLimitInput()).to.eq('5', 'Expected limit value to be equals to 5');
         expect(await eventUpdatePage.getStreamLinkInput()).to.eq('streamLink', 'Expected StreamLink value to be equals to streamLink');
+        expect(await eventUpdatePage.getZoomRoomNoInput()).to.eq('zoomRoomNo', 'Expected ZoomRoomNo value to be equals to zoomRoomNo');
+        expect(await eventUpdatePage.getZoomRoomPswInput()).to.eq('zoomRoomPsw', 'Expected ZoomRoomPsw value to be equals to zoomRoomPsw');
+        expect(await eventUpdatePage.getZoomStartLinkInput()).to.eq('zoomStartLink', 'Expected ZoomStartLink value to be equals to zoomStartLink');
         expect(await eventUpdatePage.getCommentInput()).to.eq('comment', 'Expected Comment value to be equals to comment');
 
         await eventUpdatePage.save();

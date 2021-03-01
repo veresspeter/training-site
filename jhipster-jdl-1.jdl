@@ -47,6 +47,9 @@ entity Event {
   limit Integer
   streamLink String
   streamLinkType LinkType
+  ZoomRoomNo String
+  ZoomRoomPsw String
+  ZoomStartLink String
   comment String
 }
 

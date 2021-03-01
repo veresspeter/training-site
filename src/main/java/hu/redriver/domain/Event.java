@@ -51,6 +51,15 @@ public class Event implements Serializable {
     @Column(name = "stream_link_type")
     private LinkType streamLinkType;
 
+    @Column(name = "zoom_room_no")
+    private String zoomRoomNo;
+
+    @Column(name = "zoom_room_psw")
+    private String zoomRoomPsw;
+
+    @Column(name = "zoom_start_link")
+    private String zoomStartLink;
+
     @Column(name = "comment")
     private String comment;
 
@@ -158,6 +167,45 @@ public class Event implements Serializable {
         this.streamLinkType = streamLinkType;
     }
 
+    public String getZoomRoomNo() {
+        return zoomRoomNo;
+    }
+
+    public Event zoomRoomNo(String zoomRoomNo) {
+        this.zoomRoomNo = zoomRoomNo;
+        return this;
+    }
+
+    public void setZoomRoomNo(String zoomRoomNo) {
+        this.zoomRoomNo = zoomRoomNo;
+    }
+
+    public String getZoomRoomPsw() {
+        return zoomRoomPsw;
+    }
+
+    public Event zoomRoomPsw(String zoomRoomPsw) {
+        this.zoomRoomPsw = zoomRoomPsw;
+        return this;
+    }
+
+    public void setZoomRoomPsw(String zoomRoomPsw) {
+        this.zoomRoomPsw = zoomRoomPsw;
+    }
+
+    public String getZoomStartLink() {
+        return zoomStartLink;
+    }
+
+    public Event zoomStartLink(String zoomStartLink) {
+        this.zoomStartLink = zoomStartLink;
+        return this;
+    }
+
+    public void setZoomStartLink(String zoomStartLink) {
+        this.zoomStartLink = zoomStartLink;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -250,6 +298,9 @@ public class Event implements Serializable {
             ", limit=" + getLimit() +
             ", streamLink='" + getStreamLink() + "'" +
             ", streamLinkType='" + getStreamLinkType() + "'" +
+            ", zoomRoomNo='" + getZoomRoomNo() + "'" +
+            ", zoomRoomPsw='" + getZoomRoomPsw() + "'" +
+            ", zoomStartLink='" + getZoomStartLink() + "'" +
             ", comment='" + getComment() + "'" +
             "}";
     }

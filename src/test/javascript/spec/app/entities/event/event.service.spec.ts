@@ -25,7 +25,19 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Event(0, 'AAAAAAA', currentDate, currentDate, 0, 'AAAAAAA', LinkType.ZOOM, 'AAAAAAA');
+      elemDefault = new Event(
+        0,
+        'AAAAAAA',
+        currentDate,
+        currentDate,
+        0,
+        'AAAAAAA',
+        LinkType.ZOOM,
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA',
+        'AAAAAAA'
+      );
     });
 
     describe('Service methods', () => {
@@ -79,6 +91,9 @@ describe('Service Tests', () => {
             limit: 1,
             streamLink: 'BBBBBB',
             streamLinkType: 'BBBBBB',
+            zoomRoomNo: 'BBBBBB',
+            zoomRoomPsw: 'BBBBBB',
+            zoomStartLink: 'BBBBBB',
             comment: 'BBBBBB',
           },
           elemDefault
@@ -108,6 +123,9 @@ describe('Service Tests', () => {
             limit: 1,
             streamLink: 'BBBBBB',
             streamLinkType: 'BBBBBB',
+            zoomRoomNo: 'BBBBBB',
+            zoomRoomPsw: 'BBBBBB',
+            zoomStartLink: 'BBBBBB',
             comment: 'BBBBBB',
           },
           elemDefault

@@ -29,6 +29,12 @@ public class EventDTO implements Serializable {
 
     private LinkType streamLinkType;
 
+    private String zoomRoomNo;
+
+    private String zoomRoomPsw;
+
+    private String zoomStartLink;
+
     private String comment;
 
 
@@ -93,6 +99,30 @@ public class EventDTO implements Serializable {
         this.streamLinkType = streamLinkType;
     }
 
+    public String getZoomRoomNo() {
+        return zoomRoomNo;
+    }
+
+    public void setZoomRoomNo(String zoomRoomNo) {
+        this.zoomRoomNo = zoomRoomNo;
+    }
+
+    public String getZoomRoomPsw() {
+        return zoomRoomPsw;
+    }
+
+    public void setZoomRoomPsw(String zoomRoomPsw) {
+        this.zoomRoomPsw = zoomRoomPsw;
+    }
+
+    public String getZoomStartLink() {
+        return zoomStartLink;
+    }
+
+    public void setZoomStartLink(String zoomStartLink) {
+        this.zoomStartLink = zoomStartLink;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -153,6 +183,9 @@ public class EventDTO implements Serializable {
             ", limit=" + getLimit() +
             ", streamLink='" + getStreamLink() + "'" +
             ", streamLinkType='" + getStreamLinkType() + "'" +
+            ", zoomRoomNo='" + getZoomRoomNo() + "'" +
+            ", zoomRoomPsw='" + getZoomRoomPsw() + "'" +
+            ", zoomStartLink='" + getZoomStartLink() + "'" +
             ", comment='" + getComment() + "'" +
             ", organizerId=" + getOrganizer() +
             ", activityId=" + getActivityId() +
