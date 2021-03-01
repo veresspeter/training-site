@@ -4,8 +4,10 @@ import hu.redriver.service.EventService;
 import hu.redriver.web.rest.errors.BadRequestAlertException;
 import hu.redriver.service.dto.EventDTO;
 
+import hu.redriver.web.utils.CustomHeaderUtil;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.undertow.util.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -114,5 +116,23 @@ public class EventResource {
         log.debug("REST request to delete Event : {}", id);
         eventService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
+    }
+
+    @PutMapping("/events/{id}/join")
+    public ResponseEntity<Void> joinEvent(@PathVariable Long id) {
+        log.debug("REST request to join Event : {}", id);
+        try {
+            eventService.join(id);
+            return ResponseEntity.ok().build();
+        } catch (BadRequestException e) {
+            return ResponseEntity.badRequest().headers(CustomHeaderUtil.createCustomFailureAlert(applicationName, ENTITY_NAME, "Az eseményre a helyek beteltek")).build();
+        }
+    }
+
+    @PutMapping("/events/{id}/quit")
+    public ResponseEntity<Void> quitEvent(@PathVariable Long id) {
+        log.debug("REST request to quit Event : {}", id);
+        eventService.quit(id);
+        return ResponseEntity.ok().build();
     }
 }

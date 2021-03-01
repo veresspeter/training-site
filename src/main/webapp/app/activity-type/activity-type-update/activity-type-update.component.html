@@ -1,18 +1,11 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-activity-type-heading">Create or edit a Activity Type</h2>
+    <div class="col-8 card">
+        <form name="editForm" role="form" class="card-body" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-activity-type-heading">Foglalkozás típus létrehozása vagy szerkesztése</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
-
+            <div class="my-4">
                 <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
+                    <label class="form-control-label" for="field_name">Név</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
                     <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
@@ -24,13 +17,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_image">Image</label>
+                    <label class="form-control-label" for="field_image">Kép</label>
                     <div>
                         <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value" style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="activityType image"/>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
                             <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')" class="btn btn-secondary btn-xs pull-right">
-                                <fa-icon icon="times"></fa-icon>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')" class="btn btn-icon btn-danger btn-xs pull-right">
+                                <fa-icon icon="trash"></fa-icon>
                             </button>
                         </div>
                         <input type="file" id="file_image" (change)="setFileData($event, 'image', true)" accept="image/*"/>
@@ -48,13 +41,13 @@
                 </div>
             </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+            <div class="text-right">
+                <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
+                    Mégse
                 </button>
 
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                    Mentés
                 </button>
             </div>
         </form>

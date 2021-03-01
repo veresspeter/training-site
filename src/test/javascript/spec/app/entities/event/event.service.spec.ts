@@ -2,7 +2,7 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { EventService } from 'app/entities/event/event.service';
+import { EventService } from 'app/shared/services/event.service';
 import { IEvent, Event } from 'app/shared/model/event.model';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 

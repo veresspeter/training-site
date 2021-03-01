@@ -10,7 +10,7 @@ import hu.redriver.domain.enumeration.Sex;
  * A DTO for the {@link hu.redriver.domain.ApplicationUser} entity.
  */
 public class ApplicationUserDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -33,9 +33,8 @@ public class ApplicationUserDTO implements Serializable {
     @NotNull
     private Boolean isTrainer;
 
-
     private Long internalUserId;
-    
+
     public Long getId() {
         return id;
     }

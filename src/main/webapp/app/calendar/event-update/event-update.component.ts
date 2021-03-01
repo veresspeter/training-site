@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IEvent, Event } from 'app/shared/model/event.model';
-import { EventService } from './event.service';
+import { EventService } from '../../shared/services/event.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
@@ -70,7 +70,7 @@ export class EventUpdateComponent implements OnInit {
       end: event.end ? event.end.format(DATE_TIME_FORMAT) : null,
       limit: event.limit,
       streamLink: event.streamLink,
-      streamLinkType: event.streamLinkType,
+      streamLinkType: event.streamLinkType || 'ZOOM',
       comment: event.comment,
       organizerId: event.organizerId,
       activityId: event.activityId,

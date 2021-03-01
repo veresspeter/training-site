@@ -1,144 +1,146 @@
-<div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1>Registration</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8 card">
+        <div class="card-body">
+            <div>
+                <h1>Regisztráció</h1>
 
-            <div class="alert alert-success" *ngIf="success">
-                <strong>Registration saved!</strong> Please check your email for confirmation.
+                <div class="alert alert-success" *ngIf="success">
+                    <strong>Sikeres regisztráció!</strong> Az aktiváló emailt hamarosan a beérkező leveleid között
+                    találod.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="error">
+                    <strong>Sikertelen regisztráció!</strong> Próbáld újra később.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="errorUserExists">
+                    <strong>A felhasználó név foglalt!</strong> Válassz egy másikat.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="errorEmailExists">
+                    <strong>Ezzel az email címmel már regisztráltak!</strong> Válassz egy másikat.
+                </div>
+
+                <div class="alert alert-danger" *ngIf="doNotMatch">
+                    A jelszó és megerősítése nem egyezik.
+                </div>
             </div>
 
-            <div class="alert alert-danger" *ngIf="error">
-                <strong>Registration failed!</strong> Please try again later.
-            </div>
+            <div>
+                <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
+                    <div class="form-group">
+                        <label class="form-control-label" for="login">Felhasználónév</label>
+                        <input type="text" class="form-control" id="login" name="login"
+                               placeholder="felhasználóneved helye"
+                               formControlName="login" #login>
 
-            <div class="alert alert-danger" *ngIf="errorUserExists">
-                <strong>Login name already registered!</strong> Please choose another one.
-            </div>
+                        <div
+                            *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('login')?.errors?.required">
+                                Mező kitöltése kötelező
+                            </small>
 
-            <div class="alert alert-danger" *ngIf="errorEmailExists">
-                <strong>Email is already in use!</strong> Please choose another one.
-            </div>
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('login')?.errors?.minlength">
+                                A mező minimum 1 karakter hosszú lehezt
+                            </small>
 
-            <div class="alert alert-danger" *ngIf="doNotMatch">
-                The password and its confirmation do not match!
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('login')?.errors?.maxlength">
+                                A mező maximum 50 karakter hosszú lehezt
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('login')?.errors?.pattern">
+                                A mező csak betűket és számokat tartalmazhat
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="email címed"
+                               formControlName="email">
+
+                        <div
+                            *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('email')?.errors?.required">
+                                Mező kitöltése kötelező
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('email')?.errors?.invalid">
+                                A megadott email cím nem helyes
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('email')?.errors?.minlength">
+                                A mező minimum 5 karakter hosszú lehet
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('email')?.errors?.maxlength">
+                                A mező maximum 100 karakter hosszú lehet
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="password">Új jelszó</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="jelszavad helye" formControlName="password">
+
+                        <div *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('password')?.errors?.required">
+                                Mező kitöltése kötelező
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('password')?.errors?.minlength">
+                                A mező minimum 4 karakter hosszú lehet
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('password')?.errors?.maxlength">
+                                A mező maximum 50 karakter hosszú lehet
+                            </small>
+                        </div>
+
+                        <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label" for="confirmPassword">Új jelszó megerősítése</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                               placeholder="jelszavad helye"
+                               formControlName="confirmPassword">
+
+                        <div
+                            *ngIf="registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('confirmPassword')?.errors?.required">
+                                Mező kitöltése kötelező
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('confirmPassword')?.errors?.minlength">
+                                A mező minimum 4 karakter hosszú lehet
+                            </small>
+
+                            <small class="form-text text-danger"
+                                   *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength">
+                                A mező maximum 50 karakter hosszú lehet
+                            </small>
+                        </div>
+                    </div>
+
+                    <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Regisztráció</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
-                <div class="form-group">
-                    <label class="form-control-label" for="login">Username</label>
-                    <input type="text" class="form-control" id="login" name="login" placeholder="Your username"
-                           formControlName="login" #login>
-
-                    <div *ngIf="registerForm.get('login')!.invalid && (registerForm.get('login')!.dirty || registerForm.get('login')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('login')?.errors?.required">
-                            Your username is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('login')?.errors?.minlength">
-                            Your username is required to be at least 1 character.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('login')?.errors?.maxlength">
-                            Your username cannot be longer than 50 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('login')?.errors?.pattern">
-                            Your username can only contain letters and digits.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Your email"
-                             formControlName="email">
-
-                    <div *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('email')?.errors?.required">
-                            Your email is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('email')?.errors?.invalid">
-                            Your email is invalid.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('email')?.errors?.minlength">
-                            Your email is required to be at least 5 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('email')?.errors?.maxlength">
-                            Your email cannot be longer than 100 characters.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="password">New password</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="New password"
-                            formControlName="password">
-
-                    <div *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('password')?.errors?.required">
-                            Your password is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('password')?.errors?.minlength">
-                            Your password is required to be at least 4 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('password')?.errors?.maxlength">
-                            Your password cannot be longer than 50 characters.
-                        </small>
-                    </div>
-
-                    <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="confirmPassword">New password confirmation</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm the new password"
-                            formControlName="confirmPassword">
-
-                    <div *ngIf="registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('confirmPassword')?.errors?.required">
-                            Your confirmation password is required.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('confirmPassword')?.errors?.minlength">
-                            Your confirmation password is required to be at least 4 characters.
-                        </small>
-
-                        <small class="form-text text-danger"
-                               *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength">
-                            Your confirmation password cannot be longer than 50 characters.
-                        </small>
-                    </div>
-                </div>
-
-                <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Register</button>
-            </form>
-
-            <div class="mt-3 alert alert-warning">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-        </div>
-    </div>
 </div>

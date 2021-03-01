@@ -18,4 +18,8 @@ public class CustomHeaderUtil {
         String message = enableTranslation ? applicationName + "." + entityName + ".deleted" : entityName + " sikeresen törölve";
         return HeaderUtil.createAlert(applicationName, message, id);
     }
+
+    public static HttpHeaders createCustomFailureAlert(String applicationName, String entityName, String message) {
+        return HeaderUtil.createFailureAlert(applicationName, false, entityName, null, message);
+    }
 }

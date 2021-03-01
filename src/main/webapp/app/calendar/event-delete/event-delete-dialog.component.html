@@ -1,10 +1,10 @@
-<form *ngIf="activityType" name="deleteForm" (ngSubmit)="confirmDelete(activityType?.id!)">
+<form *ngIf="event" name="deleteForm" (ngSubmit)="confirmDelete(event?.id!)">
     <div class="modal-header">
         <h4 class="modal-title">Törlés megerősítése</h4>
     </div>
 
     <div class="modal-body">
-        <p id="jhi-delete-activityType-heading">Biztosan törölni szeretnéd ezt a foglalkozást?</p>
+        <p id="jhi-delete-activity-heading">Biztosan törölni szeretnéd ezt az eseményt?</p>
     </div>
 
     <div class="modal-footer">
@@ -12,7 +12,7 @@
             Mégse
         </button>
 
-        <button id="jhi-confirm-delete-activityType" type="submit" class="btn btn-danger">
+        <button id="jhi-confirm-delete-event" type="submit" class="btn btn-danger">
             Törlés
         </button>
     </div>

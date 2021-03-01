@@ -10,6 +10,16 @@
 body {
   background-color: $mv-bg;
 
+  jhi-main {
+    .container-fluid {
+      min-height: calc(100vh - 100px);
+
+      .jh-card {
+        min-height: calc(100vh - 140px);
+      }
+    }
+  }
+
   footer {
     margin-top: 6px;
     text-align: center;
@@ -69,4 +79,35 @@ body {
 
 .jh-card {
   background-color: rgba(0, 0, 0, 0);
+}
+
+#zmmtg-root {
+  display: none;
+  z-index: 10000;
+}
+
+#zmmtg-root {
+  @media (min-width: 768px) {
+    margin: 305px calc(25vw + 100px) !important;
+  }
+
+  @media (max-width: 768px) {
+    margin: 305px calc(20% + 100px) !important;
+  }
+}
+
+#zmmtg-root,
+#wc-loading,
+#wc-leave {
+  position: absolute;
+
+  @media (min-width: 768px) {
+    width: calc(50vw - 200px) !important;
+    height: calc(50vw / 16 * 9 - 50px) !important;
+  }
+
+  @media (max-width: 768px) {
+    width: calc(80vw - 200px) !important;
+    height: calc(80vw / 16 * 9 - 50px) !important;
+  }
 }

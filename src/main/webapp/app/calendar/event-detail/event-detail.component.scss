@@ -1,0 +1,43 @@
+@import '../../../content/scss/variables';
+
+:host {
+  h2 {
+    width: 100%;
+    padding-bottom: 15px;
+    text-align: center;
+  }
+
+  #zoom-card {
+    display: flex;
+    background-color: $mv-pastel;
+    box-shadow: 0 0 15px 0 $mv-shadow-primary;
+
+    @media (min-width: 768px) {
+      margin: 50px auto;
+      width: 50vw;
+      height: calc(50vw / 16 * 9);
+    }
+
+    @media (max-width: 768px) {
+      margin: 80px auto;
+      width: 80vw;
+      height: calc(80vw / 16 * 9);
+    }
+
+    button.join-now {
+      z-index: 30000;
+      position: absolute;
+      left: calc(50% - 81px);
+      top: 250px;
+    }
+
+    #zoom-container {
+      margin: -25px 50px;
+      padding: 75px 50px;
+      border: solid 3px $mv-shadow-primary;
+      width: calc(100% - 25px);
+      height: calc(100% + 50px);
+      text-align: center;
+    }
+  }
+}

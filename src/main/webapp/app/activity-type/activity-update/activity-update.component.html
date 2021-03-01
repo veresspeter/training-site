@@ -1,86 +1,91 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-activity-heading">Create or edit a Activity</h2>
+    <div class="col-8 card">
+        <form name="editForm" role="form" class="card-body" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-activity-heading">Foglalkozás létrehozása vagy szerkesztése</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
-
+            <div class="my-4">
                 <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
+                    <label class="form-control-label" for="field_name">Név</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
-                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                    <div
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('name')?.errors?.required">
-                        This field is required.
+                            A mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_description">Description</label>
+                    <label class="form-control-label" for="field_description">Leírás</label>
                     <input type="text" class="form-control" name="description" id="field_description"
                            formControlName="description"/>
-                    <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+                    <div
+                        *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('description')?.errors?.required">
-                        This field is required.
+                            A mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_image">Image</label>
+                    <label class="form-control-label" for="field_image">Kép</label>
                     <div>
-                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value" style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="activity image"/>
+                        <img
+                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="activity image"/>
                         <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')" class="btn btn-secondary btn-xs pull-right">
-                                <fa-icon icon="times"></fa-icon>
+                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}
+                                , {{ byteSize(editForm.get('image')!.value) }}</span>
+                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                    class="btn btn-icon btn-danger btn-xs pull-right">
+                                <fa-icon icon="trash"></fa-icon>
                             </button>
                         </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)" accept="image/*"/>
+                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                               accept="image/*"/>
                     </div>
                     <input type="hidden" class="form-control" name="image" id="field_image"
                            formControlName="image"/>
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                           formControlName="imageContentType" />
-                    <div *ngIf="editForm.get('image')!.invalid && (editForm.get('image')!.dirty || editForm.get('image')!.touched)">
+                           formControlName="imageContentType"/>
+                    <div
+                        *ngIf="editForm.get('image')!.invalid && (editForm.get('image')!.dirty || editForm.get('image')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('image')?.errors?.required">
-                        This field is required.
+                            A mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_activityType">Activity Type</label>
-                    <select class="form-control" id="field_activityType" name="activityType" formControlName="activityTypeId">
+                    <label class="form-control-label" for="field_activityType">Foglalkozás típus</label>
+                    <select class="form-control" id="field_activityType" name="activityType"
+                            formControlName="activityTypeId">
                         <option *ngIf="!editForm.get('activityTypeId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="activityTypeOption.id" *ngFor="let activityTypeOption of activitytypes; trackBy: trackById">{{ activityTypeOption.id }}</option>
+                        <option [ngValue]="activityTypeOption.id"
+                                *ngFor="let activityTypeOption of activitytypes; trackBy: trackById">{{ activityTypeOption.name }}</option>
                     </select>
                 </div>
-                <div *ngIf="editForm.get('activityTypeId')!.invalid && (editForm.get('activityTypeId')!.dirty || editForm.get('activityTypeId')!.touched)">
+                <div
+                    *ngIf="editForm.get('activityTypeId')!.invalid && (editForm.get('activityTypeId')!.dirty || editForm.get('activityTypeId')!.touched)">
                     <small class="form-text text-danger"
                            *ngIf="editForm.get('activityTypeId')?.errors?.required">
-                        This field is required.
+                        A mező kitöltése kötelező
                     </small>
                 </div>
             </div>
 
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+            <div class="text-right">
+                <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
+                    Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        class="btn btn-primary">
+                    Mentés
                 </button>
             </div>
         </form>

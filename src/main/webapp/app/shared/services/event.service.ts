@@ -48,6 +48,14 @@ export class EventService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  join(id: number): Observable<EntityResponseType> {
+    return this.http.put(`${this.resourceUrl}/${id}/join`, {}, { observe: 'response' });
+  }
+
+  quit(id: number): Observable<EntityResponseType> {
+    return this.http.put(`${this.resourceUrl}/${id}/quit`, {}, { observe: 'response' });
+  }
+
   protected convertDateFromClient(event: IEvent): IEvent {
     const copy: IEvent = Object.assign({}, event, {
       start: event.start && event.start.isValid() ? event.start.toJSON() : undefined,

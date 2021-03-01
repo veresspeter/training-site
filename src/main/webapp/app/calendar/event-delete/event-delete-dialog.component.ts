@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IEvent } from 'app/shared/model/event.model';
-import { EventService } from './event.service';
+import { EventService } from '../../shared/services/event.service';
 
 @Component({
   templateUrl: './event-delete-dialog.component.html',
