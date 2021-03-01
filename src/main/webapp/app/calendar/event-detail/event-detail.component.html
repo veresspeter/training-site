@@ -32,17 +32,17 @@
         </dd>
         <dt><span>Szervező</span></dt>
         <dd>
-            <div *ngIf="event.organizerId">
-                <a [routerLink]="['/application-user', event.organizerId, 'view']">{{ event.organizerId }}</a>
+            <div *ngIf="event.organizer">
+                <a [routerLink]="['/trainers', event.organizer, 'view']">{{ event.organizer.fullName }}</a>
             </div>
         </dd>
-        <ng-template *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <dt><span>Jelentkezők</span></dt>
             <dd>
                     <span *ngFor="let participants of event.participants; let last = last">
-                        <a [routerLink]="['/application-user', participants?.id, 'view']">{{ participants.id }}</a>{{ last ? '' : ', ' }}
+                        <a [routerLink]="['/application-user', participants?.id, 'view']">{{ participants.fullName }}</a>{{ last ? '' : ', ' }}
                     </span>
             </dd>
-        </ng-template>
+        </ng-container>
     </dl>
 </div>

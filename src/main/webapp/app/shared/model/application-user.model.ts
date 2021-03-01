@@ -5,6 +5,7 @@ import { Sex } from 'app/shared/model/enumerations/sex.model';
 export interface IApplicationUser {
   id?: number;
   credit?: number;
+  fullName?: string;
   sex?: Sex;
   birthDay?: Moment;
   googleToken?: string;
@@ -21,6 +22,7 @@ export class ApplicationUser implements IApplicationUser {
   constructor(
     public id?: number,
     public credit?: number,
+    public fullName?: string,
     public sex?: Sex,
     public birthDay?: Moment,
     public googleToken?: string,

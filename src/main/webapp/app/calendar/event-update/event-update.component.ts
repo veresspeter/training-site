@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IEvent, Event } from 'app/shared/model/event.model';
-import { EventService } from '../../shared/services/event.service';
+import { EventService } from 'app/shared/services/event.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
@@ -21,7 +21,7 @@ type SelectableEntity = IApplicationUser | IActivity;
 })
 export class EventUpdateComponent implements OnInit {
   isSaving = false;
-  applicationusers: IApplicationUser[] = [];
+  applicationUsers: IApplicationUser[] = [];
   activities: IActivity[] = [];
 
   editForm = this.fb.group({
@@ -56,7 +56,7 @@ export class EventUpdateComponent implements OnInit {
 
       this.updateForm(event);
 
-      this.applicationUserService.query().subscribe((res: HttpResponse<IApplicationUser[]>) => (this.applicationusers = res.body || []));
+      this.applicationUserService.query().subscribe((res: HttpResponse<IApplicationUser[]>) => (this.applicationUsers = res.body || []));
 
       this.activityService.query().subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
     });
@@ -72,7 +72,7 @@ export class EventUpdateComponent implements OnInit {
       streamLink: event.streamLink,
       streamLinkType: event.streamLinkType || 'ZOOM',
       comment: event.comment,
-      organizerId: event.organizerId,
+      organizerId: event.organizer?.id,
       activityId: event.activityId,
       participants: event.participants,
     });
@@ -103,7 +103,7 @@ export class EventUpdateComponent implements OnInit {
       streamLink: this.editForm.get(['streamLink'])!.value,
       streamLinkType: this.editForm.get(['streamLinkType'])!.value,
       comment: this.editForm.get(['comment'])!.value,
-      organizerId: this.editForm.get(['organizerId'])!.value,
+      organizer: this.applicationUsers.find(user => user.id === this.editForm.get(['organizerId'])!.value),
       activityId: this.editForm.get(['activityId'])!.value,
       participants: this.editForm.get(['participants'])!.value,
     };

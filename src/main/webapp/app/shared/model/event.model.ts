@@ -11,7 +11,7 @@ export interface IEvent {
   streamLink?: string;
   streamLinkType?: LinkType;
   comment?: string;
-  organizerId?: number;
+  organizer?: IApplicationUser;
   activityId?: number;
   participants?: IApplicationUser[];
 }
@@ -26,7 +26,7 @@ export class Event implements IEvent {
     public streamLink?: string,
     public streamLinkType?: LinkType,
     public comment?: string,
-    public organizerId?: number,
+    public organizer?: IApplicationUser,
     public activityId?: number,
     public participants?: IApplicationUser[]
   ) {}
