@@ -1,3 +1,5 @@
+import { IActivityType } from 'app/shared/model/activity-type.model';
+
 export interface IPassType {
   id?: number;
   name?: string;
@@ -5,7 +7,7 @@ export interface IPassType {
   durationDays?: number;
   price?: string;
   occasions?: number;
-  availableForTypeId?: number;
+  availableForType?: IActivityType;
   availableForActivityId?: number;
 }
 
@@ -17,7 +19,7 @@ export class PassType implements IPassType {
     public durationDays?: number,
     public price?: string,
     public occasions?: number,
-    public availableForTypeId?: number,
+    public availableForType?: IActivityType,
     public availableForActivityId?: number
   ) {}
 }

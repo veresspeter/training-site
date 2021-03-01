@@ -32,7 +32,7 @@ public class MailService {
 
     private static final String USER = "user";
 
-    private static final String BASE_URL = "baseUrl";
+    private static final String BASE_URL = "maxmove.hu";
 
     private final JHipsterProperties jHipsterProperties;
 

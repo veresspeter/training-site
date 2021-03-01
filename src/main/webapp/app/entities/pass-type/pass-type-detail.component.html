@@ -30,8 +30,8 @@
                 </dd>
                 <dt><span>Available For Type</span></dt>
                 <dd>
-                    <div *ngIf="passType.availableForTypeId">
-                        <a [routerLink]="['/activity-type', passType.availableForTypeId, 'view']">{{ passType.availableForTypeId }}</a>
+                    <div *ngIf="passType.availableForType">
+                        <a [routerLink]="['/activity-type', passType.availableForType, 'view']">{{ passType.availableForType }}</a>
                     </div>
                 </dd>
                 <dt><span>Available For Activity</span></dt>

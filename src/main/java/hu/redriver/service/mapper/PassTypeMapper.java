@@ -12,11 +12,9 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {ActivityTypeMapper.class, ActivityMapper.class})
 public interface PassTypeMapper extends EntityMapper<PassTypeDTO, PassType> {
 
-    @Mapping(source = "availableForType.id", target = "availableForTypeId")
     @Mapping(source = "availableForActivity.id", target = "availableForActivityId")
     PassTypeDTO toDto(PassType passType);
 
-    @Mapping(source = "availableForTypeId", target = "availableForType")
     @Mapping(source = "availableForActivityId", target = "availableForActivity")
     PassType toEntity(PassTypeDTO passTypeDTO);
 

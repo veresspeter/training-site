@@ -16,7 +16,6 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
-                <th scope="col"><span>ID</span></th>
                 <th scope="col"><span>Teljes név</span></th>
                 <th scope="col"><span>Egységek</span></th>
                 <th scope="col"><span>Nem</span></th>
@@ -31,8 +30,6 @@
             </thead>
             <tbody>
             <tr *ngFor="let applicationUser of applicationUsers ;trackBy: trackId">
-                <td><a [routerLink]="['/application-user', applicationUser.id, 'view']">{{ applicationUser.id }}</a>
-                </td>
                 <td>{{ applicationUser.fullName }}</td>
                 <td>{{ applicationUser.credit }}</td>
                 <td>{{ applicationUser.sex }}</td>
