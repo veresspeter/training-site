@@ -13,7 +13,7 @@ pipeline {
 
     stage('Backend Build') {
       agent {
-        docker 'openjdk:8'
+        docker 'openjdk:11'
       }
       environment {
           DOCKERHUB = credentials('dockerhubId')
