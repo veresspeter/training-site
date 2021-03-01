@@ -5,7 +5,7 @@ import { ZoomMtg } from '@zoomus/websdk';
 import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core/auth/account.service';
 
-ZoomMtg.setZoomJSLib('https://source.zoom.us/1.9.0/lib', '/av');
+ZoomMtg.setZoomJSLib('./content/@zoomus/websdk/lib', '/av');
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareJssdk();
 
@@ -19,7 +19,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   inMeeting = false;
 
   signature = '';
-  signatureEndpoint = 'http://localhost:9000';
+  signatureEndpoint = 'http://maxmove.hu';
   apiKey = 'DScn7swaQOKOGka9DZKYBg';
   secret = 'd7rh0zJXPZMcYqdhyGN0DeodLusHvFJNxxpi';
   meetingNumber = '92614439105';
@@ -27,7 +27,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   leaveUrl = 'calendar';
   userName = 'felhasználónév';
   email = '';
-  password = 'JQ7wxe';
+  password = 'maxmovepsw';
   zoomMtg = document.getElementById('zmmtg-root');
 
   constructor(protected activatedRoute: ActivatedRoute, protected accountService: AccountService) {}
@@ -39,14 +39,28 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ event }) => (this.event = event));
-    this.initializeCall();
+    this.activatedRoute.data.subscribe(({ event }) => {
+      this.event = event;
+      this.initializeCall();
+    });
     this.authenticate();
   }
 
   initializeCall(): void {
+    if (this.event?.streamLink?.split('/').pop()?.split('?') === undefined) {
+      this.inMeeting = false;
+      return;
+    }
+    const meetingNo = this.event.streamLink.split('/').pop()?.split('?').shift();
+
+    if (meetingNo === undefined) {
+      this.inMeeting = false;
+      return;
+    }
+
+    this.meetingNumber = meetingNo;
     this.signature = ZoomMtg.generateSignature({
-      meetingNumber: this.meetingNumber,
+      meetingNumber: meetingNo,
       apiKey: this.apiKey,
       apiSecret: this.secret,
       role: this.role,

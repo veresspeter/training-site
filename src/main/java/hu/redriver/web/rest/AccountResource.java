@@ -76,9 +76,13 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+
         ApplicationUserDTO applicationUser = new ApplicationUserDTO();
         applicationUser.setInternalUserId(user.getId());
+        applicationUser.setCredit(0);
+        applicationUser.setIsTrainer(false);
         this.applicationUserService.save(applicationUser);
+
         mailService.sendActivationEmail(user);
     }
 

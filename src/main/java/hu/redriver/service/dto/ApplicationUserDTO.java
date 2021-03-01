@@ -35,6 +35,7 @@ public class ApplicationUserDTO implements Serializable {
     @NotNull
     private Boolean isTrainer;
 
+    @NotNull
     private Long internalUserId;
 
     public Long getId() {
