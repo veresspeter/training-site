@@ -13,7 +13,7 @@ pipeline {
 
     stage('Backend Build and Verify') {
       agent {
-        docker 'openjdk:8'
+        docker 'openjdk:11'
       }
       steps {
         sh 'chmod go-w+x -R .'
