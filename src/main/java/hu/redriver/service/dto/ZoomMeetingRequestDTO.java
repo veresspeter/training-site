@@ -10,6 +10,7 @@ public class ZoomMeetingRequestDTO {
     Integer type;
     String timezone;
     String password;
+    ZoomMeetingSettingsDTO settings;
 
     public String  getStart_time() {
         return start_time;
@@ -57,5 +58,13 @@ public class ZoomMeetingRequestDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ZoomMeetingSettingsDTO getSettings() {
+        return settings;
+    }
+
+    public void setSettings(ZoomMeetingSettingsDTO settings) {
+        this.settings = settings;
     }
 }

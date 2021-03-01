@@ -10,6 +10,9 @@ export interface IEvent {
   limit?: number;
   streamLink?: string;
   streamLinkType?: LinkType;
+  zoomRoomNo?: string;
+  zoomRoomPsw?: string;
+  zoomStartLink?: string;
   comment?: string;
   organizer?: IApplicationUser;
   activityId?: number;
@@ -25,6 +28,9 @@ export class Event implements IEvent {
     public limit?: number,
     public streamLink?: string,
     public streamLinkType?: LinkType,
+    public zoomRoomNo?: string,
+    public zoomRoomPsw?: string,
+    public zoomStartLink?: string,
     public comment?: string,
     public organizer?: IApplicationUser,
     public activityId?: number,

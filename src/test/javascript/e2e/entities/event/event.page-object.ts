@@ -35,6 +35,9 @@ export class EventUpdatePage {
   limitInput = element(by.id('field_limit'));
   streamLinkInput = element(by.id('field_streamLink'));
   streamLinkTypeSelect = element(by.id('field_streamLinkType'));
+  zoomRoomNoInput = element(by.id('field_zoomRoomNo'));
+  zoomRoomPswInput = element(by.id('field_zoomRoomPsw'));
+  zoomStartLinkInput = element(by.id('field_zoomStartLink'));
   commentInput = element(by.id('field_comment'));
 
   organizerSelect = element(by.id('field_organizer'));
@@ -95,6 +98,30 @@ export class EventUpdatePage {
 
   async streamLinkTypeSelectLastOption(): Promise<void> {
     await this.streamLinkTypeSelect.all(by.tagName('option')).last().click();
+  }
+
+  async setZoomRoomNoInput(zoomRoomNo: string): Promise<void> {
+    await this.zoomRoomNoInput.sendKeys(zoomRoomNo);
+  }
+
+  async getZoomRoomNoInput(): Promise<string> {
+    return await this.zoomRoomNoInput.getAttribute('value');
+  }
+
+  async setZoomRoomPswInput(zoomRoomPsw: string): Promise<void> {
+    await this.zoomRoomPswInput.sendKeys(zoomRoomPsw);
+  }
+
+  async getZoomRoomPswInput(): Promise<string> {
+    return await this.zoomRoomPswInput.getAttribute('value');
+  }
+
+  async setZoomStartLinkInput(zoomStartLink: string): Promise<void> {
+    await this.zoomStartLinkInput.sendKeys(zoomStartLink);
+  }
+
+  async getZoomStartLinkInput(): Promise<string> {
+    return await this.zoomStartLinkInput.getAttribute('value');
   }
 
   async setCommentInput(comment: string): Promise<void> {

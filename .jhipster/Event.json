@@ -30,6 +30,18 @@
       "fieldValues": "ZOOM,SKYPE,GOOGLE_MEET,OTHER"
     },
     {
+      "fieldName": "zoomRoomNo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "zoomRoomPsw",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "zoomStartLink",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "comment",
       "fieldType": "String"
     }
