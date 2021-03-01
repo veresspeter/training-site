@@ -20,7 +20,7 @@ type SelectableEntity = IActivityType | IActivity;
 })
 export class PassTypeUpdateComponent implements OnInit {
   isSaving = false;
-  activitytypes: IActivityType[] = [];
+  activityTypes: IActivityType[] = [];
   activities: IActivity[] = [];
 
   editForm = this.fb.group({
@@ -46,7 +46,7 @@ export class PassTypeUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ passType }) => {
       this.updateForm(passType);
 
-      this.activityTypeService.query().subscribe((res: HttpResponse<IActivityType[]>) => (this.activitytypes = res.body || []));
+      this.activityTypeService.query().subscribe((res: HttpResponse<IActivityType[]>) => (this.activityTypes = res.body || []));
 
       this.activityService.query().subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
     });
@@ -60,7 +60,7 @@ export class PassTypeUpdateComponent implements OnInit {
       durationDays: passType.durationDays,
       price: passType.price,
       occasions: passType.occasions,
-      availableForTypeId: passType.availableForTypeId,
+      availableForTypeId: passType.availableForType?.id,
       availableForActivityId: passType.availableForActivityId,
     });
   }
@@ -88,7 +88,7 @@ export class PassTypeUpdateComponent implements OnInit {
       durationDays: this.editForm.get(['durationDays'])!.value,
       price: this.editForm.get(['price'])!.value,
       occasions: this.editForm.get(['occasions'])!.value,
-      availableForTypeId: this.editForm.get(['availableForTypeId'])!.value,
+      availableForType: this.activityTypes.find(type => type.id === this.editForm.get(['availableForTypeId'])!.value),
       availableForActivityId: this.editForm.get(['availableForActivityId'])!.value,
     };
   }

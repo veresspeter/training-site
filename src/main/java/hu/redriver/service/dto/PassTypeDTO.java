@@ -7,7 +7,7 @@ import java.io.Serializable;
  * A DTO for the {@link hu.redriver.domain.PassType} entity.
  */
 public class PassTypeDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -24,10 +24,10 @@ public class PassTypeDTO implements Serializable {
     private Integer occasions;
 
 
-    private Long availableForTypeId;
+    private ActivityTypeDTO availableForType;
 
     private Long availableForActivityId;
-    
+
     public Long getId() {
         return id;
     }
@@ -76,12 +76,12 @@ public class PassTypeDTO implements Serializable {
         this.occasions = occasions;
     }
 
-    public Long getAvailableForTypeId() {
-        return availableForTypeId;
+    public ActivityTypeDTO getAvailableForType() {
+        return availableForType;
     }
 
-    public void setAvailableForTypeId(Long activityTypeId) {
-        this.availableForTypeId = activityTypeId;
+    public void setAvailableForType(ActivityTypeDTO availableForType) {
+        this.availableForType = availableForType;
     }
 
     public Long getAvailableForActivityId() {
@@ -119,7 +119,7 @@ public class PassTypeDTO implements Serializable {
             ", durationDays=" + getDurationDays() +
             ", price='" + getPrice() + "'" +
             ", occasions=" + getOccasions() +
-            ", availableForTypeId=" + getAvailableForTypeId() +
+            ", availableForTypeId=" + getAvailableForType() +
             ", availableForActivityId=" + getAvailableForActivityId() +
             "}";
     }
