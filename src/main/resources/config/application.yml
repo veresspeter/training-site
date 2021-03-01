@@ -141,7 +141,7 @@ jhipster:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    from: maxmove@localhost
+    from: maxmove@redriver.hu
   swagger:
     default-include-pattern: /api/.*
     title: maxmove API
