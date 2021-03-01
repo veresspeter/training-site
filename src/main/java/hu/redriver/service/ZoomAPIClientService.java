@@ -19,13 +19,14 @@ public class ZoomAPIClientService {
 
     private final String JWT_TOKEN = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IkRTY243c3dhUU9LT0drYTlEWktZQmciLCJleHAiOjE2NDY3MzU0NjAsImlhdCI6MTYxNDU5NDY5MH0.mvZVMq8pKCuRAn_fgczYsIa1RwwoBQgaBELsDaXyqEc";
 
-    private final HttpClient httpClient = HttpClient.newHttpClient();
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public ZoomAPIClientService() {
     }
 
     public void createMeeting(EventDTO eventDTO) throws IOException, InterruptedException {
+        final HttpClient httpClient = HttpClient.newHttpClient();
+        final ObjectMapper objectMapper = new ObjectMapper();
+
         ZoomMeetingRequestDTO data = new ZoomMeetingRequestDTO();
         data.setPassword("maxmovepsw");
         data.setTimezone("Europe/Budapest");

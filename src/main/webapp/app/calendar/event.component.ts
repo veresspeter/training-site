@@ -11,6 +11,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { AccountService } from 'app/core/auth/account.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
+import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
 
 @Component({
   selector: 'jhi-event',
@@ -21,12 +22,14 @@ export class EventComponent implements OnInit, OnDestroy {
   events?: IEvent[];
   eventSubscriber?: Subscription;
   activeUserId: number | undefined;
+  isUserRequestActive = false;
 
   constructor(
     protected eventService: EventService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected applicationUserService: ApplicationUserService
   ) {}
 
   loadAll(): void {
@@ -36,10 +39,7 @@ export class EventComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadAll();
     this.registerChangeInEvents();
-
-    this.accountService.identity().subscribe(account => {
-      this.activeUserId = account?.id;
-    });
+    this.checkUserAuthentication();
   }
 
   ngOnDestroy(): void {
@@ -63,20 +63,33 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   isJoinEnabled(event: IEvent): boolean {
-    return this.isUserAuthenticated() && !this.isEventClosed(event.start) && !this.isUserRegistered(event.participants);
+    this.checkUserAuthentication();
+    return !this.isEventClosed(event.start) && !this.isUserRegistered(event.participants) && this.activeUserId !== undefined;
   }
 
   isQuitEnabled(event: IEvent): boolean {
-    return this.isUserAuthenticated() && !this.isEventClosed(event.start) && this.isUserRegistered(event.participants);
+    this.checkUserAuthentication();
+    return !this.isEventClosed(event.start) && this.isUserRegistered(event.participants) && this.activeUserId !== undefined;
   }
 
-  isUserAuthenticated(): boolean {
-    if (this.activeUserId === undefined && this.accountService.isAuthenticated()) {
-      this.accountService.identity().subscribe(account => {
-        this.activeUserId = account?.id;
-      });
+  checkUserAuthentication(): void {
+    if (this.activeUserId === undefined && this.accountService.isAuthenticated() && !this.isUserRequestActive) {
+      this.isUserRequestActive = true;
+      this.accountService.identity().subscribe(
+        account => {
+          if (account !== null && account.id !== null) {
+            this.applicationUserService.findByInternalId(account.id).subscribe(
+              res => {
+                this.activeUserId = res.body?.id;
+                this.isUserRequestActive = false;
+              },
+              () => (this.isUserRequestActive = false)
+            );
+          }
+        },
+        () => (this.isUserRequestActive = false)
+      );
     }
-    return this.activeUserId !== undefined;
   }
 
   isUserRegistered(participants: IApplicationUser[] | undefined): boolean {
@@ -90,7 +103,8 @@ export class EventComponent implements OnInit, OnDestroy {
   isStartEnabled(event: IEvent): boolean {
     const toStart = moment.duration(moment().diff(event?.start)).asMinutes();
     const toEnd = moment.duration(moment().diff(event?.end)).asMinutes();
-    return this.isUserAuthenticated() && this.isUserRegistered(event.participants) && toStart > -15 && toEnd < 15;
+    this.checkUserAuthentication();
+    return this.isUserRegistered(event.participants) && toStart > -15 && toEnd < 15 && this.activeUserId !== undefined;
   }
 
   joinEvent(eventId: number | undefined): void {

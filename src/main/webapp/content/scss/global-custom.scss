@@ -9,7 +9,7 @@
 
 body {
   background-color: $mv-bg;
-  overflow-y: auto;
+  overflow-y: auto !important;
 
   jhi-main {
     .container-fluid {

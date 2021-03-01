@@ -1,12 +1,15 @@
 package hu.redriver.web.rest;
 
+import hu.redriver.domain.ApplicationUser;
 import hu.redriver.domain.PersistentToken;
 import hu.redriver.repository.PersistentTokenRepository;
 import hu.redriver.domain.User;
 import hu.redriver.repository.UserRepository;
 import hu.redriver.security.SecurityUtils;
+import hu.redriver.service.ApplicationUserService;
 import hu.redriver.service.MailService;
 import hu.redriver.service.UserService;
+import hu.redriver.service.dto.ApplicationUserDTO;
 import hu.redriver.service.dto.PasswordChangeDTO;
 import hu.redriver.service.dto.UserDTO;
 import hu.redriver.web.rest.errors.*;
@@ -41,16 +44,18 @@ public class AccountResource {
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
     private final UserRepository userRepository;
-
+    private final ApplicationUserService applicationUserService;
     private final UserService userService;
-
     private final MailService mailService;
-
     private final PersistentTokenRepository persistentTokenRepository;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, PersistentTokenRepository persistentTokenRepository) {
-
+    public AccountResource(UserRepository userRepository,
+                           ApplicationUserService applicationUserService,
+                           UserService userService,
+                           MailService mailService,
+                           PersistentTokenRepository persistentTokenRepository) {
         this.userRepository = userRepository;
+        this.applicationUserService = applicationUserService;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
@@ -71,6 +76,9 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+        ApplicationUserDTO applicationUser = new ApplicationUserDTO();
+        applicationUser.setInternalUserId(user.getId());
+        this.applicationUserService.save(applicationUser);
         mailService.sendActivationEmail(user);
     }
 
