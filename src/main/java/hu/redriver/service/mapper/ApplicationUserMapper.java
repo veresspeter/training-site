@@ -13,6 +13,7 @@ import org.mapstruct.*;
 public interface ApplicationUserMapper extends EntityMapper<ApplicationUserDTO, ApplicationUser> {
 
     @Mapping(source = "internalUser.id", target = "internalUserId")
+    @Mapping(expression = "java(getFullName(applicationUser.getInternalUser()))", target = "fullName")
     ApplicationUserDTO toDto(ApplicationUser applicationUser);
 
     @Mapping(source = "internalUserId", target = "internalUser")
@@ -27,5 +28,13 @@ public interface ApplicationUserMapper extends EntityMapper<ApplicationUserDTO, 
         ApplicationUser applicationUser = new ApplicationUser();
         applicationUser.setId(id);
         return applicationUser;
+    }
+
+    default String getFullName(User user) {
+        if ( user.getLastName() != null && user.getFirstName() != null) {
+            return user.getLastName() + " " + user.getFirstName();
+        } else {
+            return null;
+        }
     }
 }

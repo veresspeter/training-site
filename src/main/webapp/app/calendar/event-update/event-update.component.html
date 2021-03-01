@@ -38,7 +38,7 @@
                     <label class="form-control-label" for="field_organizer">Szervező</label>
                     <select class="form-control" id="field_organizer" name="organizer" formControlName="organizerId">
                         <option *ngIf="!editForm.get('organizerId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="applicationUserOption.id" *ngFor="let applicationUserOption of applicationusers; trackBy: trackById">{{ applicationUserOption.id }}</option>
+                        <option [ngValue]="applicationUserOption.id" *ngFor="let applicationUserOption of applicationusers; trackBy: trackById">{{ applicationUserOption.fullName }}</option>
                     </select>
                 </div>
                 <div *ngIf="editForm.get('organizerId')!.invalid && (editForm.get('organizerId')!.dirty || editForm.get('organizerId')!.touched)">
@@ -113,7 +113,7 @@
                 <div class="form-group col-6">
                     <label for="field_participants">Participants</label>
                     <select class="form-control" id="field_participants" multiple name="participants" formControlName="participants">
-                        <option [ngValue]="getSelected(editForm.get('participants')!.value, applicationUserOption)" *ngFor="let applicationUserOption of applicationusers; trackBy: trackById">{{ applicationUserOption.id }}</option>
+                        <option [ngValue]="getSelected(editForm.get('participants')!.value, applicationUserOption)" *ngFor="let applicationUserOption of applicationusers; trackBy: trackById">{{ applicationUserOption.fullName }}</option>
                     </select>
                 </div>
             </div>

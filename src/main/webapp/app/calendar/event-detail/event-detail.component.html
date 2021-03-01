@@ -40,7 +40,7 @@
             <dt><span>Jelentkezők</span></dt>
             <dd>
                     <span *ngFor="let participants of event.participants; let last = last">
-                        <a [routerLink]="['/application-user', participants?.id, 'view']">{{ participants.id }}</a>{{ last ? '' : ', ' }}
+                        <a [routerLink]="['/application-user', participants?.id, 'view']">{{ participants.fullName }}</a>{{ last ? '' : ', ' }}
                     </span>
             </dd>
         </ng-template>

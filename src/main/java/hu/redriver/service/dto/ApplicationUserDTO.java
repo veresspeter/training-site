@@ -16,6 +16,8 @@ public class ApplicationUserDTO implements Serializable {
     @NotNull
     private Integer credit;
 
+    private String fullName;
+
     private Sex sex;
 
     private LocalDate birthDay;
@@ -121,6 +123,14 @@ public class ApplicationUserDTO implements Serializable {
 
     public void setInternalUserId(Long userId) {
         this.internalUserId = userId;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     @Override
