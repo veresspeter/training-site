@@ -11,7 +11,7 @@ import hu.redriver.domain.enumeration.LinkType;
  * A DTO for the {@link hu.redriver.domain.Event} entity.
  */
 public class EventDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -32,11 +32,11 @@ public class EventDTO implements Serializable {
     private String comment;
 
 
-    private Long organizerId;
+    private ApplicationUserDTO organizer;
 
     private Long activityId;
     private Set<ApplicationUserDTO> participants = new HashSet<>();
-    
+
     public Long getId() {
         return id;
     }
@@ -101,12 +101,12 @@ public class EventDTO implements Serializable {
         this.comment = comment;
     }
 
-    public Long getOrganizerId() {
-        return organizerId;
+    public ApplicationUserDTO getOrganizer() {
+        return organizer;
     }
 
-    public void setOrganizerId(Long applicationUserId) {
-        this.organizerId = applicationUserId;
+    public void setOrganizer(ApplicationUserDTO organizer) {
+        this.organizer = organizer;
     }
 
     public Long getActivityId() {
@@ -154,7 +154,7 @@ public class EventDTO implements Serializable {
             ", streamLink='" + getStreamLink() + "'" +
             ", streamLinkType='" + getStreamLinkType() + "'" +
             ", comment='" + getComment() + "'" +
-            ", organizerId=" + getOrganizerId() +
+            ", organizerId=" + getOrganizer() +
             ", activityId=" + getActivityId() +
             ", participants='" + getParticipants() + "'" +
             "}";
