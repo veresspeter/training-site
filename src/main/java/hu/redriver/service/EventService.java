@@ -1,30 +1,24 @@
 package hu.redriver.service;
 
-import hu.redriver.domain.ApplicationUser;
 import hu.redriver.domain.Event;
+import hu.redriver.domain.enumeration.LinkType;
 import hu.redriver.repository.EventRepository;
 import hu.redriver.service.dto.ApplicationUserDTO;
 import hu.redriver.service.dto.EventDTO;
 import hu.redriver.service.mapper.EventMapper;
-import hu.redriver.web.utils.CustomHeaderUtil;
 import io.undertow.util.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.el.LambdaExpression;
 import javax.persistence.EntityNotFoundException;
-import java.io.NotActiveException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
-import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -37,19 +31,18 @@ public class EventService {
 
     private final Logger log = LoggerFactory.getLogger(EventService.class);
 
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
-
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final UserService userService;
     private final ApplicationUserService applicationUserService;
+    private final ZoomAPIClientService zoomAPIClientService;
 
-    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, ApplicationUserService applicationUserService) {
+    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, ApplicationUserService applicationUserService, ZoomAPIClientService zoomAPIClientService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.userService = userService;
         this.applicationUserService = applicationUserService;
+        this.zoomAPIClientService = zoomAPIClientService;
     }
 
     /**
@@ -60,6 +53,15 @@ public class EventService {
      */
     public EventDTO save(EventDTO eventDTO) {
         log.debug("Request to save Event : {}", eventDTO);
+
+        if (eventDTO.getStreamLinkType() == LinkType.ZOOM) {
+            try {
+                this.zoomAPIClientService.createMeeting(eventDTO);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+
         Event event = eventMapper.toEntity(eventDTO);
         event = eventRepository.save(event);
         return eventMapper.toDto(event);

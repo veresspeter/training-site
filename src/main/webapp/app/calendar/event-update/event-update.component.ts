@@ -43,7 +43,7 @@ export class EventUpdateComponent implements OnInit {
     protected applicationUserService: ApplicationUserService,
     protected activityService: ActivityService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    protected fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
