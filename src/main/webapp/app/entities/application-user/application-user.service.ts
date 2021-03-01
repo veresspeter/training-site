@@ -38,6 +38,12 @@ export class ApplicationUserService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  findByInternalId(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IApplicationUser>(`${this.resourceUrl}/internal-id/${id}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
