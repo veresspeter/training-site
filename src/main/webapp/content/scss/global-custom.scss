@@ -11,7 +11,8 @@ html {
   body {
     background-color: $mv-bg;
     overflow: auto !important;
-    height: auto;
+    height: auto !important;
+    width: auto !important;
 
     jhi-main {
       nav {
