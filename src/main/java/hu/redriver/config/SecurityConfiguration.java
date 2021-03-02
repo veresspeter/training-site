@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         "https://rwcprod.tj.zoom.com.cn " +
         "https://rwcty.ty.zoom.us " +
         "https://rwcdv.dv.zoom.us " +
-        "https://rwcfr.fr.zoom.us" +
+        "https://rwcfr.fr.zoom.us " +
         "https://rwchk.hk.zoom.us " +
         "https://rwcny.ny.zoom.us " +
         "https://rwcsy.sy.zoom.us " +
