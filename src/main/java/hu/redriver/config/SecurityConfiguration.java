@@ -108,7 +108,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://zoom.us https://*.zoom.us https://storage.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com;" +
                     "style-src 'self' https://zoom.us https://*.zoom.us https://fonts.googleapis.com 'unsafe-inline';" +
                     "img-src 'self' https://zoom.us https://*.zoom.us data: https://www.google-analytics.com https://www.googletagmanager.com;" +
-                    "connect-src 'self' https://zoom.us https://*.zoom.us data: https://www.google-analytics.com https://www.googletagmanager.com;" +
+                    "connect-src 'self' https://*zoom* data: https://www.google-analytics.com https://www.googletagmanager.com;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
             .and()
