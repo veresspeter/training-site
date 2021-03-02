@@ -80,16 +80,33 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   isEventInProgress(event: IEvent): boolean {
+    if (!event.start || !event.end) {
+      return false;
+    }
+
     const toStart = this.getMomentAndNowDiff(event.start);
     const toEnd = this.getMomentAndNowDiff(event.end);
 
-    // eslint-disable-next-line no-console
-    console.log(toEnd);
-    return toStart > -15 && toEnd < 15;
+    return toStart < 15 && toEnd > -15;
+  }
+
+  isEventEditable(event: IEvent): boolean {
+    if (!event.start || !event.end) {
+      return false;
+    }
+
+    return this.getMomentAndNowDiff(event.start) < 180;
   }
 
   isEventClosed(event: IEvent): boolean {
-    return this.getMomentAndNowDiff(event.start) > -180 && this.getMomentAndNowDiff(event.end) < 15;
+    if (!event.start || !event.end) {
+      return false;
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(this.getMomentAndNowDiff(event.end));
+
+    return this.getMomentAndNowDiff(event.start) < 180 && this.getMomentAndNowDiff(event.end) > -15;
   }
 
   isStartEnabled(event: IEvent): boolean {
@@ -133,7 +150,7 @@ export class EventComponent implements OnInit, OnDestroy {
     }
   }
 
-  getMomentAndNowDiff(time: Moment | undefined): number {
-    return moment.duration(moment().diff(time)).asMinutes();
+  getMomentAndNowDiff(time: Moment): number {
+    return moment.duration(time.diff(moment())).asMinutes();
   }
 }
