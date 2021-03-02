@@ -103,9 +103,6 @@ export class EventComponent implements OnInit, OnDestroy {
       return false;
     }
 
-    // eslint-disable-next-line no-console
-    console.log(this.getMomentAndNowDiff(event.end));
-
     return this.getMomentAndNowDiff(event.start) < 180 && this.getMomentAndNowDiff(event.end) > -15;
   }
 
