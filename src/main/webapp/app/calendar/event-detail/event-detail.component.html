@@ -33,7 +33,7 @@
         <dt><span>Szervező</span></dt>
         <dd>
             <div *ngIf="event.organizer">
-                <a [routerLink]="['/trainers', event.organizer, 'view']">{{ event.organizer.fullName }}</a>
+                <a [routerLink]="['/trainers', event.organizer.id, 'view']">{{ event.organizer.fullName }}</a>
             </div>
         </dd>
         <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
