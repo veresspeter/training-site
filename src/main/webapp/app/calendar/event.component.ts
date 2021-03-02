@@ -62,14 +62,54 @@ export class EventComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.event = event;
   }
 
-  isJoinEnabled(event: IEvent): boolean {
-    this.checkUserAuthentication();
-    return !this.isEventClosed(event.start) && !this.isUserRegistered(event.participants) && this.activeUserId !== undefined;
+  isJoinShown(event: IEvent): boolean {
+    return this.isUserAuthenticated() && !this.isUserRegistered(event.participants);
   }
 
-  isQuitEnabled(event: IEvent): boolean {
+  isQuitShown(event: IEvent): boolean {
     this.checkUserAuthentication();
-    return !this.isEventClosed(event.start) && this.isUserRegistered(event.participants) && this.activeUserId !== undefined;
+    return this.isUserAuthenticated() && this.isUserRegistered(event.participants);
+  }
+
+  isUserRegistered(participants: IApplicationUser[] | undefined): boolean {
+    return participants?.find(participant => participant.id === this.activeUserId) !== undefined;
+  }
+
+  isUserAuthenticated(): boolean {
+    this.checkUserAuthentication();
+    return this.activeUserId !== undefined;
+  }
+
+  isEventInProgress(event: IEvent): boolean {
+    const toStart = this.getMomentAndNowDiff(event.start);
+    const toEnd = this.getMomentAndNowDiff(event.end);
+
+    return toStart > -15 && toEnd < 15;
+  }
+
+  isEventClosed(event: IEvent): boolean {
+    return this.getMomentAndNowDiff(event.start) > -180 && this.getMomentAndNowDiff(event.end) < 15;
+  }
+
+  isStartEnabled(event: IEvent): boolean {
+    this.checkUserAuthentication();
+    return this.isEventInProgress(event) && this.isUserRegistered(event.participants) && this.activeUserId !== undefined;
+  }
+
+  joinEvent(eventId: number | undefined): void {
+    if (eventId !== undefined) {
+      this.eventService.join(eventId).subscribe(() => {
+        this.eventManager.broadcast('eventListModification');
+      });
+    }
+  }
+
+  quitEvent(eventId: number | undefined): void {
+    if (eventId !== undefined) {
+      this.eventService.quit(eventId).subscribe(() => {
+        this.eventManager.broadcast('eventListModification');
+      });
+    }
   }
 
   checkUserAuthentication(): void {
@@ -92,34 +132,7 @@ export class EventComponent implements OnInit, OnDestroy {
     }
   }
 
-  isUserRegistered(participants: IApplicationUser[] | undefined): boolean {
-    return participants?.find(participant => participant.id === this.activeUserId) !== undefined;
-  }
-
-  isEventClosed(start: Moment | undefined): boolean {
-    return moment.duration(moment().diff(start)).asHours() > -3;
-  }
-
-  isStartEnabled(event: IEvent): boolean {
-    const toStart = moment.duration(moment().diff(event?.start)).asMinutes();
-    const toEnd = moment.duration(moment().diff(event?.end)).asMinutes();
-    this.checkUserAuthentication();
-    return this.isUserRegistered(event.participants) && toStart > -15 && toEnd < 15 && this.activeUserId !== undefined;
-  }
-
-  joinEvent(eventId: number | undefined): void {
-    if (eventId !== undefined) {
-      this.eventService.join(eventId).subscribe(() => {
-        this.eventManager.broadcast('eventListModification');
-      });
-    }
-  }
-
-  quitEvent(eventId: number | undefined): void {
-    if (eventId !== undefined) {
-      this.eventService.quit(eventId).subscribe(() => {
-        this.eventManager.broadcast('eventListModification');
-      });
-    }
+  getMomentAndNowDiff(time: Moment | undefined): number {
+    return moment.duration(moment().diff(time)).asMinutes();
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import './vendor';
 import { MaxmoveSharedModule } from 'app/shared/shared.module';
@@ -28,6 +29,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
     MaxmoveEntityModule,
     MaxmoveAppRoutingModule,
     CalendarModule,
+    NgbModule,
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
   bootstrap: [MainComponent],
