@@ -27,15 +27,15 @@
                         <fa-icon icon="plus"></fa-icon>
                     </button>
 
-                    <button *ngIf="!isEventClosed(event) && isQuitShown(event)" type="button" (click)="quitEvent(event.id)" class="btn btn-danger btn-icon"
+                    <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event.id)" class="btn btn-danger btn-icon"
                             [attr.disabled]="!isEventClosed(event) ? null : ''">
                         <fa-icon icon="minus"></fa-icon>
                     </button>
 
-                    <button *ngIf="isEventClosed(event)" type="button"  [routerLink]="['/calendar', event.id, 'view']"
-                            class="btn btn-success btn-icon" [attr.disabled]="!isEventInProgress(event) ? null : ''"
-                            [attr.placement]="isEventClosed(event) && !isEventInProgress(event) ? 'top' : null"
-                            [attr.ngbTooltip]="isEventClosed(event) && !isEventInProgress(event) ? 'Az óra még nem kezdődik' : null"
+                    <button *ngIf="isEventClosed(event) && isRegisteredShown(event)" type="button"  [routerLink]="['/calendar', event.id, 'view']"
+                            class="btn btn-success btn-icon" [attr.disabled]="isEventInProgress(event) ? null : ''"
+                            [attr.placement]="isEventClosed(event) && isEventInProgress(event) ? 'top' : null"
+                            [attr.ngbTooltip]="isEventClosed(event) && isEventInProgress(event) ? 'Az óra még nem kezdődik' : null"
                     >
                         <fa-icon icon="play-circle"></fa-icon>
                     </button>

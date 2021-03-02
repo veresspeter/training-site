@@ -10,6 +10,7 @@
 body {
   background-color: $mv-bg;
   overflow-y: auto !important;
+  overflow: inherit;
   height: auto;
 
   jhi-main {

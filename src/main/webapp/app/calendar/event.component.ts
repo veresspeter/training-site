@@ -66,8 +66,7 @@ export class EventComponent implements OnInit, OnDestroy {
     return this.isUserAuthenticated() && !this.isUserRegistered(event.participants);
   }
 
-  isQuitShown(event: IEvent): boolean {
-    this.checkUserAuthentication();
+  isRegisteredShown(event: IEvent): boolean {
     return this.isUserAuthenticated() && this.isUserRegistered(event.participants);
   }
 
@@ -84,6 +83,8 @@ export class EventComponent implements OnInit, OnDestroy {
     const toStart = this.getMomentAndNowDiff(event.start);
     const toEnd = this.getMomentAndNowDiff(event.end);
 
+    // eslint-disable-next-line no-console
+    console.log(toEnd);
     return toStart > -15 && toEnd < 15;
   }
 
