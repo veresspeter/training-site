@@ -27,6 +27,19 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final String ZOOM_LINKS = "https://zoom.us " +
+        "https://rwcsc.sc.zoom.us " +
+        "https://rwcprod.zoom.us " +
+        "https://rwcprod.tj.zoom.com.cn " +
+        "https://rwcty.ty.zoom.us " +
+        "https://rwcdv.dv.zoom.us " +
+        "https://rwcfr.fr.zoom.us" +
+        "https://rwchk.hk.zoom.us " +
+        "https://rwcny.ny.zoom.us " +
+        "https://rwcsy.sy.zoom.us" +
+        "https://rwchy.hy.zoom.us" +
+        "https://rwcam.am.zoom.us";
+
     private final JHipsterProperties jHipsterProperties;
 
     private final RememberMeServices rememberMeServices;
@@ -105,10 +118,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .contentSecurityPolicy(
                 "default-src 'self';" +
                     "frame-src 'self' data:;" +
-                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://zoom.us https://*.zoom.us https://storage.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com;" +
-                    "style-src 'self' https://zoom.us https://*.zoom.us https://fonts.googleapis.com 'unsafe-inline';" +
-                    "img-src 'self' https://zoom.us https://*.zoom.us data: https://www.google-analytics.com https://www.googletagmanager.com;" +
-                    "connect-src 'self' https://*zoom* data: https://www.google-analytics.com https://www.googletagmanager.com;" +
+                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' " + ZOOM_LINKS + " https://storage.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com;" +
+                    "style-src 'self' " + ZOOM_LINKS + " https://fonts.googleapis.com 'unsafe-inline';" +
+                    "img-src 'self' " + ZOOM_LINKS + " data: https://www.google-analytics.com https://www.googletagmanager.com;" +
+                    "connect-src 'self' " + ZOOM_LINKS + " data: https://www.google-analytics.com https://www.googletagmanager.com;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
             .and()
