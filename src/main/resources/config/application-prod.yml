@@ -104,7 +104,7 @@ jhipster:
       # security key (this key should be unique for your application, and kept secret)
       key: 037adfce65313cc4371e5c811a62600dfe393ed46f8e7625330ea5eb2a9f091d0a6f0c19f6fda02f06dcf0264c9bb7d2f2eb
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://my-server-url-to-change # Modify according to your server's URL
+    base-url: http://maxmove.hu
   metrics:
     logs: # Reports metrics in the logs
       enabled: false

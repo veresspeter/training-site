@@ -10,6 +10,7 @@
 body {
   background-color: $mv-bg;
   overflow-y: auto !important;
+  height: auto;
 
   jhi-main {
     .container-fluid {
@@ -111,4 +112,8 @@ body {
     width: calc(80vw - 200px) !important;
     height: calc(80vw / 16 * 9 - 50px) !important;
   }
+}
+
+.tooltip {
+  opacity: 1 !important;
 }
