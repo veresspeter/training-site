@@ -54,7 +54,7 @@ public class EventService {
     public EventDTO save(EventDTO eventDTO) {
         log.debug("Request to save Event : {}", eventDTO);
 
-        if (eventDTO.getStreamLinkType() == LinkType.ZOOM) {
+        if (eventDTO.getStreamLinkType() == LinkType.ZOOM && eventDTO.getStreamLink() == null) {
             try {
                 this.zoomAPIClientService.createMeeting(eventDTO);
             } catch (Exception e) {
