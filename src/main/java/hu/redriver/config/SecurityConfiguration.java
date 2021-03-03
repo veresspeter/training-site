@@ -115,11 +115,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .contentSecurityPolicy(
                 "default-src 'self';" +
                     "frame-src 'self' data:;" +
-                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' " + ZOOM_LINKS + GOOGLE_LINKS + " ;" +
+                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' " + ZOOM_LINKS + GOOGLE_LINKS + " blob: ;" +
                     "style-src 'self' " + ZOOM_LINKS + GOOGLE_LINKS + " 'unsafe-inline';" +
                     "img-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS + " ;" +
                     "connect-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS +" ;" +
-                    "worker-src 'self' blob: ;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
             .and()
