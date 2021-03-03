@@ -126,8 +126,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .featurePolicy("geolocation 'none';" +
                 "midi 'none'; sync-xhr 'none'; microphone 'none';" +
-                "camera 'none'; magnetometer 'none'; gyroscope 'none';" +
-                "speaker 'none';" +
+                "magnetometer 'none'; gyroscope 'none';" +
                 "fullscreen 'self';" +
                 "payment 'none'")
             .and()
