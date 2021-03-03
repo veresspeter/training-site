@@ -38,7 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         "https://rwcny.ny.zoom.us " +
         "https://rwcsy.sy.zoom.us " +
         "https://rwchy.hy.zoom.us " +
-        "https://rwcam.am.zoom.us";
+        "https://rwcam.am.zoom.us " +
+        "wss://zoomfrn14rwg.fr.zoom.us " +
+        "wss://zoomamn16rwg.am.zoom.us";
 
     private final JHipsterProperties jHipsterProperties;
 
