@@ -77,6 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")
+            .antMatchers("/node_modules/**")
             .antMatchers("/h2-console/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**");
@@ -118,7 +119,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "style-src 'self' " + ZOOM_LINKS + GOOGLE_LINKS + " 'unsafe-inline';" +
                     "img-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS + " ;" +
                     "connect-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS +" ;" +
-                    "worker-src 'self' ;" +
+                    "worker-src 'self' data: 'self' ;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
             .and()
