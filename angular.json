@@ -26,14 +26,7 @@
         }
       },
       "prefix": "jhi",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "allowedCommonJsDependencies": ["@zoomus/websdk"]
-          }
-        }
-      }
+      "architect": {}
     }
   },
   "defaultProject": "maxmove",
