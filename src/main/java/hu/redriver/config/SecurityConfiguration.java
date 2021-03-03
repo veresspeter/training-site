@@ -28,19 +28,10 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final String ZOOM_LINKS = "https://zoom.us " +
-        "https://rwcsc.sc.zoom.us " +
-        "https://rwcprod.zoom.us " +
-        "https://rwcprod.tj.zoom.com.cn " +
-        "https://rwcty.ty.zoom.us " +
-        "https://rwcdv.dv.zoom.us " +
-        "https://rwcfr.fr.zoom.us " +
-        "https://rwchk.hk.zoom.us " +
-        "https://rwcny.ny.zoom.us " +
-        "https://rwcsy.sy.zoom.us " +
-        "https://rwchy.hy.zoom.us " +
-        "https://rwcam.am.zoom.us " +
-        "wss://zoomfrn14rwg.fr.zoom.us " +
-        "wss://zoomamn16rwg.am.zoom.us";
+        "https://*.zoom.us " +
+        "https://*.*.zoom.us " +
+        "wss://*.zoom.us " +
+        "wss://*.*.zoom.us";
 
     private final JHipsterProperties jHipsterProperties;
 
