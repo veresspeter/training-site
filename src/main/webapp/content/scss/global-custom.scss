@@ -9,7 +9,7 @@
 html {
   overflow: auto !important;
   body {
-    background-color: #000;
+    background-color: $mv-bg;
     overflow: hidden !important;
     height: auto !important;
     width: auto !important;
@@ -107,7 +107,7 @@ html {
   .meeting-client-inner {
     height: calc(100% - 50px);
     top: 50px;
-    background-color: $mv-bg;
+    background-color: #000;
   }
 
   .meeting-app {
