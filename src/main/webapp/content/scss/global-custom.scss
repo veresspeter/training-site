@@ -7,10 +7,10 @@
   }
 }
 html {
-  overflow: hidden !important;
+  overflow: auto !important;
   body {
     background-color: $mv-bg;
-    overflow: auto !important;
+    overflow: hidden !important;
     height: auto !important;
     width: auto !important;
     position: relative;

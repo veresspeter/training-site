@@ -29,9 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final String ZOOM_LINKS = "https://zoom.us " +
         "https://*.zoom.us " +
-        "https://*.*.zoom.us " +
-        "wss://*.zoom.us " +
-        "wss://*.*.zoom.us";
+        "https://*.zoom.com.cn " +
+        "wss://*.zoom.us";
 
     private final JHipsterProperties jHipsterProperties;
 
