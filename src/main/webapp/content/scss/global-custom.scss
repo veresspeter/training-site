@@ -12,8 +12,8 @@ html {
     background-color: $mv-bg;
     overflow: hidden !important;
     height: auto !important;
-    width: auto !important;
-    min-width: auto !important;
+    width: 100% !important;
+    min-width: 100% !important;
     position: relative;
 
     jhi-main {
