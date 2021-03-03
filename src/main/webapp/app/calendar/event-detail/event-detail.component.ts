@@ -99,7 +99,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   authenticate(): void {
     this.accountService.identity().subscribe(account => {
-      if (account != null) this.userName = account?.lastName + ' ' + account?.lastName;
+      if (account != null) this.userName = account?.lastName + ' ' + account?.firstName;
     });
   }
 }
