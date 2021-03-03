@@ -5,7 +5,9 @@ import { ZoomMtg } from '@zoomus/websdk';
 import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core/auth/account.service';
 
-ZoomMtg.setZoomJSLib('./content/@zoomus/websdk/lib', '/av');
+ZoomMtg.i18n.load('en-US');
+//ZoomMtg.setZoomJSLib('./content/@zoomus/websdk/lib', '/av');
+ZoomMtg.setZoomJSLib('https://source.zoom.us/1.9.0/lib', '/av');
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareJssdk();
 
