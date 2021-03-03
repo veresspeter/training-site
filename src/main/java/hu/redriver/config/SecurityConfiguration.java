@@ -118,6 +118,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     "style-src 'self' " + ZOOM_LINKS + GOOGLE_LINKS + " 'unsafe-inline';" +
                     "img-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS + " ;" +
                     "connect-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS +" ;" +
+                    "worker-src 'self' ;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
             .and()
