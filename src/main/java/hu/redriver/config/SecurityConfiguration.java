@@ -130,7 +130,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "payment 'none'")
             .and()
             .frameOptions()
-            .deny()
+            .sameOrigin()
             .and()
             .authorizeRequests()
             .antMatchers("/api/authenticate").permitAll()
