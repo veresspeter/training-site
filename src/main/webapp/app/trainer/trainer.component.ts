@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IActivity } from 'app/shared/model/activity.model';
 import { Subscription } from 'rxjs';
 import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { ActivatedRoute } from '@angular/router';
@@ -46,7 +45,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: IActivity): number {
+  trackId(index: number, item: IApplicationUser): number {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return item.id!;
   }

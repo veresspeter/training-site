@@ -23,7 +23,7 @@ describe('Component Tests', () => {
     describe('PasswordStrengthBarComponents', () => {
       it('should initialize with default values', () => {
         expect(comp.measureStrength('')).toBe(0);
-        expect(comp.colors).toEqual(['#F00', '#F90', '#FF0', '#9F0', '#0F0']);
+        expect(comp.colors).toEqual(['#F00', '#F90', '#FF0', '#00AA00', '#0F0']);
         expect(comp.getColor(0).idx).toBe(1);
         expect(comp.getColor(0).color).toBe(comp.colors[0]);
       });

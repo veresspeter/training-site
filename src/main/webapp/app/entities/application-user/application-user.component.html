@@ -29,12 +29,12 @@
                     <a *ngIf="applicationUser.image"
                        (click)="openFile(applicationUser.imageContentType, applicationUser.image)">
                         <img [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image"
-                             style="max-height: 30px;" alt="applicationUser image"/>
+                             style="max-height: 100px;" alt="{{applicationUser.fullName}} profilképe"/>
                     </a>
                 </td>
                 <td>{{ applicationUser.fullName }}</td>
                 <td>{{ applicationUser.credit }}</td>
-                <td class="text-center">
+                <td>
                     <fa-icon *ngIf="applicationUser.isTrainer" icon="times"></fa-icon>
                 </td>
                 <td class="text-right">

@@ -7,11 +7,11 @@
     </div>
 </div>
 
-<ng-container *ngIf="!loading">
-    <h2 id="page-heading">
-        Oktatók
-    </h2>
+<h2 id="page-heading">
+    Oktatók
+</h2>
 
+<ng-container *ngIf="!loading">
     <div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="applicationUsers?.length === 0">
         <span class="text-light">Még egyik oktató profilja sem publikus</span>
     </div>

@@ -17,7 +17,7 @@
         {{activityType?.name}}
     </h2>
 
-    <div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="activities?.length === 0">
+    <div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="!loading && activities?.length === 0">
         <span class="text-light">Még nincsenek foglalkozások feltöltve</span>
     </div>
 

@@ -11,7 +11,7 @@
     </div>
 </div>
 
-<div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="activityTypes?.length === 0">
+<div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="!loading && activityTypes?.length === 0">
     <span class="text-light">Még nincsenek foglalkozás típusok feltöltve</span>
 </div>
 
