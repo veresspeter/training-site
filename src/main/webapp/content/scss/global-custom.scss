@@ -8,6 +8,8 @@
 }
 html {
   overflow: auto !important;
+  min-width: 320px !important;
+
   body {
     background-color: $mv-bg;
     overflow: hidden !important;
@@ -53,7 +55,7 @@ html {
   }
 }
 
-.btn {
+.btn:not(.btn-link, #zmmtg-root) {
   width: 175px;
   height: 35px;
   border-radius: 0;

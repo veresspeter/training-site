@@ -22,20 +22,14 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    private final String ZOOM_LINKS = "https://zoom.us " +
-        "https://*.zoom.us " +
-        "https://*.zoom.com.cn " +
-        "wss://*.zoom.us " +
-        "https://*.jsdelivr.net ";
-    private final String GOOGLE_LINKS = "https://storage.googleapis.com " +
-        "https://www.google-analytics.com " +
-        "https://www.googletagmanager.com "+
-        "http://www.googletagmanager.com ";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -116,10 +110,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .contentSecurityPolicy(
                 "default-src 'self';" +
                     "frame-src 'self' data:;" +
-                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' " + ZOOM_LINKS + GOOGLE_LINKS + " blob: ;" +
-                    "style-src 'self' " + ZOOM_LINKS + GOOGLE_LINKS + " 'unsafe-inline';" +
-                    "img-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS + " ;" +
-                    "connect-src 'self' " + ZOOM_LINKS + " data: " + GOOGLE_LINKS +" ;" +
+                    "script-src 'self' 'unsafe-inline' 'unsafe-eval' " + getCORSAsString() + " blob: ;" +
+                    "style-src 'self' " + getCORSAsString() + " 'unsafe-inline';" +
+                    "img-src 'self' " + getCORSAsString() + " data: " + getCORSAsString() + " ;" +
+                    "connect-src 'self' " + getCORSAsString() + " data: " + getCORSAsString() + " ;" +
                     "font-src 'self' https://fonts.gstatic.com data:"
             )
             .and()
@@ -151,5 +145,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
         // @formatter:on
+    }
+
+    private String getCORSAsString() {
+        return String.join(" ", Optional.ofNullable(jHipsterProperties.getCors().getAllowedOrigins()).orElse(Collections.singletonList("")));
     }
 }
