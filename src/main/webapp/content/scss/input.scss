@@ -1,0 +1,33 @@
+.input-group {
+  border: solid 1px $mv-pastel;
+  box-shadow: 0 0 10px $mv-shadow-primary;
+  background-color: $mv-pastel-light;
+  padding-right: 5px;
+  border-radius: 0.15em;
+
+  input,
+  .input-group-text {
+    border: none !important;
+    background-color: $mv-pastel-light;
+    box-shadow: none;
+  }
+}
+
+:not(.input-group) > input {
+  border: solid 1px $mv-pastel !important;
+  box-shadow: 0 0 10px $mv-shadow-primary !important;
+  background-color: $mv-pastel-light !important;
+}
+
+input:not([type='checkbox']) {
+  height: 50px !important;
+  padding: 15px !important;
+
+  &:-internal-autofill-selected {
+    background-color: $mv-pastel !important;
+  }
+}
+
+input[type='checkbox'] {
+  margin-top: 3px;
+}

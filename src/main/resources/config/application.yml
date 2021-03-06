@@ -111,6 +111,13 @@ spring:
   output:
     ansi:
       console-available: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1084550267072-jb6emiq4jdeqs2qqulml1vkph0boidi2.apps.googleusercontent.com
+            client-secret: xHwDBzZCU39aOjTjer56Y2mT
 
 server:
   servlet:

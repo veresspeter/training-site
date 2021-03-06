@@ -1,0 +1,38 @@
+.btn:not(.btn-link, #zmmtg-root *) {
+  width: 175px;
+  height: 35px;
+  border-radius: 0;
+  box-shadow: 0 0 0.4rem $mv-shadow-primary;
+
+  &.btn-icon {
+    width: auto;
+    height: auto;
+    color: $mv-text-light;
+    fa-icon * {
+      color: $mv-text-light;
+    }
+  }
+
+  &.btn-primary {
+    color: $mv-text-light;
+    background-color: $mv-btn-primary;
+    border-color: $mv-btn-primary;
+
+    &:hover {
+      background-color: $mv-btn-hover-primary;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0.1rem 0.1rem opacify($mv-dark, 0.5);
+    }
+
+    &:active {
+      background-color: $mv-btn-activate-primary !important;
+      border-color: $mv-dark !important;
+    }
+  }
+}
+
+.btn.btn-link:not(#zmmtg-root *) {
+  color: $mv-text-dark;
+}

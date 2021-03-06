@@ -1,0 +1,13 @@
+@import '../../../content/scss/variables';
+
+:host {
+  .card {
+    text-align: center;
+    background-color: $mv-bg;
+    border: none;
+
+    .form-group {
+      text-align: left;
+    }
+  }
+}

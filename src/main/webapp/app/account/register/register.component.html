@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-md-8 card">
+    <div class="col-md-8 col-lg-6 col-xl-4 card">
         <div class="card-body">
             <div>
                 <h1>Regisztráció</h1>
@@ -28,7 +28,7 @@
 
             <div>
                 <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
-                    <div class="form-group">
+                    <div class="form-group" hidden>
                         <label class="form-control-label" for="login">Felhasználónév</label>
                         <input type="text" class="form-control" id="login" name="login"
                                placeholder="felhasználóneved helye"
@@ -59,8 +59,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-control-label" for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email címed"
+                        <label class="form-control-label" for="email">Email cím</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email cím"
                                formControlName="email">
 
                         <div
@@ -71,7 +71,7 @@
                             </small>
 
                             <small class="form-text text-danger"
-                                   *ngIf="registerForm.get('email')?.errors?.invalid">
+                                   *ngIf="registerForm.get('email')?.errors?.pattern">
                                 A megadott email cím nem helyes
                             </small>
 
@@ -88,11 +88,20 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-control-label" for="password">Új jelszó</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="jelszavad helye" formControlName="password">
+                        <label class="form-control-label" for="password">Jelszó</label>
+                        <div class="input-group">
+                            <input [attr.type]="showPsw ? 'text' : 'password'" class="form-control" id="password" name="password"
+                                   placeholder="Jelszó" formControlName="password">
 
-                        <div *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
+                            <div class="input-group-append">
+                             <button type="button" class="input-group-text" (click)="togglePsw()">
+                               <fa-icon [icon]="showPsw ? 'eye' : 'eye-slash'"></fa-icon>
+                             </button>
+                            </div>
+                        </div>
+
+                        <div
+                            *ngIf="registerForm.get('password')!.invalid && (registerForm.get('password')!.dirty || registerForm.get('password')!.touched)">
                             <small class="form-text text-danger"
                                    *ngIf="registerForm.get('password')?.errors?.required">
                                 Mező kitöltése kötelező
@@ -109,14 +118,22 @@
                             </small>
                         </div>
 
-                        <jhi-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-control-label" for="confirmPassword">Új jelszó megerősítése</label>
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-                               placeholder="jelszavad helye"
-                               formControlName="confirmPassword">
+                        <label class="form-control-label" for="confirmPassword">Jelszó megerősítése</label>
+                        <div class="input-group">
+                            <input [attr.type]="showRePsw ? 'text' : 'password'" class="form-control" id="confirmPassword" name="confirmPassword"
+                                   placeholder="Jelszó megerősítése"
+                                   formControlName="confirmPassword">
+
+                            <div class="input-group-append">
+                             <button type="button" class="input-group-text" (click)="toggleRePsw()">
+                               <fa-icon [icon]="showRePsw ? 'eye' : 'eye-slash'"></fa-icon>
+                             </button>
+                            </div>
+                        </div>
+
 
                         <div
                             *ngIf="registerForm.get('confirmPassword')!.invalid && (registerForm.get('confirmPassword')!.dirty || registerForm.get('confirmPassword')!.touched)">
@@ -135,9 +152,12 @@
                                 A mező maximum 50 karakter hosszú lehet
                             </small>
                         </div>
+
+                        <jhi-password-strength-bar
+                            [passwordToCheck]="registerForm.get('password')!.value"></jhi-password-strength-bar>
                     </div>
 
-                    <button type="submit" [disabled]="registerForm.invalid" class="btn btn-primary">Regisztráció</button>
+                    <button type="submit" class="btn btn-primary">Regisztráció</button>
                 </form>
             </div>
         </div>
