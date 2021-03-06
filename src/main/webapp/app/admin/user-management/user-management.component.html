@@ -1,9 +1,9 @@
 <div>
     <h2>
-        <span id="user-management-page-heading">Users</span>
+        <span id="user-management-page-heading">Felhasználók (rendszeradatok)</span>
 
         <button class="btn btn-primary float-right jh-create-entity" [routerLink]="['./new']">
-            <fa-icon icon="plus"></fa-icon> <span>Create a new User</span>
+            Létrehozás
         </button>
     </h2>
 
@@ -15,58 +15,51 @@
         <table class="table table-striped" aria-describedby="user-management-page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="transition.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="login"><span>Login</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="email"><span>Email</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="login"><span>Felhasználónév</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="email"><span>Email cím</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
-                    <th scope="col"><span>Profiles</span></th>
-                    <th scope="col" jhiSortBy="createdDate"><span>Created Date</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col" jhiSortBy="lastModifiedBy"><span>Last Modified By</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col" jhiSortBy="lastModifiedDate"><span>Last Modified Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"><span>Jogosultságok</span></th>
+                    <th scope="col" jhiSortBy="createdDate"><span>Létrehozva</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col" jhiSortBy="lastModifiedDate"><span>Utolsó módosítás</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col" jhiSortBy="lastModifiedBy"><span>Utolsó módosító</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody *ngIf="users">
                 <tr *ngFor="let user of users; trackBy: trackIdentity">
-                    <td><a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a></td>
                     <td>{{ user.login }}</td>
                     <td>{{ user.email }}</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated">Deactivated</button>
-                        <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
-                                [disabled]="!currentAccount || currentAccount.login === user.login">Activated</button>
+                        <button class="btn btn-outline-primary btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated">Deaktivált</button>
+                        <button class="btn btn-primary btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
+                                [disabled]="!currentAccount || currentAccount.login === user.login">Aktivált</button>
                     </td>
                     <td>
                         <div *ngFor="let authority of user.authorities">
-                            <span class="badge badge-info">{{ authority }}</span>
+                            <span class="badge badge-primary">{{ authority }}</span>
                         </div>
                     </td>
-                    <td>{{ user.createdDate | date:'dd/MM/yy HH:mm' }}</td>
+                    <td>{{ user.createdDate | date:'yyyy.MM.dd. HH:mm' }}</td>
+                    <td>{{ user.lastModifiedDate | date:'yyyy.MM.dd. HH:mm' }}</td>
                     <td>{{ user.lastModifiedBy }}</td>
-                    <td>{{ user.lastModifiedDate | date:'dd/MM/yy HH:mm' }}</td>
                     <td class="text-right">
-                        <div class="btn-group">
                             <button type="submit"
                                     [routerLink]="['./', user.login, 'view']"
-                                    class="btn btn-info btn-sm">
+                                    class="btn btn-primary btn-icon">
                                 <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline">View</span>
                             </button>
 
                             <button type="submit"
                                     [routerLink]="['./', user.login, 'edit']"
                                     queryParamsHandling="merge"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
+                                    class="btn btn-primary btn-icon">
+                                <fa-icon icon="pen"></fa-icon>
                             </button>
 
                             <button type="button" (click)="deleteUser(user)"
-                                    class="btn btn-danger btn-sm" [disabled]="!currentAccount || currentAccount.login === user.login">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline">Delete</span>
+                                    class="btn btn-primary btn-icon" [disabled]="!currentAccount || currentAccount.login === user.login">
+                                <fa-icon icon="trash"></fa-icon>
                             </button>
-                        </div>
                     </td>
                 </tr>
             </tbody>

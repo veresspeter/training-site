@@ -1,12 +1,10 @@
 <div>
     <div class="row justify-content-around">
         <div class="col-10 col-md-8 col-xl-4">
-            <div class="card">
-                <h1 class="card-header">Hoppá!</h1>
+            <h1>Hoppá!</h1>
 
-                <div *ngIf="errorMessage" class="card-body">
-                    <div class="alert alert-danger">{{ errorMessage }}</div>
-                </div>
+            <div *ngIf="errorMessage">
+                <div class="alert alert-danger shadow">{{ errorMessage }}</div>
             </div>
         </div>
     </div>

@@ -31,6 +31,25 @@
       border-color: $mv-dark !important;
     }
   }
+
+  &.btn-outline-primary {
+    color: $mv-btn-primary;
+    border-color: $mv-btn-primary;
+
+    &:hover {
+      color: $mv-text-light;
+      background-color: $mv-btn-primary;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0.1rem 0.1rem opacify($mv-dark, 0.5);
+    }
+
+    &:active {
+      background-color: $mv-btn-activate-primary !important;
+      border-color: $mv-dark !important;
+    }
+  }
 }
 
 .btn.btn-link:not(#zmmtg-root *) {
