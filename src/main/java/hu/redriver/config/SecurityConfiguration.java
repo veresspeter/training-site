@@ -30,7 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final String ZOOM_LINKS = "https://zoom.us " +
         "https://*.zoom.us " +
         "https://*.zoom.com.cn " +
-        "wss://*.zoom.us ";
+        "wss://*.zoom.us " +
+        "https://*.jsdelivr.net ";
     private final String GOOGLE_LINKS = "https://storage.googleapis.com " +
         "https://www.google-analytics.com " +
         "https://www.googletagmanager.com "+
@@ -143,7 +144,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/activity-types/{id}").permitAll()
             .antMatchers("/api/events").permitAll()
             .antMatchers("/api/**").authenticated()
-            .antMatchers("/websocket/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
+            // next line includes .antMatchers("/websocket/tracker").permitAll()
             .antMatchers("/websocket/**").permitAll()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()

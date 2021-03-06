@@ -15,12 +15,12 @@ public class WebsocketSecurityConfiguration extends AbstractSecurityWebSocketMes
             .nullDestMatcher().authenticated()
             // custom rula for tracker to work with websockets
             .simpDestMatchers("/tracker/**").permitAll()
-            .simpDestMatchers("/topic/tracker").hasAuthority(AuthoritiesConstants.ADMIN)
+            .simpDestMatchers("/topic/tracker").permitAll()
             // matches any destination that starts with /topic/
             // (i.e. cannot send messages directly to /topic/)
             // (i.e. cannot subscribe to /topic/messages/* to get messages sent to
             // /topic/messages-user<id>)
-            .simpDestMatchers("/topic/**").authenticated()
+            .simpDestMatchers("/topic/**").permitAll()
             // message types other than MESSAGE and SUBSCRIBE
             .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll()
             // catch all
