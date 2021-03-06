@@ -32,7 +32,7 @@ public class MailService {
 
     private static final String USER = "user";
 
-    private static final String BASE_URL = "maxmove.hu";
+    private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -42,8 +42,7 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
-    public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine) {
+    public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender, MessageSource messageSource, SpringTemplateEngine templateEngine) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
