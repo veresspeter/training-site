@@ -59,6 +59,12 @@ public class ApplicationUserService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public List<ApplicationUserDTO> findAllTrainer() {
+        log.debug("Request to get all Trainers");
+        return applicationUserMapper.toDto(applicationUserRepository.findByIsTrainerTrue());
+    }
+
 
     /**
      * Get one applicationUser by id.

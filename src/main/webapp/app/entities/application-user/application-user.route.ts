@@ -7,7 +7,7 @@ import { flatMap } from 'rxjs/operators';
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IApplicationUser, ApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from './application-user.service';
+import { ApplicationUserService } from '../../shared/services/application-user.service';
 import { ApplicationUserComponent } from './application-user.component';
 import { ApplicationUserDetailComponent } from './application-user-detail.component';
 import { ApplicationUserUpdateComponent } from './application-user-update.component';

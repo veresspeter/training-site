@@ -11,7 +11,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { AccountService } from 'app/core/auth/account.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 @Component({
   selector: 'jhi-event',

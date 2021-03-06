@@ -5,7 +5,7 @@
     </button>
 
     <h2 id="page-heading">
-        <span>Felhasználók nem rendszer szintű adatai</span>
+        <span>Felhasználók (személyes adatok)</span>
     </h2>
 
     <div class="alert alert-warning" id="no-result" *ngIf="applicationUsers?.length === 0">
@@ -16,45 +16,44 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
+                <th scope="col"><span>Kép</span></th>
                 <th scope="col"><span>Teljes név</span></th>
                 <th scope="col"><span>Egységek</span></th>
-                <th scope="col"><span>Nem</span></th>
-                <th scope="col"><span>Születésnap</span></th>
-                <th scope="col"><span>Google Token</span></th>
-                <th scope="col"><span>Facebook Token</span></th>
-                <th scope="col"><span>Kép</span></th>
-                <th scope="col"><span>Bemutatkozás</span></th>
                 <th scope="col"><span>Oktató</span></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let applicationUser of applicationUsers ;trackBy: trackId">
-                <td>{{ applicationUser.fullName }}</td>
-                <td>{{ applicationUser.credit }}</td>
-                <td>{{ applicationUser.sex }}</td>
-                <td>{{ applicationUser.birthDay | date:'mediumDate' }}</td>
-                <td>{{ applicationUser.googleToken }}</td>
-                <td>{{ applicationUser.facebookToken }}</td>
                 <td>
                     <a *ngIf="applicationUser.image"
                        (click)="openFile(applicationUser.imageContentType, applicationUser.image)">
                         <img [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image"
                              style="max-height: 30px;" alt="applicationUser image"/>
                     </a>
-                    <span *ngIf="applicationUser.image">{{ applicationUser.imageContentType }}
-                        , {{ byteSize(applicationUser.image) }}</span>
                 </td>
-                <td>{{ applicationUser.introduction }}</td>
-                <td>{{ applicationUser.isTrainer ? "X" : ""}}</td>
+                <td>{{ applicationUser.fullName }}</td>
+                <td>{{ applicationUser.credit }}</td>
+                <td class="text-center">
+                    <fa-icon *ngIf="applicationUser.isTrainer" icon="times"></fa-icon>
+                </td>
                 <td class="text-right">
-                    <button type="submit" [routerLink]="['/application-user', applicationUser.id, 'edit']"
-                            class="btn btn-primary btn-sm">
-                        Szerkesztés
+                    <button type="submit"
+                            [routerLink]="['./', applicationUser.id, 'view']"
+                            class="btn btn-primary btn-icon">
+                        <fa-icon icon="eye"></fa-icon>
                     </button>
 
-                    <button type="submit" (click)="delete(applicationUser)" class="btn btn-danger btn-sm">
-                        Törlés
+                    <button type="submit"
+                            [routerLink]="['./', applicationUser.id, 'edit']"
+                            queryParamsHandling="merge"
+                            class="btn btn-primary btn-icon">
+                        <fa-icon icon="pen"></fa-icon>
+                    </button>
+
+                    <button type="button" (click)="delete(applicationUser)"
+                            class="btn btn-primary btn-icon" [disabled]="!currentAccount || currentAccount.id === applicationUser.internalUserId">
+                        <fa-icon icon="trash"></fa-icon>
                     </button>
                 </td>
             </tr>

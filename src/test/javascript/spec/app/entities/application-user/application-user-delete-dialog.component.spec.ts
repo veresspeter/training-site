@@ -7,7 +7,7 @@ import { MaxmoveTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { ApplicationUserDeleteDialogComponent } from 'app/entities/application-user/application-user-delete-dialog.component';
-import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 describe('Component Tests', () => {
   describe('ApplicationUser Management Delete Component', () => {

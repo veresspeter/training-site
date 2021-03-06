@@ -11,7 +11,11 @@
     </div>
 </div>
 
-<ul *ngIf="!loading" class="row justify-content-center align-items-center">
+<div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="activityTypes?.length === 0">
+    <span class="text-light">Még nincsenek foglalkozás típusok feltöltve</span>
+</div>
+
+<ul *ngIf="!loading && activityTypes!.length > 0" class="row justify-content-center align-items-center">
     <li class="col-12 col-lg-6 col-xl-4" *ngFor="let activityType of activityTypes; trackBy: trackId">
         <div class="card mx-md-3">
             <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">

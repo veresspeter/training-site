@@ -10,7 +10,7 @@ import { PassService } from './pass.service';
 import { IPassType } from 'app/shared/model/pass-type.model';
 import { PassTypeService } from 'app/entities/pass-type/pass-type.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 type SelectableEntity = IPassType | IApplicationUser;
 

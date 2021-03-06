@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
 import { ApplicationUserUpdateComponent } from 'app/entities/application-user/application-user-update.component';
-import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { ApplicationUser } from 'app/shared/model/application-user.model';
 
 describe('Component Tests', () => {

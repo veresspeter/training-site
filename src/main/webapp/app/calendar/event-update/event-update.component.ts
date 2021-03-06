@@ -9,7 +9,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { IEvent, Event } from 'app/shared/model/event.model';
 import { EventService } from 'app/shared/services/event.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
 import { ActivityService } from 'app/shared/services/activity.service';
 

@@ -89,6 +89,12 @@ public class ApplicationUserResource {
         return applicationUserService.findAll();
     }
 
+    @GetMapping("/trainers")
+    public List<ApplicationUserDTO> getAllTrainers() {
+        log.debug("REST request to get all Trainers");
+        return applicationUserService.findAllTrainer();
+    }
+
     /**
      * {@code GET  /application-users/:id} : get the "id" applicationUser.
      *

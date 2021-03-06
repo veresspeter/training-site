@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { TrainerComponent } from './trainer.component';
 import { RouterModule } from '@angular/router';
 import { trainerRoutes } from 'app/trainer/trainer.route';
+import { MaxmoveSharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [TrainerComponent],
-  imports: [CommonModule, RouterModule.forChild(trainerRoutes)],
+  imports: [CommonModule, RouterModule.forChild(trainerRoutes), MaxmoveSharedModule],
 })
 export class TrainerModule {}

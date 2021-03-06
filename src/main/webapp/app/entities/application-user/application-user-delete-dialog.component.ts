@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from './application-user.service';
+import { ApplicationUserService } from '../../shared/services/application-user.service';
 
 @Component({
   templateUrl: './application-user-delete-dialog.component.html',

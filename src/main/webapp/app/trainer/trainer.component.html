@@ -1,1 +1,34 @@
-<p>trainer works!</p>
+<div *ngIf="loading" class="app-loading">
+    <div class="lds-css ng-scope">
+        <div class="lds-pacman">
+            <div><div></div><div></div><div></div></div>
+            <div><div></div><div></div><div></div></div>
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="!loading">
+    <h2 id="page-heading">
+        Oktatók
+    </h2>
+
+    <div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="applicationUsers?.length === 0">
+        <span class="text-light">Még egyik oktató profilja sem publikus</span>
+    </div>
+
+    <div class="card" *ngFor="let applicationUser of applicationUsers; trackBy: trackId">
+        <div class="card-body">
+            <h3>{{applicationUser.fullName}}</h3>
+            <p>{{applicationUser.introduction}}</p>
+        </div>
+        <img *ngIf="applicationUser.image" class="card-img" [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image" alt="oktató képe"/>
+
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
+            <button type="submit" class="btn btn-icon btn-primary"
+                    [routerLink]="['/application-user', applicationUser?.id, 'edit']">
+                <fa-icon icon="pen"></fa-icon>
+            </button>
+        </div>
+    </div>
+</ng-container>
+

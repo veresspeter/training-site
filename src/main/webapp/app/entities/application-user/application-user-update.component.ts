@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IApplicationUser, ApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from './application-user.service';
+import { ApplicationUserService } from '../../shared/services/application-user.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';

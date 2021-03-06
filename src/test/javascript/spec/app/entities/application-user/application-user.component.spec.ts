@@ -4,7 +4,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { MaxmoveTestModule } from '../../../test.module';
 import { ApplicationUserComponent } from 'app/entities/application-user/application-user.component';
-import { ApplicationUserService } from 'app/entities/application-user/application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { ApplicationUser } from 'app/shared/model/application-user.model';
 
 describe('Component Tests', () => {

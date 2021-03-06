@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IApplicationUser[]>;
 @Injectable({ providedIn: 'root' })
 export class ApplicationUserService {
   public resourceUrl = SERVER_API_URL + 'api/application-users';
+  public trainerResourceUrl = SERVER_API_URL + 'api/trainers';
 
   constructor(protected http: HttpClient) {}
 
@@ -48,6 +49,13 @@ export class ApplicationUserService {
     const options = createRequestOption(req);
     return this.http
       .get<IApplicationUser[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryTrainers(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IApplicationUser[]>(this.trainerResourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

@@ -5,25 +5,30 @@ import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from './application-user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { ApplicationUserDeleteDialogComponent } from './application-user-delete-dialog.component';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-application-user',
   templateUrl: './application-user.component.html',
 })
 export class ApplicationUserComponent implements OnInit, OnDestroy {
+  currentAccount: Account | null = null;
   applicationUsers?: IApplicationUser[];
   eventSubscriber?: Subscription;
 
   constructor(
     protected applicationUserService: ApplicationUserService,
+    protected accountService: AccountService,
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal
   ) {}
 
   loadAll(): void {
+    this.accountService.identity().subscribe(account => (this.currentAccount = account));
     this.applicationUserService.query().subscribe((res: HttpResponse<IApplicationUser[]>) => (this.applicationUsers = res.body || []));
   }
 
