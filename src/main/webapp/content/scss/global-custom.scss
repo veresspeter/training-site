@@ -55,7 +55,7 @@ html {
   }
 }
 
-.btn:not(.btn-link, #zmmtg-root) {
+.btn:not(.btn-link, #zmmtg-root *) {
   width: 175px;
   height: 35px;
   border-radius: 0;
