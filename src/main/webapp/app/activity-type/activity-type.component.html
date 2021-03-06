@@ -2,7 +2,16 @@
     Létrehozás
 </button>
 
-<ul class="row justify-content-center align-items-center">
+<div *ngIf="loading" class="app-loading">
+    <div class="lds-css ng-scope">
+        <div class="lds-pacman">
+            <div><div></div><div></div><div></div></div>
+            <div><div></div><div></div><div></div></div>
+        </div>
+    </div>
+</div>
+
+<ul *ngIf="!loading" class="row justify-content-center align-items-center">
     <li class="col-12 col-lg-6 col-xl-4" *ngFor="let activityType of activityTypes; trackBy: trackId">
         <div class="card mx-md-3">
             <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">

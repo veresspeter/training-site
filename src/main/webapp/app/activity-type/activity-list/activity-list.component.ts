@@ -19,6 +19,7 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   activities?: IActivity[];
   eventSubscriber?: Subscription;
   activityType?: IActivityType;
+  loading = true;
 
   constructor(
     protected activityService: ActivityService,
@@ -29,9 +30,10 @@ export class ActivityListComponent implements OnInit, OnDestroy {
   ) {}
 
   loadAll(): void {
-    this.activityService
-      .query({ activityTypeId: this.activityType?.id })
-      .subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
+    this.activityService.query({ activityTypeId: this.activityType?.id }).subscribe((res: HttpResponse<IActivity[]>) => {
+      this.activities = res.body || [];
+      this.loading = false;
+    });
   }
 
   ngOnInit(): void {

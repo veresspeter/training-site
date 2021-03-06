@@ -23,6 +23,7 @@ export class EventComponent implements OnInit, OnDestroy {
   eventSubscriber?: Subscription;
   activeUserId: number | undefined;
   isUserRequestActive = false;
+  loading = true;
 
   constructor(
     protected eventService: EventService,
@@ -33,7 +34,10 @@ export class EventComponent implements OnInit, OnDestroy {
   ) {}
 
   loadAll(): void {
-    this.eventService.query().subscribe((res: HttpResponse<IEvent[]>) => (this.events = res.body?.reverse() || []));
+    this.eventService.query().subscribe((res: HttpResponse<IEvent[]>) => {
+      this.events = res.body?.reverse() || [];
+      this.loading = false;
+    });
   }
 
   ngOnInit(): void {

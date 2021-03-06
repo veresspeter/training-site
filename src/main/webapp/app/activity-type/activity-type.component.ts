@@ -16,6 +16,7 @@ import { ActivityTypeDeleteDialogComponent } from 'app/activity-type/activity-ty
 export class ActivityTypeComponent implements OnInit, OnDestroy {
   activityTypes?: IActivityType[] = [];
   eventSubscriber?: Subscription;
+  loading = true;
 
   constructor(
     protected activityTypeService: ActivityTypeService,
@@ -26,7 +27,10 @@ export class ActivityTypeComponent implements OnInit, OnDestroy {
   ) {}
 
   loadAll(): void {
-    this.activityTypeService.query().subscribe((res: HttpResponse<IActivityType[]>) => (this.activityTypes = res.body || []));
+    this.activityTypeService.query().subscribe((res: HttpResponse<IActivityType[]>) => {
+      this.activityTypes = res.body || [];
+      this.loading = false;
+    });
   }
 
   ngOnInit(): void {

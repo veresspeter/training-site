@@ -3,56 +3,67 @@
     Létrehozás
 </button>
 
-<h2 id="page-heading" class="mb-5">
-    Órarend
-</h2>
-
-<div class="alert alert-warning" id="no-result" *ngIf="events?.length === 0">
-    <span>Nincs megjeleníthető esemény</span>
+<div *ngIf="loading" class="app-loading">
+    <div class="lds-css ng-scope">
+        <div class="lds-pacman">
+            <div><div></div><div></div><div></div></div>
+            <div><div></div><div></div><div></div></div>
+        </div>
+    </div>
 </div>
 
-<div id="entities" class="text-left" *ngIf="events && events.length > 0">
-    <ul class="row justify-content-center" aria-describedby="page-heading">
-        <li *ngFor="let event of events ;trackBy: trackId" class="col-12 col-md-6 col-lg-4 col-xl-2">
-            <div class="card">
-                <div class="card-header">{{ event.name }}</div>
-                <div class="card-body">
-                    <div>{{ event.start | date:'yyyy. MMM dd. HH:mm' }} - {{ event.end | date:'HH:mm' }}</div>
-                    <div>{{ event.participants?.length || 0 }} / {{ event.limit || "∞"}}</div>
-                    <div *ngIf="event.comment !== null" class="mt-3">{{ event.comment }}</div>
+<ng-container *ngIf="!loading">
+    <h2 id="page-heading" class="mb-5">
+        Órarend
+    </h2>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="events?.length === 0">
+        <span>Nincs megjeleníthető esemény</span>
+    </div>
+
+    <div id="entities" class="text-left" *ngIf="events && events.length > 0">
+        <ul class="row justify-content-center" aria-describedby="page-heading">
+            <li *ngFor="let event of events ;trackBy: trackId" class="col-12 col-md-6 col-lg-4 col-xl-2">
+                <div class="card">
+                    <div class="card-header">{{ event.name }}</div>
+                    <div class="card-body">
+                        <div>{{ event.start | date:'yyyy. MMM dd. HH:mm' }} - {{ event.end | date:'HH:mm' }}</div>
+                        <div>{{ event.participants?.length || 0 }} / {{ event.limit || "∞"}}</div>
+                        <div *ngIf="event.comment !== null" class="mt-3">{{ event.comment }}</div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event.id)" class="btn btn-primary btn-icon"
+                                [attr.disabled]="!isEventEditable(event) ? null : ''">
+                            <fa-icon icon="plus"></fa-icon>
+                        </button>
+
+                        <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event.id)" class="btn btn-danger btn-icon"
+                                [attr.disabled]="!isEventEditable(event) ? null : ''">
+                            <fa-icon icon="minus"></fa-icon>
+                        </button>
+
+                        <button *ngIf="isEventClosed(event) && isRegisteredShown(event)" type="button"  [routerLink]="['/calendar', event.id, 'view']"
+                                class="btn btn-success btn-icon" [attr.disabled]="isEventInProgress(event) ? null : ''"
+                                [attr.placement]="isEventClosed(event) && isEventInProgress(event) ? 'top' : null"
+                                [attr.ngbTooltip]="isEventClosed(event) && isEventInProgress(event) ? 'Az óra még nem kezdődik' : null"
+                        >
+                            <fa-icon icon="play-circle"></fa-icon>
+                        </button>
+                    </div>
+                    <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit">
+                        <button type="submit" [routerLink]="['/calendar', event.id, 'edit']"
+                                class="btn btn-primary btn-icon">
+                            <fa-icon icon="pen"></fa-icon>
+                        </button>
+
+                        <button type="submit" (click)="delete(event)" class="btn btn-primary btn-icon">
+                            <fa-icon icon="trash"></fa-icon>
+                        </button>
+                    </div>
+
                 </div>
-                <div class="card-footer text-right">
-                    <button *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event.id)" class="btn btn-primary btn-icon"
-                            [attr.disabled]="!isEventEditable(event) ? null : ''">
-                        <fa-icon icon="plus"></fa-icon>
-                    </button>
-
-                    <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event.id)" class="btn btn-danger btn-icon"
-                            [attr.disabled]="!isEventEditable(event) ? null : ''">
-                        <fa-icon icon="minus"></fa-icon>
-                    </button>
-
-                    <button *ngIf="isEventClosed(event) && isRegisteredShown(event)" type="button"  [routerLink]="['/calendar', event.id, 'view']"
-                            class="btn btn-success btn-icon" [attr.disabled]="isEventInProgress(event) ? null : ''"
-                            [attr.placement]="isEventClosed(event) && isEventInProgress(event) ? 'top' : null"
-                            [attr.ngbTooltip]="isEventClosed(event) && isEventInProgress(event) ? 'Az óra még nem kezdődik' : null"
-                    >
-                        <fa-icon icon="play-circle"></fa-icon>
-                    </button>
-                </div>
-                <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit">
-                    <button type="submit" [routerLink]="['/calendar', event.id, 'edit']"
-                            class="btn btn-primary btn-icon">
-                        <fa-icon icon="pen"></fa-icon>
-                    </button>
-
-                    <button type="submit" (click)="delete(event)" class="btn btn-primary btn-icon">
-                        <fa-icon icon="trash"></fa-icon>
-                    </button>
-                </div>
-
-            </div>
-        </li>
-    </ul>
-</div>
+            </li>
+        </ul>
+    </div>
+</ng-container>
 
