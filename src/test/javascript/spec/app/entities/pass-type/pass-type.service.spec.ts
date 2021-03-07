@@ -1,6 +1,6 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { PassTypeService } from 'app/entities/pass-type/pass-type.service';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { IPassType, PassType } from 'app/shared/model/pass-type.model';
 
 describe('Service Tests', () => {
@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(PassTypeService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new PassType(0, 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA', 0);
+      elemDefault = new PassType(0, 'AAAAAAA', 'AAAAAAA', 0, 0, 'AAAAAAA', 0);
     });
 
     describe('Service methods', () => {
@@ -57,7 +57,8 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             description: 'BBBBBB',
             durationDays: 1,
-            price: 'BBBBBB',
+            price: 1,
+            unit: 'BBBBBB',
             occasions: 1,
           },
           elemDefault
@@ -78,7 +79,8 @@ describe('Service Tests', () => {
             name: 'BBBBBB',
             description: 'BBBBBB',
             durationDays: 1,
-            price: 'BBBBBB',
+            price: 1,
+            unit: 'BBBBBB',
             occasions: 1,
           },
           elemDefault

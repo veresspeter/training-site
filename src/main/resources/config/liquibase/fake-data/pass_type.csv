@@ -1,4 +1,4 @@
-id;name;description;duration_days;price;occasions;available_for_type_id
-1;intermediate Sharable;supply-chains front-end Multi-channelled;42533;attitude-oriented THX;84532;1
-2;client-server Human;Sleek Frozen Chicken hard drive;57248;olive;17741;2
-3;Bedfordshire Web;Pizza Electronics transform;64790;driver;33821;3
+id;name;description;duration_days;price;unit;occasions;available_for_type_id
+1;intermediate Sharable;supply-chains front-end Multi-channelled;42533;52390;Refined;63076;1
+2;ROI Sausages Regional;Cambridgeshire;69262;72061;Florida olive;17741;2
+3;Bedfordshire Web;Pizza Electronics transform;64790;30806;Incredible Soft Soap Checking Account Ergonomic;33591;3

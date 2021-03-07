@@ -6,7 +6,7 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div class="form-group" hidden>
                     <label for="id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
@@ -48,6 +48,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" for="field_unit">Unit</label>
+                    <input type="text" class="form-control" name="price" id="field_unit"
+                           formControlName="unit"/>
+                    <div *ngIf="editForm.get('unit')!.invalid && (editForm.get('unit')!.dirty || editForm.get('unit')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('unit')?.errors?.required">
+                            This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" for="field_occasions">Occasions</label>
                     <input type="number" class="form-control" name="occasions" id="field_occasions"
                            formControlName="occasions"/>
@@ -65,24 +77,16 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_availableForType">Available For Type</label>
-                    <select class="form-control" id="field_availableForType" name="availableForType" formControlName="availableForTypeId">
-                        <option *ngIf="!editForm.get('availableForTypeId')!.value" [ngValue]="null" selected></option>
+                    <select class="form-control" id="field_availableForType" name="availableForType" formControlName="availableForType">
+                        <option *ngIf="!editForm.get('availableForType')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="activityTypeOption.id" *ngFor="let activityTypeOption of activityTypes; trackBy: trackById">{{ activityTypeOption.name }}</option>
                     </select>
                 </div>
-                <div *ngIf="editForm.get('availableForTypeId')!.invalid && (editForm.get('availableForTypeId')!.dirty || editForm.get('availableForTypeId')!.touched)">
+                <div *ngIf="editForm.get('availableForTypeId')?.invalid && (editForm.get('availableForTypeId')?.dirty || editForm.get('availableForTypeId')?.touched)">
                     <small class="form-text text-danger"
                            *ngIf="editForm.get('availableForTypeId')?.errors?.required">
                         This field is required.
                     </small>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_availableForActivity">Available For Activity</label>
-                    <select class="form-control" id="field_availableForActivity" name="availableForActivity" formControlName="availableForActivityId">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="activityOption.id" *ngFor="let activityOption of activities; trackBy: trackById">{{ activityOption.name }}</option>
-                    </select>
                 </div>
             </div>
 

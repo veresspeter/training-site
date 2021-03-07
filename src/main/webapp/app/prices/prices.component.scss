@@ -1,0 +1,74 @@
+@import '../../content/scss/variables';
+
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.hipster {
+  display: inline-block;
+  width: 347px;
+  height: 497px;
+  background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
+  background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  .hipster {
+    background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
+    background-size: contain;
+  }
+}
+
+:host {
+  text-align: right;
+
+  .container {
+    margin-top: 4em;
+    padding: 35px 25px 0 25px;
+    text-align: left;
+    border: solid 2px $mv-dark;
+
+    .category-header {
+      background-color: $mv-rose;
+      margin: 0 -50px;
+      padding: 10px 50px;
+      box-shadow: 0 0 15px $mv-shadow-primary;
+    }
+
+    .category-item {
+      margin: 15px 15px 0 15px;
+      padding-bottom: 15px;
+      border-bottom: solid 2px $mv-dark;
+
+      h4 {
+        margin: 0 -25px;
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      &:first-child {
+        margin-top: 50px;
+      }
+
+      &:last-child {
+        margin-bottom: 10px;
+        border-bottom: none;
+      }
+
+      .category-price h4 {
+        text-align: right;
+        margin-top: 5px;
+        font-size: 1.4rem;
+      }
+    }
+  }
+}

@@ -1,1 +1,63 @@
-<p>prices works!</p>
+<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary" [routerLink]="['/prices/new']">
+    Létrehozás
+</button>
+
+<h2 id="page-heading" class="text-center">Árak</h2>
+
+<div *ngIf="loading" class="app-loading">
+    <div class="lds-css ng-scope">
+        <div class="lds-pacman">
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result"
+     *ngIf="!loading && passTypes?.length === 0">
+    <span class="text-light">Még nincsenek árak feltöltve</span>
+</div>
+
+<div class="container" id="entities" *ngIf="!loading && passTypes && passTypes.length > 0">
+    <div *ngFor="let activityType of activityTypes">
+        <h3 class="category-header">
+            {{activityType.name}}
+        </h3>
+        <div *ngFor="let passType of getPassTypesByActivityType(activityType)" class="category-item row">
+            <div class="col-md-4">
+                <h4>{{passType.name}}</h4>
+                <p>Érvényes: {{passType.durationDays ? durationToString(passType.durationDays) : 'felhasználásig'}}</p>
+            </div>
+            <div class="col-md-4 text-center mt-2">
+                <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                        [routerLink]="['/prices', passType.id, 'view']"
+                        class="btn btn-primary btn-icon btn-sm">
+                    <fa-icon icon="eye"></fa-icon>
+                </button>
+
+                <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                        [routerLink]="['/prices', passType.id, 'edit']"
+                        class="btn btn-primary btn-icon btn-sm">
+                    <fa-icon icon="pen"></fa-icon>
+                </button>
+
+                <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                        (click)="delete(passType)"
+                        class="btn btn-primary btn-icon btn-sm">
+                    <fa-icon icon="trash"></fa-icon>
+                </button>
+            </div>
+            <div class="col-md-4 category-price">
+                <h4>{{passType.price | number: '1.0':'hu'}} {{passType.unit}}</h4>
+            </div>
+        </div>
+    </div>
+</div>

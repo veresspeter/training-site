@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IPassType } from 'app/shared/model/pass-type.model';
-import { PassTypeService } from './pass-type.service';
+import { PassTypeService } from '../../shared/services/pass-type.service';
 
 @Component({
   templateUrl: './pass-type-delete-dialog.component.html',

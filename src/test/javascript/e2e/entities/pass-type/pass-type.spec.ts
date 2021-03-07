@@ -48,7 +48,8 @@ describe('PassType e2e test', () => {
             passTypeUpdatePage.setNameInput('name'),
             passTypeUpdatePage.setDescriptionInput('description'),
             passTypeUpdatePage.setDurationDaysInput('5'),
-            passTypeUpdatePage.setPriceInput('price'),
+            passTypeUpdatePage.setPriceInput('5'),
+            passTypeUpdatePage.setUnitInput('unit'),
             passTypeUpdatePage.setOccasionsInput('5'),
             passTypeUpdatePage.availableForTypeSelectLastOption(),
             passTypeUpdatePage.availableForActivitySelectLastOption(),
@@ -57,7 +58,8 @@ describe('PassType e2e test', () => {
         expect(await passTypeUpdatePage.getNameInput()).to.eq('name', 'Expected Name value to be equals to name');
         expect(await passTypeUpdatePage.getDescriptionInput()).to.eq('description', 'Expected Description value to be equals to description');
         expect(await passTypeUpdatePage.getDurationDaysInput()).to.eq('5', 'Expected durationDays value to be equals to 5');
-        expect(await passTypeUpdatePage.getPriceInput()).to.eq('price', 'Expected Price value to be equals to price');
+        expect(await passTypeUpdatePage.getPriceInput()).to.eq('5', 'Expected price value to be equals to 5');
+        expect(await passTypeUpdatePage.getUnitInput()).to.eq('unit', 'Expected Unit value to be equals to unit');
         expect(await passTypeUpdatePage.getOccasionsInput()).to.eq('5', 'Expected occasions value to be equals to 5');
 
         await passTypeUpdatePage.save();

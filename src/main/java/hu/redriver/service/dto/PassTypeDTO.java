@@ -18,7 +18,10 @@ public class PassTypeDTO implements Serializable {
     private Integer durationDays;
 
     @NotNull
-    private String price;
+    private Integer price;
+
+    @NotNull
+    private String unit;
 
     @NotNull
     private Integer occasions;
@@ -60,12 +63,20 @@ public class PassTypeDTO implements Serializable {
         this.durationDays = durationDays;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public Integer getOccasions() {
@@ -80,8 +91,8 @@ public class PassTypeDTO implements Serializable {
         return availableForType;
     }
 
-    public void setAvailableForType(ActivityTypeDTO availableForType) {
-        this.availableForType = availableForType;
+    public void setAvailableForType(ActivityTypeDTO activityType) {
+        this.availableForType = activityType;
     }
 
     public Long getAvailableForActivityId() {
@@ -117,9 +128,10 @@ public class PassTypeDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", durationDays=" + getDurationDays() +
-            ", price='" + getPrice() + "'" +
+            ", price=" + getPrice() +
+            ", unit='" + getUnit() + "'" +
             ", occasions=" + getOccasions() +
-            ", availableForTypeId=" + getAvailableForType() +
+            ", availableForType=" + getAvailableForType() +
             ", availableForActivityId=" + getAvailableForActivityId() +
             "}";
     }

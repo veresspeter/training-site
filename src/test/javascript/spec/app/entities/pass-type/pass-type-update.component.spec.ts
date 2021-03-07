@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
 import { PassTypeUpdateComponent } from 'app/entities/pass-type/pass-type-update.component';
-import { PassTypeService } from 'app/entities/pass-type/pass-type.service';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { PassType } from 'app/shared/model/pass-type.model';
 
 describe('Component Tests', () => {

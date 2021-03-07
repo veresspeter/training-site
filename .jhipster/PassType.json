@@ -16,6 +16,11 @@
     },
     {
       "fieldName": "price",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "unit",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },

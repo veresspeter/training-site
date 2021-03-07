@@ -5,7 +5,8 @@ export interface IPassType {
   name?: string;
   description?: string;
   durationDays?: number;
-  price?: string;
+  price?: number;
+  unit?: string;
   occasions?: number;
   availableForType?: IActivityType;
   availableForActivityId?: number;
@@ -17,7 +18,8 @@ export class PassType implements IPassType {
     public name?: string,
     public description?: string,
     public durationDays?: number,
-    public price?: string,
+    public price?: number,
+    public unit?: string,
     public occasions?: number,
     public availableForType?: IActivityType,
     public availableForActivityId?: number

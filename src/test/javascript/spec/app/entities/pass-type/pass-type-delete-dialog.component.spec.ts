@@ -7,7 +7,7 @@ import { MaxmoveTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
 import { PassTypeDeleteDialogComponent } from 'app/entities/pass-type/pass-type-delete-dialog.component';
-import { PassTypeService } from 'app/entities/pass-type/pass-type.service';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
 
 describe('Component Tests', () => {
   describe('PassType Management Delete Component', () => {

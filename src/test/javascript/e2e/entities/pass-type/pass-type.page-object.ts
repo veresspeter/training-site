@@ -33,6 +33,7 @@ export class PassTypeUpdatePage {
   descriptionInput = element(by.id('field_description'));
   durationDaysInput = element(by.id('field_durationDays'));
   priceInput = element(by.id('field_price'));
+  unitInput = element(by.id('field_unit'));
   occasionsInput = element(by.id('field_occasions'));
 
   availableForTypeSelect = element(by.id('field_availableForType'));
@@ -72,6 +73,14 @@ export class PassTypeUpdatePage {
 
   async getPriceInput(): Promise<string> {
     return await this.priceInput.getAttribute('value');
+  }
+
+  async setUnitInput(unit: string): Promise<void> {
+    await this.unitInput.sendKeys(unit);
+  }
+
+  async getUnitInput(): Promise<string> {
+    return await this.unitInput.getAttribute('value');
   }
 
   async setOccasionsInput(occasions: string): Promise<void> {

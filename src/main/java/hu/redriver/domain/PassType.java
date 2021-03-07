@@ -36,7 +36,11 @@ public class PassType implements Serializable {
 
     @NotNull
     @Column(name = "price", nullable = false)
-    private String price;
+    private Integer price;
+
+    @NotNull
+    @Column(name = "unit", nullable = false)
+    private String unit;
 
     @NotNull
     @Column(name = "occasions", nullable = false)
@@ -99,17 +103,30 @@ public class PassType implements Serializable {
         this.durationDays = durationDays;
     }
 
-    public String getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public PassType price(String price) {
+    public PassType price(Integer price) {
         this.price = price;
         return this;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public PassType unit(String unit) {
+        this.unit = unit;
+        return this;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public Integer getOccasions() {
@@ -176,7 +193,8 @@ public class PassType implements Serializable {
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", durationDays=" + getDurationDays() +
-            ", price='" + getPrice() + "'" +
+            ", price=" + getPrice() +
+            ", unit='" + getUnit() + "'" +
             ", occasions=" + getOccasions() +
             "}";
     }

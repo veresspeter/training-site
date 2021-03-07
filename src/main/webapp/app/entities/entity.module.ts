@@ -9,10 +9,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./application-user/application-user.module').then(m => m.MaxmoveApplicationUserModule),
       },
       {
-        path: 'pass-type',
-        loadChildren: () => import('./pass-type/pass-type.module').then(m => m.MaxmovePassTypeModule),
-      },
-      {
         path: 'pass',
         loadChildren: () => import('./pass/pass.module').then(m => m.MaxmovePassModule),
       },

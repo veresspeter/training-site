@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { IPass, Pass } from 'app/shared/model/pass.model';
 import { PassService } from './pass.service';
 import { IPassType } from 'app/shared/model/pass-type.model';
-import { PassTypeService } from 'app/entities/pass-type/pass-type.service';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { IApplicationUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 

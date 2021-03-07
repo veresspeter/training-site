@@ -4,7 +4,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { MaxmoveTestModule } from '../../../test.module';
 import { PassTypeComponent } from 'app/entities/pass-type/pass-type.component';
-import { PassTypeService } from 'app/entities/pass-type/pass-type.service';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { PassType } from 'app/shared/model/pass-type.model';
 
 describe('Component Tests', () => {

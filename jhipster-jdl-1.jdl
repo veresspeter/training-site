@@ -65,7 +65,8 @@ entity PassType {
   name String required
   description String
   durationDays Integer
-  price String required
+  price Integer required
+  unit String required
   occasions Integer required
 }
 

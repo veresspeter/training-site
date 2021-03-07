@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IPassType, PassType } from 'app/shared/model/pass-type.model';
-import { PassTypeService } from './pass-type.service';
+import { PassTypeService } from '../../shared/services/pass-type.service';
 import { IActivityType } from 'app/shared/model/activity-type.model';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { IActivity } from 'app/shared/model/activity.model';
@@ -29,8 +29,9 @@ export class PassTypeUpdateComponent implements OnInit {
     description: [],
     durationDays: [],
     price: [null, [Validators.required]],
+    unit: [null, [Validators.required]],
     occasions: [null, [Validators.required]],
-    availableForTypeId: [null, Validators.required],
+    availableForType: [null, Validators.required],
     availableForActivityId: [],
   });
 
@@ -59,8 +60,9 @@ export class PassTypeUpdateComponent implements OnInit {
       description: passType.description,
       durationDays: passType.durationDays,
       price: passType.price,
+      unit: passType.unit,
       occasions: passType.occasions,
-      availableForTypeId: passType.availableForType?.id,
+      availableForType: passType.availableForType?.id,
       availableForActivityId: passType.availableForActivityId,
     });
   }
@@ -87,8 +89,9 @@ export class PassTypeUpdateComponent implements OnInit {
       description: this.editForm.get(['description'])!.value,
       durationDays: this.editForm.get(['durationDays'])!.value,
       price: this.editForm.get(['price'])!.value,
+      unit: this.editForm.get(['unit'])!.value,
       occasions: this.editForm.get(['occasions'])!.value,
-      availableForType: this.activityTypes.find(type => type.id === this.editForm.get(['availableForTypeId'])!.value),
+      availableForType: this.activityTypes.find(type => type.id === this.editForm.get(['availableForType'])!.value),
       availableForActivityId: this.editForm.get(['availableForActivityId'])!.value,
     };
   }

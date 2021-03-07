@@ -43,8 +43,11 @@ public class PassTypeResourceIT {
     private static final Integer DEFAULT_DURATION_DAYS = 1;
     private static final Integer UPDATED_DURATION_DAYS = 2;
 
-    private static final String DEFAULT_PRICE = "AAAAAAAAAA";
-    private static final String UPDATED_PRICE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_PRICE = 1;
+    private static final Integer UPDATED_PRICE = 2;
+
+    private static final String DEFAULT_UNIT = "AAAAAAAAAA";
+    private static final String UPDATED_UNIT = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_OCCASIONS = 1;
     private static final Integer UPDATED_OCCASIONS = 2;
@@ -78,6 +81,7 @@ public class PassTypeResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .durationDays(DEFAULT_DURATION_DAYS)
             .price(DEFAULT_PRICE)
+            .unit(DEFAULT_UNIT)
             .occasions(DEFAULT_OCCASIONS);
         // Add required entity
         ActivityType activityType;
@@ -103,6 +107,7 @@ public class PassTypeResourceIT {
             .description(UPDATED_DESCRIPTION)
             .durationDays(UPDATED_DURATION_DAYS)
             .price(UPDATED_PRICE)
+            .unit(UPDATED_UNIT)
             .occasions(UPDATED_OCCASIONS);
         // Add required entity
         ActivityType activityType;
@@ -141,6 +146,7 @@ public class PassTypeResourceIT {
         assertThat(testPassType.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testPassType.getDurationDays()).isEqualTo(DEFAULT_DURATION_DAYS);
         assertThat(testPassType.getPrice()).isEqualTo(DEFAULT_PRICE);
+        assertThat(testPassType.getUnit()).isEqualTo(DEFAULT_UNIT);
         assertThat(testPassType.getOccasions()).isEqualTo(DEFAULT_OCCASIONS);
     }
 
@@ -207,6 +213,26 @@ public class PassTypeResourceIT {
 
     @Test
     @Transactional
+    public void checkUnitIsRequired() throws Exception {
+        int databaseSizeBeforeTest = passTypeRepository.findAll().size();
+        // set the field null
+        passType.setUnit(null);
+
+        // Create the PassType, which fails.
+        PassTypeDTO passTypeDTO = passTypeMapper.toDto(passType);
+
+
+        restPassTypeMockMvc.perform(post("/api/pass-types").with(csrf())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(passTypeDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<PassType> passTypeList = passTypeRepository.findAll();
+        assertThat(passTypeList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void checkOccasionsIsRequired() throws Exception {
         int databaseSizeBeforeTest = passTypeRepository.findAll().size();
         // set the field null
@@ -240,6 +266,7 @@ public class PassTypeResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].durationDays").value(hasItem(DEFAULT_DURATION_DAYS)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
+            .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
             .andExpect(jsonPath("$.[*].occasions").value(hasItem(DEFAULT_OCCASIONS)));
     }
     
@@ -258,6 +285,7 @@ public class PassTypeResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.durationDays").value(DEFAULT_DURATION_DAYS))
             .andExpect(jsonPath("$.price").value(DEFAULT_PRICE))
+            .andExpect(jsonPath("$.unit").value(DEFAULT_UNIT))
             .andExpect(jsonPath("$.occasions").value(DEFAULT_OCCASIONS));
     }
     @Test
@@ -285,6 +313,7 @@ public class PassTypeResourceIT {
             .description(UPDATED_DESCRIPTION)
             .durationDays(UPDATED_DURATION_DAYS)
             .price(UPDATED_PRICE)
+            .unit(UPDATED_UNIT)
             .occasions(UPDATED_OCCASIONS);
         PassTypeDTO passTypeDTO = passTypeMapper.toDto(updatedPassType);
 
@@ -301,6 +330,7 @@ public class PassTypeResourceIT {
         assertThat(testPassType.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testPassType.getDurationDays()).isEqualTo(UPDATED_DURATION_DAYS);
         assertThat(testPassType.getPrice()).isEqualTo(UPDATED_PRICE);
+        assertThat(testPassType.getUnit()).isEqualTo(UPDATED_UNIT);
         assertThat(testPassType.getOccasions()).isEqualTo(UPDATED_OCCASIONS);
     }
 
