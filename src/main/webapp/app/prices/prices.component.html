@@ -1,5 +1,8 @@
 <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary" [routerLink]="['/prices/new']">
-    Létrehozás
+    Ár létrehozása
+</button>
+<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary" [routerLink]="['/prices/new']">
+    Jegy létrehozása
 </button>
 
 <h2 id="page-heading" class="text-center">Árak</h2>
@@ -33,7 +36,7 @@
         </h3>
         <div *ngFor="let passType of getPassTypesByActivityType(activityType)" class="category-item row">
             <div class="col-md-4">
-                <h4>{{passType.name}}</h4>
+                <h4>{{passType.name}} <span class="h6" *ngIf="passType.description">({{passType.description}})</span> </h4>
                 <p>Érvényes: {{passType.durationDays ? durationToString(passType.durationDays) : 'felhasználásig'}}</p>
             </div>
             <div class="col-md-4 text-center mt-2">
