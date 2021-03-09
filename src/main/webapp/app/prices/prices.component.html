@@ -40,7 +40,7 @@
                 <p>Érvényes: {{passType.durationDays ? durationToString(passType.durationDays) : 'felhasználásig'}}</p>
             </div>
             <div class="col-md-4 text-center mt-2">
-                <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                <button type="submit" *jhiHasAnyAuthority="'ROLE_USER'"
                         [routerLink]="['/prices', passType.id, 'view']"
                         class="btn btn-primary btn-icon btn-sm">
                     <fa-icon icon="eye"></fa-icon>
@@ -57,9 +57,14 @@
                         class="btn btn-primary btn-icon btn-sm">
                     <fa-icon icon="trash"></fa-icon>
                 </button>
+                <button type="button" *jhiHasAnyAuthority="'ROLE_USER'" class="btn btn-outline-primary btn-icon btn-sm">
+                    <fa-icon icon="cart-plus"></fa-icon>
+                </button>
             </div>
             <div class="col-md-4 category-price">
-                <h4>{{passType.price | number: '1.0':'hu'}} {{passType.unit}}</h4>
+                <h4>
+                    {{passType.price | number: '1.0':'hu'}} {{passType.unit}}
+                </h4>
             </div>
         </div>
     </div>

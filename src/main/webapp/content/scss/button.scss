@@ -49,6 +49,18 @@
       background-color: $mv-btn-activate-primary !important;
       border-color: $mv-dark !important;
     }
+
+    &.btn-icon {
+      fa-icon * {
+        color: $mv-btn-primary;
+      }
+
+      &:hover {
+        fa-icon * {
+          color: $mv-text-light;
+        }
+      }
+    }
   }
 }
 
