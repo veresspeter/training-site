@@ -9,6 +9,11 @@ import { PassDeleteDialogComponent } from './pass-delete/pass-delete-dialog.comp
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PassService } from 'app/shared/services/pass.service';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
+import { AppUser } from 'app/shared/model/application-user.model';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
+import { PassType } from 'app/shared/model/pass-type.model';
+import { formatNumber } from '@angular/common';
 
 @Component({
   selector: 'jhi-pass',
@@ -16,6 +21,8 @@ import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 })
 export class PassComponent implements OnInit, OnDestroy {
   passes: Pass[] | null = null;
+  appUsers: AppUser[] | null = null;
+  passTypes: PassType[] | null = null;
   eventSubscriber?: Subscription;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -25,6 +32,8 @@ export class PassComponent implements OnInit, OnDestroy {
 
   constructor(
     protected passService: PassService,
+    protected appUserService: ApplicationUserService,
+    protected passTypeService: PassTypeService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     private activatedRoute: ActivatedRoute,
@@ -33,6 +42,8 @@ export class PassComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.eventSubscriber = this.eventManager.subscribe('passListModification', () => this.loadAll());
+    this.appUserService.query().subscribe(res => (this.appUsers = res.body || []));
+    this.passTypeService.query().subscribe(res => (this.passTypes = res.body || []));
     this.handleNavigation();
   }
 
@@ -94,5 +105,20 @@ export class PassComponent implements OnInit, OnDestroy {
   private onSuccess(passes: Pass[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.passes = passes;
+  }
+
+  getUserNameById(id: number): string {
+    const result = this.appUsers?.find(appUser => appUser.id === id);
+    return result?.internalUser?.lastName + ' ' + result?.internalUser?.firstName;
+  }
+
+  getPassTypeNameById(id: number): string {
+    const result = this.passTypes?.find(passType => passType.id === id);
+    return `${result?.name} (${result?.price ? formatNumber(result.price, 'hu', '1.0') : '?'} ${result?.unit})`;
+  }
+
+  getPassOccasionsById(id: number): string {
+    const result = this.passTypes?.find(passType => passType.id === id);
+    return result?.occasions?.toString() || '?';
   }
 }

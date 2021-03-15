@@ -36,7 +36,7 @@ export class AppUser implements IAppUser {
     public image?: any,
     public introduction?: string,
     public isTrainer?: boolean,
-    public internalUse?: User,
+    public internalUser?: User,
     public events?: IEvent[],
     public injury?: string,
     public surgery?: string,
