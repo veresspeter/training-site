@@ -1,41 +1,49 @@
 <div>
-    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-application-user"
-            [routerLink]="['/application-user/new']">
-        Létrehozás
-    </button>
-
-    <h2 id="page-heading">
-        <span>Felhasználók (személyes adatok)</span>
-    </h2>
+    <h2 id="page-heading" class="text-center mb-5">Felhasználók</h2>
 
     <div class="alert alert-warning" id="no-result" *ngIf="appUsers?.length === 0">
         <span>No appUsers found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="appUsers && appUsers.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-            <tr>
-                <th scope="col"><span>Kép</span></th>
-                <th scope="col"><span>Teljes név</span></th>
-                <th scope="col"><span>Oktató</span></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let appUser of appUsers ;trackBy: trackId">
-                <td>
-                    <a *ngIf="appUser.image"
-                       (click)="openFile(appUser.imageContentType, appUser.image)">
-                        <img [src]="'data:' + appUser.imageContentType + ';base64,' + appUser.image"
-                             style="max-height: 100px;" alt="{{appUser.fullName}} profilképe"/>
-                    </a>
-                </td>
-                <td>{{ appUser.fullName }}</td>
-                <td>
-                    <fa-icon *ngIf="appUser.isTrainer" icon="times"></fa-icon>
-                </td>
-                <td class="text-right">
+    <div class="container text-center" id="entities" *ngIf="appUsers && appUsers.length > 0">
+        <div class="card" *ngFor="let appUser of appUsers ;trackBy: trackId">
+            <div class="card-body row align-items-center">
+                <div class="col-md-5 row align-items-center mx-0">
+                    <div class="col-lg-5">
+                        <a *ngIf="appUser.image"
+                           (click)="openFile(appUser.imageContentType, appUser.image)">
+                            <img [src]="'data:' + appUser.imageContentType + ';base64,' + appUser.image"
+                                 style="max-height: 150px;"
+                                 alt="{{appUser.internalUser!.lastName}}  {{appUser.internalUser!.firstName}} profilképe"/>
+                        </a>
+                    </div>
+                    <div class="col-lg-7">
+                        <div>
+                            {{appUser.internalUser!.lastName}} {{appUser.internalUser!.firstName}}
+                        </div>
+                        <div>{{appUser.internalUser!.email}}</div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-6 row align-items-center mx-0">
+                    <div class="col-lg-2">
+                        <fa-icon *ngIf="appUser.isTrainer" icon="chalkboard-teacher"></fa-icon>
+                    </div>
+                    <div class="col-lg-6">
+                        <button class="btn btn-outline-primary btn-sm" (click)="setActive(appUser.internalUser, true)"
+                                *ngIf="!appUser.internalUser?.activated">Deaktivált
+                        </button>
+                        <button class="btn btn-primary btn-sm" (click)="setActive(appUser.internalUser, false)"
+                                *ngIf="appUser.internalUser?.activated"
+                                [disabled]="!currentAccount || currentAccount.id === appUser.internalUser?.id">Aktivált
+                        </button>
+                    </div>
+                    <div class="col-lg-4">
+                        <div *ngFor="let authority of appUser.internalUser?.authorities">
+                            <span class="badge badge-primary">{{ authority }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-1">
                     <button type="submit"
                             [routerLink]="['./', appUser.id, 'view']"
                             class="btn btn-primary btn-icon">
@@ -50,12 +58,12 @@
                     </button>
 
                     <button type="button" (click)="delete(appUser)"
-                            class="btn btn-primary btn-icon" [disabled]="!currentAccount || currentAccount.id === appUser.internalUserId">
+                            class="btn btn-primary btn-icon"
+                            [disabled]="!currentAccount || currentAccount.id === appUser.internalUser?.id">
                         <fa-icon icon="trash"></fa-icon>
                     </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-12 col-md-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-event-heading" class="text-center">{{!editForm.get('id').value ? "Esemény létrehozása" : "Esemény szerkesztése"}}</h2>
+            <h2 id="jhi-event-heading" class="text-center">{{!editForm.get('id')?.value ? "Esemény létrehozása" : "Esemény szerkesztése"}}</h2>
 
             <div class="my-4 row">
                 <div class="form-group col-6">
@@ -42,7 +42,7 @@
                     <select class="form-control" id="field_organizer" name="organizer" formControlName="organizerId">
                         <option *ngIf="!editForm.get('organizerId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="applicationUserOption.id"
-                                *ngFor="let applicationUserOption of applicationUsers; trackBy: trackById">{{ applicationUserOption.fullName }}</option>
+                                *ngFor="let applicationUserOption of applicationUsers; trackBy: trackById">{{ applicationUserOption?.internalUser?.lastName }} {{ applicationUserOption?.internalUser?.firstName }}</option>
                     </select>
                 </div>
                 <div
@@ -126,7 +126,7 @@
                     <select class="form-control" id="field_participants" multiple name="participants"
                             formControlName="participants">
                         <option [ngValue]="getSelected(editForm.get('participants')!.value, applicationUserOption)"
-                                *ngFor="let applicationUserOption of applicationUsers; trackBy: trackById">{{ applicationUserOption.fullName }}</option>
+                                *ngFor="let applicationUserOption of applicationUsers; trackBy: trackById">{{ applicationUserOption?.internalUser?.lastName }} {{ applicationUserOption?.internalUser?.firstName }}</option>
                     </select>
                 </div>
             </div>

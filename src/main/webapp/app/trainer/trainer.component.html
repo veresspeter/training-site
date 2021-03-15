@@ -18,7 +18,7 @@
 
     <div class="card" *ngFor="let applicationUser of applicationUsers; trackBy: trackId">
         <div class="card-body">
-            <h3>{{applicationUser.fullName}}</h3>
+            <h3>{{applicationUser.internalUser!.lastName}} {{applicationUser.internalUser!.firstName}}</h3>
             <p>{{applicationUser.introduction}}</p>
         </div>
         <img *ngIf="applicationUser.image" class="card-img" [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image" alt="oktató képe"/>

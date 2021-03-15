@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8 card">
         <div *ngIf="appUser" class="card-body text-right">
-            <h2 class="text-center">{{ appUser.fullName }}</h2>
+            <h2 class="text-center">{{ appUser.internalUser?.lastName }} {{ appUser.internalUser?.firstName }}</h2>
 
             <dl class="row-md jh-entity-details text-left">
                 <dt><span>Nem</span></dt>

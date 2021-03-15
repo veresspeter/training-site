@@ -1,10 +1,10 @@
 import { Moment } from 'moment';
 import { IEvent } from 'app/shared/model/event.model';
 import { Sex } from 'app/shared/model/enumerations/sex.model';
+import { User } from 'app/core/user/user.model';
 
 export interface IAppUser {
   id?: number;
-  fullName?: string;
   sex?: Sex;
   birthDay?: Moment;
   googleToken?: string;
@@ -13,7 +13,7 @@ export interface IAppUser {
   image?: any;
   introduction?: string;
   isTrainer?: boolean;
-  internalUserId?: number;
+  internalUser?: User;
   events?: IEvent[];
   injury?: string;
   surgery?: string;
@@ -28,7 +28,6 @@ export interface IAppUser {
 export class AppUser implements IAppUser {
   constructor(
     public id?: number,
-    public fullName?: string,
     public sex?: Sex,
     public birthDay?: Moment,
     public googleToken?: string,
@@ -37,7 +36,7 @@ export class AppUser implements IAppUser {
     public image?: any,
     public introduction?: string,
     public isTrainer?: boolean,
-    public internalUserId?: number,
+    public internalUse?: User,
     public events?: IEvent[],
     public injury?: string,
     public surgery?: string,

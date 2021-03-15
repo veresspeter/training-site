@@ -123,7 +123,7 @@ public class EventResource {
         log.debug("REST request to join Event : {}", id);
         try {
             eventService.join(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().headers(CustomHeaderUtil.createEntitySuccessAlert(applicationName, ENTITY_NAME,"Sikeres jelentkezés", id.toString())).build();
         } catch (BadRequestException e) {
             return ResponseEntity.badRequest().headers(CustomHeaderUtil.createCustomFailureAlert(applicationName, ENTITY_NAME, "Az eseményre a helyek beteltek")).build();
         }
@@ -133,6 +133,6 @@ public class EventResource {
     public ResponseEntity<Void> quitEvent(@PathVariable Long id) {
         log.debug("REST request to quit Event : {}", id);
         eventService.quit(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().headers(CustomHeaderUtil.createEntitySuccessAlert(applicationName, ENTITY_NAME,"Jelentkezés törölve", id.toString())).build();
     }
 }

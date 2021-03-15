@@ -33,12 +33,12 @@
                     </div>
                     <div class="card-footer text-right">
                         <button *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event.id)" class="btn btn-primary btn-icon"
-                                [attr.disabled]="!isEventEditable(event) ? null : ''">
+                                [attr.disabled]="!isEventEditable(event) && !saving ? null : ''">
                             <fa-icon icon="plus"></fa-icon>
                         </button>
 
                         <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event.id)" class="btn btn-danger btn-icon"
-                                [attr.disabled]="!isEventEditable(event) ? null : ''">
+                                [attr.disabled]="!isEventEditable(event) && !saving ? null : ''">
                             <fa-icon icon="minus"></fa-icon>
                         </button>
 

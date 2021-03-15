@@ -1,15 +1,7 @@
 <div>
     <h2>
         <span id="user-management-page-heading">Felhasználók (rendszeradatok)</span>
-
-        <button class="btn btn-primary float-right jh-create-entity" [routerLink]="['./new']">
-            Létrehozás
-        </button>
     </h2>
-
-    <jhi-alert-error></jhi-alert-error>
-
-    <jhi-alert></jhi-alert>
 
     <div class="table-responsive" *ngIf="users">
         <table class="table table-striped" aria-describedby="user-management-page-heading">

@@ -24,6 +24,7 @@ export class EventComponent implements OnInit, OnDestroy {
   activeUserId: number | undefined;
   isUserRequestActive = false;
   loading = true;
+  saving = false;
 
   constructor(
     protected eventService: EventService,
@@ -116,18 +117,28 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   joinEvent(eventId: number | undefined): void {
+    this.saving = true;
     if (eventId !== undefined) {
-      this.eventService.join(eventId).subscribe(() => {
-        this.eventManager.broadcast('eventListModification');
-      });
+      this.eventService.join(eventId).subscribe(
+        () => {
+          this.saving = false;
+          this.eventManager.broadcast('eventListModification');
+        },
+        () => (this.saving = false)
+      );
     }
   }
 
   quitEvent(eventId: number | undefined): void {
+    this.saving = true;
     if (eventId !== undefined) {
-      this.eventService.quit(eventId).subscribe(() => {
-        this.eventManager.broadcast('eventListModification');
-      });
+      this.eventService.quit(eventId).subscribe(
+        () => {
+          this.saving = false;
+          this.eventManager.broadcast('eventListModification');
+        },
+        () => (this.saving = false)
+      );
     }
   }
 

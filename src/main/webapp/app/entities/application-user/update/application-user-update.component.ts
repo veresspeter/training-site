@@ -7,22 +7,29 @@ import { Observable } from 'rxjs';
 import { JhiDataUtils, JhiFileLoadError, JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 
 import { IAppUser, AppUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from '../../../shared/services/application-user.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
-import { IUser } from 'app/core/user/user.model';
+import { IUser, User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-application-user-update',
   templateUrl: './application-user-update.component.html',
 })
 export class ApplicationUserUpdateComponent implements OnInit {
+  currentAccount: Account | null = null;
+  authorities: string[] = [];
   isSaving = false;
   users: IUser[] = [];
   birthDayDp: any;
+  internalUser: User | undefined;
 
   editForm = this.fb.group({
     id: [],
+    lastName: [null, [Validators.required]],
+    firstName: [null, [Validators.required]],
     sex: [],
     birthDay: [],
     googleToken: [],
@@ -37,33 +44,41 @@ export class ApplicationUserUpdateComponent implements OnInit {
   constructor(
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
-    protected applicationUserService: ApplicationUserService,
+    protected appUserService: ApplicationUserService,
     protected userService: UserService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
+    protected accountService: AccountService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ appUser }) => {
+      this.internalUser = appUser.internalUser;
       this.updateForm(appUser);
 
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
+    this.accountService.identity().subscribe(account => (this.currentAccount = account));
+    this.userService.authorities().subscribe(authorities => {
+      this.authorities = authorities;
+    });
   }
 
-  updateForm(applicationUser: IAppUser): void {
+  updateForm(appUser: IAppUser): void {
     this.editForm.patchValue({
-      id: applicationUser.id,
-      sex: applicationUser.sex,
-      birthDay: applicationUser.birthDay,
-      googleToken: applicationUser.googleToken,
-      facebookToken: applicationUser.facebookToken,
-      image: applicationUser.image,
-      imageContentType: applicationUser.imageContentType,
-      introduction: applicationUser.introduction,
-      isTrainer: applicationUser.isTrainer,
-      internalUserId: applicationUser.internalUserId,
+      id: appUser.id,
+      lastName: appUser.internalUser?.lastName,
+      firstName: appUser.internalUser?.firstName,
+      sex: appUser.sex,
+      birthDay: appUser.birthDay,
+      googleToken: appUser.googleToken,
+      facebookToken: appUser.facebookToken,
+      image: appUser.image,
+      imageContentType: appUser.imageContentType,
+      introduction: appUser.introduction,
+      isTrainer: appUser.isTrainer,
+      internalUserId: appUser.internalUser?.id,
     });
   }
 
@@ -99,15 +114,19 @@ export class ApplicationUserUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const applicationUser = this.createFromForm();
-    if (applicationUser.id !== undefined) {
-      this.subscribeToSaveResponse(this.applicationUserService.update(applicationUser));
+    const appUser = this.createFromForm();
+    if (appUser.id !== undefined) {
+      this.subscribeToSaveResponse(this.appUserService.update(appUser));
     } else {
-      this.subscribeToSaveResponse(this.applicationUserService.create(applicationUser));
+      this.subscribeToSaveResponse(this.appUserService.create(appUser));
     }
   }
 
   private createFromForm(): IAppUser {
+    if (this.internalUser !== undefined) {
+      this.internalUser.firstName = this.editForm.get(['firstName'])!.value;
+      this.internalUser.lastName = this.editForm.get(['lastName'])!.value;
+    }
     return {
       ...new AppUser(),
       id: this.editForm.get(['id'])!.value,
@@ -119,7 +138,7 @@ export class ApplicationUserUpdateComponent implements OnInit {
       image: this.editForm.get(['image'])!.value,
       introduction: this.editForm.get(['introduction'])!.value,
       isTrainer: this.editForm.get(['isTrainer'])!.value,
-      internalUserId: this.editForm.get(['internalUserId'])!.value,
+      internalUser: this.internalUser,
     };
   }
 

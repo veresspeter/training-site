@@ -57,18 +57,6 @@ export const applicationUserRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: 'new',
-    component: ApplicationUserUpdateComponent,
-    resolve: {
-      appUser: ApplicationUserResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ApplicationUsers',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: ':id/edit',
     component: ApplicationUserUpdateComponent,
     resolve: {

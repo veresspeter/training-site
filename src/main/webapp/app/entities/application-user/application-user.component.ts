@@ -9,10 +9,13 @@ import { ApplicationUserService } from 'app/shared/services/application-user.ser
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { ApplicationUserDeleteDialogComponent } from 'app/entities/application-user/delete/application-user-delete-dialog.component';
+import { User } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-application-user',
   templateUrl: './application-user.component.html',
+  styleUrls: ['application-user.component.scss'],
 })
 export class ApplicationUserComponent implements OnInit, OnDestroy {
   currentAccount: Account | null = null;
@@ -24,7 +27,8 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected dataUtils: JhiDataUtils,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected userService: UserService
   ) {}
 
   loadAll(): void {
@@ -63,5 +67,9 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
   delete(appUser: IAppUser): void {
     const modalRef = this.modalService.open(ApplicationUserDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.appUser = appUser;
+  }
+
+  setActive(user: User | undefined, isActivated: boolean): void {
+    this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
   }
 }

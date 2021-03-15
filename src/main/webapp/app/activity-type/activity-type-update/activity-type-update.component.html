@@ -2,7 +2,7 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-activity-type-heading"
-                class="text-center">{{!editForm.get('id').value ? "Foglalkozás típus létrehozása" : "Foglalkozás típus szerkesztése" }}</h2>
+                class="text-center">{{!editForm.get('id')?.value ? "Foglalkozás típus létrehozása" : "Foglalkozás típus szerkesztése" }}</h2>
 
             <div class="my-4">
                 <div class="form-group">

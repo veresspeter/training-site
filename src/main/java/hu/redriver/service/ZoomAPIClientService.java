@@ -5,7 +5,6 @@ import hu.redriver.service.dto.EventDTO;
 import hu.redriver.service.dto.ZoomMeetingDTO;
 import hu.redriver.service.dto.ZoomMeetingRequestDTO;
 import hu.redriver.service.dto.ZoomMeetingSettingsDTO;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
@@ -22,13 +20,12 @@ import java.time.temporal.ChronoUnit;
 public class ZoomAPIClientService {
 
     private final String JWT_TOKEN = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IkRTY243c3dhUU9LT0drYTlEWktZQmciLCJleHAiOjE2NDY3MzU0NjAsImlhdCI6MTYxNDU5NDY5MH0.mvZVMq8pKCuRAn_fgczYsIa1RwwoBQgaBELsDaXyqEc";
-
+    final HttpClient httpClient = HttpClient.newHttpClient();
 
     public ZoomAPIClientService() {
     }
 
     public void createMeeting(EventDTO eventDTO) throws IOException, InterruptedException {
-        final HttpClient httpClient = HttpClient.newHttpClient();
         final ObjectMapper objectMapper = new ObjectMapper();
 
         ZoomMeetingRequestDTO data = getZoomMeetingRequestDTO(eventDTO);
@@ -51,7 +48,6 @@ public class ZoomAPIClientService {
     }
 
     public void updateMeeting(EventDTO eventDTO) throws IOException, InterruptedException {
-        final HttpClient httpClient = HttpClient.newHttpClient();
         final ObjectMapper objectMapper = new ObjectMapper();
 
         ZoomMeetingRequestDTO data = getZoomMeetingRequestDTO(eventDTO);
@@ -74,7 +70,6 @@ public class ZoomAPIClientService {
     }
 
     public void deleteMeeting(EventDTO eventDTO) throws IOException, InterruptedException {
-        final HttpClient httpClient = HttpClient.newHttpClient();
         final ObjectMapper objectMapper = new ObjectMapper();
 
         ZoomMeetingRequestDTO data = getZoomMeetingRequestDTO(eventDTO);
@@ -103,12 +98,16 @@ public class ZoomAPIClientService {
         data.setType(2);
         data.setStart_time(eventDTO.getStart().format(DateTimeFormatter.ISO_ZONED_DATE_TIME));
         data.setDuration((int) ChronoUnit.MINUTES.between(eventDTO.getStart(), eventDTO.getEnd()));
-        data.setTopic(zoneDateTimeToString(eventDTO) + " " + eventDTO.getName() + " " + eventDTO.getOrganizer().getFullName());
+        data.setTopic(zoneDateTimeToString(eventDTO) + " " + eventDTO.getName() + " " + getFullName(eventDTO));
 
         ZoomMeetingSettingsDTO settingsDTO = new ZoomMeetingSettingsDTO();
         settingsDTO.setJoin_before_host(true);
         data.setSettings(settingsDTO);
         return data;
+    }
+
+    private String getFullName(EventDTO eventDTO) {
+        return eventDTO.getOrganizer().getInternalUserDTO().getLastName() + " " + eventDTO.getOrganizer().getInternalUserDTO().getFirstName();
     }
 
     private String zoneDateTimeToString(EventDTO eventDTO) {

@@ -1,13 +1,39 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-application-user-heading" class="text-center">
+            <h2 id="jhi-application-user-heading" class="text-center mb-5">
                 <span *ngIf="!editForm.get('id')!.value">Felhasználó létrehozása</span>
                 <span *ngIf="editForm.get('id')!.value">Felhasználó szerkesztése</span>
             </h2>
 
-            <div>
-                <div class="form-group">
+            <div class="row align-items-center">
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_lastName">Vezetéknév</label>
+                    <input type="text" class="form-control" name="lastName" id="field_lastName"
+                           formControlName="lastName"/>
+                    <div
+                        *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastName')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_firstName">Keresztnév</label>
+                    <input type="text" class="form-control" name="firstName" id="field_firstName"
+                           formControlName="firstName"/>
+                    <div
+                        *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstName')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_sex">Nem</label>
                     <select class="form-control" name="sex" formControlName="sex" id="field_sex">
                         <option value="MAN">Férfi</option>
@@ -16,7 +42,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_birthDay">Születési idő</label>
                     <div class="input-group pr-0">
                         <input id="field_birthDay" type="text" class="form-control" name="birthDay" ngbDatepicker
@@ -28,28 +54,69 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_googleToken">Google Token</label>
-                    <input type="text" class="form-control" name="googleToken" id="field_googleToken"
-                           formControlName="googleToken"/>
+                <div class="form-group col-md-6">
+                    <label class="form-control-label">Email</label>
+                    <input type="email" class="form-control" name="email" formControlName="email">
+
+                    <div
+                        *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.required">
+                            This field is required.
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.maxlength">
+                            This field cannot be longer than 100 characters.
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.minlength">
+                            This field is required to be at least 5 characters.
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.email">
+                            Your email is invalid.
+                        </small>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_facebookToken">Facebook Token</label>
-                    <input type="text" class="form-control" name="facebookToken" id="field_facebookToken"
-                           formControlName="facebookToken"/>
+                <div class="form-group col-md-6 text-center">
+                    <div>
+                        <label class="form-control-label" for="field_isTrainer">
+                            <input type="checkbox" class="form-check-input" name="isTrainer" id="field_isTrainer"
+                                   formControlName="isTrainer"/>
+                            <span>Oktató</span>
+                        </label>
+                        <div
+                            *ngIf="editForm.get('isTrainer')!.invalid && (editForm.get('isTrainer')!.dirty || editForm.get('isTrainer')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('isTrainer')?.errors?.required">
+                                Mező kitöltése kötelező
+                            </small>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-check-label" for="activated">
+                            <input class="form-check-input"
+                                   [attr.disabled]="currentAccount?.id === undefined ? 'disabled' : null"
+                                   type="checkbox" id="activated" name="activated" formControlName="activated">
+                            <span>Activated</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_image">Profilkép</label>
                     <div>
                         <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="appUser image"/>
-                            <button type="button" *ngIf="editForm.get('image')!.value"
-                                    (click)="clearInputImage('image', 'imageContentType', 'file_image')"
-                                    class="btn btn-secondary btn-icon btn-xs pull-right">
-                                <fa-icon icon="times"></fa-icon>
-                            </button>
+                        <button type="button" *ngIf="editForm.get('image')!.value"
+                                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                class="btn btn-secondary btn-icon btn-xs pull-right">
+                            <fa-icon icon="times"></fa-icon>
+                        </button>
                         <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
                                accept="image/*" class="input-group-text"/>
                     </div>
@@ -59,35 +126,41 @@
                            formControlName="imageContentType"/>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-md-6">
+                    <label>Profiles</label>
+                    <select class="form-control" multiple name="authority" formControlName="authorities">
+                        <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-12">
                     <label class="form-control-label" for="field_introduction">Bemutatkozás</label>
                     <input type="text" class="form-control" name="introduction" id="field_introduction"
                            formControlName="introduction"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_isTrainer">Oktató</label>
-                    <input type="checkbox" class="form-control w-auto h-auto" name="isTrainer" id="field_isTrainer"
-                           formControlName="isTrainer"/>
-                    <div
-                        *ngIf="editForm.get('isTrainer')!.invalid && (editForm.get('isTrainer')!.dirty || editForm.get('isTrainer')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('isTrainer')?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
                 </div>
 
                 <div
                     *ngIf="editForm.get('internalUserId')!.invalid && (editForm.get('internalUserId')!.dirty || editForm.get('internalUserId')!.touched)">
                     <small class="form-text text-danger"
                            *ngIf="editForm.get('internalUserId')?.errors?.required">
-                        This field is required.
+                        Mező kitöltése kötelező
                     </small>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_googleToken">Google Token</label>
+                    <input type="text" class="form-control" name="googleToken" id="field_googleToken"
+                           formControlName="googleToken"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_facebookToken">Facebook Token</label>
+                    <input type="text" class="form-control" name="facebookToken" id="field_facebookToken"
+                           formControlName="facebookToken"/>
                 </div>
             </div>
 
-            <div class="text-right">
+            <div class="text-center text-md-right">
                 <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
                     Mégse
                 </button>

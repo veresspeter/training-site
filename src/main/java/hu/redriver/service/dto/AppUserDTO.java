@@ -5,6 +5,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import javax.persistence.Lob;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import hu.redriver.domain.AppUser;
 import hu.redriver.domain.enumeration.Sex;
 
@@ -14,7 +15,6 @@ import hu.redriver.domain.enumeration.Sex;
 public class AppUserDTO implements Serializable {
 
     private Long id;
-    private String fullName;
     private Sex sex;
     private LocalDate birthDay;
     private String googleToken;
@@ -37,7 +37,8 @@ public class AppUserDTO implements Serializable {
     private Boolean isTrainer;
 
     @NotNull
-    private Long internalUserId;
+    @JsonProperty("internalUser")
+    private UserDTO internalUserDTO;
 
     public Long getId() {
         return id;
@@ -111,20 +112,12 @@ public class AppUserDTO implements Serializable {
         this.isTrainer = isTrainer;
     }
 
-    public Long getInternalUserId() {
-        return internalUserId;
+    public UserDTO getInternalUserDTO() {
+        return internalUserDTO;
     }
 
-    public void setInternalUserId(Long userId) {
-        this.internalUserId = userId;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setInternalUserDTO(UserDTO internalUserDTO) {
+        this.internalUserDTO = internalUserDTO;
     }
 
     public String getInjury() {
@@ -225,10 +218,8 @@ public class AppUserDTO implements Serializable {
             ", birthDay='" + getBirthDay() + "'" +
             ", googleToken='" + getGoogleToken() + "'" +
             ", facebookToken='" + getFacebookToken() + "'" +
-            ", image='" + getImage() + "'" +
             ", introduction='" + getIntroduction() + "'" +
             ", isTrainer='" + isIsTrainer() + "'" +
-            ", internalUserId=" + getInternalUserId() +
             "}";
     }
 }

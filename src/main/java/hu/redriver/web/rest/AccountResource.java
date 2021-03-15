@@ -11,6 +11,7 @@ import hu.redriver.service.UserService;
 import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.PasswordChangeDTO;
 import hu.redriver.service.dto.UserDTO;
+import hu.redriver.service.mapper.UserMapper;
 import hu.redriver.web.rest.errors.*;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
 import hu.redriver.web.rest.vm.ManagedUserVM;
@@ -47,17 +48,20 @@ public class AccountResource {
     private final UserService userService;
     private final MailService mailService;
     private final PersistentTokenRepository persistentTokenRepository;
+    private final UserMapper userMapper;
 
     public AccountResource(UserRepository userRepository,
                            AppUserService appUserService,
                            UserService userService,
                            MailService mailService,
-                           PersistentTokenRepository persistentTokenRepository) {
+                           PersistentTokenRepository persistentTokenRepository,
+                           UserMapper userMapper) {
         this.userRepository = userRepository;
         this.appUserService = appUserService;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
+        this.userMapper = userMapper;
     }
 
     /**
@@ -77,7 +81,7 @@ public class AccountResource {
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
 
         AppUserDTO appUser = new AppUserDTO();
-        appUser.setInternalUserId(user.getId());
+        appUser.setInternalUserDTO(userMapper.userToUserDTO(user));
         appUser.setIsTrainer(false);
         this.appUserService.save(appUser);
 

@@ -19,6 +19,10 @@ public class CustomHeaderUtil {
         return HeaderUtil.createAlert(applicationName, message, id);
     }
 
+    public static HttpHeaders createEntitySuccessAlert(String applicationName, String entityName, String message, String id) {
+        return HeaderUtil.createAlert(applicationName, message, id);
+    }
+
     public static HttpHeaders createCustomFailureAlert(String applicationName, String entityName, String message) {
         return HeaderUtil.createFailureAlert(applicationName, false, entityName, null, message);
     }

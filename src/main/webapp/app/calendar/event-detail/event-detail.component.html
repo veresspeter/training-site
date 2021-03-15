@@ -32,14 +32,14 @@
         <dt><span>Szervező</span></dt>
         <dd>
             <div *ngIf="event.organizer">
-                <a [routerLink]="['/trainers', event.organizer.id, 'view']">{{ event.organizer.fullName }}</a>
+                <a [routerLink]="['/trainers', event.organizer.id, 'view']">{{ event.organizer?.internalUser?.lastName }} {{ event.organizer?.internalUser?.firstName }}</a>
             </div>
         </dd>
         <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
             <dt><span>Jelentkezők</span></dt>
             <dd>
                     <span *ngFor="let participants of event.participants; let last = last">
-                        <a [routerLink]="['/application-user', participants?.id, 'view']">{{ participants.fullName }}</a>{{ last ? '' : ', ' }}
+                        <a [routerLink]="['/application-user', participants?.id, 'view']">{{ event.organizer?.internalUser?.lastName }} {{ event.organizer?.internalUser?.firstName }}</a>{{ last ? '' : ', ' }}
                     </span>
             </dd>
         </ng-container>
