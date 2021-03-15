@@ -22,14 +22,19 @@ export class ApplicationUserUpdateComponent implements OnInit {
   currentAccount: Account | null = null;
   authorities: string[] = [];
   isSaving = false;
+  isEdit = false;
   users: IUser[] = [];
   birthDayDp: any;
   internalUser: User | undefined;
 
   editForm = this.fb.group({
+    stepper: [],
     id: [],
     lastName: [null, [Validators.required]],
     firstName: [null, [Validators.required]],
+    email: [null, [Validators.required]],
+    activated: [],
+    authorities: [],
     sex: [],
     birthDay: [],
     googleToken: [],
@@ -39,6 +44,14 @@ export class ApplicationUserUpdateComponent implements OnInit {
     introduction: [],
     isTrainer: [null, [Validators.required]],
     internalUserId: [null, Validators.required],
+    injury: [],
+    surgery: [],
+    heartProblem: [],
+    respiratoryDisease: [],
+    spineProblem: [],
+    regularPain: [],
+    medicine: [],
+    otherProblem: [],
   });
 
   constructor(
@@ -67,10 +80,14 @@ export class ApplicationUserUpdateComponent implements OnInit {
 
   updateForm(appUser: IAppUser): void {
     this.editForm.patchValue({
+      stepper: 1,
       id: appUser.id,
       lastName: appUser.internalUser?.lastName,
       firstName: appUser.internalUser?.firstName,
       sex: appUser.sex,
+      email: appUser.internalUser?.email,
+      activated: appUser.internalUser?.activated,
+      authorities: appUser.internalUser?.authorities,
       birthDay: appUser.birthDay,
       googleToken: appUser.googleToken,
       facebookToken: appUser.facebookToken,
@@ -79,7 +96,18 @@ export class ApplicationUserUpdateComponent implements OnInit {
       introduction: appUser.introduction,
       isTrainer: appUser.isTrainer,
       internalUserId: appUser.internalUser?.id,
+      injury: appUser.injury,
+      surgery: appUser.surgery,
+      heartProblem: appUser.heartProblem,
+      respiratoryDisease: appUser.respiratoryDisease,
+      spineProblem: appUser.spineProblem,
+      regularPain: appUser.regularPain,
+      medicine: appUser.medicine,
+      otherProblem: appUser.otherProblem,
     });
+
+    this.editForm.disable();
+    this.editForm.get(['stepper'])!.enable();
   }
 
   byteSize(base64String: string): string {
@@ -126,6 +154,9 @@ export class ApplicationUserUpdateComponent implements OnInit {
     if (this.internalUser !== undefined) {
       this.internalUser.firstName = this.editForm.get(['firstName'])!.value;
       this.internalUser.lastName = this.editForm.get(['lastName'])!.value;
+      this.internalUser.email = this.editForm.get(['email'])!.value;
+      this.internalUser.activated = this.editForm.get(['activated'])!.value;
+      this.internalUser.authorities = this.editForm.get(['authorities'])!.value;
     }
     return {
       ...new AppUser(),
@@ -139,6 +170,14 @@ export class ApplicationUserUpdateComponent implements OnInit {
       introduction: this.editForm.get(['introduction'])!.value,
       isTrainer: this.editForm.get(['isTrainer'])!.value,
       internalUser: this.internalUser,
+      injury: this.editForm.get(['injury'])!.value,
+      surgery: this.editForm.get(['surgery'])!.value,
+      heartProblem: this.editForm.get(['heartProblem'])!.value,
+      respiratoryDisease: this.editForm.get(['respiratoryDisease'])!.value,
+      spineProblem: this.editForm.get(['spineProblem'])!.value,
+      regularPain: this.editForm.get(['regularPain'])!.value,
+      medicine: this.editForm.get(['medicine'])!.value,
+      otherProblem: this.editForm.get(['otherProblem'])!.value,
     };
   }
 
@@ -160,5 +199,10 @@ export class ApplicationUserUpdateComponent implements OnInit {
 
   trackById(index: number, item: IUser): any {
     return item.id;
+  }
+
+  enableEdit(): void {
+    this.isEdit = true;
+    this.editForm.enable();
   }
 }

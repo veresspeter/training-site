@@ -9,7 +9,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { IAppUser, AppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { ApplicationUserComponent } from './application-user.component';
-import { ApplicationUserDetailComponent } from './detail/application-user-detail.component';
 import { ApplicationUserUpdateComponent } from './update/application-user-update.component';
 
 @Injectable({ providedIn: 'root' })
@@ -46,18 +45,6 @@ export const applicationUserRoute: Routes = [
   },
   {
     path: ':id/view',
-    component: ApplicationUserDetailComponent,
-    resolve: {
-      appUser: ApplicationUserResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'ApplicationUsers',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
     component: ApplicationUserUpdateComponent,
     resolve: {
       appUser: ApplicationUserResolve,

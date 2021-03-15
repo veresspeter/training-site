@@ -30,6 +30,14 @@ input:not([type='checkbox']) {
   &[type='file'] {
     height: 62px !important;
   }
+
+  &[disabled] {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    color: $mv-text-dark !important;
+    font-weight: 700;
+  }
 }
 
 input[type='checkbox'] {
@@ -43,10 +51,19 @@ select.form-control {
   border-radius: 0.15em;
   height: 50px !important;
   padding: 15px !important;
+  overflow-y: auto;
 
   &[disabled] {
-    background-color: $mv-pastel-light;
-    color: $mv-bg;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    color: $mv-text-dark;
+    font-weight: 700;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
   }
 
   &[multiple='multiple'] {

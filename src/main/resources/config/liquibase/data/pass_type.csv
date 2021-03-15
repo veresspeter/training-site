@@ -1,0 +1,9 @@
+id;name;description;duration_days;price;unit;occasions;available_for_type_id
+1255;Kinesio tape;10 cm;;500;Ft;1;1153
+1256;Hátmasszázs;30 perc;;4000;Ft;1;1152
+1257;Svédmasszázs;60 perc;;6000;Ft;1;1152
+1258;Sportmasszázs;60 perc;;6000;Ft;1;1152
+1259;Cellulit masszázs;60 perc;;7500;Ft;1;1152
+1260;1 alkalmas jegy;;;1400;Ft;1;1151
+1261;4 alkalmas jegy;;21;4800;Ft;4;1151
+1262;10 alkalmas jegy;;35;10000;Ft;10;1151

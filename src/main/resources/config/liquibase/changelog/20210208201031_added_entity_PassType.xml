@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity PassType.
     -->
@@ -58,7 +58,7 @@
     -->
     <changeSet id="20210208201031-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/pass_type.csv"
+                  file="config/liquibase/data/pass_type.csv"
                   separator=";"
                   tableName="pass_type">
             <column name="id" type="numeric"/>

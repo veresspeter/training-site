@@ -1,12 +1,21 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-application-user-heading" class="text-center mb-5">
+            <h2 id="jhi-application-user-heading" class="text-center mb-4">
                 <span *ngIf="!editForm.get('id')!.value">Felhasználó létrehozása</span>
                 <span *ngIf="editForm.get('id')!.value">Felhasználó szerkesztése</span>
             </h2>
 
-            <div class="row align-items-center">
+            <div class="btn-group btn-group-toggle mb-4 text-center w-100" ngbRadioGroup name="radioBasic" formControlName="stepper">
+                <label ngbButtonLabel class="btn-primary h-auto">
+                    <input ngbButton type="radio" [value]="1"> Rendszer adatok
+                </label>
+                <label ngbButtonLabel class="btn-primary h-auto">
+                    <input ngbButton type="radio" [value]="2"> Egészségügyi adatok
+                </label>
+            </div>
+
+            <div *ngIf="this.editForm.get(['stepper'])!.value === 1"  class="row align-items-center">
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_lastName">Vezetéknév</label>
                     <input type="text" class="form-control" name="lastName" id="field_lastName"
@@ -44,13 +53,16 @@
 
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_birthDay">Születési idő</label>
-                    <div class="input-group pr-0">
+                    <div *ngIf="isEdit" class="input-group pr-0">
                         <input id="field_birthDay" type="text" class="form-control" name="birthDay" ngbDatepicker
                                #birthDayDp="ngbDatepicker" formControlName="birthDay"/>
                         <span class="input-group-append">
                             <button type="button" class="btn btn-primary btn-icon" (click)="birthDayDp.toggle()"><fa-icon
                                 icon="calendar-alt"></fa-icon></button>
                         </span>
+                    </div>
+                    <div *ngIf="!isEdit" class="px-3 font-weight-bold">
+                        <p>{{editForm.get('birthDay')!.value | date:'longDate'}}</p>
                     </div>
                 </div>
 
@@ -82,27 +94,20 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6 text-center">
+                <div class="form-group col-md-6 pt-3 text-center">
                     <div>
                         <label class="form-control-label" for="field_isTrainer">
                             <input type="checkbox" class="form-check-input" name="isTrainer" id="field_isTrainer"
                                    formControlName="isTrainer"/>
                             <span>Oktató</span>
                         </label>
-                        <div
-                            *ngIf="editForm.get('isTrainer')!.invalid && (editForm.get('isTrainer')!.dirty || editForm.get('isTrainer')!.touched)">
-                            <small class="form-text text-danger"
-                                   *ngIf="editForm.get('isTrainer')?.errors?.required">
-                                Mező kitöltése kötelező
-                            </small>
-                        </div>
                     </div>
                     <div>
                         <label class="form-check-label" for="activated">
                             <input class="form-check-input"
                                    [attr.disabled]="currentAccount?.id === undefined ? 'disabled' : null"
                                    type="checkbox" id="activated" name="activated" formControlName="activated">
-                            <span>Activated</span>
+                            <span>Aktivált</span>
                         </label>
                     </div>
                 </div>
@@ -110,14 +115,15 @@
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_image">Profilkép</label>
                     <div>
-                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                        <img
+                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
                             style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="appUser image"/>
-                        <button type="button" *ngIf="editForm.get('image')!.value"
+                        <button type="button" *ngIf="editForm.get('image')!.value && isEdit"
                                 (click)="clearInputImage('image', 'imageContentType', 'file_image')"
                                 class="btn btn-secondary btn-icon btn-xs pull-right">
                             <fa-icon icon="times"></fa-icon>
                         </button>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                        <input type="file" id="file_image" [hidden]="!isEdit" (change)="setFileData($event, 'image', true)"
                                accept="image/*" class="input-group-text"/>
                     </div>
                     <input type="hidden" class="form-control" name="image" id="field_image"
@@ -127,7 +133,7 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label>Profiles</label>
+                    <label>Jogosultságok</label>
                     <select class="form-control" multiple name="authority" formControlName="authorities">
                         <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
                     </select>
@@ -160,14 +166,68 @@
                 </div>
             </div>
 
-            <div class="text-center text-md-right">
+            <div *ngIf="this.editForm.get(['stepper'])!.value === 2" class="row align-items-center">
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_injury">Korábbi sérülések</label>
+                    <input type="text" class="form-control" name="injury" id="field_injury"
+                           formControlName="injury"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_surgery">Műtéti beavatkozások</label>
+                    <input type="text" class="form-control" name="surgery" id="field_surgery"
+                           formControlName="surgery"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_heartProblem">Szív- vagy vérnyomásproblémák</label>
+                    <input type="text" class="form-control" name="heartProblem" id="field_heartProblem"
+                           formControlName="heartProblem"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_respiratoryDisease">Légzószervi megbetegedések</label>
+                    <input type="text" class="form-control" name="respiratoryDisease" id="field_respiratoryDisease"
+                           formControlName="respiratoryDisease"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_spineProblem">Gerinc- vagy egyéb izületi problémák</label>
+                    <input type="text" class="form-control" name="spineProblem" id="field_spineProblem"
+                           formControlName="spineProblem"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_regularPain">Rendszeres fájdalmak</label>
+                    <input type="text" class="form-control" name="regularPain" id="field_regularPain"
+                           formControlName="regularPain"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_medicine">Rendszeresen szedett gyógyszerek</label>
+                    <input type="text" class="form-control" name="medicine" id="field_medicine"
+                           formControlName="medicine"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_otherProblem">Bármi egyéb</label>
+                    <input type="text" class="form-control" name="otherProblem" id="field_otherProblem"
+                           formControlName="otherProblem"/>
+                </div>
+            </div>
+
+            <div class="text-center text-md-right mt-3">
                 <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
                     Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                <button *ngIf="isEdit" type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
                         class="btn btn-primary">
                     Mentés
+                </button>
+
+                <button *ngIf="!isEdit" type="button" id="edit-entity" class="btn btn-primary" (click)="enableEdit()">
+                    Szerkesztés
                 </button>
             </div>
         </form>

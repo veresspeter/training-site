@@ -50,13 +50,6 @@
                         <fa-icon icon="eye"></fa-icon>
                     </button>
 
-                    <button type="submit"
-                            [routerLink]="['./', appUser.id, 'edit']"
-                            queryParamsHandling="merge"
-                            class="btn btn-primary btn-icon">
-                        <fa-icon icon="pen"></fa-icon>
-                    </button>
-
                     <button type="button" (click)="delete(appUser)"
                             class="btn btn-primary btn-icon"
                             [disabled]="!currentAccount || currentAccount.id === appUser.internalUser?.id">
