@@ -8,15 +8,28 @@
         </button>
     </h2>
 
-    <jhi-alert-error></jhi-alert-error>
+    <div *ngIf="loading" class="app-loading">
+        <div class="lds-css ng-scope">
+            <div class="lds-pacman">
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <jhi-alert></jhi-alert>
-
-    <div class="alert alert-warning" id="no-result" *ngIf="passes?.length === 0">
+    <div class="alert alert-warning" id="no-result" *ngIf="passes?.length === 0 && !loading">
         <span>No passes found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="passes && passes.length > 0">
+    <div class="table-responsive" id="entities" *ngIf="passes && passes.length > 0 && !loading">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
@@ -47,9 +60,6 @@
                     <button type="submit" [routerLink]="['/admin/pass', pass.id, 'view']" class="btn btn-primary btn-icon">
                         <fa-icon icon="eye"></fa-icon>
                     </button>
-                    <button type="submit" [routerLink]="['/admin/pass', pass.id, 'edit']" class="btn btn-primary btn-icon">
-                        <fa-icon icon="pen"></fa-icon>
-                    </button>
                     <button type="submit" (click)="delete(pass)" class="btn btn-primary btn-icon">
                         <fa-icon icon="trash"></fa-icon>
                     </button>
@@ -59,7 +69,7 @@
         </table>
     </div>
 
-    <div *ngIf="passes">
+    <div *ngIf="passes && !loading">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>

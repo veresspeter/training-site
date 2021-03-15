@@ -21,11 +21,12 @@ type SelectableEntity = IPassType | IAppUser;
 })
 export class PassUpdateComponent implements OnInit {
   isSaving = false;
-  passtypes: IPassType[] = [];
-  applicationusers: IAppUser[] = [];
+  passTypes: IPassType[] = [];
+  appUsers: IAppUser[] = [];
   purchasedDp: any;
   validFromDp: any;
   validToDp: any;
+  isEdit = false;
 
   editForm = this.fb.group({
     id: [],
@@ -48,10 +49,8 @@ export class PassUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ pass }) => {
       this.updateForm(pass);
-
-      this.passTypeService.query().subscribe((res: HttpResponse<IPassType[]>) => (this.passtypes = res.body || []));
-
-      this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.applicationusers = res.body || []));
+      this.passTypeService.query().subscribe((res: HttpResponse<IPassType[]>) => (this.passTypes = res.body || []));
+      this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.appUsers = res.body || []));
     });
   }
 
@@ -65,6 +64,12 @@ export class PassUpdateComponent implements OnInit {
       passTypeId: pass.passTypeId,
       userId: pass.userId,
     });
+
+    if (pass.id === undefined) {
+      this.isEdit = true;
+    } else {
+      this.editForm.disable();
+    }
   }
 
   previousState(): void {
@@ -114,9 +119,20 @@ export class PassUpdateComponent implements OnInit {
     return item.id;
   }
 
+  getUserNameById(id: number | undefined): string {
+    const result = this.appUsers.find(user => user.id === id);
+
+    return `${result?.internalUser?.lastName} ${result?.internalUser?.firstName}`;
+  }
+
   getPassTypeNameById(id: number | undefined): string | undefined {
-    const result = this.passtypes.find(type => type.id === id);
+    const result = this.passTypes.find(type => type.id === id);
 
     return `${result?.name} (${result?.price ? formatNumber(result.price, 'hu', '1.0') : '?'} ${result?.unit})`;
+  }
+
+  enableEdit(): void {
+    this.isEdit = true;
+    this.editForm.enable();
   }
 }

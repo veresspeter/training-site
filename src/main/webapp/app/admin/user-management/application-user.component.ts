@@ -21,6 +21,7 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
   currentAccount: Account | null = null;
   appUsers?: IAppUser[];
   eventSubscriber?: Subscription;
+  loading = true;
 
   constructor(
     protected applicationUserService: ApplicationUserService,
@@ -33,7 +34,10 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
 
   loadAll(): void {
     this.accountService.identity().subscribe(account => (this.currentAccount = account));
-    this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.appUsers = res.body || []));
+    this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => {
+      this.appUsers = res.body || [];
+      this.loading = false;
+    });
   }
 
   ngOnInit(): void {

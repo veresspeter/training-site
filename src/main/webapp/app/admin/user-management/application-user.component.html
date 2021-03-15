@@ -1,11 +1,28 @@
 <div>
     <h2 id="page-heading" class="text-center mb-5">Felhasználók</h2>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="appUsers?.length === 0">
+    <div *ngIf="loading" class="app-loading">
+        <div class="lds-css ng-scope">
+            <div class="lds-pacman">
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="appUsers?.length === 0 && !loading">
         <span>No appUsers found</span>
     </div>
 
-    <div class="container text-center" id="entities" *ngIf="appUsers && appUsers.length > 0">
+    <div class="container text-center" id="entities" *ngIf="appUsers && appUsers.length > 0 && !loading">
         <div class="card" *ngFor="let appUser of appUsers ;trackBy: trackId">
             <div class="card-body row align-items-center">
                 <div class="col-md-5 row align-items-center mx-0">

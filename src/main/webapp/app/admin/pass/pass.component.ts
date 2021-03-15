@@ -29,6 +29,7 @@ export class PassComponent implements OnInit, OnDestroy {
   page!: number;
   predicate!: string;
   ascending!: boolean;
+  loading = true;
 
   constructor(
     protected passService: PassService,
@@ -105,19 +106,20 @@ export class PassComponent implements OnInit, OnDestroy {
   private onSuccess(passes: Pass[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.passes = passes;
+    this.loading = false;
   }
 
-  getUserNameById(id: number): string {
+  getUserNameById(id: number | undefined): string {
     const result = this.appUsers?.find(appUser => appUser.id === id);
     return result?.internalUser?.lastName + ' ' + result?.internalUser?.firstName;
   }
 
-  getPassTypeNameById(id: number): string {
+  getPassTypeNameById(id: number | undefined): string {
     const result = this.passTypes?.find(passType => passType.id === id);
     return `${result?.name} (${result?.price ? formatNumber(result.price, 'hu', '1.0') : '?'} ${result?.unit})`;
   }
 
-  getPassOccasionsById(id: number): string {
+  getPassOccasionsById(id: number | undefined): string {
     const result = this.passTypes?.find(passType => passType.id === id);
     return result?.occasions?.toString() || '?';
   }

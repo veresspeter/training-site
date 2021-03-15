@@ -8,7 +8,6 @@ import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IPass, Pass } from 'app/shared/model/pass.model';
 import { PassComponent } from './pass.component';
-import { PassDetailComponent } from './pass-detail/pass-detail.component';
 import { PassUpdateComponent } from './pass-update/pass-update.component';
 import { PassService } from 'app/shared/services/pass.service';
 
@@ -46,18 +45,6 @@ export const passRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/view',
-    component: PassDetailComponent,
-    resolve: {
-      pass: PassResolve,
-    },
-    data: {
-      authorities: [Authority.USER],
-      pageTitle: 'Passes',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: 'new',
     component: PassUpdateComponent,
     resolve: {
@@ -70,7 +57,7 @@ export const passRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/edit',
+    path: ':id/view',
     component: PassUpdateComponent,
     resolve: {
       pass: PassResolve,

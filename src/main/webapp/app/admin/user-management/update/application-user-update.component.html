@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <form name="editForm" role="form" class="text-center text-md-right" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-application-user-heading" class="text-center mb-4">
                 <span *ngIf="!editForm.get('id')!.value">Felhasználó létrehozása</span>
                 <span *ngIf="editForm.get('id')!.value">Felhasználó szerkesztése</span>
