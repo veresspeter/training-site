@@ -66,7 +66,7 @@ public class Event implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "events", allowSetters = true)
-    private ApplicationUser organizer;
+    private AppUser organizer;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -78,7 +78,7 @@ public class Event implements Serializable {
     @JoinTable(name = "event_participants",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
-    private Set<ApplicationUser> participants = new HashSet<>();
+    private Set<AppUser> participants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -219,17 +219,17 @@ public class Event implements Serializable {
         this.comment = comment;
     }
 
-    public ApplicationUser getOrganizer() {
+    public AppUser getOrganizer() {
         return organizer;
     }
 
-    public Event organizer(ApplicationUser applicationUser) {
-        this.organizer = applicationUser;
+    public Event organizer(AppUser appUser) {
+        this.organizer = appUser;
         return this;
     }
 
-    public void setOrganizer(ApplicationUser applicationUser) {
-        this.organizer = applicationUser;
+    public void setOrganizer(AppUser appUser) {
+        this.organizer = appUser;
     }
 
     public Activity getActivity() {
@@ -245,29 +245,29 @@ public class Event implements Serializable {
         this.activity = activity;
     }
 
-    public Set<ApplicationUser> getParticipants() {
+    public Set<AppUser> getParticipants() {
         return participants;
     }
 
-    public Event participants(Set<ApplicationUser> applicationUsers) {
-        this.participants = applicationUsers;
+    public Event participants(Set<AppUser> appUsers) {
+        this.participants = appUsers;
         return this;
     }
 
-    public Event addParticipants(ApplicationUser applicationUser) {
-        this.participants.add(applicationUser);
-        applicationUser.getEvents().add(this);
+    public Event addParticipants(AppUser appUser) {
+        this.participants.add(appUser);
+        appUser.getEvents().add(this);
         return this;
     }
 
-    public Event removeParticipants(ApplicationUser applicationUser) {
-        this.participants.remove(applicationUser);
-        applicationUser.getEvents().remove(this);
+    public Event removeParticipants(AppUser appUser) {
+        this.participants.remove(appUser);
+        appUser.getEvents().remove(this);
         return this;
     }
 
-    public void setParticipants(Set<ApplicationUser> applicationUsers) {
-        this.participants = applicationUsers;
+    public void setParticipants(Set<AppUser> appUsers) {
+        this.participants = appUsers;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

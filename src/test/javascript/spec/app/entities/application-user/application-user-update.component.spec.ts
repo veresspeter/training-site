@@ -4,9 +4,9 @@ import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { ApplicationUserUpdateComponent } from 'app/entities/application-user/application-user-update.component';
+import { ApplicationUserUpdateComponent } from 'app/entities/application-user/update/application-user-update.component';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
-import { ApplicationUser } from 'app/shared/model/application-user.model';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 describe('Component Tests', () => {
   describe('ApplicationUser Management Update Component', () => {
@@ -31,7 +31,7 @@ describe('Component Tests', () => {
     describe('save', () => {
       it('Should call update service on save for existing entity', fakeAsync(() => {
         // GIVEN
-        const entity = new ApplicationUser(123);
+        const entity = new AppUser(123);
         spyOn(service, 'update').and.returnValue(of(new HttpResponse({ body: entity })));
         comp.updateForm(entity);
         // WHEN
@@ -45,7 +45,7 @@ describe('Component Tests', () => {
 
       it('Should call create service on save for new entity', fakeAsync(() => {
         // GIVEN
-        const entity = new ApplicationUser();
+        const entity = new AppUser();
         spyOn(service, 'create').and.returnValue(of(new HttpResponse({ body: entity })));
         comp.updateForm(entity);
         // WHEN

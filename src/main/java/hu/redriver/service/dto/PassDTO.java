@@ -1,5 +1,7 @@
 package hu.redriver.service.dto;
 
+import hu.redriver.domain.Pass;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.io.Serializable;
  * A DTO for the {@link hu.redriver.domain.Pass} entity.
  */
 public class PassDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -18,14 +20,23 @@ public class PassDTO implements Serializable {
     private Integer usageNo;
 
     private LocalDate validFrom;
-
     private LocalDate validTo;
-
-
     private Long passTypeId;
-
     private Long userId;
-    
+
+    public PassDTO() {
+    }
+
+    public PassDTO(Pass pass) {
+        this.id = pass.getId();
+        this.purchased = pass.getPurchased();
+        this.usageNo = pass.getUsageNo();
+        this.validFrom = pass.getValidFrom();
+        this.validTo = pass.getValidTo();
+        this.passTypeId = pass.getPassType().getId();
+        this.userId = pass.getUser().getId();
+    }
+
     public Long getId() {
         return id;
     }
@@ -78,8 +89,8 @@ public class PassDTO implements Serializable {
         return userId;
     }
 
-    public void setUserId(Long applicationUserId) {
-        this.userId = applicationUserId;
+    public void setUserId(Long appUserId) {
+        this.userId = appUserId;
     }
 
     @Override

@@ -1,0 +1,40 @@
+ngb-pagination li {
+  &.page-item {
+    margin: 0 5px;
+    min-width: 45px;
+    text-align: center;
+
+    &.disabled a.page-link {
+      border: solid 1px $mv-alert-bg;
+      color: $mv-alert-bg;
+      background-color: transparent;
+
+      & * {
+        color: $mv-alert-bg;
+      }
+    }
+
+    & a.page-link {
+      border-radius: 0.15rem !important;
+      border: solid 1px $mv-btn-primary;
+      color: $mv-btn-primary;
+      background-color: transparent;
+
+      &:focus,
+      &:hover {
+        color: $mv-text-light;
+        background-color: $mv-btn-hover-primary;
+      }
+
+      & * {
+        color: inherit;
+        background-color: inherit;
+      }
+    }
+
+    &.active a.page-link {
+      background-color: $mv-btn-primary;
+      border: solid 1px $mv-btn-primary;
+    }
+  }
+}

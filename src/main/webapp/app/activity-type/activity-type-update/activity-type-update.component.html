@@ -1,17 +1,19 @@
 <div class="row justify-content-center">
-    <div class="col-8 card">
-        <form name="editForm" role="form" class="card-body" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-activity-type-heading">Foglalkozás típus létrehozása vagy szerkesztése</h2>
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-activity-type-heading"
+                class="text-center">{{!editForm.get('id').value ? "Foglalkozás típus létrehozása" : "Foglalkozás típus szerkesztése" }}</h2>
 
             <div class="my-4">
                 <div class="form-group">
                     <label class="form-control-label" for="field_name">Név</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
-                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                    <div
+                        *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('name')?.errors?.required">
-                        This field is required.
+                            This field is required.
                         </small>
                     </div>
                 </div>
@@ -19,23 +21,25 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_image">Kép</label>
                     <div>
-                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value" style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="activityType image"/>
-                        <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
-                            <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
-                            <button type="button" (click)="clearInputImage('image', 'imageContentType', 'file_image')" class="btn btn-icon btn-danger btn-xs pull-right">
-                                <fa-icon icon="trash"></fa-icon>
-                            </button>
-                        </div>
-                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)" accept="image/*"/>
+                        <img [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="activityType image"/>
+                        <button type="button" *ngIf="editForm.get('image')!.value"
+                                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                class="btn btn-icon btn-danger btn-xs pull-right">
+                            <fa-icon icon="trash"></fa-icon>
+                        </button>
+                        <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
+                               accept="image/*" class="input-group-text"/>
                     </div>
                     <input type="hidden" class="form-control" name="image" id="field_image"
                            formControlName="image"/>
                     <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
-                           formControlName="imageContentType" />
-                    <div *ngIf="editForm.get('image')!.invalid && (editForm.get('image')!.dirty || editForm.get('image')!.touched)">
+                           formControlName="imageContentType"/>
+                    <div
+                        *ngIf="editForm.get('image')!.invalid && (editForm.get('image')!.dirty || editForm.get('image')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('image')?.errors?.required">
-                        This field is required.
+                            This field is required.
                         </small>
                     </div>
                 </div>
@@ -46,7 +50,8 @@
                     Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                        class="btn btn-primary">
                     Mentés
                 </button>
             </div>

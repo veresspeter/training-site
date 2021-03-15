@@ -4,11 +4,11 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IApplicationUser } from 'app/shared/model/application-user.model';
+import { IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
-import { ApplicationUserDeleteDialogComponent } from './application-user-delete-dialog.component';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { ApplicationUserDeleteDialogComponent } from 'app/entities/application-user/delete/application-user-delete-dialog.component';
 
 @Component({
   selector: 'jhi-application-user',
@@ -16,7 +16,7 @@ import { Account } from 'app/core/user/account.model';
 })
 export class ApplicationUserComponent implements OnInit, OnDestroy {
   currentAccount: Account | null = null;
-  applicationUsers?: IApplicationUser[];
+  appUsers?: IAppUser[];
   eventSubscriber?: Subscription;
 
   constructor(
@@ -29,7 +29,7 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
 
   loadAll(): void {
     this.accountService.identity().subscribe(account => (this.currentAccount = account));
-    this.applicationUserService.query().subscribe((res: HttpResponse<IApplicationUser[]>) => (this.applicationUsers = res.body || []));
+    this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.appUsers = res.body || []));
   }
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: IApplicationUser): number {
+  trackId(index: number, item: IAppUser): number {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return item.id!;
   }
@@ -60,8 +60,8 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('applicationUserListModification', () => this.loadAll());
   }
 
-  delete(applicationUser: IApplicationUser): void {
+  delete(appUser: IAppUser): void {
     const modalRef = this.modalService.open(ApplicationUserDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.applicationUser = applicationUser;
+    modalRef.componentInstance.appUser = appUser;
   }
 }

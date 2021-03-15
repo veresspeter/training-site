@@ -10,7 +10,7 @@ import { EventDeleteDialogComponent } from './event-delete/event-delete-dialog.c
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { AccountService } from 'app/core/auth/account.service';
-import { IApplicationUser } from 'app/shared/model/application-user.model';
+import { IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 @Component({
@@ -74,7 +74,7 @@ export class EventComponent implements OnInit, OnDestroy {
     return this.isUserAuthenticated() && this.isUserRegistered(event.participants);
   }
 
-  isUserRegistered(participants: IApplicationUser[] | undefined): boolean {
+  isUserRegistered(participants: IAppUser[] | undefined): boolean {
     return participants?.find(participant => participant.id === this.activeUserId) !== undefined;
   }
 

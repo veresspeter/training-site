@@ -2,6 +2,7 @@ package hu.redriver.config;
 
 import java.time.Duration;
 
+import hu.redriver.domain.AppUser;
 import org.ehcache.config.builders.*;
 import org.ehcache.jsr107.Eh107Configuration;
 
@@ -50,8 +51,8 @@ public class CacheConfiguration {
             createCache(cm, hu.redriver.domain.User.class.getName() + ".authorities");
             createCache(cm, hu.redriver.domain.PersistentToken.class.getName());
             createCache(cm, hu.redriver.domain.User.class.getName() + ".persistentTokens");
-            createCache(cm, hu.redriver.domain.ApplicationUser.class.getName());
-            createCache(cm, hu.redriver.domain.ApplicationUser.class.getName() + ".events");
+            createCache(cm, AppUser.class.getName());
+            createCache(cm, AppUser.class.getName() + ".events");
             createCache(cm, hu.redriver.domain.ActivityType.class.getName());
             createCache(cm, hu.redriver.domain.Activity.class.getName());
             createCache(cm, hu.redriver.domain.Event.class.getName());

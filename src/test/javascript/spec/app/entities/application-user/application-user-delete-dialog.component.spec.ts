@@ -6,7 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { MaxmoveTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
-import { ApplicationUserDeleteDialogComponent } from 'app/entities/application-user/application-user-delete-dialog.component';
+import { ApplicationUserDeleteDialogComponent } from 'app/entities/application-user/delete/application-user-delete-dialog.component';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 describe('Component Tests', () => {

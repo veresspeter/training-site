@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Event} and its DTO {@link EventDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ApplicationUserMapper.class, ActivityMapper.class})
+@Mapper(componentModel = "spring", uses = {AppUserMapper.class, ActivityMapper.class})
 public interface EventMapper extends EntityMapper<EventDTO, Event> {
 
     @Mapping(source = "organizer", target = "organizer")

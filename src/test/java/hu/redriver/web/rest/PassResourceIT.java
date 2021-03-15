@@ -1,9 +1,9 @@
 package hu.redriver.web.rest;
 
 import hu.redriver.MaxmoveApp;
+import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Pass;
 import hu.redriver.domain.PassType;
-import hu.redriver.domain.ApplicationUser;
 import hu.redriver.repository.PassRepository;
 import hu.redriver.service.PassService;
 import hu.redriver.service.dto.PassDTO;
@@ -89,15 +89,15 @@ public class PassResourceIT {
         }
         pass.setPassType(passType);
         // Add required entity
-        ApplicationUser applicationUser;
-        if (TestUtil.findAll(em, ApplicationUser.class).isEmpty()) {
-            applicationUser = ApplicationUserResourceIT.createEntity(em);
-            em.persist(applicationUser);
+        AppUser appUser;
+        if (TestUtil.findAll(em, AppUser.class).isEmpty()) {
+            appUser = AppUserResourceIT.createEntity(em);
+            em.persist(appUser);
             em.flush();
         } else {
-            applicationUser = TestUtil.findAll(em, ApplicationUser.class).get(0);
+            appUser = TestUtil.findAll(em, AppUser.class).get(0);
         }
-        pass.setUser(applicationUser);
+        pass.setUser(appUser);
         return pass;
     }
     /**
@@ -123,15 +123,15 @@ public class PassResourceIT {
         }
         pass.setPassType(passType);
         // Add required entity
-        ApplicationUser applicationUser;
-        if (TestUtil.findAll(em, ApplicationUser.class).isEmpty()) {
-            applicationUser = ApplicationUserResourceIT.createUpdatedEntity(em);
-            em.persist(applicationUser);
+        AppUser appUser;
+        if (TestUtil.findAll(em, AppUser.class).isEmpty()) {
+            appUser = AppUserResourceIT.createUpdatedEntity(em);
+            em.persist(appUser);
             em.flush();
         } else {
-            applicationUser = TestUtil.findAll(em, ApplicationUser.class).get(0);
+            appUser = TestUtil.findAll(em, AppUser.class).get(0);
         }
-        pass.setUser(applicationUser);
+        pass.setUser(appUser);
         return pass;
     }
 
@@ -238,7 +238,7 @@ public class PassResourceIT {
             .andExpect(jsonPath("$.[*].validFrom").value(hasItem(DEFAULT_VALID_FROM.toString())))
             .andExpect(jsonPath("$.[*].validTo").value(hasItem(DEFAULT_VALID_TO.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getPass() throws Exception {

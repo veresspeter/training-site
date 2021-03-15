@@ -6,23 +6,23 @@ import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IApplicationUser, ApplicationUser } from 'app/shared/model/application-user.model';
-import { ApplicationUserService } from '../../shared/services/application-user.service';
+import { IAppUser, AppUser } from 'app/shared/model/application-user.model';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { ApplicationUserComponent } from './application-user.component';
-import { ApplicationUserDetailComponent } from './application-user-detail.component';
-import { ApplicationUserUpdateComponent } from './application-user-update.component';
+import { ApplicationUserDetailComponent } from './detail/application-user-detail.component';
+import { ApplicationUserUpdateComponent } from './update/application-user-update.component';
 
 @Injectable({ providedIn: 'root' })
-export class ApplicationUserResolve implements Resolve<IApplicationUser> {
+export class ApplicationUserResolve implements Resolve<IAppUser> {
   constructor(private service: ApplicationUserService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<IApplicationUser> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IAppUser> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        flatMap((applicationUser: HttpResponse<ApplicationUser>) => {
-          if (applicationUser.body) {
-            return of(applicationUser.body);
+        flatMap((appUser: HttpResponse<AppUser>) => {
+          if (appUser.body) {
+            return of(appUser.body);
           } else {
             this.router.navigate(['404']);
             return EMPTY;
@@ -30,7 +30,7 @@ export class ApplicationUserResolve implements Resolve<IApplicationUser> {
         })
       );
     }
-    return of(new ApplicationUser());
+    return of(new AppUser());
   }
 }
 
@@ -48,7 +48,7 @@ export const applicationUserRoute: Routes = [
     path: ':id/view',
     component: ApplicationUserDetailComponent,
     resolve: {
-      applicationUser: ApplicationUserResolve,
+      appUser: ApplicationUserResolve,
     },
     data: {
       authorities: [Authority.USER],
@@ -60,7 +60,7 @@ export const applicationUserRoute: Routes = [
     path: 'new',
     component: ApplicationUserUpdateComponent,
     resolve: {
-      applicationUser: ApplicationUserResolve,
+      appUser: ApplicationUserResolve,
     },
     data: {
       authorities: [Authority.USER],
@@ -72,7 +72,7 @@ export const applicationUserRoute: Routes = [
     path: ':id/edit',
     component: ApplicationUserUpdateComponent,
     resolve: {
-      applicationUser: ApplicationUserResolve,
+      appUser: ApplicationUserResolve,
     },
     data: {
       authorities: [Authority.USER],

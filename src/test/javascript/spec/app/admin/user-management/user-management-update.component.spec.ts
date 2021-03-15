@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { MaxmoveTestModule } from '../../../test.module';
-import { UserManagementUpdateComponent } from 'app/admin/user-management/user-management-update.component';
+import { UserManagementUpdateComponent } from 'app/admin/user-management/update/user-management-update.component';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 

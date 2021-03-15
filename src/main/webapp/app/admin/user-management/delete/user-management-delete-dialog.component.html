@@ -1,0 +1,21 @@
+<form *ngIf="user" name="deleteForm" (ngSubmit)="confirmDelete(user?.login!)">
+    <div class="modal-header">
+        <h4 class="modal-title">Törlés megerősítése</h4>
+    </div>
+
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <p>Biztosan törölni szeretnéd a(z) <span class="delete-item-name">{{user.lastName}} {{user.firstName}}</span> nevű felhasználót?</p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="cancel()">
+            Mégse
+        </button>
+
+        <button type="submit" class="btn btn-danger">
+            Törlés
+        </button>
+    </div>
+</form>

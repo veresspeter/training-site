@@ -2,6 +2,7 @@
   width: 175px;
   height: 35px;
   border-radius: 0;
+  margin: 5px 0;
   box-shadow: 0 0 0.4rem $mv-shadow-primary;
 
   &.btn-icon {
@@ -66,4 +67,9 @@
 
 .btn.btn-link:not(#zmmtg-root *) {
   color: $mv-text-dark;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 }

@@ -26,8 +26,30 @@ input:not([type='checkbox']) {
   &:-internal-autofill-selected {
     background-color: $mv-pastel !important;
   }
+
+  &[type='file'] {
+    height: 62px !important;
+  }
 }
 
 input[type='checkbox'] {
   margin-top: 3px;
+}
+
+select.form-control {
+  border: solid 1px $mv-pastel;
+  box-shadow: 0 0 10px $mv-shadow-primary;
+  background-color: $mv-pastel-light;
+  border-radius: 0.15em;
+  height: 50px !important;
+  padding: 15px !important;
+
+  &[disabled] {
+    background-color: $mv-pastel-light;
+    color: $mv-bg;
+  }
+
+  &[multiple='multiple'] {
+    height: 150px !important;
+  }
 }

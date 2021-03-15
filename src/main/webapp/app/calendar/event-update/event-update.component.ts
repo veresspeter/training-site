@@ -8,12 +8,12 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IEvent, Event } from 'app/shared/model/event.model';
 import { EventService } from 'app/shared/services/event.service';
-import { IApplicationUser } from 'app/shared/model/application-user.model';
+import { IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
 import { ActivityService } from 'app/shared/services/activity.service';
 
-type SelectableEntity = IApplicationUser | IActivity;
+type SelectableEntity = IAppUser | IActivity;
 
 @Component({
   selector: 'jhi-event-update',
@@ -21,7 +21,7 @@ type SelectableEntity = IApplicationUser | IActivity;
 })
 export class EventUpdateComponent implements OnInit {
   isSaving = false;
-  applicationUsers: IApplicationUser[] = [];
+  applicationUsers: IAppUser[] = [];
   activities: IActivity[] = [];
 
   editForm = this.fb.group({
@@ -56,7 +56,7 @@ export class EventUpdateComponent implements OnInit {
 
       this.updateForm(event);
 
-      this.applicationUserService.query().subscribe((res: HttpResponse<IApplicationUser[]>) => (this.applicationUsers = res.body || []));
+      this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.applicationUsers = res.body || []));
 
       this.activityService.query().subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
     });
@@ -129,7 +129,7 @@ export class EventUpdateComponent implements OnInit {
     return item.id;
   }
 
-  getSelected(selectedVals: IApplicationUser[], option: IApplicationUser): IApplicationUser {
+  getSelected(selectedVals: IAppUser[], option: IAppUser): IAppUser {
     if (selectedVals) {
       for (let i = 0; i < selectedVals.length; i++) {
         if (option.id === selectedVals[i].id) {

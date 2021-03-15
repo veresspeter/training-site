@@ -2,9 +2,8 @@ import { Moment } from 'moment';
 import { IEvent } from 'app/shared/model/event.model';
 import { Sex } from 'app/shared/model/enumerations/sex.model';
 
-export interface IApplicationUser {
+export interface IAppUser {
   id?: number;
-  credit?: number;
   fullName?: string;
   sex?: Sex;
   birthDay?: Moment;
@@ -16,12 +15,19 @@ export interface IApplicationUser {
   isTrainer?: boolean;
   internalUserId?: number;
   events?: IEvent[];
+  injury?: string;
+  surgery?: string;
+  heartProblem?: string;
+  respiratoryDisease?: string;
+  spineProblem?: string;
+  regularPain?: string;
+  medicine?: string;
+  otherProblem?: string;
 }
 
-export class ApplicationUser implements IApplicationUser {
+export class AppUser implements IAppUser {
   constructor(
     public id?: number,
-    public credit?: number,
     public fullName?: string,
     public sex?: Sex,
     public birthDay?: Moment,
@@ -32,7 +38,15 @@ export class ApplicationUser implements IApplicationUser {
     public introduction?: string,
     public isTrainer?: boolean,
     public internalUserId?: number,
-    public events?: IEvent[]
+    public events?: IEvent[],
+    public injury?: string,
+    public surgery?: string,
+    public heartProblem?: string,
+    public respiratoryDisease?: string,
+    public spineProblem?: string,
+    public regularPain?: string,
+    public medicine?: string,
+    public otherProblem?: string
   ) {
     this.isTrainer = this.isTrainer || false;
   }

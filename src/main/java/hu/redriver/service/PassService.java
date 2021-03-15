@@ -7,6 +7,8 @@ import hu.redriver.service.mapper.PassMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +59,12 @@ public class PassService {
         return passRepository.findAll().stream()
             .map(passMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PassDTO> findAll(Pageable pageable) {
+        log.debug("Request to get all Passes");
+        return passRepository.findAll(pageable).map(PassDTO::new);
     }
 
 

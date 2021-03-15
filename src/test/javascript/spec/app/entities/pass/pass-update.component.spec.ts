@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { PassUpdateComponent } from 'app/entities/pass/pass-update.component';
+import { PassUpdateComponent } from 'app/entities/pass/pass-update/pass-update.component';
 import { PassService } from 'app/entities/pass/pass.service';
 import { Pass } from 'app/shared/model/pass.model';
 

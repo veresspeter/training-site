@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity Activity.
     -->
@@ -49,7 +49,7 @@
     -->
     <changeSet id="20210208200831-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/activity.csv"
+                  file="config/liquibase/data/activity.csv"
                   separator=";"
                   tableName="activity">
             <column name="id" type="numeric"/>

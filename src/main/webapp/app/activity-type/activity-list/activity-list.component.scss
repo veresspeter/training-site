@@ -3,6 +3,11 @@
 :host {
   text-align: right;
 
+  & > button.btn-link {
+    position: absolute;
+    left: 20px;
+  }
+
   h2 {
     width: 100%;
     text-align: center;

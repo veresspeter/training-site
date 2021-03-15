@@ -4,7 +4,7 @@ import { JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
-import { IApplicationUser } from 'app/shared/model/application-user.model';
+import { IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ApplicationUserService } from 'app/shared/services/application-user.ser
   styleUrls: ['./trainer.component.scss'],
 })
 export class TrainerComponent implements OnInit, OnDestroy {
-  applicationUsers?: IApplicationUser[];
+  applicationUsers?: IAppUser[];
   eventSubscriber?: Subscription;
   loading = true;
 
@@ -26,7 +26,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
   ) {}
 
   loadAll(): void {
-    this.applicationUserService.queryTrainers({}).subscribe((res: HttpResponse<IApplicationUser[]>) => {
+    this.applicationUserService.queryTrainers({}).subscribe((res: HttpResponse<IAppUser[]>) => {
       this.applicationUsers = res.body || [];
       this.loading = false;
     });
@@ -45,7 +45,7 @@ export class TrainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: IApplicationUser): number {
+  trackId(index: number, item: IAppUser): number {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return item.id!;
   }

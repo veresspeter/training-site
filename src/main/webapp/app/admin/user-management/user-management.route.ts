@@ -5,8 +5,8 @@ import { Observable, of } from 'rxjs';
 import { User, IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { UserManagementComponent } from './user-management.component';
-import { UserManagementDetailComponent } from './user-management-detail.component';
-import { UserManagementUpdateComponent } from './user-management-update.component';
+import { UserManagementDetailComponent } from './detail/user-management-detail.component';
+import { UserManagementUpdateComponent } from './update/user-management-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementResolve implements Resolve<IUser> {

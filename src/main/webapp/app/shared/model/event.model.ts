@@ -1,5 +1,5 @@
 import { Moment } from 'moment';
-import { IApplicationUser } from 'app/shared/model/application-user.model';
+import { IAppUser } from 'app/shared/model/application-user.model';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 
 export interface IEvent {
@@ -14,9 +14,9 @@ export interface IEvent {
   zoomRoomPsw?: string;
   zoomStartLink?: string;
   comment?: string;
-  organizer?: IApplicationUser;
+  organizer?: IAppUser;
   activityId?: number;
-  participants?: IApplicationUser[];
+  participants?: IAppUser[];
 }
 
 export class Event implements IEvent {
@@ -32,8 +32,8 @@ export class Event implements IEvent {
     public zoomRoomPsw?: string,
     public zoomStartLink?: string,
     public comment?: string,
-    public organizer?: IApplicationUser,
+    public organizer?: IAppUser,
     public activityId?: number,
-    public participants?: IApplicationUser[]
+    public participants?: IAppUser[]
   ) {}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20210314191200-1" author="jhipster">
+        <dropColumn  catalogName="cat"
+                     columnName="id"
+                     schemaName="public"
+                     tableName="application_user">
+            <column  name="credit"/>
+        </dropColumn>
+        <addColumn catalogName="cat"
+                   schemaName= "public"
+                   tableName="application_user" >
+            <column name="injury"
+                    type="varchar(255)"/>
+            <column name="surgery"
+                    type="varchar(255)"/>
+            <column name="heart_problem"
+                    type="varchar(255)"/>
+            <column name="respiratory_disease"
+                    type="varchar(255)"/>
+            <column name="spine_problem"
+                    type="varchar(255)"/>
+            <column name="regular_pain"
+                    type="varchar(255)"/>
+            <column name="medicine"
+                    type="varchar(255)"/>
+            <column name="other_problem"
+                    type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

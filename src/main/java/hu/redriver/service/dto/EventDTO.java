@@ -38,10 +38,10 @@ public class EventDTO implements Serializable {
     private String comment;
 
 
-    private ApplicationUserDTO organizer;
+    private AppUserDTO organizer;
 
     private Long activityId;
-    private Set<ApplicationUserDTO> participants = new HashSet<>();
+    private Set<AppUserDTO> participants = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -131,11 +131,11 @@ public class EventDTO implements Serializable {
         this.comment = comment;
     }
 
-    public ApplicationUserDTO getOrganizer() {
+    public AppUserDTO getOrganizer() {
         return organizer;
     }
 
-    public void setOrganizer(ApplicationUserDTO organizer) {
+    public void setOrganizer(AppUserDTO organizer) {
         this.organizer = organizer;
     }
 
@@ -147,11 +147,11 @@ public class EventDTO implements Serializable {
         this.activityId = activityId;
     }
 
-    public Set<ApplicationUserDTO> getParticipants() {
+    public Set<AppUserDTO> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Set<ApplicationUserDTO> applicationUsers) {
+    public void setParticipants(Set<AppUserDTO> applicationUsers) {
         this.participants = applicationUsers;
     }
 

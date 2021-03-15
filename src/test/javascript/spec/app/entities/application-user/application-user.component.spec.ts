@@ -5,7 +5,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { MaxmoveTestModule } from '../../../test.module';
 import { ApplicationUserComponent } from 'app/entities/application-user/application-user.component';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
-import { ApplicationUser } from 'app/shared/model/application-user.model';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 describe('Component Tests', () => {
   describe('ApplicationUser Management Component', () => {
@@ -32,7 +32,7 @@ describe('Component Tests', () => {
       spyOn(service, 'query').and.returnValue(
         of(
           new HttpResponse({
-            body: [new ApplicationUser(123)],
+            body: [new AppUser(123)],
             headers,
           })
         )
@@ -43,7 +43,7 @@ describe('Component Tests', () => {
 
       // THEN
       expect(service.query).toHaveBeenCalled();
-      expect(comp.applicationUsers && comp.applicationUsers[0]).toEqual(jasmine.objectContaining({ id: 123 }));
+      expect(comp.appUsers && comp.appUsers[0]).toEqual(jasmine.objectContaining({ id: 123 }));
     });
   });
 });

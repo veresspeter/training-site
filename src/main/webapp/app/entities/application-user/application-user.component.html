@@ -8,51 +8,49 @@
         <span>Felhasználók (személyes adatok)</span>
     </h2>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="applicationUsers?.length === 0">
-        <span>No applicationUsers found</span>
+    <div class="alert alert-warning" id="no-result" *ngIf="appUsers?.length === 0">
+        <span>No appUsers found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="applicationUsers && applicationUsers.length > 0">
+    <div class="table-responsive" id="entities" *ngIf="appUsers && appUsers.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
             <tr>
                 <th scope="col"><span>Kép</span></th>
                 <th scope="col"><span>Teljes név</span></th>
-                <th scope="col"><span>Egységek</span></th>
                 <th scope="col"><span>Oktató</span></th>
                 <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let applicationUser of applicationUsers ;trackBy: trackId">
+            <tr *ngFor="let appUser of appUsers ;trackBy: trackId">
                 <td>
-                    <a *ngIf="applicationUser.image"
-                       (click)="openFile(applicationUser.imageContentType, applicationUser.image)">
-                        <img [src]="'data:' + applicationUser.imageContentType + ';base64,' + applicationUser.image"
-                             style="max-height: 100px;" alt="{{applicationUser.fullName}} profilképe"/>
+                    <a *ngIf="appUser.image"
+                       (click)="openFile(appUser.imageContentType, appUser.image)">
+                        <img [src]="'data:' + appUser.imageContentType + ';base64,' + appUser.image"
+                             style="max-height: 100px;" alt="{{appUser.fullName}} profilképe"/>
                     </a>
                 </td>
-                <td>{{ applicationUser.fullName }}</td>
-                <td>{{ applicationUser.credit }}</td>
+                <td>{{ appUser.fullName }}</td>
                 <td>
-                    <fa-icon *ngIf="applicationUser.isTrainer" icon="times"></fa-icon>
+                    <fa-icon *ngIf="appUser.isTrainer" icon="times"></fa-icon>
                 </td>
                 <td class="text-right">
                     <button type="submit"
-                            [routerLink]="['./', applicationUser.id, 'view']"
+                            [routerLink]="['./', appUser.id, 'view']"
                             class="btn btn-primary btn-icon">
                         <fa-icon icon="eye"></fa-icon>
                     </button>
 
                     <button type="submit"
-                            [routerLink]="['./', applicationUser.id, 'edit']"
+                            [routerLink]="['./', appUser.id, 'edit']"
                             queryParamsHandling="merge"
                             class="btn btn-primary btn-icon">
                         <fa-icon icon="pen"></fa-icon>
                     </button>
 
-                    <button type="button" (click)="delete(applicationUser)"
-                            class="btn btn-primary btn-icon" [disabled]="!currentAccount || currentAccount.id === applicationUser.internalUserId">
+                    <button type="button" (click)="delete(appUser)"
+                            class="btn btn-primary btn-icon" [disabled]="!currentAccount || currentAccount.id === appUser.internalUserId">
                         <fa-icon icon="trash"></fa-icon>
                     </button>
                 </td>

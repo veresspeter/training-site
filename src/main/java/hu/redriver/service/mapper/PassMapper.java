@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Pass} and its DTO {@link PassDTO}.
  */
-@Mapper(componentModel = "spring", uses = {PassTypeMapper.class, ApplicationUserMapper.class})
+@Mapper(componentModel = "spring", uses = {PassTypeMapper.class, AppUserMapper.class})
 public interface PassMapper extends EntityMapper<PassDTO, Pass> {
 
     @Mapping(source = "passType.id", target = "passTypeId")

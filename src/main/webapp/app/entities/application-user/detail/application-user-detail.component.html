@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8 card">
+        <div *ngIf="appUser" class="card-body text-right">
+            <h2 class="text-center">{{ appUser.fullName }}</h2>
+
+            <dl class="row-md jh-entity-details text-left">
+                <dt><span>Nem</span></dt>
+                <dd>
+                    <span>{{ appUser.sex }}</span>
+                </dd>
+                <dt><span>Születési dátum</span></dt>
+                <dd>
+                    <span>{{ appUser.birthDay }}</span>
+                </dd>
+                <dt><span>Google Token</span></dt>
+                <dd>
+                    <span>{{ appUser.googleToken }}</span>
+                </dd>
+                <dt><span>Facebook Token</span></dt>
+                <dd>
+                    <span>{{ appUser.facebookToken }}</span>
+                </dd>
+                <dt><span>Felhasználókép</span></dt>
+                <dd>
+                    <div *ngIf="appUser.image">
+                        <a (click)="openFile(appUser.imageContentType, appUser.image)">
+                            <img [src]="'data:' + appUser.imageContentType + ';base64,' + appUser.image" style="max-width: 100%;" alt="appUser image"/>
+                        </a>
+                    </div>
+                </dd>
+                <dt><span>Bemutatkozás</span></dt>
+                <dd>
+                    <span>{{ appUser.introduction }}</span>
+                </dd>
+                <dt><span>Oktató</span></dt>
+                <dd>
+                    <span>{{ appUser.isTrainer ? "Igen" : "Nem" }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-outline-secondary">
+                Vissza
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/application-user', appUser.id, 'edit']"
+                    class="btn btn-primary">
+                Szerkesztés
+            </button>
+        </div>
+    </div>
+</div>

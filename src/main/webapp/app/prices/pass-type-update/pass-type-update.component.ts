@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IPassType, PassType } from 'app/shared/model/pass-type.model';
-import { PassTypeService } from '../../shared/services/pass-type.service';
+import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { IActivityType } from 'app/shared/model/activity-type.model';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 import { IActivity } from 'app/shared/model/activity.model';

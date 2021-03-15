@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { PassDetailComponent } from 'app/entities/pass/pass-detail.component';
+import { PassDetailComponent } from 'app/entities/pass/pass-detail/pass-detail.component';
 import { Pass } from 'app/shared/model/pass.model';
 
 describe('Component Tests', () => {

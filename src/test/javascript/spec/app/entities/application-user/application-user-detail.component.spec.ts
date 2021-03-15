@@ -4,15 +4,15 @@ import { of } from 'rxjs';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { MaxmoveTestModule } from '../../../test.module';
-import { ApplicationUserDetailComponent } from 'app/entities/application-user/application-user-detail.component';
-import { ApplicationUser } from 'app/shared/model/application-user.model';
+import { ApplicationUserDetailComponent } from 'app/entities/application-user/detail/application-user-detail.component';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 describe('Component Tests', () => {
   describe('ApplicationUser Management Detail Component', () => {
     let comp: ApplicationUserDetailComponent;
     let fixture: ComponentFixture<ApplicationUserDetailComponent>;
     let dataUtils: JhiDataUtils;
-    const route = ({ data: of({ applicationUser: new ApplicationUser(123) }) } as any) as ActivatedRoute;
+    const route = ({ data: of({ appUser: new AppUser(123) }) } as any) as ActivatedRoute;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('Component Tests', () => {
         comp.ngOnInit();
 
         // THEN
-        expect(comp.applicationUser).toEqual(jasmine.objectContaining({ id: 123 }));
+        expect(comp.appUser).toEqual(jasmine.objectContaining({ id: 123 }));
       });
     });
 

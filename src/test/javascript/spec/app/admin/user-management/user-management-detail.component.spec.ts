@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { MaxmoveTestModule } from '../../../test.module';
-import { UserManagementDetailComponent } from 'app/admin/user-management/user-management-detail.component';
+import { UserManagementDetailComponent } from 'app/admin/user-management/detail/user-management-detail.component';
 import { User } from 'app/core/user/user.model';
 
 describe('Component Tests', () => {

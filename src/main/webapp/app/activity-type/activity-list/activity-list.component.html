@@ -1,3 +1,7 @@
+<button class="btn btn-link" (click)="previousState()">
+    <fa-icon icon="chevron-left"></fa-icon> Vissza
+</button>
+
 <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary"
         [routerLink]="['/activity-type', activityType?.id, 'activity', 'new']">
     Létrehozás

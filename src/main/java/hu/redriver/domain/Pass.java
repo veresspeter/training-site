@@ -47,7 +47,7 @@ public class Pass implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "passes", allowSetters = true)
-    private ApplicationUser user;
+    private AppUser user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -123,17 +123,17 @@ public class Pass implements Serializable {
         this.passType = passType;
     }
 
-    public ApplicationUser getUser() {
+    public AppUser getUser() {
         return user;
     }
 
-    public Pass user(ApplicationUser applicationUser) {
-        this.user = applicationUser;
+    public Pass user(AppUser appUser) {
+        this.user = appUser;
         return this;
     }
 
-    public void setUser(ApplicationUser applicationUser) {
-        this.user = applicationUser;
+    public void setUser(AppUser appUser) {
+        this.user = appUser;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

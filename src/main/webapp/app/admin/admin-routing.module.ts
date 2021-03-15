@@ -41,6 +41,10 @@ import { RouterModule } from '@angular/router';
         path: 'metrics',
         loadChildren: () => import('./metrics/metrics.module').then(m => m.MetricsModule),
       },
+      {
+        path: 'pass',
+        loadChildren: () => import('./pass/pass.module').then(m => m.MaxmovePassModule),
+      },
       /* jhipster-needle-add-admin-route - JHipster will add admin routes here */
     ]),
   ],

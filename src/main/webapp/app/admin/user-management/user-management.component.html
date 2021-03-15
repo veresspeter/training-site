@@ -15,7 +15,7 @@
         <table class="table table-striped" aria-describedby="user-management-page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="transition.bind(this)">
-                    <th scope="col"  jhiSortBy="login"><span>Felhasználónév</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="lastName"><span>Név</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="email"><span>Email cím</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                     <th scope="col"><span>Jogosultságok</span></th>
@@ -27,7 +27,7 @@
             </thead>
             <tbody *ngIf="users">
                 <tr *ngFor="let user of users; trackBy: trackIdentity">
-                    <td>{{ user.login }}</td>
+                    <td>{{ user.lastName }} {{ user.firstName }}</td>
                     <td>{{ user.email }}</td>
                     <td>
                         <button class="btn btn-outline-primary btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated">Deaktivált</button>

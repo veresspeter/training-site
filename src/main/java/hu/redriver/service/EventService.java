@@ -3,7 +3,7 @@ package hu.redriver.service;
 import hu.redriver.domain.Event;
 import hu.redriver.domain.enumeration.LinkType;
 import hu.redriver.repository.EventRepository;
-import hu.redriver.service.dto.ApplicationUserDTO;
+import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.EventDTO;
 import hu.redriver.service.mapper.EventMapper;
 import io.undertow.util.BadRequestException;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -34,14 +35,14 @@ public class EventService {
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
     private final UserService userService;
-    private final ApplicationUserService applicationUserService;
+    private final AppUserService appUserService;
     private final ZoomAPIClientService zoomAPIClientService;
 
-    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, ApplicationUserService applicationUserService, ZoomAPIClientService zoomAPIClientService) {
+    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, AppUserService appUserService, ZoomAPIClientService zoomAPIClientService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.userService = userService;
-        this.applicationUserService = applicationUserService;
+        this.appUserService = appUserService;
         this.zoomAPIClientService = zoomAPIClientService;
     }
 
@@ -122,6 +123,12 @@ public class EventService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
+        EventDTO eventDTO = findOne(id).orElseThrow(EntityNotFoundException::new);
+        try {
+            zoomAPIClientService.deleteMeeting(eventDTO);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         eventRepository.deleteById(id);
     }
 
@@ -144,8 +151,8 @@ public class EventService {
         save(eventDTO);
     }
 
-    private ApplicationUserDTO getCurrentAppUser() {
-        return applicationUserService.findOneByInternalUserId(
+    private AppUserDTO getCurrentAppUser() {
+        return appUserService.findOneByInternalUserId(
             userService.getUserWithAuthorities()
                 .orElseThrow(getNotFoundException())
                 .getId()

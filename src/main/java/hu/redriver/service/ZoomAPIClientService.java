@@ -50,7 +50,6 @@ public class ZoomAPIClientService {
         eventDTO.setZoomRoomPsw(zoomMeetingDTO.getPassword());
     }
 
-
     public void updateMeeting(EventDTO eventDTO) throws IOException, InterruptedException {
         final HttpClient httpClient = HttpClient.newHttpClient();
         final ObjectMapper objectMapper = new ObjectMapper();
@@ -71,6 +70,29 @@ public class ZoomAPIClientService {
         HttpResponse<String> response = httpClient.send(zoomMeetingRequest, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() != 204) {
             throw new RuntimeException("A Zoom eseményt nem sikerült frissteni");
+        }
+    }
+
+    public void deleteMeeting(EventDTO eventDTO) throws IOException, InterruptedException {
+        final HttpClient httpClient = HttpClient.newHttpClient();
+        final ObjectMapper objectMapper = new ObjectMapper();
+
+        ZoomMeetingRequestDTO data = getZoomMeetingRequestDTO(eventDTO);
+
+        HttpRequest zoomMeetingRequest = HttpRequest.newBuilder(
+            URI.create("https://api.zoom.us/v2/meetings/" + eventDTO.getZoomRoomNo())
+        )
+            .header("accept", "application/json")
+            .header("Content-Type", "application/json")
+            .header("authorization", JWT_TOKEN)
+            .method("DELETE", HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(null)))
+            .build();
+
+        System.out.println(objectMapper.writeValueAsString(data));
+
+        HttpResponse<String> response = httpClient.send(zoomMeetingRequest, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 204) {
+            throw new RuntimeException("A Zoom eseményt nem sikerült törölni");
         }
     }
 

@@ -1,0 +1,71 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bérletek</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-pass"
+                [routerLink]="['/admin/pass/new']">
+            Létrehozás
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="passes?.length === 0">
+        <span>No passes found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="passes && passes.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+                <th scope="col"><span>Vásárlás időpontja</span></th>
+                <th scope="col"><span>Elhasznált alkalmak</span></th>
+                <th scope="col"><span>Érvényesség</span></th>
+                <th scope="col"><span>Bérlet típus</span></th>
+                <th scope="col"><span>Felhasználó</span></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let pass of passes ;trackBy: trackId">
+                <td>{{ pass.purchased | date:'mediumDate' }}</td>
+                <td>{{ pass.usageNo }}</td>
+                <td>{{ pass.validFrom | date:'mediumDate' }} - {{ pass.validTo | date:'mediumDate' }}</td>
+                <td>
+                    <div *ngIf="pass.passTypeId">
+                        <a [routerLink]="['/pass-type', pass.passTypeId , 'view']">{{ pass.passTypeId }}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="pass.userId">
+                        <a [routerLink]="['/application-user', pass.userId , 'view']">{{ pass.userId }}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <button type="submit" [routerLink]="['/admin/pass', pass.id, 'view']" class="btn btn-primary btn-icon">
+                        <fa-icon icon="eye"></fa-icon>
+                    </button>
+                    <button type="submit" [routerLink]="['/admin/pass', pass.id, 'edit']" class="btn btn-primary btn-icon">
+                        <fa-icon icon="pen"></fa-icon>
+                    </button>
+                    <button type="submit" (click)="delete(pass)" class="btn btn-primary btn-icon">
+                        <fa-icon icon="trash"></fa-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="passes">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="transition()"></ngb-pagination>
+        </div>
+    </div>
+</div>

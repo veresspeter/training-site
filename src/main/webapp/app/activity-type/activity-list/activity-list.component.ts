@@ -71,4 +71,8 @@ export class ActivityListComponent implements OnInit, OnDestroy {
     const modalRef = this.modalService.open(ActivityDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.activity = activity;
   }
+
+  previousState(): void {
+    window.history.back();
+  }
 }

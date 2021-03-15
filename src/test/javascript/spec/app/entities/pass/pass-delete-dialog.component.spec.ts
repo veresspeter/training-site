@@ -6,7 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { MaxmoveTestModule } from '../../../test.module';
 import { MockEventManager } from '../../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../../helpers/mock-active-modal.service';
-import { PassDeleteDialogComponent } from 'app/entities/pass/pass-delete-dialog.component';
+import { PassDeleteDialogComponent } from 'app/entities/pass/pass-delete/pass-delete-dialog.component';
 import { PassService } from 'app/entities/pass/pass.service';
 
 describe('Component Tests', () => {
