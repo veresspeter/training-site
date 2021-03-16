@@ -1,5 +1,5 @@
-id;credit;sex;birth_day;google_token;facebook_token;image;image_content_type;introduction;is_trainer;internal_user_id
-1;;OTHER;;;;;;true;1
-2;;OTHER;;;;;;true;2
-3;;OTHER;;;;;;false;3
-4;;OTHER;;;;;;false;4
+id;credit;sex;introduction;is_trainer;internal_user_id
+1;0;OTHER;true;1
+2;0;OTHER;true;2
+3;0;OTHER;false;3
+4;0;OTHER;false;4

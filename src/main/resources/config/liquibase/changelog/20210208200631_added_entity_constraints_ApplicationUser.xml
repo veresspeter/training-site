@@ -7,7 +7,7 @@
         Added the constraints for entity ApplicationUser.
     -->
     <changeSet id="20210208200631-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="internal_user_id"
                                  baseTableName="application_user"
                                  constraintName="fk_application_user_internal_user_id"
