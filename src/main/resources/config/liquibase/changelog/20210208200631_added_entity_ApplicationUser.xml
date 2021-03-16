@@ -55,11 +55,6 @@
             <column name="id" type="numeric"/>
             <column name="credit" type="numeric"/>
             <column name="sex" type="string"/>
-            <column name="birth_day" type="date"/>
-            <column name="google_token" type="string"/>
-            <column name="facebook_token" type="string"/>
-            <column name="image" type="blob"/>
-            <column name="image_content_type" type="string"/>
             <column name="introduction" type="string"/>
             <column name="is_trainer" type="boolean"/>
             <column name="internal_user_id" type="numeric"/>
