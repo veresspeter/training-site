@@ -1,4 +1,4 @@
-id;credit;sex;introduction;is_trainer;internal_user_id
+id;credit;sex;is_trainer;internal_user_id
 1;0;OTHER;true;1
 2;0;OTHER;true;2
 3;0;OTHER;false;3

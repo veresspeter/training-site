@@ -55,7 +55,6 @@
             <column name="id" type="numeric"/>
             <column name="credit" type="numeric"/>
             <column name="sex" type="string"/>
-            <column name="introduction" type="string"/>
             <column name="is_trainer" type="boolean"/>
             <column name="internal_user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
