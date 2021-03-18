@@ -89,12 +89,15 @@ export class ActivityUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
-    const activity = this.createFromForm();
-    if (activity.id !== undefined) {
-      this.subscribeToSaveResponse(this.activityService.update(activity));
-    } else {
-      this.subscribeToSaveResponse(this.activityService.create(activity));
+    this.editForm.markAllAsTouched();
+    if (this.editForm.valid) {
+      this.isSaving = true;
+      const activity = this.createFromForm();
+      if (activity.id !== undefined) {
+        this.subscribeToSaveResponse(this.activityService.update(activity));
+      } else {
+        this.subscribeToSaveResponse(this.activityService.create(activity));
+      }
     }
   }
 

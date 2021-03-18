@@ -78,17 +78,25 @@ export class EventUpdateComponent implements OnInit {
     });
   }
 
+  setNevToFoglalkozas(): void {
+    const activityId = this.editForm.get('activityId')?.value;
+    this.editForm.get('name')?.setValue(this.activities.find(activity => activity.id === activityId)?.name);
+  }
+
   previousState(): void {
     window.history.back();
   }
 
   save(): void {
-    this.isSaving = true;
-    const event = this.createFromForm();
-    if (event.id !== undefined) {
-      this.subscribeToSaveResponse(this.eventService.update(event));
-    } else {
-      this.subscribeToSaveResponse(this.eventService.create(event));
+    this.editForm.markAllAsTouched();
+    if (this.editForm.valid) {
+      this.isSaving = true;
+      const event = this.createFromForm();
+      if (event.id !== undefined) {
+        this.subscribeToSaveResponse(this.eventService.update(event));
+      } else {
+        this.subscribeToSaveResponse(this.eventService.create(event));
+      }
     }
   }
 

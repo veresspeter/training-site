@@ -6,14 +6,14 @@ import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 import { SERVER_API_URL } from 'app/app.constants';
-import { Account } from 'app/core/user/account.model';
 import { TrackerService } from '../tracker/tracker.service';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-  private userIdentity: Account | null = null;
-  private authenticationState = new ReplaySubject<Account | null>(1);
-  private accountCache$?: Observable<Account | null>;
+  private userIdentity: AppUser | null = null;
+  private authenticationState = new ReplaySubject<AppUser | null>(1);
+  private accountCache$?: Observable<AppUser | null>;
 
   constructor(
     private http: HttpClient,
@@ -22,40 +22,42 @@ export class AccountService {
     private router: Router
   ) {}
 
-  save(account: Account): Observable<{}> {
+  save(account: AppUser): Observable<{}> {
     return this.http.post(SERVER_API_URL + 'api/account', account);
   }
 
-  authenticate(identity: Account | null): void {
+  authenticate(identity: AppUser | null): void {
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);
+    /*
     if (identity) {
       this.trackerService.connect();
     } else {
       this.trackerService.disconnect();
     }
+     */
   }
 
   hasAnyAuthority(authorities: string[] | string): boolean {
-    if (!this.userIdentity || !this.userIdentity.authorities) {
+    if (!this.userIdentity || !this.userIdentity.internalUser!.authorities) {
       return false;
     }
     if (!Array.isArray(authorities)) {
       authorities = [authorities];
     }
-    return this.userIdentity.authorities.some((authority: string) => authorities.includes(authority));
+    return this.userIdentity.internalUser!.authorities.some((authority: string) => authorities.includes(authority));
   }
 
-  identity(force?: boolean): Observable<Account | null> {
+  identity(force?: boolean): Observable<AppUser | null> {
     if (!this.accountCache$ || force || !this.isAuthenticated()) {
       this.accountCache$ = this.fetch().pipe(
         catchError(() => {
           return of(null);
         }),
-        tap((account: Account | null) => {
-          this.authenticate(account);
+        tap((appUser: AppUser | null) => {
+          this.authenticate(appUser);
 
-          if (account) {
+          if (appUser) {
             this.navigateToStoredUrl();
           }
         }),
@@ -69,16 +71,16 @@ export class AccountService {
     return this.userIdentity !== null;
   }
 
-  getAuthenticationState(): Observable<Account | null> {
+  getAuthenticationState(): Observable<AppUser | null> {
     return this.authenticationState.asObservable();
   }
 
   getImageUrl(): string {
-    return this.userIdentity ? this.userIdentity.imageUrl : '';
+    return this.userIdentity!.internalUser!.imageUrl ? this.userIdentity!.internalUser!.imageUrl : '';
   }
 
-  private fetch(): Observable<Account> {
-    return this.http.get<Account>(SERVER_API_URL + 'api/account');
+  private fetch(): Observable<AppUser> {
+    return this.http.get<AppUser>(SERVER_API_URL + 'api/account');
   }
 
   private navigateToStoredUrl(): void {

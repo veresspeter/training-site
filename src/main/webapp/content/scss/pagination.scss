@@ -15,7 +15,7 @@ ngb-pagination li {
     }
 
     & a.page-link {
-      border-radius: 0.15rem !important;
+      border-radius: 0 !important;
       border: solid 1px $mv-btn-primary;
       color: $mv-btn-primary;
       background-color: transparent;

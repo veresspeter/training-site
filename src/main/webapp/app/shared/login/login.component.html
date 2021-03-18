@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-11">
             <div class="alert alert-danger" *ngIf="authenticationError">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                <strong>SSikertelen bejelentkezés!</strong> Ellenőrizd a bejelentkezési adataid és próbáld újra.
             </div>
         </div>
 
@@ -15,14 +15,13 @@
                 <div class="form-group text-left">
                     <label class="username-label" for="username">Email cím</label>
                     <input type="text" class="form-control" name="username" id="username" placeholder="Email cím"
-                           formControlName="username" #username>
+                          autocomplete="email" formControlName="username" #username>
                 </div>
 
                 <div class="form-group text-left">
                     <label for="password">Jelszó</label>
                     <input type="password" class="form-control" name="password" id="password"
-                           placeholder="Your password"
-                           formControlName="password">
+                           autocomplete="current-password" placeholder="Your password" formControlName="password">
                 </div>
 
                 <div class="form-check text-center my-2">

@@ -1,5 +1,6 @@
 package hu.redriver.web.rest;
 
+import hu.redriver.domain.AppUser;
 import hu.redriver.domain.PersistentToken;
 import hu.redriver.repository.PersistentTokenRepository;
 import hu.redriver.domain.User;
@@ -11,6 +12,7 @@ import hu.redriver.service.UserService;
 import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.PasswordChangeDTO;
 import hu.redriver.service.dto.UserDTO;
+import hu.redriver.service.mapper.AppUserMapper;
 import hu.redriver.service.mapper.UserMapper;
 import hu.redriver.web.rest.errors.*;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
@@ -98,7 +100,7 @@ public class AccountResource {
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<User> user = userService.activateRegistration(key);
         if (!user.isPresent()) {
-            throw new AccountResourceException("No user was found for this activation key");
+            throw new AccountResourceException("Nem található felhasználó ezzel az aktiváló kulcssal");
         }
     }
 
@@ -121,32 +123,60 @@ public class AccountResource {
      * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
      */
     @GetMapping("/account")
-    public UserDTO getAccount() {
+    public AppUserDTO getAccount() {
+        return appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
+            .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
+    }
+
+    private UserDTO getLoggedInUserDTO() {
         return userService.getUserWithAuthorities()
             .map(UserDTO::new)
-            .orElseThrow(() -> new AccountResourceException("User could not be found"));
+            .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
     }
 
     /**
      * {@code POST  /account} : update the current user information.
      *
-     * @param userDTO the current user information.
+     * @param appUserDTO the current user information.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws RuntimeException {@code 500 (Internal Server Error)} if the user login wasn't found.
      */
     @PostMapping("/account")
-    public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
-        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
-        Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
+    public void saveAccount(@Valid @RequestBody AppUserDTO appUserDTO) {
+        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("A jelenlegi felhasználó nem található"));
+
+        AppUserDTO existingAppUserDTO =  appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
+            .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
+
+        if (!appUserDTO.getInternalUserDTO().getId().equals(existingAppUserDTO.getInternalUserDTO().getId())) {
+            throw new AccountResourceException("Hibás adatok");
+        }
+
+        existingAppUserDTO.setBirthDay(appUserDTO.getBirthDay());
+        existingAppUserDTO.setSex(appUserDTO.getSex());
+        existingAppUserDTO.setImage(appUserDTO.getImage());
+        existingAppUserDTO.setImageContentType(appUserDTO.getImageContentType());
+        existingAppUserDTO.setInjury(appUserDTO.getInjury());
+        existingAppUserDTO.setHeartProblem(appUserDTO.getHeartProblem());
+        existingAppUserDTO.setMedicine(appUserDTO.getMedicine());
+        existingAppUserDTO.setOtherProblem(appUserDTO.getOtherProblem());
+        existingAppUserDTO.setRegularPain(appUserDTO.getRegularPain());
+        existingAppUserDTO.setRespiratoryDisease(appUserDTO.getRespiratoryDisease());
+        existingAppUserDTO.setSpineProblem(appUserDTO.getSpineProblem());
+        existingAppUserDTO.setSurgery(appUserDTO.getSurgery());
+
+        Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(appUserDTO.getInternalUserDTO().getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
             throw new EmailAlreadyUsedException();
         }
         Optional<User> user = userRepository.findOneByLogin(userLogin);
         if (!user.isPresent()) {
-            throw new AccountResourceException("User could not be found");
+            throw new AccountResourceException("Felhasználó nem található");
         }
-        userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
-            userDTO.getLangKey(), userDTO.getImageUrl());
+
+        appUserService.save(existingAppUserDTO);
+        userService.updateUser(appUserDTO.getInternalUserDTO().getFirstName(), appUserDTO.getInternalUserDTO().getLastName(), appUserDTO.getInternalUserDTO().getEmail(),
+            appUserDTO.getInternalUserDTO().getLangKey(), appUserDTO.getInternalUserDTO().getImageUrl());
     }
 
     /**
@@ -173,8 +203,8 @@ public class AccountResource {
     public List<PersistentToken> getCurrentSessions() {
         return persistentTokenRepository.findByUser(
             userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()
-                .orElseThrow(() -> new AccountResourceException("Current user login not found")))
-                    .orElseThrow(() -> new AccountResourceException("User could not be found"))
+                .orElseThrow(() -> new AccountResourceException("Az aktuális felhasználó bejelentkezési adata nem található")))
+                    .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"))
         );
     }
 
@@ -218,7 +248,7 @@ public class AccountResource {
         } else {
             // Pretend the request has been successful to prevent checking which emails really exist
             // but log that an invalid attempt has been made
-            log.warn("Password reset requested for non existing mail");
+            log.warn("Jelszóemlékeztető ismeretlen e-mail címhez");
         }
     }
 
@@ -238,7 +268,7 @@ public class AccountResource {
             userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (!user.isPresent()) {
-            throw new AccountResourceException("No user was found for this reset key");
+            throw new AccountResourceException("Nem található felhasználó a helyreállító kulcshoz");
         }
     }
 

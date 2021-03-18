@@ -1,11 +1,11 @@
 <div class="row justify-content-center pb-4">
-    <div class="col-8">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-4">
         <form name="editForm" role="form" class="text-center text-md-right" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-pass-heading" class="text-center mb-4">{{!editForm.get('id')!.value ? "Jegy létrehozása" : "Jegy szerkesztése"}}</h2>
+            <h2 id="jhi-pass-heading" class="text-center mb-4">{{!editForm.get('id')!.value ? "Bérlet létrehozása" : "Bérlet szerkesztése"}}</h2>
 
             <div class="text-left row">
                 <div class="form-group col-md-6">
-                    <label class="form-control-label" for="field_passType">Árlista elem</label>
+                    <label class="form-control-label" for="field_passType">Bérlet típus elem</label>
                     <select class="form-control" id="field_passType" name="passType" formControlName="passTypeId">
                         <option *ngIf="!editForm.get('passTypeId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="passTypeOption.id" *ngFor="let passTypeOption of passTypes; trackBy: trackById">{{ getPassTypeNameById(passTypeOption.id) }}</option>
@@ -13,13 +13,13 @@
                     <div *ngIf="editForm.get('passTypeId')!.invalid && (editForm.get('passTypeId')!.dirty || editForm.get('passTypeId')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('passTypeId')?.errors?.required">
-                            This field is required.
+                            Mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-control-label" for="field_user">User</label>
+                    <label class="form-control-label" for="field_user">Felhazsnáló</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
                         <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="appUserOption.id" *ngFor="let appUserOption of appUsers; trackBy: trackById">{{ getUserNameById(appUserOption.id) }}</option>
@@ -27,7 +27,7 @@
                     <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('userId')?.errors?.required">
-                            This field is required.
+                            Mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_purchased">Létrehozva</label>
                     <div class="px-3">
-                        <p id="field_purchased" class="font-weight-bold">{{editForm.get('purchased')!.value | date: "yyyy.MM.dd."}}</p>
+                        <p id="field_purchased" class="font-weight-bold">{{editForm.get('purchased')!.value | date: "yyyy.MM.dd. HH:mm"}}</p>
                     </div>
                 </div>
 
@@ -68,17 +68,17 @@
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label class="form-control-label" for="field_usageNo">Felhasználva</label>
+                    <label class="form-control-label" for="field_usageNo">Felhasználva (alkalom)</label>
                     <input type="number" class="form-control" name="usageNo" id="field_usageNo"
                            formControlName="usageNo"/>
                     <div *ngIf="editForm.get('usageNo')!.invalid && (editForm.get('usageNo')!.dirty || editForm.get('usageNo')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('usageNo')?.errors?.required">
-                            This field is required.
+                            Mező kitöltése kötelező
                         </small>
                         <small class="form-text text-danger"
                                [hidden]="!editForm.get('usageNo')?.errors?.number">
-                            This field should be a number.
+                            Csak szám adható meg
                         </small>
                     </div>
                 </div>
@@ -89,11 +89,11 @@
                     Mégse
                 </button>
 
-                <button *ngIf="isEdit" type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button *ngIf="isEdit" type="submit" id="save-entity" [disabled]="isSaving" class="btn btn-primary">
                     Mentés
                 </button>
 
-                <button *ngIf="!isEdit" type="button" id="sedit-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary" (click)="enableEdit()">
+                <button *ngIf="!isEdit" type="button" id="sedit-entity" [disabled]="isSaving" class="btn btn-primary" (click)="enableEdit()">
                     Szerkesztés
                 </button>
             </div>

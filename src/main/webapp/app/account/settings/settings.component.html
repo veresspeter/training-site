@@ -1,95 +1,198 @@
-<div>
-    <div class="row justify-content-center">
-        <div class="col-md-8 card">
-            <div class="card-body text-right">
-                <h2 *ngIf="account" class="text-center">Adatlap</h2>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <form name="editForm" role="form" class="text-center text-md-right" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-application-user-heading" class="text-center mb-4">
+                Adatlap
+            </h2>
 
-                <div class="alert alert-success" *ngIf="success">
-                    <strong>Változtatások mentve!</strong>
-                </div>
-
-                <div class="alert alert-warning" *ngIf="settingsForm.get('firstName')?.invalid || settingsForm.get('lastname')?.invalid">
-                    <strong>Töltsd ki az adataidat, hogy teljesértékűen használhasd az oldalt!</strong>
-                </div>
-
-                <form name="form" role="form" (ngSubmit)="save()" [formGroup]="settingsForm" *ngIf="account" novalidate>
-                    <div class="form-group text-left">
-                        <label class="form-control-label" for="firstName">Keresztnév</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="keresztneved helye"
-                               formControlName="firstName">
-
-                        <div *ngIf="settingsForm.get('firstName')!.invalid && (settingsForm.get('firstName')!.dirty || settingsForm.get('firstName')!.touched)">
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('firstName')?.errors?.required">
-                                Mező kitöltése kötelező
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('firstName')?.errors?.minlength">
-                                Mező minimum 1 karakter hosszú lehet
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('firstName')?.errors?.maxlength">
-                                Mező maximum 50 karakter hosszú lehet
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="form-group text-left">
-                        <label class="form-control-label" for="lastName">Vezetéknév</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="vezetékneved helye"
-                               formControlName="lastName">
-
-                        <div *ngIf="settingsForm.get('lastName')!.invalid && (settingsForm.get('lastName')!.dirty || settingsForm.get('lastName')!.touched)">
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('lastName')?.errors?.required">
-                                Mező kitöltése kötelező
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('lastName')?.errors?.minlength">
-                                A mező minimum 1 karakter hosszú lehet
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('lastName')?.errors?.maxlength">
-                                A mező maximum 50 karakter hosszú lehet
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="form-group text-left">
-                        <label class="form-control-label" for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="email címed helye"
-                               formControlName="email">
-
-                        <div *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('email')?.errors?.required">
-                                Mező kitöltése kötelező
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('email')?.errors?.email">
-                                A megadott email cím nem helyes
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('email')?.errors?.minlength">
-                                A mező minimum 5 karakter hosszú lehet
-                            </small>
-
-                            <small class="form-text text-danger"
-                                   *ngIf="settingsForm.get('email')?.errors?.maxlength">
-                                A mező maximum 100 karakter hosszú lehet
-                            </small>
-                        </div>
-                    </div>
-
-                    <button type="submit" [disabled]="settingsForm.invalid" class="btn btn-primary">Mentés</button>
-                </form>
+            <div class="alert alert-success text-left" *ngIf="success">
+                <strong>Változtatások mentve!</strong>
             </div>
-        </div>
+
+            <div class="alert alert-warning text-left" *ngIf="editForm.get('firstName')?.invalid || editForm.get('lastname')?.invalid">
+                <strong>Töltsd ki az adataidat, hogy teljesértékűen használhasd az oldalt!</strong>
+            </div>
+
+            <div class="btn-group btn-group-toggle mb-4 text-center w-100" ngbRadioGroup name="radioBasic" formControlName="stepper">
+                <label ngbButtonLabel class="btn-primary h-auto">
+                    <input ngbButton type="radio" [value]="1"> Rendszer adatok
+                </label>
+                <label ngbButtonLabel class="btn-primary h-auto">
+                    <input ngbButton type="radio" [value]="2"> Egészségügyi adatok
+                </label>
+            </div>
+
+            <div *ngIf="this.editForm.get(['stepper'])!.value === 1"  class="row align-items-center text-left">
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_lastName">Vezetéknév</label>
+                    <input type="text" class="form-control" name="lastName" id="field_lastName"
+                           formControlName="lastName"/>
+                    <div
+                        *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastName')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_firstName">Keresztnév</label>
+                    <input type="text" class="form-control" name="firstName" id="field_firstName"
+                           formControlName="firstName"/>
+                    <div
+                        *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstName')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_user_birthDay">Születési idő</label>
+                    <div *ngIf="isEdit" class="input-group pr-0">
+                        <input id="field_user_birthDay" type="text" class="form-control" name="userBirthDay" ngbDatepicker
+                               #userBirthDayDp="ngbDatepicker" formControlName="userBirthDay"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-primary btn-icon" (click)="userBirthDayDp.toggle()">
+                                <fa-icon icon="calendar-alt"></fa-icon>
+                            </button>
+                        </span>
+                    </div>
+                    <div *ngIf="editForm.get('userBirthDay')!.invalid && (editForm.get('userBirthDay')!.dirty || editForm.get('userBirthDay')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('userBirthDay')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
+                    <div *ngIf="!isEdit" class="px-3 font-weight-bold">
+                        <p>{{ !editForm.get('userBirthDay')?.value ? "" : editForm.get('userBirthDay')!.value | date:'longDate' }}</p>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_sex">Nem</label>
+                    <select class="form-control" name="sex" formControlName="sex" id="field_sex">
+                        <option value="MAN">Férfi</option>
+                        <option value="WOMAN">Nő</option>
+                        <option value="OTHER">Egyéb</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-control-label">Email</label>
+                    <input type="email" class="form-control" name="email" formControlName="email">
+
+                    <div
+                        *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.maxlength">
+                            Az e-mail cím maximum 100 karakter hosszú lehet
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.minlength">
+                            Az e-mail cím minimum 5 karakter hosszú lehet
+                        </small>
+
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('email')?.errors?.email">
+                            Hibás e-mail cím
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_image">Profilkép</label>
+                    <div>
+                        <img
+                            [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+                            style="max-height: 100px;" *ngIf="editForm.get('image')!.value" alt="appUser image"/>
+                        <button type="button" *ngIf="editForm.get('image')!.value && isEdit"
+                                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                                class="btn btn-secondary btn-icon btn-xs pull-right">
+                            <fa-icon icon="times"></fa-icon>
+                        </button>
+                        <input type="file" id="file_image" [hidden]="!isEdit" (change)="setFileData($event, 'image', true)"
+                               accept="image/*" class="form-control-file"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="image" id="field_image"
+                           formControlName="image"/>
+                    <input type="hidden" class="form-control" name="imageContentType" id="field_imageContentType"
+                           formControlName="imageContentType"/>
+                </div>
+            </div>
+
+            <div *ngIf="this.editForm.get(['stepper'])!.value === 2" class="row align-items-center text-left">
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_injury">Korábbi sérülések</label>
+                    <input type="text" class="form-control" name="injury" id="field_injury"
+                           formControlName="injury"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_surgery">Műtéti beavatkozások</label>
+                    <input type="text" class="form-control" name="surgery" id="field_surgery"
+                           formControlName="surgery"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_heartProblem">Szív- vagy vérnyomásproblémák</label>
+                    <input type="text" class="form-control" name="heartProblem" id="field_heartProblem"
+                           formControlName="heartProblem"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_respiratoryDisease">Légzószervi megbetegedések</label>
+                    <input type="text" class="form-control" name="respiratoryDisease" id="field_respiratoryDisease"
+                           formControlName="respiratoryDisease"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_spineProblem">Gerinc- vagy egyéb izületi problémák</label>
+                    <input type="text" class="form-control" name="spineProblem" id="field_spineProblem"
+                           formControlName="spineProblem"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_regularPain">Rendszeres fájdalmak</label>
+                    <input type="text" class="form-control" name="regularPain" id="field_regularPain"
+                           formControlName="regularPain"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_medicine">Rendszeresen szedett gyógyszerek</label>
+                    <input type="text" class="form-control" name="medicine" id="field_medicine"
+                           formControlName="medicine"/>
+                </div>
+
+                <div class="form-group col-12">
+                    <label class="form-control-label" for="field_otherProblem">Bármi egyéb</label>
+                    <input type="text" class="form-control" name="otherProblem" id="field_otherProblem"
+                           formControlName="otherProblem"/>
+                </div>
+            </div>
+
+            <div class="text-center text-md-right mt-3">
+                <button *ngIf="isEdit && this.editForm.get(['stepper'])?.value === 1" type="button" id="next-page" class="btn btn-primary" (click)="stepToNextTab()">
+                    Következő
+                </button>
+
+                <button *ngIf="isEdit && this.editForm.get(['stepper'])?.value !== 1" type="submit" id="save-entity" [disabled]="isSaving"
+                        class="btn btn-primary">
+                    Mentés
+                </button>
+
+                <button *ngIf="!isEdit" type="button" id="edit-entity" class="btn btn-primary" (click)="enableEdit()">
+                    Szerkesztés
+                </button>
+            </div>
+        </form>
     </div>
 </div>

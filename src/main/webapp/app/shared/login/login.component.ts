@@ -46,9 +46,14 @@ export class LoginModalComponent implements AfterViewInit {
         rememberMe: this.loginForm.get('rememberMe')!.value,
       })
       .subscribe(
-        () => {
+        appUser => {
           this.authenticationError = false;
           this.activeModal.close();
+
+          if ((appUser != null && appUser.birthDay == null) || !appUser!.internalUser!.firstName || !appUser!.internalUser!.lastName) {
+            this.router.navigate(['/account/settings']);
+          }
+
           if (
             this.router.url === '/account/register' ||
             this.router.url.startsWith('/account/activate') ||

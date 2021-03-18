@@ -147,8 +147,8 @@ export class EventComponent implements OnInit, OnDestroy {
       this.isUserRequestActive = true;
       this.accountService.identity().subscribe(
         account => {
-          if (account !== null && account.id !== null) {
-            this.applicationUserService.findByInternalId(account.id).subscribe(
+          if (account !== null && account.internalUser!.id !== null) {
+            this.applicationUserService.findByInternalId(account.internalUser!.id).subscribe(
               res => {
                 this.activeUserId = res.body?.id;
                 this.isUserRequestActive = false;

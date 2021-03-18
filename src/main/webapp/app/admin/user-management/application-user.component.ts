@@ -4,10 +4,9 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiDataUtils } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IAppUser } from 'app/shared/model/application-user.model';
+import { AppUser, IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ApplicationUserDeleteDialogComponent } from 'app/admin/user-management/delete/application-user-delete-dialog.component';
@@ -18,7 +17,7 @@ import { ApplicationUserDeleteDialogComponent } from 'app/admin/user-management/
   styleUrls: ['application-user.component.scss'],
 })
 export class ApplicationUserComponent implements OnInit, OnDestroy {
-  currentAccount: Account | null = null;
+  currentAccount: AppUser | null = null;
   appUsers?: IAppUser[];
   eventSubscriber?: Subscription;
   loading = true;

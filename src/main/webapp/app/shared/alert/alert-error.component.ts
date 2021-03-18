@@ -34,7 +34,7 @@ export class AlertErrorComponent implements OnDestroy {
       switch (httpErrorResponse.status) {
         // connection refused, server not reachable
         case 0:
-          this.addErrorAlert('Server not reachable');
+          this.addErrorAlert('A szerver nem elérhető');
           break;
 
         case 400: {
@@ -56,7 +56,7 @@ export class AlertErrorComponent implements OnDestroy {
               // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
               const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
               const fieldName = convertedField.charAt(0).toUpperCase() + convertedField.slice(1);
-              this.addErrorAlert('Error on field "' + fieldName + '"');
+              this.addErrorAlert('Hibás "' + fieldName + '" mező érték');
             }
           } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
             this.addErrorAlert(httpErrorResponse.error.message);
@@ -67,7 +67,7 @@ export class AlertErrorComponent implements OnDestroy {
         }
 
         case 404:
-          this.addErrorAlert('Not found');
+          this.addErrorAlert('A keresett oldal nem található');
           break;
 
         default:
