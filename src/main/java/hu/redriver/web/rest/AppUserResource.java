@@ -1,12 +1,19 @@
 package hu.redriver.web.rest;
 
 import hu.redriver.domain.AppUser;
+import hu.redriver.domain.User;
+import hu.redriver.repository.UserRepository;
 import hu.redriver.service.AppUserService;
+import hu.redriver.service.UserService;
 import hu.redriver.web.rest.errors.BadRequestAlertException;
 import hu.redriver.service.dto.AppUserDTO;
 
+import hu.redriver.web.rest.errors.EmailAlreadyUsedException;
+import hu.redriver.web.rest.errors.LoginAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.undertow.util.BadRequestException;
+import javassist.tools.web.BadHttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,10 +40,14 @@ public class AppUserResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final UserRepository userRepository;
     private final AppUserService appUserService;
+    private final UserService userService;
 
-    public AppUserResource(AppUserService appUserService) {
+    public AppUserResource(UserRepository userRepository, AppUserService appUserService, UserService userService) {
+        this.userRepository = userRepository;
         this.appUserService = appUserService;
+        this.userService = userService;
     }
 
     /**
@@ -73,7 +84,24 @@ public class AppUserResource {
         if (appUserDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        Optional<User> checkUser = userRepository.findById(appUserDTO.getInternalUserDTO().getId());
+        if (checkUser.isEmpty() || !checkUser.get().getId().equals(appUserDTO.getInternalUserDTO().getId())) {
+            throw new IllegalArgumentException("Belső azonosító nem változtatható meg");
+        }
+
+        Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(appUserDTO.getInternalUserDTO().getEmail());
+        if (existingUser.isPresent() && (!existingUser.get().getId().equals(appUserDTO.getInternalUserDTO().getId()))) {
+            throw new EmailAlreadyUsedException();
+        }
+        existingUser = userRepository.findOneByLogin(appUserDTO.getInternalUserDTO().getLogin().toLowerCase());
+        if (existingUser.isPresent() && (!existingUser.get().getId().equals(appUserDTO.getInternalUserDTO().getId()))) {
+            throw new LoginAlreadyUsedException();
+        }
+
+        userService.updateUser(appUserDTO.getInternalUserDTO());
         AppUserDTO result = appUserService.save(appUserDTO);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, appUserDTO.getId().toString()))
             .body(result);

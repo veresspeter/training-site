@@ -1,82 +1,90 @@
 <div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-pass-type-heading">Create or edit a Pass Type</h2>
 
-            <div>
-                <jhi-alert-error></jhi-alert-error>
+    <div class="col-12">
+        <button type="button" class="btn btn-link" (click)="previousState()">
+            <fa-icon icon="chevron-left"></fa-icon>
+            Vissza
+        </button>
+    </div>
 
-                <div class="form-group" hidden>
+    <div class="col-12 col-sm-10 col-lg-7 col-xl-4">
+        <form name="editForm" role="form" class="text-center text-md-right" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-pass-type-heading" class="text-center">{{!editForm.get('id')?.value ? "Bérlet típus létrehozása" : "Bérlet típus szerkesztése" }}</h2>
+
+            <div class="text-left row justify-content-around my-4">
+                <div class="form-group col-12" hidden>
                     <label for="id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
+                <div class="form-group col-md-7">
+                    <label class="form-control-label" for="field_name">Név</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
                     <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('name')?.errors?.required">
-                        This field is required.
+                        Mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_description">Description</label>
-                    <input type="text" class="form-control" name="description" id="field_description"
+                <div class="form-group col-md-5">
+                    <label class="form-control-label" for="field_description">Leírás</label>
+                    <input type="text" class="form-control" name="description" maxlength="15" id="field_description"
                            formControlName="description"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_durationDays">Duration Days</label>
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_durationDays">Érvényesség (nap)</label>
                     <input type="number" class="form-control" name="durationDays" id="field_durationDays"
                            formControlName="durationDays"/>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_price">Price</label>
-                    <input type="text" class="form-control" name="price" id="field_price"
-                           formControlName="price"/>
-                    <div *ngIf="editForm.get('price')!.invalid && (editForm.get('price')!.dirty || editForm.get('price')!.touched)">
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_occasions">Alkalmak (db)</label>
+                    <input type="number" class="form-control" name="occasions" id="field_occasions" min="0"
+                           formControlName="occasions"/>
+                    <div *ngIf="editForm.get('occasions')!.invalid && (editForm.get('occasions')!.dirty || editForm.get('occasions')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('price')?.errors?.required">
-                        This field is required.
+                               *ngIf="editForm.get('occasions')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                        <small class="form-text text-danger"
+                               [hidden]="!editForm.get('occasions')?.errors?.number">
+                            Csak szám adható meg
                         </small>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_unit">Unit</label>
+                <div class="form-group col-7">
+                    <label class="form-control-label" for="field_price">Ár</label>
+                    <input type="text" class="form-control text-right" name="price" id="field_price"
+                           formControlName="price"/>
+                    <div *ngIf="editForm.get('price')!.invalid && (editForm.get('price')!.dirty || editForm.get('price')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('price')?.errors?.required">
+                        Mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-5">
+                    <label class="form-control-label" for="field_unit">Pénznem</label>
                     <input type="text" class="form-control" name="price" id="field_unit"
                            formControlName="unit"/>
                     <div *ngIf="editForm.get('unit')!.invalid && (editForm.get('unit')!.dirty || editForm.get('unit')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('unit')?.errors?.required">
-                            This field is required.
+                            Mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_occasions">Occasions</label>
-                    <input type="number" class="form-control" name="occasions" id="field_occasions"
-                           formControlName="occasions"/>
-                    <div *ngIf="editForm.get('occasions')!.invalid && (editForm.get('occasions')!.dirty || editForm.get('occasions')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('occasions')?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.get('occasions')?.errors?.number">
-                            This field should be a number.
-                        </small>
-                    </div>
-                </div>
+                <div class="w-100"></div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_availableForType">Available For Type</label>
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_availableForType">Foglalkozás típus</label>
                     <select class="form-control" id="field_availableForType" name="availableForType" formControlName="availableForType">
                         <option *ngIf="!editForm.get('availableForType')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="activityTypeOption.id" *ngFor="let activityTypeOption of activityTypes; trackBy: trackById">{{ activityTypeOption.name }}</option>
@@ -85,18 +93,18 @@
                 <div *ngIf="editForm.get('availableForTypeId')?.invalid && (editForm.get('availableForTypeId')?.dirty || editForm.get('availableForTypeId')?.touched)">
                     <small class="form-text text-danger"
                            *ngIf="editForm.get('availableForTypeId')?.errors?.required">
-                        This field is required.
+                        Mező kitöltése kötelező
                     </small>
                 </div>
             </div>
 
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
+                    Mégse
                 </button>
 
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                    Mentés
                 </button>
             </div>
         </form>

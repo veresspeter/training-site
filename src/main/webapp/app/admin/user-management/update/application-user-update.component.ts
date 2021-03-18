@@ -12,14 +12,13 @@ import { IUser, User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-application-user-update',
   templateUrl: './application-user-update.component.html',
 })
 export class ApplicationUserUpdateComponent implements OnInit {
-  currentAccount: Account | null = null;
+  currentAccount: AppUser | null = null;
   authorities: string[] = [];
   isSaving = false;
   isEdit = false;
@@ -36,14 +35,14 @@ export class ApplicationUserUpdateComponent implements OnInit {
     activated: [],
     authorities: [],
     sex: [],
-    birthDay: [],
+    birthDay: [null, [Validators.required]],
     googleToken: [],
     facebookToken: [],
     image: [],
     imageContentType: [],
     introduction: [],
-    isTrainer: [null, [Validators.required]],
-    internalUserId: [null, Validators.required],
+    isTrainer: [],
+    internalUserId: [],
     injury: [],
     surgery: [],
     heartProblem: [],
@@ -141,12 +140,16 @@ export class ApplicationUserUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
-    const appUser = this.createFromForm();
-    if (appUser.id !== undefined) {
-      this.subscribeToSaveResponse(this.appUserService.update(appUser));
-    } else {
-      this.subscribeToSaveResponse(this.appUserService.create(appUser));
+    this.editForm.markAllAsTouched();
+
+    if (this.editForm.valid) {
+      this.isSaving = true;
+      const appUser = this.createFromForm();
+      if (appUser.id !== undefined) {
+        this.subscribeToSaveResponse(this.appUserService.update(appUser));
+      } else {
+        this.subscribeToSaveResponse(this.appUserService.create(appUser));
+      }
     }
   }
 
@@ -190,7 +193,10 @@ export class ApplicationUserUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
+    this.isEdit = false;
+    this.editForm.disable();
+    this.editForm.get(['stepper'])!.enable();
+    this.editForm.get(['stepper'])!.setValue(1);
   }
 
   protected onSaveError(): void {

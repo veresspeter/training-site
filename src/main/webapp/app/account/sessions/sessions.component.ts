@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'app/core/auth/account.service';
 import { Session } from './session.model';
 import { SessionsService } from './sessions.service';
-import { Account } from 'app/core/user/account.model';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 @Component({
   selector: 'jhi-sessions',
   templateUrl: './sessions.component.html',
 })
 export class SessionsComponent implements OnInit {
-  account: Account | null = null;
+  account: AppUser | null = null;
   error = false;
   success = false;
   sessions: Session[] = [];

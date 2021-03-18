@@ -3,8 +3,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/user/account.model';
 import { PasswordService } from './password.service';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 @Component({
   selector: 'jhi-password',
@@ -14,7 +14,7 @@ export class PasswordComponent implements OnInit {
   doNotMatch = false;
   error = false;
   success = false;
-  account$?: Observable<Account | null>;
+  account$?: Observable<AppUser | null>;
   passwordForm = this.fb.group({
     currentPassword: ['', [Validators.required]],
     newPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],

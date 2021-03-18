@@ -1,10 +1,33 @@
 <div class="row justify-content-center">
-    <div class="col-12 col-md-8">
+
+    <div class="col-12">
+        <button type="button" class="btn btn-link" (click)="previousState()">
+            <fa-icon icon="chevron-left"></fa-icon>
+            Vissza
+        </button>
+    </div>
+
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-event-heading" class="text-center">{{!editForm.get('id')?.value ? "Esemény létrehozása" : "Esemény szerkesztése"}}</h2>
 
             <div class="my-4 row">
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
+                    <label class="form-control-label" for="field_activity">Foglalkozás</label>
+                    <select class="form-control" id="field_activity" name="activity" formControlName="activityId" (ngModelChange)="setNevToFoglalkozas()">
+                        <option *ngIf="!editForm.get('activityId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="activityOption.id"
+                                *ngFor="let activityOption of activities; trackBy: trackById">{{ activityOption.name }}</option>
+                    </select>
+                    <div *ngIf="editForm.get('activityId')!.invalid && (editForm.get('activityId')!.dirty || editForm.get('activityId')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('activityId')?.errors?.required">
+                            A mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_name">Név</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                            formControlName="name"/>
@@ -19,43 +42,24 @@
 
                 <div class="w-100"></div>
 
-                <div class="form-group col-6">
-                    <label class="form-control-label" for="field_activity">Foglalkozás</label>
-                    <select class="form-control" id="field_activity" name="activity" formControlName="activityId">
-                        <option *ngIf="!editForm.get('activityId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="activityOption.id"
-                                *ngFor="let activityOption of activities; trackBy: trackById">{{ activityOption.name }}</option>
-                    </select>
-                </div>
-                <div
-                    *ngIf="editForm.get('activityId')!.invalid && (editForm.get('activityId')!.dirty || editForm.get('activityId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('activityId')?.errors?.required">
-                        A mező kitöltése kötelező
-                    </small>
-                </div>
-
-                <div class="w-100"></div>
-
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_organizer">Szervező</label>
                     <select class="form-control" id="field_organizer" name="organizer" formControlName="organizerId">
                         <option *ngIf="!editForm.get('organizerId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="applicationUserOption.id"
                                 *ngFor="let applicationUserOption of applicationUsers; trackBy: trackById">{{ applicationUserOption?.internalUser?.lastName }} {{ applicationUserOption?.internalUser?.firstName }}</option>
                     </select>
-                </div>
-                <div
-                    *ngIf="editForm.get('organizerId')!.invalid && (editForm.get('organizerId')!.dirty || editForm.get('organizerId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('organizerId')?.errors?.required">
-                        A mező kitöltése kötelező
-                    </small>
+                    <div *ngIf="editForm.get('organizerId')!.invalid && (editForm.get('organizerId')!.dirty || editForm.get('organizerId')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('organizerId')?.errors?.required">
+                            A mező kitöltése kötelező
+                        </small>
+                    </div>
                 </div>
 
                 <div class="w-100"></div>
 
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_start">Kezdés</label>
                     <div class="d-flex">
                         <input id="field_start" type="datetime-local" class="form-control" name="start"
@@ -74,7 +78,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_end">Befejezés</label>
                     <div class="d-flex">
                         <input id="field_end" type="datetime-local" class="form-control" name="end"
@@ -95,7 +99,7 @@
 
                 <div class="w-100"></div>
 
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_streamLinkType">Óra helyszíne</label>
                     <select class="form-control" name="streamLinkType" formControlName="streamLinkType" id="field_streamLinkType"
                             [attr.disabled]="editForm.get('streamLinkType')?.value === 'ZOOM' && editForm.get('streamLink')?.value?.length > 0 ? '' : null">
@@ -106,7 +110,7 @@
                     </select>
                 </div>
 
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_streamLink">Link</label>
                     <input type="text" class="form-control" name="streamLink" id="field_streamLink"
                            [attr.disabled]="editForm.get('streamLinkType')?.value === 'ZOOM' ? '' : null"
@@ -115,14 +119,14 @@
 
                 <div class="w-100"></div>
 
-                <div class="form-group col-6">
+                <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_limit">Limit</label>
                     <input type="number" class="form-control" name="limit" id="field_limit"
                            formControlName="limit"/>
                 </div>
 
-                <div class="form-group col-6">
-                    <label for="field_participants">Participants</label>
+                <div class="form-group col-12 col-md-6">
+                    <label for="field_participants">Résztvevők</label>
                     <select class="form-control" id="field_participants" multiple name="participants"
                             formControlName="participants">
                         <option [ngValue]="getSelected(editForm.get('participants')!.value, applicationUserOption)"
@@ -137,12 +141,12 @@
                        formControlName="comment"/>
             </div>
 
-            <div class="text-right mt-5">
+            <div class="text-center text-md-right mt-5">
                 <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
                     Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                <button type="submit" id="save-entity" [disabled]="isSaving"
                         class="btn btn-primary">
                     Mentés
                 </button>

@@ -1,5 +1,13 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+
+    <div class="col-12">
+        <button type="button" class="btn btn-link" (click)="previousState()">
+            <fa-icon icon="chevron-left"></fa-icon>
+            Vissza
+        </button>
+    </div>
+
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-activity-type-heading"
                 class="text-center">{{!editForm.get('id')?.value ? "Foglalkozás típus létrehozása" : "Foglalkozás típus szerkesztése" }}</h2>
@@ -13,7 +21,7 @@
                         *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('name')?.errors?.required">
-                            This field is required.
+                            Mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
@@ -29,7 +37,7 @@
                             <fa-icon icon="trash"></fa-icon>
                         </button>
                         <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*" class="input-group-text"/>
+                               accept="image/*" class="form-control-file"/>
                     </div>
                     <input type="hidden" class="form-control" name="image" id="field_image"
                            formControlName="image"/>
@@ -39,18 +47,18 @@
                         *ngIf="editForm.get('image')!.invalid && (editForm.get('image')!.dirty || editForm.get('image')!.touched)">
                         <small class="form-text text-danger"
                                *ngIf="editForm.get('image')?.errors?.required">
-                            This field is required.
+                            Kép feltöltése kötelező
                         </small>
                     </div>
                 </div>
             </div>
 
-            <div class="text-right">
+            <div class="text-center text-md-right">
                 <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
                     Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                <button type="submit" id="save-entity" [disabled]="isSaving"
                         class="btn btn-primary">
                     Mentés
                 </button>

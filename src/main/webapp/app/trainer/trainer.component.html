@@ -25,8 +25,8 @@
 
         <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
             <button type="submit" class="btn btn-icon btn-primary"
-                    [routerLink]="['/application-user', applicationUser?.id, 'edit']">
-                <fa-icon icon="pen"></fa-icon>
+                    [routerLink]="['/admin/user-management/', applicationUser?.id, 'view']">
+                <fa-icon icon="eye"></fa-icon>
             </button>
         </div>
     </div>

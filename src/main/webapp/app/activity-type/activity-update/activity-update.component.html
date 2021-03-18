@@ -1,5 +1,13 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+
+    <div class="col-12">
+        <button type="button" class="btn btn-link" (click)="previousState()">
+            <fa-icon icon="chevron-left"></fa-icon>
+            Vissza
+        </button>
+    </div>
+
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-activity-heading" class="text-center">{{!editForm.get('id')?.value ? "Foglalkozás létrehozása" : "Foglalkozás szerkesztése" }}</h2>
 
@@ -45,7 +53,7 @@
                             </button>
                         </div>
                         <input type="file" id="file_image" (change)="setFileData($event, 'image', true)"
-                               accept="image/*"/>
+                               accept="image/*" class="form-control-file" />
                     </div>
                     <input type="hidden" class="form-control" name="image" id="field_image"
                            formControlName="image"/>
@@ -78,12 +86,12 @@
                 </div>
             </div>
 
-            <div class="text-right">
+            <div class=" text-center text-md-right">
                 <button type="button" id="cancel-save" class="btn btn-outline-secondary" (click)="previousState()">
                     Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                <button type="submit" id="save-entity" [disabled]="isSaving"
                         class="btn btn-primary">
                     Mentés
                 </button>

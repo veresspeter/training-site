@@ -12,6 +12,7 @@ import { IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { PassService } from 'app/shared/services/pass.service';
 import { formatNumber } from '@angular/common';
+import * as moment from 'moment/moment';
 
 type SelectableEntity = IPassType | IAppUser;
 
@@ -57,8 +58,8 @@ export class PassUpdateComponent implements OnInit {
   updateForm(pass: IPass): void {
     this.editForm.patchValue({
       id: pass.id,
-      purchased: pass.purchased,
-      usageNo: pass.usageNo,
+      purchased: pass.purchased ? pass.purchased : moment(new Date()),
+      usageNo: pass.usageNo ? pass.usageNo : 0,
       validFrom: pass.validFrom,
       validTo: pass.validTo,
       passTypeId: pass.passTypeId,
@@ -77,12 +78,16 @@ export class PassUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
-    const pass = this.createFromForm();
-    if (pass.id !== undefined) {
-      this.subscribeToSaveResponse(this.passService.update(pass));
-    } else {
-      this.subscribeToSaveResponse(this.passService.create(pass));
+    this.editForm.markAllAsTouched();
+
+    if (this.editForm.valid) {
+      this.isSaving = true;
+      const pass = this.createFromForm();
+      if (pass.id !== undefined) {
+        this.subscribeToSaveResponse(this.passService.update(pass));
+      } else {
+        this.subscribeToSaveResponse(this.passService.create(pass));
+      }
     }
   }
 
