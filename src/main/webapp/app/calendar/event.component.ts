@@ -94,7 +94,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
   getCalendarDates(): Date[] {
     if (!this.isMultiDate()) {
-      return [new Date()];
+      return [this.datePickerFirstDate];
     } else {
       const dates: Date[] = [];
       for (let i = 0; i < 7; i++) {
@@ -109,13 +109,23 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   decreaseDatePicker(): void {
-    this.datePickerLastDate = new Date((this.getDayByDate(this.datePickerLastDate) - 7) * this.DAY_TO_MS);
-    this.datePickerFirstDate = new Date((this.getDayByDate(this.datePickerFirstDate) - 7) * this.DAY_TO_MS);
+    let days = 1;
+    if (this.isMultiDate()) {
+      days = 7;
+    }
+
+    this.datePickerLastDate = new Date((this.getDayByDate(this.datePickerLastDate) - days) * this.DAY_TO_MS);
+    this.datePickerFirstDate = new Date((this.getDayByDate(this.datePickerFirstDate) - days) * this.DAY_TO_MS);
   }
 
   increaseDatePicker(): void {
-    this.datePickerLastDate = new Date((this.getDayByDate(this.datePickerLastDate) + 7) * this.DAY_TO_MS);
-    this.datePickerFirstDate = new Date((this.getDayByDate(this.datePickerFirstDate) + 7) * this.DAY_TO_MS);
+    let days = 1;
+    if (this.isMultiDate()) {
+      days = 7;
+    }
+
+    this.datePickerLastDate = new Date((this.getDayByDate(this.datePickerLastDate) + days) * this.DAY_TO_MS);
+    this.datePickerFirstDate = new Date((this.getDayByDate(this.datePickerFirstDate) + days) * this.DAY_TO_MS);
   }
 
   getEventsByDay(date: Date): IEvent[] | undefined {
