@@ -33,36 +33,37 @@
                 {{activityType.name}}
             </h3>
             <div *ngFor="let passType of getPassTypesByActivityType(activityType)" class="category-item row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <h4>{{passType.name}} <span class="h6" *ngIf="passType.description">({{passType.description}})</span> </h4>
                     <p>Érvényes: {{passType.durationDays ? durationToString(passType.durationDays) : 'felhasználásig'}}</p>
                 </div>
-                <div class="col-md-4 text-center mt-2">
-                    <button type="submit" *jhiHasAnyAuthority="'ROLE_USER'"
+                <div class="col-md-6 category-price">
+                    <h4>
+                        {{passType.price | number: '1.0':'hu'}} {{passType.unit}}
+                        <button type="button" *jhiHasAnyAuthority="'ROLE_USER'"
+                                class="btn btn-outline-primary btn-icon ml-2">
+                            <fa-icon icon="cart-plus"></fa-icon>
+                        </button>
+                    </h4>
+                </div>
+                <div class="col-12 text-center mt-0">
+                    <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
                             [routerLink]="['/prices', passType.id, 'view']"
-                            class="btn btn-primary btn-icon btn-sm">
+                            class="btn btn-primary btn-icon">
                         <fa-icon icon="eye"></fa-icon>
                     </button>
 
                     <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
                             [routerLink]="['/prices', passType.id, 'edit']"
-                            class="btn btn-primary btn-icon btn-sm">
+                            class="btn btn-primary btn-icon">
                         <fa-icon icon="pen"></fa-icon>
                     </button>
 
                     <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
                             (click)="delete(passType)"
-                            class="btn btn-primary btn-icon btn-sm">
+                            class="btn btn-primary btn-icon">
                         <fa-icon icon="trash"></fa-icon>
                     </button>
-                    <button type="button" *jhiHasAnyAuthority="'ROLE_USER'" class="btn btn-outline-primary btn-icon btn-sm">
-                        <fa-icon icon="cart-plus"></fa-icon>
-                    </button>
-                </div>
-                <div class="col-md-4 category-price">
-                    <h4>
-                        {{passType.price | number: '1.0':'hu'}} {{passType.unit}}
-                    </h4>
                 </div>
             </div>
         </div>

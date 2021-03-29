@@ -1,0 +1,13 @@
+<h3 [class.active]="isDateToday()">{{date | date: "d"}}</h3>
+<div class="day">
+    <p>{{date?.toLocaleDateString("hu-HU", { weekday: 'long' })}}</p>
+</div>
+
+<jhi-calendar-item *ngFor="let event of events"
+                   [event]="event"
+                   [authorities]="authorities"
+                   [activeUserId]="activeUserId"
+                   (checkUserAuthentication)="emitAuthEvent()"
+                   [class.past]="isPastEvent(event.end)"
+                   [style.top]="getPositionByStart(event?.start) + 'px'">
+</jhi-calendar-item>

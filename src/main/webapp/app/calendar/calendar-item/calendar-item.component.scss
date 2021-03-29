@@ -1,0 +1,26 @@
+@import '../../../content/scss/variables';
+
+:host {
+  position: absolute;
+  left: 8px;
+  background-color: $mv-navbar;
+  display: inline-block;
+  padding: 5px;
+  width: 150px;
+  height: 100px;
+  box-shadow: 0 0 15px 0 $mv-shadow-primary;
+  margin-right: -75px;
+
+  .time {
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .organizer {
+    font-size: 0.6rem;
+  }
+
+  &.past {
+    background-color: $mv-pastel;
+  }
+}

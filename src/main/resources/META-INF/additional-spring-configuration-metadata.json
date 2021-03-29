@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "szamlazzhu.apiKey",
+      "type": "java.lang.String",
+      "description": "Description for szamlazzhu.apiKey."
+    }
+  ]
+}

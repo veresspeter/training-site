@@ -57,6 +57,9 @@ management:
           autotime:
             enabled: true
 
+szamlazzhu:
+  apiKey: 5a2jp2qsuyfxmn2jp2qsg266ax2jp2qss28rdh2jp2
+
 spring:
   application:
     name: maxmove

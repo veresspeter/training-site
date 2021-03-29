@@ -1,0 +1,38 @@
+@import '../../../content/scss/variables';
+
+:host {
+  position: relative;
+  height: 800px;
+  width: 175px;
+  margin: 0 -2px;
+  border-left: 4px solid $mv-border;
+  border-right: 4px solid $mv-border;
+
+  h3 {
+    width: fit-content;
+    min-width: 38px;
+    margin: 10px auto auto auto;
+    padding: 5px;
+    font-size: 1.5rem;
+    border-radius: 25px;
+
+    &.active {
+      background-color: $mv-navbar;
+    }
+  }
+
+  .day {
+    background: $mv-navbar;
+    margin: 15px auto 10px auto;
+    max-width: 120px;
+    padding: 7px 6px;
+
+    p {
+      margin: -14px 6px;
+      padding: 2px 0;
+      height: fit-content;
+      border: 3px solid $mv-dark;
+      font-size: 1.2rem;
+    }
+  }
+}
