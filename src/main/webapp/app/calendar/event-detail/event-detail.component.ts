@@ -5,6 +5,7 @@ import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 import * as AgoraRTC from 'agora-rtc-sdk';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -15,7 +16,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   event: IEvent | null = null;
   inMeeting = false;
 
-  userName = 0;
+  userId = 0;
   agoraClient = AgoraRTC.createClient({
     mode: 'rtc',
     codec: 'vp8',
@@ -50,8 +51,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
     this.agoraClient.on('stream-subscribed', (event: any) => {
       const remoteStream = event.stream;
-
-      if (this.event?.organizer?.id?.toString() === remoteStream.getId().toString()) {
+      const remoteUserIdString = remoteStream
+        .getId()
+        .toString()
+        .substring(0, remoteStream.getId().toString().length - 12);
+      if (this.event?.organizer?.id?.toString() === remoteUserIdString) {
         remoteStream.play('myVideoContainer');
       } else {
         remoteStream.play('remoteVideoContainer');
@@ -79,7 +83,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.agoraClient.join(
       this.tempToken,
       'test-channel',
-      this.userName,
+      this.userId + formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU'),
       undefined,
       (uid: any) => {
         this.localStream = AgoraRTC.createStream({
@@ -142,7 +146,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   authenticate(): void {
     this.accountService.identity().subscribe(account => {
-      if (account?.id != null) this.userName = account.id;
+      if (account?.id != null) this.userId = account.id;
     });
   }
 
