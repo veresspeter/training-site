@@ -94,10 +94,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           streamID: uid,
           audio: true,
           video: true,
+          mirror: false,
         });
         this.localStream.init(() => {
           this.localStream.play('myVideoContainer');
-          this.addVideoStream(this.localStream.getId(), false, true);
+          this.addVideoStream(this.localStream.getId());
           this.agoraClient.publish(this.localStream, this.handleFail);
         }, this.handleFail);
       },
@@ -119,13 +120,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  addVideoStream(id: string, small?: boolean, skipRotate?: boolean): void {
+  addVideoStream(id: string, small?: boolean): void {
     const streamDiv = document.getElementById('player_' + id);
     if (streamDiv != null) {
-      if (!skipRotate) {
-        streamDiv.style.transform = 'rotateY(180deg)';
-      }
-
       if (!small) {
         streamDiv.style.width = '40vw';
       } else {
