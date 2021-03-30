@@ -55,6 +55,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         .getId()
         .toString()
         .substring(0, remoteStream.getId().toString().length - 12);
+
       if (this.event?.organizer?.id?.toString() === remoteUserIdString) {
         remoteStream.play('myVideoContainer');
       } else {
@@ -115,10 +116,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  addVideoStream(id: string): void {
+  addVideoStream(id: string, skipRotate?: boolean): void {
     const streamDiv = document.getElementById('player_' + id);
     if (streamDiv != null) {
-      streamDiv.style.transform = 'rotateY(180deg)';
+      if (skipRotate) {
+        streamDiv.style.transform = 'rotateY(180deg)';
+      }
       streamDiv.style.width = 'auto';
       streamDiv.style.height = 'auto';
     }
