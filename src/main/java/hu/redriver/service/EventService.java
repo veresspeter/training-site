@@ -52,15 +52,6 @@ public class EventService {
      */
     public EventDTO save(EventDTO eventDTO) {
         log.debug("Request to save Event : {}", eventDTO);
-
-        if (eventDTO.getId() != null && eventDTO.getStreamLinkType() == LinkType.ZOOM) {
-            EventDTO storedVersion = findOne(eventDTO.getId()).orElse(null);
-            eventDTO.setZoomRoomNo(storedVersion.getZoomRoomNo());
-            eventDTO.setZoomRoomPsw(storedVersion.getZoomRoomPsw());
-            eventDTO.setZoomStartLink(storedVersion.getZoomStartLink());
-            eventDTO.setStreamLink(storedVersion.getStreamLink());
-        }
-
         Event event = eventMapper.toEntity(eventDTO);
         event = eventRepository.save(event);
         return eventMapper.toDto(event);

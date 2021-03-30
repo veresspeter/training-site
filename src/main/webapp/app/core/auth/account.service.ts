@@ -83,6 +83,10 @@ export class AccountService {
     return this.http.get<AppUser>(SERVER_API_URL + 'api/account');
   }
 
+  getAgoraToken(channelName: string, timeStamp: string): Observable<string> {
+    return this.http.get<string>(SERVER_API_URL + 'api/agora-token', { params: { timeStamp, channelName } });
+  }
+
   private navigateToStoredUrl(): void {
     // previousState can be set in the authExpiredInterceptor and in the userRouteAccessService
     // if login is successful, go to stored previousState and clear previousState

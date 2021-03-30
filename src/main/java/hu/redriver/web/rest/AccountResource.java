@@ -1,5 +1,6 @@
 package hu.redriver.web.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.redriver.domain.AppUser;
 import hu.redriver.domain.PersistentToken;
 import hu.redriver.repository.PersistentTokenRepository;
@@ -141,8 +142,9 @@ public class AccountResource {
     }
 
     @GetMapping("/agora-token")
-    public String getAgoraToken(String timeStamp) throws Exception {
-        return tokenBuilder.buildToken(APP_ID, APP_CERTIFICATE, getLoggedInUserDTO().getId().toString() + timeStamp, RtmTokenBuilder.Role.Rtm_User, 10000);
+    public String getAgoraToken(String timeStamp, String channelName) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(tokenBuilder.buildToken(APP_ID, APP_CERTIFICATE, channelName, getLoggedInUserDTO().getId().toString() + timeStamp, RtmTokenBuilder.Role.Rtm_User, 10000));
     }
 
     /**

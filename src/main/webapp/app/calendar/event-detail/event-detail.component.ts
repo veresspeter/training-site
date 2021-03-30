@@ -114,10 +114,18 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   private joinChannel(): void {
+    const timeStamp = formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU');
+    const channelName = 'teszt-channel';
+    this.accountService.getAgoraToken(channelName, timeStamp).subscribe(res => {
+      this.joinAgoraChannel(res, channelName, timeStamp);
+    });
+  }
+
+  private joinAgoraChannel(token: string, channelName: string, timeStamp: string): void {
     this.agoraClient.join(
-      this.tempToken,
-      'test-channel',
-      this.currentUser?.id + formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU'),
+      token,
+      channelName,
+      this.currentUser?.id + timeStamp,
       undefined,
       (uid: any) => {
         this.localStream = AgoraRTC.createStream({
