@@ -66,17 +66,16 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       this.handleFail
     );
 
-    /*
     this.agoraClient.on('stream-added', (event: any) => {
-      this.agoraClient.subscribe(event.stream,{}, this.handleFail);
-    })
+      this.agoraClient.subscribe(event.stream, {}, this.handleFail);
+    });
 
     this.agoraClient.on('stream-subscribed', (event: any) => {
       const remoteStream = event.stream;
       const streamId = String(remoteStream.getId());
       this.addVideoStream(streamId);
       remoteStream.play(streamId);
-    })
+    });
 
     this.agoraClient.on('stream-removed', (event: any) => {
       const remoteStream = event.stream;
@@ -84,11 +83,10 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       remoteStream.close();
       this.removeVideoStream(streamId);
     });
-    */
   }
 
   ngOnDestroy(): void {
-    this.agoraClient.on('peer-live', (event: any) => {
+    this.agoraClient.on('peer-leave', (event: any) => {
       const remoteStream = event.stream;
       const streamId = String(remoteStream.getId());
       remoteStream.close();
