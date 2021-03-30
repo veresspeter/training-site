@@ -4,19 +4,24 @@
             <fa-icon icon="chevron-left"></fa-icon> Vissza
         </button>
         <div>
-            <button *ngIf="inMeeting" type="button" class="btn btn-danger ml-auto" (click)="join()">Kilépés</button>
+            <button *ngIf="inMeeting" type="button" class="btn btn-danger btn-icon" (click)="leaveChannel()">
+                <fa-icon icon="phone-slash"></fa-icon>
+            </button>
             <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/calendar', event.id, 'edit']" class="btn btn-primary btn-icon">
                 <fa-icon icon="pen"></fa-icon>
             </button>
         </div>
-
     </div>
 
     <h2>{{ event.name }}</h2>
 
     <div class="videoContainer">
         <div #myVideoContainer id="myVideoContainer" class="row text-center justify-content-center mainVideoContainer">
-            <button *ngIf="!inMeeting" type="button" class="btn btn-primary" (click)="join()">Csatlakozás</button>
+            <div *ngIf="!inMeeting">
+                <button type="button" class="btn btn-success btn-icon" (click)="join()">
+                    <fa-icon icon="phone"></fa-icon>
+                </button>
+            </div>
         </div>
     </div>
 
