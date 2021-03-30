@@ -50,7 +50,13 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
     this.agoraClient.on('stream-subscribed', (event: any) => {
       const remoteStream = event.stream;
-      remoteStream.play('remoteVideoContainer');
+
+      if (this.event?.organizer?.id == remoteStream.getId()) {
+        remoteStream.play('myVideoContainer');
+      } else {
+        remoteStream.play('remoteVideoContainer');
+      }
+
       this.addVideoStream(remoteStream.getId());
     });
 
