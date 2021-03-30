@@ -93,6 +93,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         });
         this.localStream.init(() => {
           this.localStream.play('myVideoContainer');
+          this.addVideoStream(this.localStream.getId());
           this.agoraClient.publish(this.localStream, this.handleFail);
         }, this.handleFail);
       },
