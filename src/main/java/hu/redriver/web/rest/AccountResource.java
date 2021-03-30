@@ -18,6 +18,7 @@ import hu.redriver.web.rest.errors.*;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
 import hu.redriver.web.rest.vm.ManagedUserVM;
 
+import hu.redriver.web.utils.agora.rtm.RtmTokenBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,9 @@ import java.util.*;
 @RequestMapping("/api")
 public class AccountResource {
 
+    public static final String APP_ID = "9af1b91655eb47e2b0b82eb20a24f29f";
+    public static final String APP_CERTIFICATE = "354d6dee8aba46f9b5879132af8ccfb6";
+
     private static class AccountResourceException extends RuntimeException {
         private AccountResourceException(String message) {
             super(message);
@@ -51,6 +55,7 @@ public class AccountResource {
     private final MailService mailService;
     private final PersistentTokenRepository persistentTokenRepository;
     private final UserMapper userMapper;
+    private final RtmTokenBuilder tokenBuilder;
 
     public AccountResource(UserRepository userRepository,
                            AppUserService appUserService,
@@ -64,6 +69,7 @@ public class AccountResource {
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
         this.userMapper = userMapper;
+        this.tokenBuilder = new RtmTokenBuilder();
     }
 
     /**
@@ -132,6 +138,11 @@ public class AccountResource {
         return userService.getUserWithAuthorities()
             .map(UserDTO::new)
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
+    }
+
+    @GetMapping("/agora-token")
+    public String getAgoraToken(String timeStamp) throws Exception {
+        return tokenBuilder.buildToken(APP_ID, APP_CERTIFICATE, getLoggedInUserDTO().getId().toString() + timeStamp, RtmTokenBuilder.Role.Rtm_User, 10000);
     }
 
     /**
