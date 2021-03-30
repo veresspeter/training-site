@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IEvent } from 'app/shared/model/event.model';
@@ -12,12 +12,10 @@ import * as AgoraRTC from 'agora-rtc-sdk';
   styleUrls: ['event-detail.component.scss'],
 })
 export class EventDetailComponent implements OnInit, OnDestroy {
-  @ViewChild('me') meVideoHolder: ElementRef;
-  @ViewChild('remote') remoteVideoHolder: ElementRef;
   event: IEvent | null = null;
   inMeeting = false;
 
-  userName = 'felhasználónév';
+  userName = 0;
   agoraClient = AgoraRTC.createClient({
     mode: 'rtc',
     codec: 'vp8',
@@ -34,7 +32,65 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       this.event = event;
     });
     this.authenticate();
+  }
 
+  ngOnDestroy(): void {}
+
+  join(): void {
+    this.inMeeting = true;
+    this.initAgora();
+    this.joinChannel();
+    this.subscribeAgoraEvents();
+  }
+
+  private subscribeAgoraEvents(): void {
+    this.agoraClient.on('stream-added', (event: any) => {
+      this.agoraClient.subscribe(event.stream, {}, this.handleFail);
+    });
+
+    this.agoraClient.on('stream-subscribed', (event: any) => {
+      const remoteStream = event.stream;
+      remoteStream.play('videoContainer');
+      this.addVideoStream(remoteStream.getId());
+    });
+
+    this.agoraClient.on('stream-removed', (event: any) => {
+      const remoteStream = event.stream;
+      const streamId = String(remoteStream.getId());
+      remoteStream.close();
+      this.removeVideoStream(streamId);
+    });
+
+    this.agoraClient.on('peer-leave', (event: any) => {
+      const remoteStream = event.stream;
+      const streamId = String(remoteStream.getId());
+      remoteStream.close();
+      this.removeVideoStream(streamId);
+    });
+  }
+
+  private joinChannel(): void {
+    this.agoraClient.join(
+      this.tempToken,
+      'test-channel',
+      this.userName,
+      undefined,
+      (uid: any) => {
+        this.localStream = AgoraRTC.createStream({
+          streamID: uid,
+          audio: true,
+          video: true,
+        });
+        this.localStream.init(() => {
+          this.localStream.play('me', { fit: 'contain' });
+          this.agoraClient.publish(this.localStream, this.handleFail);
+        }, this.handleFail);
+      },
+      this.handleFail
+    );
+  }
+
+  private initAgora(): void {
     this.agoraClient.init(
       this.agoraID,
       () => {
@@ -46,63 +102,26 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         console.log('client init failed ', err);
       }
     );
-
-    this.agoraClient.join(
-      this.tempToken,
-      'test-channel',
-      null,
-      undefined,
-      (uid: any) => {
-        this.localStream = AgoraRTC.createStream({
-          streamID: uid,
-          audio: true,
-          video: true,
-        });
-        this.localStream.init(() => {
-          this.localStream.play('me');
-          this.agoraClient.publish(this.localStream, this.handleFail);
-        }, this.handleFail);
-      },
-      this.handleFail
-    );
-
-    this.agoraClient.on('stream-added', (event: any) => {
-      this.agoraClient.subscribe(event.stream, {}, this.handleFail);
-    });
-
-    this.agoraClient.on('stream-subscribed', (event: any) => {
-      const remoteStream = event.stream;
-      const streamId = String(remoteStream.getId());
-      this.addVideoStream(streamId);
-      remoteStream.play(streamId);
-    });
-
-    this.agoraClient.on('stream-removed', (event: any) => {
-      const remoteStream = event.stream;
-      const streamId = String(remoteStream.getId());
-      remoteStream.close();
-      this.removeVideoStream(streamId);
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.agoraClient.on('peer-leave', (event: any) => {
-      const remoteStream = event.stream;
-      const streamId = String(remoteStream.getId());
-      remoteStream.close();
-      this.removeVideoStream(streamId);
-    });
   }
 
   addVideoStream(id: string): void {
-    const streamDiv = document.createElement('div');
-    streamDiv.id = id;
-    streamDiv.style.transform = 'rotateY(180deg)';
-    this.remoteVideoHolder.nativeElement.appendChild(streamDiv);
+    const streamDiv = document.getElementById('player_' + id);
+    if (streamDiv != null) {
+      streamDiv.style.transform = 'rotateY(180deg)';
+      streamDiv.style.width = 'auto';
+      streamDiv.style.height = 'auto';
+    }
+
+    const videoDiv = document.getElementById('video' + id);
+    if (videoDiv != null) {
+      videoDiv.style.width = '100%';
+      videoDiv.style.height = '100%';
+      videoDiv.style.position = 'relative';
+    }
   }
 
   removeVideoStream(id: string): void {
-    const remDiv = document.getElementById(id);
+    const remDiv = document.getElementById('player_' + id);
     remDiv?.parentNode?.removeChild(remDiv);
   }
 
@@ -117,7 +136,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   authenticate(): void {
     this.accountService.identity().subscribe(account => {
-      if (account != null) this.userName = account.internalUser?.lastName + ' ' + account.internalUser?.firstName;
+      if (account?.id != null) this.userName = account.id;
     });
   }
 

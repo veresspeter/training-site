@@ -6,4 +6,11 @@
     padding-bottom: 15px;
     text-align: center;
   }
+
+  div.videoContainer {
+    width: 100%;
+    min-height: 100px;
+    margin: 20px 0;
+    height: fit-content;
+  }
 }

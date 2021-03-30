@@ -1,24 +1,21 @@
 <div *ngIf="event">
-    <button type="submit" (click)="previousState()" class="btn btn-primary btn-icon">
-        <fa-icon icon="arrow-left"></fa-icon>
-    </button>
+    <div class="row justify-content-between">
+        <button type="submit" (click)="previousState()" class="btn btn-link">
+            <fa-icon icon="chevron-left"></fa-icon> Vissza
+        </button>
+        <div>
+            <button *ngIf="inMeeting" type="button" class="btn btn-danger ml-auto" (click)="join()">Kilépés</button>
+            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/calendar', event.id, 'edit']" class="btn btn-primary btn-icon">
+                <fa-icon icon="pen"></fa-icon>
+            </button>
+        </div>
 
-    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/calendar', event.id, 'edit']" class="btn btn-primary btn-icon">
-        <fa-icon icon="pen"></fa-icon>
-    </button>
+    </div>
 
     <h2>{{ event.name }}</h2>
 
-    <div class="row text-center justify-content-center">
-        <div class="card col-6">
-            <div class="card-header">Local</div>
-            <div id="me" class="card-body"></div>
-        </div>
-        <div class="w-100"></div>
-        <div class="card col-6">
-            <div class="card-header">Remote</div>
-            <div id="remote" class="card-body"></div>
-        </div>
+    <div #videoContainer id="videoContainer"  class="row text-center justify-content-center videoContainer">
+        <button *ngIf="!inMeeting" type="button" class="btn btn-primary" (click)="join()">Csatlakozás</button>
     </div>
 
 
