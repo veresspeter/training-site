@@ -87,7 +87,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.agoraClient.join(
       this.tempToken,
       'test-channel',
-      this.currentUser + formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU'),
+      this.currentUser?.id + formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU'),
       undefined,
       (uid: any) => {
         this.localStream = AgoraRTC.createStream({
