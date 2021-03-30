@@ -1,21 +1,36 @@
 <div *ngIf="event">
-    <button type="submit" (click)="previousState()" class="btn btn-primary btn-icon">
-        <fa-icon icon="arrow-left"></fa-icon>
-    </button>
-
-    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/calendar', event.id, 'edit']" class="btn btn-primary btn-icon">
-        <fa-icon icon="pen"></fa-icon>
-    </button>
+    <div class="row justify-content-between">
+        <button type="submit" (click)="previousState()" class="btn btn-link">
+            <fa-icon icon="chevron-left"></fa-icon> Vissza
+        </button>
+        <div>
+            <button *ngIf="inMeeting" type="button" class="btn btn-danger btn-icon" (click)="leaveChannel()">
+                <fa-icon icon="phone-slash"></fa-icon>
+            </button>
+            <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/calendar', event.id, 'edit']" class="btn btn-primary btn-icon">
+                <fa-icon icon="pen"></fa-icon>
+            </button>
+        </div>
+    </div>
 
     <h2>{{ event.name }}</h2>
 
-    <div id="zoom-card">
-        <button *ngIf="!inMeeting" type="button" class="join-now btn btn-primary" (click)="joinMeeting()">Csatlakozás</button>
-        <div id="zoom-container"></div>
+    <div class="videoContainer">
+        <div #myVideoContainer id="myVideoContainer" class="row text-center justify-content-center mainVideoContainer">
+            <div *ngIf="!inMeeting">
+                <button type="button" class="btn btn-success btn-icon" (click)="join()">
+                    <fa-icon icon="phone"></fa-icon>
+                </button>
+            </div>
+        </div>
     </div>
 
+    <div #remoteVideoContainer id="remoteVideoContainer" class="row text-center justify-content-center flatVideoContainer">
+    </div>
+
+
     <dl class="row-md jh-entity-details">
-        <ng-template *ngIf="event.streamLinkType !== 'ZOOM'">
+        <ng-template *ngIf="!isEventOnline(event.streamLinkType)">
             <dt><span>Link típusa</span></dt>
             <dd>
                 <span>{{ event.streamLinkType }}</span>

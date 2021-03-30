@@ -103,10 +103,10 @@
                     <label class="form-control-label" for="field_streamLinkType">Óra helyszíne</label>
                     <select class="form-control" name="streamLinkType" formControlName="streamLinkType" id="field_streamLinkType"
                             [attr.disabled]="editForm.get('streamLinkType')?.value === 'ZOOM' && editForm.get('streamLink')?.value?.length > 0 ? '' : null">
-                        <option value="ZOOM">ZOOM</option>
-                        <option value="SKYPE">SKYPE</option>
-                        <option value="GOOGLE_MEET">GOOGLE_MEET</option>
-                        <option value="OTHER">OTHER</option>
+                        <option value="ZOOM">Online</option>
+                        <option value="STUDIO">Stúdió</option>
+                        <option value="MARGARET_ISLAND">Margit-sziget</option>
+                        <option value="OTHER">Egyéb</option>
                     </select>
                 </div>
 

@@ -18,7 +18,7 @@ Navbar
 
 .navbar {
   margin: 14px 0;
-  padding: 1px 1rem;
+  padding: 1px 0;
   height: 32px;
   background-color: $mv-navbar;
   box-shadow: 0 0 5px 3px $mv-shadow-primary;
@@ -74,9 +74,10 @@ Logo styles
 ========================================================================== */
 .logo-img {
   height: 30px;
-  width: 30px;
+  width: 80px;
+  margin: -3px 15px 0 15px;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
+  background: url('../../../content/images/maxmove-logo.png') no-repeat center center;
   background-size: contain;
 }
