@@ -6,6 +6,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 import * as AgoraRTC from 'agora-rtc-sdk';
 import { formatDate } from '@angular/common';
+import { AppUser } from 'app/shared/model/application-user.model';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -16,7 +17,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   event: IEvent | null = null;
   inMeeting = false;
 
-  userId = 0;
+  currentUser: AppUser | null = null;
   agoraClient = AgoraRTC.createClient({
     mode: 'rtc',
     codec: 'vp8',
@@ -58,11 +59,13 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
       if (this.event?.organizer?.id?.toString() === remoteUserIdString) {
         remoteStream.play('myVideoContainer');
+        this.addVideoStream(remoteStream.getId());
       } else {
-        remoteStream.play('remoteVideoContainer');
+        if (this.currentUser?.internalUser?.authorities?.find(auth => auth === 'ROLE_ADMIN')) {
+          remoteStream.play('remoteVideoContainer');
+          this.addVideoStream(remoteStream.getId(), true);
+        }
       }
-
-      this.addVideoStream(remoteStream.getId());
     });
 
     this.agoraClient.on('stream-removed', (event: any) => {
@@ -84,7 +87,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.agoraClient.join(
       this.tempToken,
       'test-channel',
-      this.userId + formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU'),
+      this.currentUser + formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU'),
       undefined,
       (uid: any) => {
         this.localStream = AgoraRTC.createStream({
@@ -94,7 +97,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         });
         this.localStream.init(() => {
           this.localStream.play('myVideoContainer');
-          this.addVideoStream(this.localStream.getId(), true);
+          this.addVideoStream(this.localStream.getId(), false, true);
           this.agoraClient.publish(this.localStream, this.handleFail);
         }, this.handleFail);
       },
@@ -116,14 +119,22 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  addVideoStream(id: string, skipRotate?: boolean): void {
+  addVideoStream(id: string, small?: boolean, skipRotate?: boolean): void {
     const streamDiv = document.getElementById('player_' + id);
     if (streamDiv != null) {
       if (!skipRotate) {
         streamDiv.style.transform = 'rotateY(180deg)';
       }
-      streamDiv.style.width = 'auto';
+
+      if (!small) {
+        streamDiv.style.width = '40vw';
+      } else {
+        streamDiv.style.width = '10vw';
+      }
+
+      streamDiv.style.minWidth = '240px';
       streamDiv.style.height = 'auto';
+      streamDiv.style.margin = '12px';
     }
 
     const videoDiv = document.getElementById('video' + id);
@@ -150,7 +161,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   authenticate(): void {
     this.accountService.identity().subscribe(account => {
-      if (account?.id != null) this.userId = account.id;
+      this.currentUser = account;
     });
   }
 
