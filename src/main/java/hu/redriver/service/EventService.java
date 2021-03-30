@@ -36,14 +36,12 @@ public class EventService {
     private final EventMapper eventMapper;
     private final UserService userService;
     private final AppUserService appUserService;
-    private final ZoomAPIClientService zoomAPIClientService;
 
-    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, AppUserService appUserService, ZoomAPIClientService zoomAPIClientService) {
+    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, AppUserService appUserService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.userService = userService;
         this.appUserService = appUserService;
-        this.zoomAPIClientService = zoomAPIClientService;
     }
 
     /**
@@ -55,24 +53,12 @@ public class EventService {
     public EventDTO save(EventDTO eventDTO) {
         log.debug("Request to save Event : {}", eventDTO);
 
-        if (eventDTO.getId() != null && eventDTO.getStreamLinkType() == LinkType.ZOOM) {
+        if (eventDTO.getId() != null && eventDTO.getStreamLinkType() == LinkType.ONLINE) {
             EventDTO storedVersion = findOne(eventDTO.getId()).orElse(null);
             eventDTO.setZoomRoomNo(storedVersion.getZoomRoomNo());
             eventDTO.setZoomRoomPsw(storedVersion.getZoomRoomPsw());
             eventDTO.setZoomStartLink(storedVersion.getZoomStartLink());
             eventDTO.setStreamLink(storedVersion.getStreamLink());
-        }
-
-        if (eventDTO.getStreamLinkType() == LinkType.ZOOM) {
-            try {
-                if (eventDTO.getZoomRoomNo() == null) {
-                    this.zoomAPIClientService.createMeeting(eventDTO);
-                } else {
-                    this.zoomAPIClientService.updateMeeting(eventDTO);
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
         }
 
         Event event = eventMapper.toEntity(eventDTO);
@@ -123,12 +109,6 @@ public class EventService {
      */
     public void delete(Long id) {
         log.debug("Request to delete Event : {}", id);
-        EventDTO eventDTO = findOne(id).orElseThrow(EntityNotFoundException::new);
-        try {
-            zoomAPIClientService.deleteMeeting(eventDTO);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
         eventRepository.deleteById(id);
     }
 

@@ -102,8 +102,8 @@
                 <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_streamLinkType">Óra helyszíne</label>
                     <select class="form-control" name="streamLinkType" formControlName="streamLinkType" id="field_streamLinkType"
-                            [attr.disabled]="editForm.get('streamLinkType')?.value === 'ZOOM' && editForm.get('streamLink')?.value?.length > 0 ? '' : null">
-                        <option value="ZOOM">Online</option>
+                            [attr.disabled]="editForm.get('streamLinkType')?.value === 'ONLINE' && editForm.get('streamLink')?.value?.length > 0 ? '' : null">
+                        <option value="ONLINE">Online</option>
                         <option value="STUDIO">Stúdió</option>
                         <option value="MARGARET_ISLAND">Margit-sziget</option>
                         <option value="OTHER">Egyéb</option>
@@ -113,7 +113,7 @@
                 <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_streamLink">Link</label>
                     <input type="text" class="form-control" name="streamLink" id="field_streamLink"
-                           [attr.disabled]="editForm.get('streamLinkType')?.value === 'ZOOM' ? '' : null"
+                           [attr.disabled]="editForm.get('streamLinkType')?.value === 'ONLINE' ? '' : null"
                            formControlName="streamLink"/>
                 </div>
 

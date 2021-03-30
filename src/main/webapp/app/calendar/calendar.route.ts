@@ -50,7 +50,7 @@ export const calendarRoutes: Routes = [
     },
     data: {
       authorities: [Authority.ADMIN],
-      pageTitle: 'Esemény létrehozása',
+      pageTitle: 'Óra létrehozása',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -62,7 +62,7 @@ export const calendarRoutes: Routes = [
     },
     data: {
       authorities: [Authority.ADMIN],
-      pageTitle: 'Esemény szerkesztése',
+      pageTitle: 'Óra szerkesztése',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -74,7 +74,7 @@ export const calendarRoutes: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'Events',
+      pageTitle: 'Óra részletei',
     },
     canActivate: [UserRouteAccessService],
   },
