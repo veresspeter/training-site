@@ -50,7 +50,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
     this.agoraClient.on('stream-subscribed', (event: any) => {
       const remoteStream = event.stream;
-      remoteStream.play('videoContainer');
+      remoteStream.play('remoteVideoContainer');
       this.addVideoStream(remoteStream.getId());
     });
 
@@ -82,7 +82,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           video: true,
         });
         this.localStream.init(() => {
-          this.localStream.play('me', { fit: 'contain' });
+          this.localStream.play('myVideoContainer');
           this.agoraClient.publish(this.localStream, this.handleFail);
         }, this.handleFail);
       },

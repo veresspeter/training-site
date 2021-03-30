@@ -14,8 +14,11 @@
 
     <h2>{{ event.name }}</h2>
 
-    <div #videoContainer id="videoContainer"  class="row text-center justify-content-center videoContainer">
+    <div #myVideoContainer id="myVideoContainer"  class="row text-center justify-content-center videoContainer">
         <button *ngIf="!inMeeting" type="button" class="btn btn-primary" (click)="join()">Csatlakozás</button>
+    </div>
+
+    <div #remoteVideoContainer id="remoteVideoContainer"  class="row text-center justify-content-center videoContainer">
     </div>
 
 
