@@ -1,9 +1,6 @@
 export const enum LinkType {
-  ZOOM = 'ZOOM',
-
-  SKYPE = 'SKYPE',
-
-  GOOGLE_MEET = 'GOOGLE_MEET',
-
+  ONLINE = 'ZOOM',
+  STUDIO = 'STUDIO',
+  MARGARET_ISLAND = 'MARGARET_ISLAND',
   OTHER = 'OTHER',
 }

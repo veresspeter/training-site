@@ -1,4 +1,4 @@
-.btn:not(.btn-link, #zmmtg-root *) {
+.btn:not(.btn-link) {
   width: 175px;
   height: 35px;
   border-radius: 0;
@@ -72,7 +72,7 @@
   }
 }
 
-.btn.btn-link:not(#zmmtg-root *) {
+.btn.btn-link {
   color: $mv-text-dark;
 
   &:hover,
