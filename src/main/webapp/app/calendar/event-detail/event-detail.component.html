@@ -9,6 +9,19 @@
 
     <h2>{{ event.name }}</h2>
 
+    <div class="row text-center justify-content-center">
+        <div class="card col-6">
+            <div class="card-header">Local</div>
+            <div id="me" class="card-body"></div>
+        </div>
+        <div class="w-100"></div>
+        <div class="card col-6">
+            <div class="card-header">Remote</div>
+            <div id="remote" class="card-body"></div>
+        </div>
+    </div>
+
+
     <dl class="row-md jh-entity-details">
         <ng-template *ngIf="!isEventOnline(event.streamLinkType)">
             <dt><span>Link típusa</span></dt>

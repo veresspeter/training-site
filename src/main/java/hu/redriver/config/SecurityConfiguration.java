@@ -108,7 +108,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .headers()
             .contentSecurityPolicy(
-                "default-src 'self';" +
+                "default-src 'self' *;" +
                     "frame-src 'self' data:;" +
                     "script-src 'self' 'unsafe-inline' 'unsafe-eval' " + getCORSAsString() + " blob: ;" +
                     "style-src 'self' " + getCORSAsString() + " 'unsafe-inline';" +
