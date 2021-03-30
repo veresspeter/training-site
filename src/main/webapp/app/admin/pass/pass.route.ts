@@ -39,7 +39,7 @@ export const passRoute: Routes = [
     component: PassComponent,
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'Passes',
+      pageTitle: 'Bérletek',
       defaultSort: 'id,asc',
     },
     canActivate: [UserRouteAccessService],
@@ -52,7 +52,7 @@ export const passRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'Passes',
+      pageTitle: 'Új bérlet',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -64,7 +64,7 @@ export const passRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'Passes',
+      pageTitle: 'Bérlet adatlap',
     },
     canActivate: [UserRouteAccessService],
   },

@@ -39,7 +39,7 @@ export const applicationUserRoute: Routes = [
     component: ApplicationUserComponent,
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'ApplicationUsers',
+      pageTitle: 'Felhasználók',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -51,7 +51,7 @@ export const applicationUserRoute: Routes = [
     },
     data: {
       authorities: [Authority.USER],
-      pageTitle: 'ApplicationUsers',
+      pageTitle: 'Felhasználói adatlap',
     },
     canActivate: [UserRouteAccessService],
   },

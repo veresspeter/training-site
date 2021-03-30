@@ -70,7 +70,7 @@ export class EventUpdateComponent implements OnInit {
       end: event.end ? event.end.format(DATE_TIME_FORMAT) : null,
       limit: event.limit,
       streamLink: event.streamLink,
-      streamLinkType: event.streamLinkType || 'ZOOM',
+      streamLinkType: event.streamLinkType || 'ONLINE',
       comment: event.comment,
       organizerId: event.organizer?.id,
       activityId: event.activityId,
