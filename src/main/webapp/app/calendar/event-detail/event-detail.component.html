@@ -28,7 +28,7 @@
     <div #remoteVideoContainer id="remoteVideoContainer" class="row text-center justify-content-center flatVideoContainer">
     </div>
 
-    <div class="w-100 row">
+    <div class="w-100 row mx-0">
         <dl class="text-center col-12 col-md-6 mx-auto jh-entity-details">
             <ng-container *ngIf="!isEventOnline(event.streamLinkType)">
                 <dt><span>Link típusa</span></dt>
@@ -58,7 +58,7 @@
                 <dt><span>Jelentkezők</span></dt>
                 <dd>
                     <span *ngFor="let participant of event.participants; let last = last">
-                        <a [routerLink]="['/application-user', participant?.id, 'view']">{{ participant?.internalUser?.lastName }} {{ participant?.internalUser?.firstName }}</a>{{ last ? '' : ', ' }}
+                        <a [routerLink]="['/user-management', participant?.id, 'view']">{{ participant?.internalUser?.lastName }} {{ participant?.internalUser?.firstName }}</a>{{ last ? '' : ', ' }}
                     </span>
                 </dd>
             </ng-container>
