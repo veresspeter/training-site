@@ -83,6 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
             .csrf()
+            .ignoringAntMatchers("/api/passes/payment-callback")
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .and()
             .addFilterBefore(corsFilter, CsrfFilter.class)
