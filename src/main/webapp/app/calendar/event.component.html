@@ -18,7 +18,7 @@
     </h2>
 
     <div id="entities" class="text-left row justify-content-around text-center">
-        <div class="col-12 col-md-7">
+        <div class="col-12 px-0">
             <button type="button" class="btn btn-link mr-3" [class.disabled]="isLeftDatePickerDisabled()" (click)="decreaseDatePicker()"><fa-icon icon="chevron-left"></fa-icon></button>
             <div class="date-range">
                 <span class="font-weight-bold">
@@ -34,7 +34,7 @@
 
         <div class="w-100"></div>
 
-        <div class="col-12 col-lg-10 row justify-content-center">
+        <div class="col-12 px-0 row justify-content-center">
             <jhi-calendar-day-column class="mt-4" *ngFor="let date of getCalendarDates()"
                                      [date]="date"
                                      [events]="getEventsByDay(date)"

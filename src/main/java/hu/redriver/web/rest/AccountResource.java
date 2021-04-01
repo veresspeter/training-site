@@ -19,6 +19,7 @@ import hu.redriver.web.rest.errors.*;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
 import hu.redriver.web.rest.vm.ManagedUserVM;
 
+import hu.redriver.web.utils.agora.media.RtcTokenBuilder;
 import hu.redriver.web.utils.agora.rtm.RtmTokenBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -56,7 +57,7 @@ public class AccountResource {
     private final MailService mailService;
     private final PersistentTokenRepository persistentTokenRepository;
     private final UserMapper userMapper;
-    private final RtmTokenBuilder tokenBuilder;
+    private final RtcTokenBuilder tokenBuilder;
 
     public AccountResource(UserRepository userRepository,
                            AppUserService appUserService,
@@ -70,7 +71,7 @@ public class AccountResource {
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
         this.userMapper = userMapper;
-        this.tokenBuilder = new RtmTokenBuilder();
+        this.tokenBuilder = new RtcTokenBuilder();
     }
 
     /**
@@ -144,7 +145,10 @@ public class AccountResource {
     @GetMapping("/agora-token")
     public String getAgoraToken(String timeStamp, String channelName) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(tokenBuilder.buildToken(APP_ID, APP_CERTIFICATE, channelName, getLoggedInUserDTO().getId().toString() + timeStamp, RtmTokenBuilder.Role.Rtm_User, 10000));
+        int customUid = Integer.parseInt(getLoggedInUserDTO().getId().toString() + timeStamp.substring(4));
+        int tS = Integer.parseInt(timeStamp) + 6 * 60 * 60;
+        String token = tokenBuilder.buildTokenWithUid(APP_ID, APP_CERTIFICATE, channelName, customUid, RtcTokenBuilder.Role.Role_Admin, tS);
+        return objectMapper.writeValueAsString(token);
     }
 
     /**

@@ -5,9 +5,9 @@ import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 import * as AgoraRTC from 'agora-rtc-sdk';
-import { formatDate } from '@angular/common';
 import { AppUser } from 'app/shared/model/application-user.model';
 import { Stream } from 'agora-rtc-sdk';
+import { time } from '@ngtools/webpack/src/benchmark';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -23,9 +23,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     mode: 'rtc',
     codec: 'vp8',
   });
-  agoraCert = '354d6dee8aba46f9b5879132af8ccfb6';
-  tempToken = '0069af1b91655eb47e2b0b82eb20a24f29fIAC0THZurINC22NZ2xs6ufUJ4Iw4nY+UKuYan66iTKBlcmLMzZAAAAAAEABfjXZElXlkYAEAAQCTeWRg';
   agoraID = '9af1b91655eb47e2b0b82eb20a24f29f';
+  agoraCert = '354d6dee8aba46f9b5879132af8ccfb6';
   localStream: Stream | undefined;
   pinnedStream: Stream | undefined;
 
@@ -110,22 +109,28 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     return stream
       .getId()
       .toString()
-      .substring(0, stream.getId().toString().length - 12);
+      .substring(0, stream.getId().toString().length - 6);
   }
 
   private joinChannel(): void {
-    const timeStamp = formatDate(new Date(), 'yyMMddhhmmss', 'hu-HU');
-    const channelName = 'teszt-channel';
-    this.accountService.getAgoraToken(channelName, timeStamp).subscribe(res => {
-      this.joinAgoraChannel(res, channelName, timeStamp);
-    });
+    const timeStamp = Math.floor(Number(new Date()) / 1000);
+    const channelName = 'test-channel';
+    this.accountService.getAgoraToken(channelName, timeStamp.toString()).subscribe(
+      res => {
+        this.joinAgoraChannel(res, channelName, timeStamp);
+      },
+      error => this.handleFail(error)
+    );
   }
 
-  private joinAgoraChannel(token: string, channelName: string, timeStamp: string): void {
+  private joinAgoraChannel(token: string, channelName: string, timeStamp: number): void {
+    const tS = timeStamp.toString().substring(4);
+    const customUid = this.currentUser?.id ? this.currentUser.id + tS : tS;
+
     this.agoraClient.join(
       token,
       channelName,
-      this.currentUser?.id + timeStamp,
+      customUid,
       undefined,
       (uid: any) => {
         this.localStream = AgoraRTC.createStream({
@@ -307,6 +312,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   handleFail(err: any): void {
+    this.leaveChannel();
     // eslint-disable-next-line no-console
     console.log(err);
   }

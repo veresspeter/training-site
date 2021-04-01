@@ -16,7 +16,9 @@ import { UserService } from 'app/core/user/user.service';
 })
 export class EventComponent implements OnInit, OnDestroy {
   readonly DAY_TO_MS = 24 * 60 * 60 * 1000;
-  readonly SINGLE_DAY_CALENDAR_MAX_WIDTH = 425;
+  readonly SINGLE_DAY_CALENDAR_MAX_WIDTH = 710;
+  readonly FOUR_DAY_CALENDAR_MAX_WIDTH = 885;
+  readonly FIVE_DAY_CALENDAR_MAX_WIDTH = 1240;
 
   authorities: string[] | undefined = [];
   events?: IEvent[];
@@ -40,7 +42,18 @@ export class EventComponent implements OnInit, OnDestroy {
     } else {
       this.datePickerFirstDate = new Date(this.getDayByDate(date) * this.DAY_TO_MS);
     }
-    this.datePickerLastDate = new Date(this.datePickerFirstDate.getTime() + 6 * this.DAY_TO_MS);
+
+    let days = 0;
+    if (this.isMultiDate()) {
+      days = 6;
+      if (this.isFiveDayCalendar()) {
+        days = 4;
+      }
+      if (this.isFourDayCalendar()) {
+        days = 3;
+      }
+    }
+    this.datePickerLastDate = new Date(this.datePickerFirstDate.getTime() + days * this.DAY_TO_MS);
   }
 
   loadAll(): void {
@@ -97,7 +110,18 @@ export class EventComponent implements OnInit, OnDestroy {
       return [this.datePickerFirstDate];
     } else {
       const dates: Date[] = [];
-      for (let i = 0; i < 7; i++) {
+      let days = 1;
+      if (this.isMultiDate()) {
+        days = 7;
+        if (this.isFiveDayCalendar()) {
+          days = 5;
+        }
+        if (this.isFourDayCalendar()) {
+          days = 4;
+        }
+      }
+
+      for (let i = 0; i < days; i++) {
         dates.push(new Date((this.getDayByDate(this.datePickerFirstDate) + i) * this.DAY_TO_MS));
       }
       return dates;
@@ -108,9 +132,17 @@ export class EventComponent implements OnInit, OnDestroy {
     return window.innerWidth > this.SINGLE_DAY_CALENDAR_MAX_WIDTH;
   }
 
+  isFiveDayCalendar(): boolean {
+    return window.innerWidth <= this.FIVE_DAY_CALENDAR_MAX_WIDTH && window.innerWidth > this.FOUR_DAY_CALENDAR_MAX_WIDTH;
+  }
+
+  isFourDayCalendar(): boolean {
+    return window.innerWidth <= this.FOUR_DAY_CALENDAR_MAX_WIDTH;
+  }
+
   decreaseDatePicker(): void {
     let days = 1;
-    if (this.isMultiDate()) {
+    if (this.isMultiDate() && !this.isFiveDayCalendar() && !this.isFourDayCalendar()) {
       days = 7;
     }
 
@@ -120,7 +152,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
   increaseDatePicker(): void {
     let days = 1;
-    if (this.isMultiDate()) {
+    if (this.isMultiDate() && !this.isFiveDayCalendar() && !this.isFourDayCalendar()) {
       days = 7;
     }
 
@@ -141,7 +173,7 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   isLeftDatePickerDisabled(): boolean {
-    return this.getDayByDate(this.datePickerLastDate) < this.getDayByDate(new Date());
+    return this.getDayByDate(this.datePickerLastDate) < this.getDayByDate(new Date()) - 7;
   }
 
   emitAuthEvent(): void {
