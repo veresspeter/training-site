@@ -2,6 +2,7 @@ package hu.redriver.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hu.redriver.service.*;
+import hu.redriver.service.dto.BarionCallBackRequestDTO;
 import hu.redriver.web.rest.errors.BadRequestAlertException;
 import hu.redriver.service.dto.PassDTO;
 
@@ -81,9 +82,9 @@ public class PassResource {
     }
 
     @PostMapping("/passes/payment-callback")
-    public ResponseEntity<Void> paymentCallback(@RequestBody String paymentId) throws IOException, URISyntaxException {
+    public ResponseEntity<Void> paymentCallback(@RequestBody BarionCallBackRequestDTO requestDTO) throws IOException, URISyntaxException {
         log.debug("REST request to update Payment for Pass");
-        barionService.checkPayment(paymentId);
+        barionService.checkPayment(requestDTO.getPaymentId());
         return ResponseEntity.ok()
             .build();
     }
