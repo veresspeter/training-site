@@ -46,6 +46,11 @@ html {
     footer {
       margin-top: 6px;
       text-align: center;
+
+      a > fa-icon > svg {
+        width: 45px !important;
+        height: 45px !important;
+      }
     }
 
     .modal-content {
