@@ -32,72 +32,23 @@ module.exports = webpackMerge(commonConfig({env: ENV}), {
         test: /\.scss$/,
         use: ['to-string-loader', 'css-loader', 'postcss-loader', {
           loader: 'sass-loader',
-          options: {implementation: sass}
+          options: { implementation: sass }
         }],
         exclude: /(vendor\.scss|global\.scss)/
       },
       {
         test: /(vendor\.scss|global\.scss)/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          },
-          'css-loader',
-          'postcss-loader',
-          {
-            loader: 'sass-loader',
-            options: {implementation: sass}
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: ['to-string-loader', 'css-loader'],
-        exclude: /(vendor\.css|global\.css)/
-      },
-      {
-        test: /(vendor\.css|global\.css)/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          },
-          'css-loader',
-          'postcss-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'postcss-loader', {
+          loader: 'sass-loader',
+          options: { implementation: sass }
+        }]
       }]
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // both options are optional
-      filename: 'content/[name].[contenthash].css',
-      chunkFilename: 'content/[id].css'
-    }),
     new MomentLocalesPlugin({
       localesToKeep: [
         // jhipster-needle-i18n-language-moment-webpack - JHipster will add/remove languages in this array
       ]
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: 'static',
-      openAnalyzer: false,
-      // Webpack statistics in target folder
-      reportFilename: '../stats.html'
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: false,
-      debug: false
-    }),
-    new WorkboxPlugin.GenerateSW({
-      clientsClaim: true,
-      skipWaiting: true,
-      exclude: [/swagger-ui/]
     })
   ],
   mode: 'production'
