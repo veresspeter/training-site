@@ -41,6 +41,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   leaveChannel(): void {
+    this.localStream?.close();
     this.agoraClient.leave();
     this.inMeeting = false;
   }
@@ -142,7 +143,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           streamID: uid,
           audio: true,
           video: true,
-          mirror: false,
+          mirror: true,
         });
         this.localStream.init(() => {
           if (this.localStream) {
