@@ -139,6 +139,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/events").permitAll()
             .antMatchers("/api/trainers").permitAll()
             .antMatchers("/api/pass-types").permitAll()
+            .antMatchers("/api/passes/payment-callback").permitAll()
             .antMatchers("/api/**").authenticated()
             // next line includes .antMatchers("/websocket/tracker").permitAll()
             .antMatchers("/websocket/**").permitAll()

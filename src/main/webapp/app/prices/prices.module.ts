@@ -4,12 +4,11 @@ import { PricesComponent } from './prices.component';
 import { RouterModule } from '@angular/router';
 import { pricesRoutes } from 'app/prices/prices.route';
 import { MaxmoveSharedModule } from 'app/shared/shared.module';
-import { PassTypeDetailComponent } from 'app/prices/pass-type-details/pass-type-detail.component';
 import { PassTypeUpdateComponent } from 'app/prices/pass-type-update/pass-type-update.component';
 import { PassTypeDeleteDialogComponent } from 'app/prices/pass-type-delete/pass-type-delete-dialog.component';
 
 @NgModule({
-  declarations: [PricesComponent, PassTypeDetailComponent, PassTypeUpdateComponent, PassTypeDeleteDialogComponent],
+  declarations: [PricesComponent, PassTypeUpdateComponent, PassTypeDeleteDialogComponent],
   imports: [CommonModule, RouterModule.forChild(pricesRoutes), MaxmoveSharedModule],
   entryComponents: [PassTypeDeleteDialogComponent],
 })
