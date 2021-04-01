@@ -121,6 +121,13 @@ public class PassService {
             .map(passMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<PassDTO> findOneByPaymentId(String paymentId) {
+        log.debug("Request to get Pass by PaymentId : {}", paymentId);
+        return passRepository.findByPaymentId(paymentId)
+            .map(passMapper::toDto);
+    }
+
     /**
      * Delete the pass by id.
      *

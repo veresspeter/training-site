@@ -38,6 +38,7 @@
                 <th scope="col"><span>Felhasználó</span></th>
                 <th scope="col"><span>Használat</span></th>
                 <th scope="col"><span>Érvényesség</span></th>
+                <th scope="col"><span>Státusz</span></th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -56,6 +57,7 @@
                 </td>
                 <td>{{ pass.usageNo }} / {{ getPassOccasionsById(pass.passTypeId) }}</td>
                 <td>{{ pass.validFrom | date:'mediumDate' }} - {{ pass.validTo | date:'mediumDate' }}</td>
+                <td>{{pass.paymentStatus}}</td>
                 <td class="text-right">
                     <button type="submit" [routerLink]="['/admin/pass', pass.id, 'view']" class="btn btn-primary btn-icon">
                         <fa-icon icon="eye"></fa-icon>

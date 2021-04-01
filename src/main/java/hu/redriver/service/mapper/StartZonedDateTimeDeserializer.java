@@ -12,14 +12,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
 
-public class ZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
+public class StartZonedDateTimeDeserializer extends JsonDeserializer<ZonedDateTime> {
     @Override
     public ZonedDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        String text = jsonParser.getText();
+        text = text.split("Z")[0];
+
         DateTimeFormatter barionDateTimeFormatter =  new DateTimeFormatterBuilder()
             .appendPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
             .appendFraction(ChronoField.MILLI_OF_SECOND, 0, 3, true)
             .toFormatter();
-        LocalDateTime localDateTime = LocalDateTime.parse(jsonParser.getText(), barionDateTimeFormatter);
+        LocalDateTime localDateTime = LocalDateTime.parse(text, barionDateTimeFormatter);
         return ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
     }
 }

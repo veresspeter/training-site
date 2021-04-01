@@ -3,7 +3,9 @@ package hu.redriver.service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hu.redriver.domain.enumeration.BarionPaymentStatus;
 
-public class BarionStartPaymentResponseDTO {
+import java.time.ZonedDateTime;
+
+public class BarionPaymentResponseDTO {
     @JsonProperty("PaymentId")
     private String paymentId;
 
@@ -13,8 +15,11 @@ public class BarionStartPaymentResponseDTO {
     @JsonProperty("Status")
     private BarionPaymentStatus status;
 
-    @JsonProperty("")
-    private String QRUrl;
+    @JsonProperty("CompletedAt")
+    private ZonedDateTime completedAt;
+
+    @JsonProperty("QRUrl")
+    private String url;
 
     @JsonProperty("Transactions")
     private BarionProcessedTransaction[] transactions;
@@ -55,12 +60,12 @@ public class BarionStartPaymentResponseDTO {
         this.status = status;
     }
 
-    public String getQRUrl() {
-        return QRUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setQRUrl(String QRUrl) {
-        this.QRUrl = QRUrl;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getRecurrenceResult() {
@@ -101,5 +106,13 @@ public class BarionStartPaymentResponseDTO {
 
     public void setRedirectUrl(String redirectUrl) {
         this.redirectUrl = redirectUrl;
+    }
+
+    public ZonedDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(ZonedDateTime completedAt) {
+        this.completedAt = completedAt;
     }
 }

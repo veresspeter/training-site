@@ -5,15 +5,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import hu.redriver.domain.enumeration.BarionPaymentStatus;
 import hu.redriver.domain.enumeration.PaymentStatus;
 import hu.redriver.service.dto.*;
-import hu.redriver.service.mapper.ZonedDateTimeDeserializer;
+import hu.redriver.service.mapper.StartZonedDateTimeDeserializer;
+import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -30,7 +33,7 @@ public class BarionService {
     private String publicKey;
 
     @Value("${barion.POSKey}")
-    private String POSKey;
+    private String privateKey;
 
     @Value("${barion.pixelId}")
     private String pixelId;
@@ -58,7 +61,7 @@ public class BarionService {
         this.objectMapper = new ObjectMapper();
 
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(ZonedDateTime.class, new ZonedDateTimeDeserializer());
+        module.addDeserializer(ZonedDateTime.class, new StartZonedDateTimeDeserializer());
 
         this.objectMapper.registerModule(module);
         this.objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -66,8 +69,8 @@ public class BarionService {
     }
 
     public String startPayment(PassDTO passDTO) throws IOException {
-        HttpRequest request = createRequest(passDTO);
-        BarionStartPaymentResponseDTO responseDTO = sendRequest(request);
+        HttpRequest request = createStartRequest(passDTO);
+        BarionPaymentResponseDTO responseDTO = sendStartRequest(request);
 
         if (responseDTO != null) {
             updatePass(passDTO, responseDTO);
@@ -77,11 +80,85 @@ public class BarionService {
         }
     }
 
-    private BarionStartPaymentResponseDTO sendRequest(HttpRequest request) throws IOException {
-        BarionStartPaymentResponseDTO responseDTO;
+    public void checkPayment(String paymentId) throws IOException, URISyntaxException {
+        HttpRequest request = createCheckRequest(paymentId);
+        sendCheckRequest(request);
+    }
+
+    private void sendCheckRequest(HttpRequest request) throws IOException {
         try {
             HttpResponse<String> response = this.httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            responseDTO = objectMapper.readValue(response.body(), BarionStartPaymentResponseDTO.class);
+            BarionPaymentResponseDTO responseDTO = objectMapper.readValue(response.body(), BarionPaymentResponseDTO.class);
+            updatePass(responseDTO);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Sikertelen fizetés ellenőrzés");
+        }
+    }
+
+    private void updatePass(BarionPaymentResponseDTO responseDTO) {
+        PassDTO passDTO = passService.findOneByPaymentId(responseDTO.getPaymentId())
+            .orElseThrow(() -> new RuntimeException("Bérlet nem található"));
+        passDTO.setPaymentBarionStatus(responseDTO.getStatus());
+
+        if (isWaiting(responseDTO)) {
+            passDTO.setPaymentStatus(PaymentStatus.WAITING);
+        }
+
+        if (isApproved(responseDTO)) {
+            passDTO.setPaymentStatus(PaymentStatus.APPROVED);
+        }
+
+        if (isaSucceed(responseDTO)) {
+            passDTO.setPaymentStatus(PaymentStatus.PAID);
+        }
+
+        if (isFailed(responseDTO)) {
+            passDTO.setPaymentStatus(PaymentStatus.UNPAID);
+        }
+
+        if (passDTO.getPaymentStatus() == PaymentStatus.PAID && responseDTO.getCompletedAt() != null ) {
+            passDTO.setPaymentBarionTimestamp(responseDTO.getCompletedAt());
+        }
+
+        passService.save(passDTO);
+    }
+
+    private boolean isFailed(BarionPaymentResponseDTO responseDTO) {
+        return responseDTO.getStatus() == BarionPaymentStatus.EXPIRED || responseDTO.getStatus() == BarionPaymentStatus.FAILED  || responseDTO.getStatus() == BarionPaymentStatus.CANCELED;
+    }
+
+    private boolean isaSucceed(BarionPaymentResponseDTO responseDTO) {
+        return responseDTO.getStatus() == BarionPaymentStatus.SUCCEEDED;
+    }
+
+    private boolean isApproved(BarionPaymentResponseDTO responseDTO) {
+        return responseDTO.getStatus() == BarionPaymentStatus.AUTHORIZED || responseDTO.getStatus() == BarionPaymentStatus.RESERVED  || responseDTO.getStatus() == BarionPaymentStatus.WAITING;
+    }
+
+    private boolean isWaiting(BarionPaymentResponseDTO responseDTO) {
+        return responseDTO.getStatus() == BarionPaymentStatus.PREPARED || responseDTO.getStatus() == BarionPaymentStatus.STARTED  || responseDTO.getStatus() == BarionPaymentStatus.IN_PROGRESS;
+    }
+
+    private HttpRequest createCheckRequest(String paymentId) throws URISyntaxException {
+        URI uri = new URIBuilder(baseUrl + "/v2/Payment/GetPaymentState")
+            .addParameter("POSKey", privateKey)
+            .addParameter("PaymentId", paymentId)
+            .build();
+
+        return HttpRequest.newBuilder()
+            .uri(uri)
+            .header("accept", "application/json")
+            .header("Content-Type", "application/json")
+            .GET()
+            .build();
+    }
+
+    private BarionPaymentResponseDTO sendStartRequest(HttpRequest request) throws IOException {
+        BarionPaymentResponseDTO responseDTO;
+        try {
+            HttpResponse<String> response = this.httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            responseDTO = objectMapper.readValue(response.body(), BarionPaymentResponseDTO.class);
         } catch (InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException("Sikertelen fizetés indítás");
@@ -89,7 +166,7 @@ public class BarionService {
         return responseDTO;
     }
 
-    private HttpRequest createRequest(PassDTO passDTO) throws JsonProcessingException {
+    private HttpRequest createStartRequest(PassDTO passDTO) throws JsonProcessingException {
         final PassTypeDTO passTypeDTO = passTypeService.findOne(passDTO.getPassTypeId())
             .orElseThrow(() -> new RuntimeException("Bérlet nem található"));
 
@@ -106,8 +183,7 @@ public class BarionService {
         return request;
     }
 
-    private void updatePass(PassDTO passDTO, BarionStartPaymentResponseDTO responseDTO) {
-        passDTO.setPaymentStatus(PaymentStatus.WAITING);
+    private void updatePass(PassDTO passDTO, BarionPaymentResponseDTO responseDTO) {
         passDTO.setPaymentId(responseDTO.getPaymentId());
         passDTO.setPaymentBarionStatus(responseDTO.getStatus());
 
@@ -120,7 +196,7 @@ public class BarionService {
         final String paymentId = UUID.randomUUID().toString();
 
         BarionStartPaymentRequestDTO paymentDTO = new BarionStartPaymentRequestDTO();
-        paymentDTO.setPOSKey(POSKey);
+        paymentDTO.setPOSKey(privateKey);
         paymentDTO.setPaymentRequestId(paymentId);
         paymentDTO.setPayerHint(user.getInternalUserDTO().getEmail());
         paymentDTO.setCardHolderNameHint(user.getInternalUserDTO().getLastName() + " " + user.getInternalUserDTO().getFirstName());

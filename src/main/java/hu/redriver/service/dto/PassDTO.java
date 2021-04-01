@@ -48,6 +48,9 @@ public class PassDTO implements Serializable {
         this.passTypeId = pass.getPassType().getId();
         this.userId = pass.getUser().getId();
         this.paymentStatus = pass.getPaymentStatus();
+        this.paymentId = pass.getPaymentId();
+        this.paymentBarionTimestamp = pass.getPaymentBarionTimestamp();
+        this.paymentBarionStatus = pass.getPaymentBarionStatus();
     }
 
     public Long getId() {

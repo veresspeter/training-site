@@ -13,6 +13,7 @@ public class BarionStartPaymentRequestDTO {
     private BarionPaymentTransactionDTO[] Transactions;
     private String Locale = "hu-HU";
     private String Currency = "HUF";
+    private String PaymentWindow = "0.00:05:00";
 
     public String getPOSKey() {
         return POSKey;
@@ -108,5 +109,13 @@ public class BarionStartPaymentRequestDTO {
 
     public void setCurrency(String currency) {
         Currency = currency;
+    }
+
+    public String getPaymentWindow() {
+        return PaymentWindow;
+    }
+
+    public void setPaymentWindow(String paymentWindow) {
+        PaymentWindow = paymentWindow;
     }
 }
