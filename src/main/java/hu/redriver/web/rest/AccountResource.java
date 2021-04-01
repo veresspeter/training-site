@@ -40,8 +40,8 @@ import java.util.*;
 @RequestMapping("/api")
 public class AccountResource {
 
-    public static final String APP_ID = "9af1b91655eb47e2b0b82eb20a24f29f";
-    public static final String APP_CERTIFICATE = "354d6dee8aba46f9b5879132af8ccfb6";
+    public static final String APP_ID = "44a98ea971f84d67aae6c23a87a9af5c";
+    public static final String APP_CERTIFICATE = "947e84ec27094d5ab5ff7a8487538023";
 
     private static class AccountResourceException extends RuntimeException {
         private AccountResourceException(String message) {

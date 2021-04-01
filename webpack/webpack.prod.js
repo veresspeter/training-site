@@ -78,7 +78,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             new TerserPlugin({
                 parallel: true,
                 cache: true,
-                // sourceMap: true, // Enable source maps. Please note that this will slow down the build
+                sourceMap: true,
                 terserOptions: {
                     ecma: 6,
                     ie8: false,
@@ -110,7 +110,8 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
                         module: true,
                         toplevel: true
                     }
-                }
+                },
+              exclude: "AgoraRTCSDK.min.js"
             }),
             new OptimizeCSSAssetsPlugin({})
         ]

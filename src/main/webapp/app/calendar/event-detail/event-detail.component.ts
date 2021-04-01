@@ -7,7 +7,6 @@ import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 import * as AgoraRTC from 'agora-rtc-sdk';
 import { AppUser } from 'app/shared/model/application-user.model';
 import { Stream } from 'agora-rtc-sdk';
-import { time } from '@ngtools/webpack/src/benchmark';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -23,8 +22,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     mode: 'rtc',
     codec: 'vp8',
   });
-  agoraID = '9af1b91655eb47e2b0b82eb20a24f29f';
-  agoraCert = '354d6dee8aba46f9b5879132af8ccfb6';
+  agoraAppID = '44a98ea971f84d67aae6c23a87a9af5c';
+  agoraCert = '947e84ec27094d5ab5ff7a8487538023';
   localStream: Stream | undefined;
   pinnedStream: Stream | undefined;
 
@@ -55,7 +54,10 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private subscribeAgoraEvents(): void {
     this.agoraClient.on('stream-added', (event: any) => {
-      this.agoraClient.subscribe(event.stream, {}, this.handleFail);
+      this.agoraClient.subscribe(event.stream, {}, err => {
+        this.handleFail(err);
+        this.leaveChannel();
+      });
     });
 
     this.agoraClient.on('stream-subscribed', (event: any) => {
@@ -119,7 +121,10 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       res => {
         this.joinAgoraChannel(res, channelName, timeStamp);
       },
-      error => this.handleFail(error)
+      err => {
+        this.handleFail(err);
+        this.leaveChannel();
+      }
     );
   }
 
@@ -147,13 +152,16 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           }
         }, this.handleFail);
       },
-      this.handleFail
+      err => {
+        this.handleFail(err);
+        this.leaveChannel();
+      }
     );
   }
 
   private initAgora(): void {
     this.agoraClient.init(
-      this.agoraID,
+      this.agoraAppID,
       () => {
         // eslint-disable-next-line no-console
         console.log('client initialized');
@@ -312,7 +320,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   handleFail(err: any): void {
-    this.leaveChannel();
     // eslint-disable-next-line no-console
     console.log(err);
   }
