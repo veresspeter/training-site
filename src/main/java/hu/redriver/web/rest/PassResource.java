@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -81,7 +82,9 @@ public class PassResource {
             .body(objectMapper.writeValueAsString(result));
     }
 
-    @PostMapping("/passes/payment-callback")
+    @PostMapping( value = "/passes/payment-callback",
+        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+        produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> paymentCallback(@RequestBody BarionCallBackRequestDTO requestDTO) throws IOException, URISyntaxException {
         log.debug("REST request to update Payment for Pass");
         barionService.checkPayment(requestDTO.getPaymentId());

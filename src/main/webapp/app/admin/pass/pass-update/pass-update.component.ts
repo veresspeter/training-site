@@ -13,6 +13,7 @@ import { ApplicationUserService } from 'app/shared/services/application-user.ser
 import { PassService } from 'app/shared/services/pass.service';
 import { formatNumber } from '@angular/common';
 import * as moment from 'moment/moment';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 type SelectableEntity = IPassType | IAppUser;
 
@@ -58,9 +59,9 @@ export class PassUpdateComponent implements OnInit {
   updateForm(pass: IPass): void {
     this.editForm.patchValue({
       id: pass.id,
-      purchased: pass.purchased ? pass.purchased : moment(new Date()),
+      purchased: pass.purchased ? pass.purchased : moment(new Date(), DATE_TIME_FORMAT),
       usageNo: pass.usageNo ? pass.usageNo : 0,
-      validFrom: pass.validFrom,
+      validFrom: pass.validFrom ? pass.validFrom : moment(new Date(), DATE_FORMAT),
       validTo: pass.validTo,
       passTypeId: pass.passTypeId,
       userId: pass.userId,
