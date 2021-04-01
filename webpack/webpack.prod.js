@@ -75,7 +75,7 @@ module.exports = webpackMerge(commonConfig({env: ENV}), {
 
   optimization: {
     runtimeChunk: false,
-    minimizer: false
+    minimize: false
   },
   plugins: [
     new MiniCssExtractPlugin({
