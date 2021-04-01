@@ -55,6 +55,9 @@ public class PassType implements Serializable {
     @JsonIgnoreProperties(value = "passTypes", allowSetters = true)
     private Activity availableForActivity;
 
+    @Column(name = "billing_name")
+    private String billingName;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -162,6 +165,14 @@ public class PassType implements Serializable {
     public PassType availableForActivity(Activity activity) {
         this.availableForActivity = activity;
         return this;
+    }
+
+    public String getBillingName() {
+        return billingName;
+    }
+
+    public void setBillingName(String billingname) {
+        this.billingName = billingname;
     }
 
     public void setAvailableForActivity(Activity activity) {

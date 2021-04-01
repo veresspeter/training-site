@@ -9,7 +9,7 @@ module.exports = (options) => ({
   resolve: {
     extensions: ['.ts', '.js'],
     modules: ['node_modules'],
-    mainFields: ['es2015', 'browser', 'module', 'main'],
+    mainFields: [ 'es2015', 'browser', 'module', 'main'],
     alias: utils.mapTypescriptAliasToWebpackAlias()
   },
   stats: {
@@ -25,7 +25,12 @@ module.exports = (options) => ({
         test: /\.html$/,
         loader: 'html-loader',
         options: {
-          minimize: false
+          minimize: {
+            caseSensitive: true,
+            removeAttributeQuotes:false,
+            minifyJS:false,
+            minifyCSS:false
+          }
         },
         exclude: utils.root('src/main/webapp/index.html')
       },
@@ -49,7 +54,7 @@ module.exports = (options) => ({
         }
       },
       // Ignore warnings about System.import in Angular
-      {test: /[\/\\]@angular[\/\\].+\.js$/, parser: {system: true}},
+      { test: /[\/\\]@angular[\/\\].+\.js$/, parser: { system: true } },
     ]
   },
   plugins: [
@@ -69,20 +74,15 @@ module.exports = (options) => ({
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {
-          from: './node_modules/swagger-ui-dist/*.{js,css,html,png}',
-          to: 'swagger-ui',
-          flatten: true,
-          globOptions: {ignore: ['**/index.html']}
-        },
-        {from: './node_modules/axios/dist/axios.min.js', to: 'swagger-ui'},
-        {from: './node_modules/agora-rtc-sdk/AgoraRTCSDK.min.js', to: 'agora-rtc-sdk'},
-        {from: './src/main/webapp/swagger-ui/', to: 'swagger-ui'},
-        {from: './src/main/webapp/content/', to: 'content'},
-        {from: './src/main/webapp/favicon.ico', to: 'favicon.ico'},
-        {from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp'},
+        { from: './node_modules/swagger-ui-dist/*.{js,css,html,png}', to: 'swagger-ui', flatten: true, globOptions: { ignore: ['**/index.html'] }},
+        { from: './node_modules/axios/dist/axios.min.js', to: 'swagger-ui' },
+        { from: './node_modules/agora-rtc-sdk/AgoraRTCSDK.min.js', to: 'agora-rtc-sdk' },
+        { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
+        { from: './src/main/webapp/content/', to: 'content' },
+        { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
+        { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
         // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
-        {from: './src/main/webapp/robots.txt', to: 'robots.txt'}
+        { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
       ],
     }),
     new HtmlWebpackPlugin({

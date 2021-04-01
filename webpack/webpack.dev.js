@@ -1,101 +1,127 @@
 const webpack = require('webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
+const writeFilePlugin = require('write-file-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
+const WebpackNotifierPlugin = require('webpack-notifier');
+const path = require('path');
+const sass = require('sass');
 
 const utils = require('./utils.js');
+const commonConfig = require('./webpack.common.js');
 
-module.exports = (options) => ({
-  resolve: {
-    extensions: ['.ts', '.js'],
-    modules: ['node_modules'],
-    mainFields: [ 'es2015', 'browser', 'module', 'main'],
-    alias: utils.mapTypescriptAliasToWebpackAlias()
+const ENV = 'development';
+
+module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
+  devtool: 'eval-source-map',
+  devServer: {
+    contentBase: './target/classes/static/',
+    proxy: [{
+      context: [
+        '/api',
+        '/services',
+        '/management',
+        '/swagger-resources',
+        '/v2/api-docs',
+        '/h2-console',
+        '/auth'
+      ],
+      target: `http${options.tls ? 's' : ''}://localhost:8080`,
+      secure: false,
+      changeOrigin: options.tls
+    },{
+      context: [
+        '/websocket'
+      ],
+      target: 'ws://127.0.0.1:8080',
+      ws: true
+    }],
+    stats: options.stats,
+    watchOptions: {
+      ignored: /node_modules/
+    },
+    https: options.tls,
+    historyApiFallback: true
   },
-  stats: {
-    children: false
+  entry: {
+    global: './src/main/webapp/content/scss/global.scss',
+    main: './src/main/webapp/app/app.main'
+  },
+  output: {
+    path: utils.root('target/classes/static/'),
+    filename: 'app/[name].bundle.js',
+    chunkFilename: 'app/[id].chunk.js'
   },
   module: {
-    rules: [
+    rules: [{
+      test: /\.(j|t)s$/,
+      enforce: 'pre',
+      loader: 'eslint-loader',
+      exclude: /node_modules/
+    },
       {
-        test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
-        loader: '@ngtools/webpack'
+        test: /\.scss$/,
+        use: ['to-string-loader', 'css-loader', 'postcss-loader', {
+          loader: 'sass-loader',
+          options: { implementation: sass }
+        }],
+        exclude: /(vendor\.scss|global\.scss)/
       },
       {
-        test: /\.html$/,
-        loader: 'html-loader',
-        options: {
-          minimize: {
-            caseSensitive: true,
-            removeAttributeQuotes:false,
-            minifyJS:false,
-            minifyCSS:false
-          }
-        },
-        exclude: utils.root('src/main/webapp/index.html')
-      },
-      {
-        test: /\.(jpe?g|png|gif|svg|woff2?|ttf|eot)$/i,
-        loader: 'file-loader',
-        options: {
-          digest: 'hex',
-          hash: 'sha512',
-          // For fixing src attr of image
-          // See https://github.com/jhipster/generator-jhipster/issues/11209
-          name: 'content/[hash].[ext]',
-          esModule: false
-        }
-      },
-      {
-        test: /manifest.webapp$/,
-        loader: 'file-loader',
-        options: {
-          name: 'manifest.webapp'
-        }
-      },
-      // Ignore warnings about System.import in Angular
-      { test: /[\/\\]@angular[\/\\].+\.js$/, parser: { system: true } },
-    ]
+        test: /(vendor\.scss|global\.scss)/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', {
+          loader: 'sass-loader',
+          options: { implementation: sass }
+        }]
+      }]
   },
+  stats: process.env.JHI_DISABLE_WEBPACK_LOGS ? 'none' : options.stats,
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: `'${options.env}'`,
-        BUILD_TIMESTAMP: `'${new Date().getTime()}'`,
-        // APP_VERSION is passed as an environment variable from the Gradle / Maven build tasks.
-        VERSION: `'${process.env.hasOwnProperty('APP_VERSION') ? process.env.APP_VERSION : 'DEV'}'`,
-        DEBUG_INFO_ENABLED: options.env === 'development',
-        // The root URL for API calls, ending with a '/' - for example: `"https://www.jhipster.tech:8081/myservice/"`.
-        // If this URL is left empty (""), then it will be relative to the current context.
-        // If you use an API server, in `prod` mode, you will need to enable CORS
-        // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
-        SERVER_API_URL: `''`
+    process.env.JHI_DISABLE_WEBPACK_LOGS
+      ? null
+      : new SimpleProgressWebpackPlugin({
+        format: options.stats === 'minimal' ? 'compact' : 'expanded'
+      }),
+    new FriendlyErrorsWebpackPlugin(),
+    new BrowserSyncPlugin({
+      https: options.tls,
+      host: 'localhost',
+      port: 9000,
+      proxy: {
+        target: `http${options.tls ? 's' : ''}://localhost:9060`,
+        ws: true,
+        proxyOptions: {
+          changeOrigin: false  //pass the Host header to the backend unchanged  https://github.com/Browsersync/browser-sync/issues/430
+        }
+      },
+      socket: {
+        clients: {
+          heartbeatTimeout: 60000
+        }
       }
+      /*
+      ,ghostMode: { // uncomment this part to disable BrowserSync ghostMode; https://github.com/jhipster/generator-jhipster/issues/11116
+          clicks: false,
+          location: false,
+          forms: false,
+          scroll: false
+      } */
+    }, {
+      reload: false
     }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: './node_modules/swagger-ui-dist/*.{js,css,html,png}', to: 'swagger-ui', flatten: true, globOptions: { ignore: ['**/index.html'] }},
-        { from: './node_modules/axios/dist/axios.min.js', to: 'swagger-ui' },
-        { from: './node_modules/agora-rtc-sdk/AgoraRTCSDK.min.js', to: 'agora-rtc-sdk' },
-        { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui' },
-        { from: './src/main/webapp/content/', to: 'content' },
-        { from: './src/main/webapp/favicon.ico', to: 'favicon.ico' },
-        { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
-        // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
-        { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
-      ],
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/main/webapp/index.html',
-      chunks: ['polyfills', 'main', 'global'],
-      chunksSortMode: 'manual',
-      inject: 'body',
-      base: '/',
-    }),
-    new AngularCompilerPlugin({
-      mainPath: utils.root('src/main/webapp/app/app.main.ts'),
-      tsConfigPath: utils.root('tsconfig.app.json'),
-      sourceMap: true
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)/,
+      path.resolve(__dirname, './src/main/webapp/')
+    ),
+    new writeFilePlugin(),
+    new webpack.WatchIgnorePlugin([
+      utils.root('src/test'),
+    ]),
+    new WebpackNotifierPlugin({
+      title: 'JHipster',
+      contentImage: path.join(__dirname, 'logo-jhipster.png')
     })
-  ]
+  ].filter(Boolean),
+  mode: 'development'
 });

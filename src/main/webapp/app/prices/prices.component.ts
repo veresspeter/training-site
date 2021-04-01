@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse } from '@angular/common/http';
 import { PassTypeDeleteDialogComponent } from 'app/prices/pass-type-delete/pass-type-delete-dialog.component';
 import { IActivityType } from 'app/shared/model/activity-type.model';
+import { PassService } from 'app/shared/services/pass.service';
 
 @Component({
   selector: 'jhi-prices',
@@ -19,7 +20,12 @@ export class PricesComponent implements OnInit, OnDestroy {
   eventSubscriber?: Subscription;
   loading = true;
 
-  constructor(protected passTypeService: PassTypeService, protected eventManager: JhiEventManager, protected modalService: NgbModal) {}
+  constructor(
+    protected passTypeService: PassTypeService,
+    protected passService: PassService,
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
 
   loadAll(): void {
     this.passTypeService.query().subscribe((res: HttpResponse<IPassType[]>) => {
@@ -76,5 +82,15 @@ export class PricesComponent implements OnInit, OnDestroy {
   delete(passType: IPassType): void {
     const modalRef = this.modalService.open(PassTypeDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.passType = passType;
+  }
+
+  purchase(passTypeId: number | undefined): void {
+    if (passTypeId) {
+      this.passService.purchase(passTypeId).subscribe(res => {
+        if (res.body) {
+          window.location.href = res.body;
+        }
+      });
+    }
   }
 }

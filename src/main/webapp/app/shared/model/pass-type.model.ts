@@ -10,6 +10,7 @@ export interface IPassType {
   occasions?: number;
   availableForType?: IActivityType;
   availableForActivityId?: number;
+  billingName?: string;
 }
 
 export class PassType implements IPassType {
@@ -22,6 +23,7 @@ export class PassType implements IPassType {
     public unit?: string,
     public occasions?: number,
     public availableForType?: IActivityType,
-    public availableForActivityId?: number
+    public availableForActivityId?: number,
+    public billingName?: string
   ) {}
 }

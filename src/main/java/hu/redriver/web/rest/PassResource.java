@@ -1,7 +1,7 @@
 package hu.redriver.web.rest;
 
-import hu.redriver.service.PassService;
-import hu.redriver.service.dto.UserDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hu.redriver.service.*;
 import hu.redriver.web.rest.errors.BadRequestAlertException;
 import hu.redriver.service.dto.PassDTO;
 
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -40,9 +41,13 @@ public class PassResource {
     private String applicationName;
 
     private final PassService passService;
+    private final BarionService barionService;
+    private final ObjectMapper objectMapper;
 
-    public PassResource(PassService passService) {
+    public PassResource(PassService passService, BarionService barionService) {
         this.passService = passService;
+        this.barionService = barionService;
+        this.objectMapper = new ObjectMapper();
     }
 
     /**
@@ -62,6 +67,17 @@ public class PassResource {
         return ResponseEntity.created(new URI("/api/passes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/passes/purchase")
+    public ResponseEntity<String> purchasePass(@RequestBody Long passTypeId) throws IOException {
+        log.debug("REST request to purchase Pass with PassType : {}", passTypeId);
+
+        final PassDTO passDTO = passService.purchase(passTypeId);
+        final String result = barionService.startPayment(passDTO);
+
+        return ResponseEntity.ok()
+            .body(objectMapper.writeValueAsString(result));
     }
 
     /**
@@ -97,6 +113,13 @@ public class PassResource {
         final Page<PassDTO> page = passService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @PostMapping("/passes/payment-callback")
+    public ResponseEntity<Void> paymentCallback() {
+        log.debug("REST request to update Payment for Pass");
+        return ResponseEntity.ok()
+            .build();
     }
 
     /**

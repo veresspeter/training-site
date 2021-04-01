@@ -1,10 +1,13 @@
 package hu.redriver.service.dto;
 
 import hu.redriver.domain.Pass;
+import hu.redriver.domain.enumeration.BarionPaymentStatus;
+import hu.redriver.domain.enumeration.PaymentStatus;
 
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 /**
  * A DTO for the {@link hu.redriver.domain.Pass} entity.
@@ -12,17 +15,26 @@ import java.io.Serializable;
 public class PassDTO implements Serializable {
 
     private Long id;
+    private ZonedDateTime validFrom;
+    private ZonedDateTime validTo;
+    private String paymentId;
+    private ZonedDateTime paymentBarionTimestamp;
+    private BarionPaymentStatus paymentBarionStatus;
 
     @NotNull
-    private LocalDate purchased;
+    private ZonedDateTime purchased;
 
     @NotNull
     private Integer usageNo;
 
-    private LocalDate validFrom;
-    private LocalDate validTo;
+    @NotNull
     private Long passTypeId;
+
+    @NotNull
     private Long userId;
+
+    @NotNull
+    private PaymentStatus paymentStatus;
 
     public PassDTO() {
     }
@@ -35,6 +47,7 @@ public class PassDTO implements Serializable {
         this.validTo = pass.getValidTo();
         this.passTypeId = pass.getPassType().getId();
         this.userId = pass.getUser().getId();
+        this.paymentStatus = pass.getPaymentStatus();
     }
 
     public Long getId() {
@@ -45,11 +58,11 @@ public class PassDTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getPurchased() {
+    public ZonedDateTime getPurchased() {
         return purchased;
     }
 
-    public void setPurchased(LocalDate purchased) {
+    public void setPurchased(ZonedDateTime purchased) {
         this.purchased = purchased;
     }
 
@@ -61,19 +74,19 @@ public class PassDTO implements Serializable {
         this.usageNo = usageNo;
     }
 
-    public LocalDate getValidFrom() {
+    public ZonedDateTime getValidFrom() {
         return validFrom;
     }
 
-    public void setValidFrom(LocalDate validFrom) {
+    public void setValidFrom(ZonedDateTime validFrom) {
         this.validFrom = validFrom;
     }
 
-    public LocalDate getValidTo() {
+    public ZonedDateTime getValidTo() {
         return validTo;
     }
 
-    public void setValidTo(LocalDate validTo) {
+    public void setValidTo(ZonedDateTime validTo) {
         this.validTo = validTo;
     }
 
@@ -91,6 +104,38 @@ public class PassDTO implements Serializable {
 
     public void setUserId(Long appUserId) {
         this.userId = appUserId;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public ZonedDateTime getPaymentBarionTimestamp() {
+        return paymentBarionTimestamp;
+    }
+
+    public void setPaymentBarionTimestamp(ZonedDateTime paymentBarionTimestamp) {
+        this.paymentBarionTimestamp = paymentBarionTimestamp;
+    }
+
+    public BarionPaymentStatus getPaymentBarionStatus() {
+        return paymentBarionStatus;
+    }
+
+    public void setPaymentBarionStatus(BarionPaymentStatus paymentBarionStatus) {
+        this.paymentBarionStatus = paymentBarionStatus;
     }
 
     @Override

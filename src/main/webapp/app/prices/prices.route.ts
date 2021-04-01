@@ -7,7 +7,6 @@ import { flatMap } from 'rxjs/operators';
 import { HttpResponse } from '@angular/common/http';
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { PassTypeDetailComponent } from 'app/prices/pass-type-details/pass-type-detail.component';
 import { PassTypeUpdateComponent } from 'app/prices/pass-type-update/pass-type-update.component';
 import { PricesComponent } from 'app/prices/prices.component';
 
@@ -42,18 +41,6 @@ export const pricesRoutes: Routes = [
     },
   },
   {
-    path: ':id/view',
-    component: PassTypeDetailComponent,
-    resolve: {
-      passType: PassTypeResolve,
-    },
-    data: {
-      authorities: [Authority.ADMIN],
-      pageTitle: 'PassTypes',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
     path: 'new',
     component: PassTypeUpdateComponent,
     resolve: {
@@ -66,13 +53,13 @@ export const pricesRoutes: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
-    path: ':id/edit',
+    path: ':id/view',
     component: PassTypeUpdateComponent,
     resolve: {
       passType: PassTypeResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'PassTypes',
     },
     canActivate: [UserRouteAccessService],

@@ -13,6 +13,13 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+barion:
+  baseUrl: https://api.test.barion.com
+  publicKey: cb05a0248471412b84f3339d94ccf913
+  POSKey: e7f8ca987aed41b99581111ed0216c95
+  pixelId: BPT-11w3RsuB6d-22
+  walletAddress: veress.peter@redriver.hu
+
 logging:
   level:
     ROOT: DEBUG
@@ -64,6 +71,8 @@ spring:
 
 server:
   port: 8080
+  fePort: 9000
+  name: http://127.0.0.1
 
 # ===================================================================
 # JHipster specific properties

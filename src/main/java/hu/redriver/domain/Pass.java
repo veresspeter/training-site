@@ -1,6 +1,8 @@
 package hu.redriver.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import hu.redriver.domain.enumeration.BarionPaymentStatus;
+import hu.redriver.domain.enumeration.PaymentStatus;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,6 +11,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 /**
  * A Pass.
@@ -27,17 +30,17 @@ public class Pass implements Serializable {
 
     @NotNull
     @Column(name = "purchased", nullable = false)
-    private LocalDate purchased;
+    private ZonedDateTime purchased;
 
     @NotNull
     @Column(name = "usage_no", nullable = false)
     private Integer usageNo;
 
     @Column(name = "valid_from")
-    private LocalDate validFrom;
+    private ZonedDateTime validFrom;
 
     @Column(name = "valid_to")
-    private LocalDate validTo;
+    private ZonedDateTime validTo;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -49,6 +52,19 @@ public class Pass implements Serializable {
     @JsonIgnoreProperties(value = "passes", allowSetters = true)
     private AppUser user;
 
+    @Column(name = "payment_id")
+    private String paymentId;
+
+    @Column(name = "payment_status")
+    private PaymentStatus paymentStatus;
+
+    @Column(name = "payment_barion_status")
+    private BarionPaymentStatus paymentBarionStatus;
+
+    @Column(name = "payment_barion_timestamp")
+    private ZonedDateTime paymentBarionTimestamp;
+
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -58,16 +74,16 @@ public class Pass implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getPurchased() {
+    public ZonedDateTime getPurchased() {
         return purchased;
     }
 
-    public Pass purchased(LocalDate purchased) {
+    public Pass purchased(ZonedDateTime purchased) {
         this.purchased = purchased;
         return this;
     }
 
-    public void setPurchased(LocalDate purchased) {
+    public void setPurchased(ZonedDateTime purchased) {
         this.purchased = purchased;
     }
 
@@ -84,29 +100,29 @@ public class Pass implements Serializable {
         this.usageNo = usageNo;
     }
 
-    public LocalDate getValidFrom() {
+    public ZonedDateTime getValidFrom() {
         return validFrom;
     }
 
-    public Pass validFrom(LocalDate validFrom) {
+    public Pass validFrom(ZonedDateTime validFrom) {
         this.validFrom = validFrom;
         return this;
     }
 
-    public void setValidFrom(LocalDate validFrom) {
+    public void setValidFrom(ZonedDateTime validFrom) {
         this.validFrom = validFrom;
     }
 
-    public LocalDate getValidTo() {
+    public ZonedDateTime getValidTo() {
         return validTo;
     }
 
-    public Pass validTo(LocalDate validTo) {
+    public Pass validTo(ZonedDateTime validTo) {
         this.validTo = validTo;
         return this;
     }
 
-    public void setValidTo(LocalDate validTo) {
+    public void setValidTo(ZonedDateTime validTo) {
         this.validTo = validTo;
     }
 
@@ -136,6 +152,39 @@ public class Pass implements Serializable {
         this.user = appUser;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public ZonedDateTime getPaymentBarionTimestamp() {
+        return paymentBarionTimestamp;
+    }
+
+    public void setPaymentBarionTimestamp(ZonedDateTime paymentTimestamp) {
+        this.paymentBarionTimestamp = paymentTimestamp;
+    }
+
+    public BarionPaymentStatus getPaymentBarionStatus() {
+        return paymentBarionStatus;
+    }
+
+    public void setPaymentBarionStatus(BarionPaymentStatus paymentBarionStatus) {
+        this.paymentBarionStatus = paymentBarionStatus;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -41,7 +41,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   leaveChannel(): void {
+    if (this.localStream?.getId()) {
+      this.removeVideoStream(this.localStream.getId().toString());
+    }
     this.localStream?.close();
+    this.localStream?.stop();
     this.agoraClient.leave();
     this.inMeeting = false;
   }
@@ -101,7 +105,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       const muteButton = document.getElementById('mute_' + event.uid.toString())!;
       muteButton.removeAttribute('disabled');
 
-      if (!muteButton.classList.contains('mute')) {
+      if (!muteButton.classList.contains('muted')) {
         muteButton.classList.remove('btn-primary');
         muteButton.classList.add('btn-outline-primary');
       }

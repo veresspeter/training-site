@@ -14,7 +14,6 @@ public class PassTypeDTO implements Serializable {
     private String name;
 
     private String description;
-
     private Integer durationDays;
 
     @NotNull
@@ -26,10 +25,11 @@ public class PassTypeDTO implements Serializable {
     @NotNull
     private Integer occasions;
 
-
     private ActivityTypeDTO availableForType;
-
     private Long availableForActivityId;
+    private String billingName;
+
+
 
     public Long getId() {
         return id;
@@ -101,6 +101,14 @@ public class PassTypeDTO implements Serializable {
 
     public void setAvailableForActivityId(Long activityId) {
         this.availableForActivityId = activityId;
+    }
+
+    public String getBillingName() {
+        return billingName;
+    }
+
+    public void setBillingName(String billingName) {
+        this.billingName = billingName;
     }
 
     @Override

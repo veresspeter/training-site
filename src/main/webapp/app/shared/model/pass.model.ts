@@ -8,6 +8,8 @@ export interface IPass {
   validTo?: Moment;
   passTypeId?: number;
   userId?: number;
+  paymentStatus?: string;
+  paymentTimestamp?: Moment;
 }
 
 export class Pass implements IPass {
@@ -18,6 +20,8 @@ export class Pass implements IPass {
     public validFrom?: Moment,
     public validTo?: Moment,
     public passTypeId?: number,
-    public userId?: number
+    public userId?: number,
+    public paymentStatus?: string,
+    public paymentTimestamp?: Moment
   ) {}
 }

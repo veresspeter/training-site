@@ -49,6 +49,10 @@ export class PassService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  purchase(passTypeId: number): Observable<HttpResponse<string>> {
+    return this.http.post<string>(`${this.resourceUrl}/purchase`, passTypeId, { observe: 'response' });
+  }
+
   protected convertDateFromClient(pass: IPass): IPass {
     const copy: IPass = Object.assign({}, pass, {
       purchased: pass.purchased && pass.purchased.isValid() ? pass.purchased.format(DATE_FORMAT) : undefined,

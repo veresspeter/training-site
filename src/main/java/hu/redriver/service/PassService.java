@@ -1,8 +1,11 @@
 package hu.redriver.service;
 
 import hu.redriver.domain.Pass;
+import hu.redriver.domain.enumeration.PaymentStatus;
 import hu.redriver.repository.PassRepository;
 import hu.redriver.service.dto.PassDTO;
+import hu.redriver.service.dto.PassTypeDTO;
+import hu.redriver.service.dto.UserDTO;
 import hu.redriver.service.mapper.PassMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +30,16 @@ public class PassService {
 
     private final Logger log = LoggerFactory.getLogger(PassService.class);
 
+    private final PassTypeService passTypeService;
+    private final UserService userService;
+    private final AppUserService appUserService;
     private final PassRepository passRepository;
-
     private final PassMapper passMapper;
 
-    public PassService(PassRepository passRepository, PassMapper passMapper) {
+    public PassService(PassTypeService passTypeService, UserService userService, AppUserService appUserService, PassRepository passRepository, PassMapper passMapper) {
+        this.passTypeService = passTypeService;
+        this.userService = userService;
+        this.appUserService = appUserService;
         this.passRepository = passRepository;
         this.passMapper = passMapper;
     }
@@ -46,6 +55,37 @@ public class PassService {
         Pass pass = passMapper.toEntity(passDTO);
         pass = passRepository.save(pass);
         return passMapper.toDto(pass);
+    }
+
+    public PassDTO purchase(Long passTypeId) {
+        log.debug("Request to purchase Pass by PassType: {}", passTypeId);
+
+        final PassTypeDTO passTypeDTO = passTypeService.findOne(passTypeId)
+            .orElseThrow(() -> new RuntimeException("Bérlet típus nem találtató"));
+        final Long userId = appUserService.findOneByInternalUserId(
+            userService.getUserWithAuthorities()
+                .map(UserDTO::new)
+                .orElseThrow(() -> new RuntimeException("Felhasználó nem található"))
+                .getId())
+            .orElseThrow(() -> new RuntimeException("Felhasználó nem található"))
+            .getId();
+
+        return createPass(passTypeId, passTypeDTO, userId);
+    }
+
+    private PassDTO createPass(Long passTypeId, PassTypeDTO passTypeDTO, Long userId) {
+        PassDTO passDTO = new PassDTO();
+        passDTO.setUsageNo(0);
+        passDTO.setPassTypeId(passTypeId);
+        passDTO.setUserId(userId);
+        passDTO.setPaymentStatus(PaymentStatus.NEW);
+        passDTO.setPurchased(ZonedDateTime.now());
+        passDTO.setValidFrom(ZonedDateTime.now());
+        if (passTypeDTO.getDurationDays() != null) {
+            passDTO.setValidTo(passDTO.getValidFrom().plusDays(passTypeDTO.getDurationDays()));
+        }
+
+        return save(passDTO);
     }
 
     /**
