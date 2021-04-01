@@ -72,50 +72,6 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             ]
         }]
     },
-    optimization: {
-        runtimeChunk: false,
-        minimizer: [
-            new TerserPlugin({
-                parallel: true,
-                cache: true,
-                sourceMap: true,
-                terserOptions: {
-                    ecma: 6,
-                    ie8: false,
-                    toplevel: true,
-                    module: true,
-                    compress: {
-                        dead_code: true,
-                        warnings: false,
-                        properties: true,
-                        drop_debugger: true,
-                        conditionals: true,
-                        booleans: true,
-                        loops: true,
-                        unused: true,
-                        toplevel: true,
-                        if_return: true,
-                        inline: true,
-                        join_vars: true,
-                        ecma: 6,
-                        module: true
-                    },
-                    output: {
-                        comments: false,
-                        beautify: false,
-                        indent_level: 2,
-                        ecma: 6
-                    },
-                    mangle: {
-                        module: true,
-                        toplevel: true
-                    }
-                },
-              exclude: "AgoraRTCSDK.min.js"
-            }),
-            new OptimizeCSSAssetsPlugin({})
-        ]
-    },
     plugins: [
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
