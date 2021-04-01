@@ -70,7 +70,6 @@ spring:
     cache: false
 
 server:
-  port: 8080
   fePort: 9000
   name: http://127.0.0.1
 
