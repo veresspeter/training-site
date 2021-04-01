@@ -80,6 +80,14 @@ public class PassResource {
             .body(objectMapper.writeValueAsString(result));
     }
 
+    @PostMapping("/passes/payment-callback")
+    public ResponseEntity<Void> paymentCallback(@RequestBody String paymentId) throws IOException, URISyntaxException {
+        log.debug("REST request to update Payment for Pass");
+        barionService.checkPayment(paymentId);
+        return ResponseEntity.ok()
+            .build();
+    }
+
     /**
      * {@code PUT  /passes} : Updates an existing pass.
      *
@@ -113,13 +121,6 @@ public class PassResource {
         final Page<PassDTO> page = passService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
-    @PostMapping("/passes/payment-callback")
-    public ResponseEntity<Void> paymentCallback() {
-        log.debug("REST request to update Payment for Pass");
-        return ResponseEntity.ok()
-            .build();
     }
 
     /**
