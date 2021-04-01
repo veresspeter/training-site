@@ -32,11 +32,11 @@ export class CalendarDayColumnComponent implements OnInit {
 
   getPositionByStart(start: Moment | undefined): number {
     if (start === undefined) {
-      return 200;
+      return 110;
     }
 
     if (start?.toDate()?.getHours() < 16) {
-      return 0;
+      return 110;
     }
 
     return ((start?.toDate()?.getHours() * 60 + start?.toDate()?.getMinutes() - 16 * 60) / 10) * 18 + 110;

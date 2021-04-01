@@ -69,8 +69,7 @@ public class AccessToken {
         }
 
         messageRawContent = Utils.pack(message);
-        signature = generateSignature(appCertificate,
-        		appId, channelName, uid, messageRawContent);
+        signature = generateSignature(appCertificate, appId, channelName, uid, messageRawContent);
         crcChannelName = crc32(channelName);
         crcUid = crc32(uid);
 
@@ -87,8 +86,7 @@ public class AccessToken {
         return VER;
     }
 
-    public static byte[] generateSignature(String appCertificate,
-    		String appID, String channelName, String uid, byte[] message) throws Exception {
+    public static byte[] generateSignature(String appCertificate, String appID, String channelName, String uid, byte[] message) throws Exception {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {

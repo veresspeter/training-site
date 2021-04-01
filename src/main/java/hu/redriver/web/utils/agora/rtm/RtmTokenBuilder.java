@@ -17,6 +17,9 @@ public class RtmTokenBuilder {
     public String buildToken(String appId, String appCertificate, String channelName, String uid, Role role, int privilegeTs) throws Exception {
         mTokenCreator = new AccessToken(appId, appCertificate, channelName, uid);
         mTokenCreator.addPrivilege(AccessToken.Privileges.kRtmLogin, privilegeTs);
+        mTokenCreator.addPrivilege(AccessToken.Privileges.kJoinChannel, privilegeTs);
+        mTokenCreator.addPrivilege(AccessToken.Privileges.kPublishAudioStream, privilegeTs);
+        mTokenCreator.addPrivilege(AccessToken.Privileges.kPublishVideoStream, privilegeTs);
         return mTokenCreator.build();
     }
 
