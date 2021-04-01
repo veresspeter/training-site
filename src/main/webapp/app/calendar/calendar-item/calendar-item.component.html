@@ -2,25 +2,27 @@
 {{event?.name}}
 <div class="organizer">{{event?.organizer?.internalUser?.lastName}} {{event?.organizer?.internalUser?.firstName}}</div>
 
-<button *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event?.id)" class="btn btn-sm btn-primary"
-        [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
-    Jelentkezés
-</button>
+<div>
+    <button *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event?.id)" class="btn btn-sm btn-primary"
+            [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
+        Jelentkezés
+    </button>
 
-<button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event?.id)" class="btn btn-sm btn-primary"
-        [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
-    Lejelentkezés
-</button>
+    <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event?.id)" class="btn btn-sm btn-primary"
+            [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
+        Lejelentkezés
+    </button>
 
-<button *ngIf="isEventClosed(event) && isRegisteredShown(event)" type="button"  [routerLink]="['/calendar', event?.id, 'view']"
-        class="btn btn-sm btn-success" [attr.disabled]="isEventInProgress(event) ? null : ''">
-    Csatlakozás
-</button>
+    <button *ngIf="isEventClosed(event) && isRegisteredShown(event)" type="button"  [routerLink]="['/calendar', event?.id, 'view']"
+            class="btn btn-sm btn-success" [attr.disabled]="isEventInProgress(event) ? null : ''">
+        Csatlakozás
+    </button>
 
-<button *ngIf="isAdmin()" type="submit" [routerLink]="['/calendar', event?.id, 'edit']"
-        class="btn btn-sm btn-primary btn-icon">
-    <fa-icon icon="pen"></fa-icon>
-</button>
-<button *ngIf="isAdmin()" type="submit" (click)="delete(event)" class="btn btn-sm btn-primary btn-icon">
-    <fa-icon icon="trash"></fa-icon>
-</button>
+    <button *ngIf="isAdmin()" type="submit" [routerLink]="['/calendar', event?.id, 'view']"
+            class="btn btn-sm btn-primary btn-icon">
+        <fa-icon icon="eye"></fa-icon>
+    </button>
+    <button *ngIf="isAdmin()" type="submit" (click)="delete(event)" class="btn btn-sm btn-primary btn-icon">
+        <fa-icon icon="trash"></fa-icon>
+    </button>
+</div>

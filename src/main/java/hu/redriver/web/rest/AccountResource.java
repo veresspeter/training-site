@@ -1,7 +1,6 @@
 package hu.redriver.web.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hu.redriver.domain.AppUser;
 import hu.redriver.domain.PersistentToken;
 import hu.redriver.repository.PersistentTokenRepository;
 import hu.redriver.domain.User;
@@ -13,14 +12,12 @@ import hu.redriver.service.UserService;
 import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.PasswordChangeDTO;
 import hu.redriver.service.dto.UserDTO;
-import hu.redriver.service.mapper.AppUserMapper;
 import hu.redriver.service.mapper.UserMapper;
 import hu.redriver.web.rest.errors.*;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
 import hu.redriver.web.rest.vm.ManagedUserVM;
 
 import hu.redriver.web.utils.agora.media.RtcTokenBuilder;
-import hu.redriver.web.utils.agora.rtm.RtmTokenBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,7 +142,11 @@ public class AccountResource {
     @GetMapping("/agora-token")
     public String getAgoraToken(String timeStamp, String channelName) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        int customUid = Integer.parseInt(getLoggedInUserDTO().getId().toString() + timeStamp.substring(4));
+        Integer userId = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
+            .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"))
+            .getId()
+            .intValue();
+        int customUid = Integer.parseInt(userId.toString() + timeStamp.substring(4));
         int tS = Integer.parseInt(timeStamp) + 6 * 60 * 60;
         String token = tokenBuilder.buildTokenWithUid(APP_ID, APP_CERTIFICATE, channelName, customUid, RtcTokenBuilder.Role.Role_Admin, tS);
         return objectMapper.writeValueAsString(token);

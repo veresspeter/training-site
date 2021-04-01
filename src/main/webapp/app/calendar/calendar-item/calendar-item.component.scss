@@ -1,15 +1,17 @@
 @import '../../../content/scss/variables';
 
 :host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: absolute;
   left: 8px;
-  background-color: $mv-navbar;
-  display: inline-block;
-  padding: 5px;
   width: 150px;
   height: 100px;
-  box-shadow: 0 0 15px 0 $mv-shadow-primary;
+  padding: 5px;
   margin-right: -75px;
+  box-shadow: 0 0 15px 0 $mv-shadow-primary;
+  background-color: $mv-navbar;
 
   .time {
     font-weight: 700;
