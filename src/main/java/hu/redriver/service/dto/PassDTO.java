@@ -15,8 +15,8 @@ import java.time.ZonedDateTime;
 public class PassDTO implements Serializable {
 
     private Long id;
-    private ZonedDateTime validFrom;
-    private ZonedDateTime validTo;
+    private LocalDate validFrom;
+    private LocalDate validTo;
     private String paymentId;
     private ZonedDateTime paymentBarionTimestamp;
     private BarionPaymentStatus paymentBarionStatus;
@@ -77,19 +77,19 @@ public class PassDTO implements Serializable {
         this.usageNo = usageNo;
     }
 
-    public ZonedDateTime getValidFrom() {
+    public LocalDate getValidFrom() {
         return validFrom;
     }
 
-    public void setValidFrom(ZonedDateTime validFrom) {
+    public void setValidFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
     }
 
-    public ZonedDateTime getValidTo() {
+    public LocalDate getValidTo() {
         return validTo;
     }
 
-    public void setValidTo(ZonedDateTime validTo) {
+    public void setValidTo(LocalDate validTo) {
         this.validTo = validTo;
     }
 

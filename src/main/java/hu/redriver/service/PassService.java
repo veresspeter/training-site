@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -80,7 +81,7 @@ public class PassService {
         passDTO.setUserId(userId);
         passDTO.setPaymentStatus(PaymentStatus.NEW);
         passDTO.setPurchased(ZonedDateTime.now());
-        passDTO.setValidFrom(ZonedDateTime.now());
+        passDTO.setValidFrom(LocalDate.now());
         if (passTypeDTO.getDurationDays() != null) {
             passDTO.setValidTo(passDTO.getValidFrom().plusDays(passTypeDTO.getDurationDays()));
         }

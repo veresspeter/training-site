@@ -37,10 +37,10 @@ public class Pass implements Serializable {
     private Integer usageNo;
 
     @Column(name = "valid_from")
-    private ZonedDateTime validFrom;
+    private LocalDate validFrom;
 
     @Column(name = "valid_to")
-    private ZonedDateTime validTo;
+    private LocalDate validTo;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -100,29 +100,29 @@ public class Pass implements Serializable {
         this.usageNo = usageNo;
     }
 
-    public ZonedDateTime getValidFrom() {
+    public LocalDate getValidFrom() {
         return validFrom;
     }
 
-    public Pass validFrom(ZonedDateTime validFrom) {
+    public Pass validFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
         return this;
     }
 
-    public void setValidFrom(ZonedDateTime validFrom) {
+    public void setValidFrom(LocalDate validFrom) {
         this.validFrom = validFrom;
     }
 
-    public ZonedDateTime getValidTo() {
+    public LocalDate getValidTo() {
         return validTo;
     }
 
-    public Pass validTo(ZonedDateTime validTo) {
+    public Pass validTo(LocalDate validTo) {
         this.validTo = validTo;
         return this;
     }
 
-    public void setValidTo(ZonedDateTime validTo) {
+    public void setValidTo(LocalDate validTo) {
         this.validTo = validTo;
     }
 
