@@ -16,6 +16,7 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { CalendarModule } from './calendar/calendar.module';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
   imports: [
@@ -34,6 +35,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 })
 export class MaxmoveAppModule {
   constructor(library: FaIconLibrary) {
-    library.addIconPacks(fas);
+    library.addIconPacks(fas, fab);
   }
 }
