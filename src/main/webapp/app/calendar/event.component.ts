@@ -153,7 +153,7 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   isFourDayCalendar(): boolean {
-    return window.innerWidth <= this.FOUR_DAY_CALENDAR_MAX_WIDTH;
+    return window.innerWidth <= this.FOUR_DAY_CALENDAR_MAX_WIDTH && window.innerWidth > this.SINGLE_DAY_CALENDAR_MAX_WIDTH;
   }
 
   decreaseDatePicker(): void {
