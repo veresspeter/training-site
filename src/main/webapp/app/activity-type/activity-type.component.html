@@ -2,6 +2,8 @@
     Létrehozás
 </button>
 
+<img src="/content/images/maxmove_logo.png" alt="maxmove logó" class="logo-img mt-3"/>
+
 <div *ngIf="loading" class="app-loading">
     <div class="lds-css ng-scope">
         <div class="lds-pacman">
@@ -16,7 +18,7 @@
 </div>
 
 <ul *ngIf="!loading && activityTypes!.length > 0" class="row justify-content-center align-items-center">
-    <li class="col-12 col-lg-6 col-xl-4" *ngFor="let activityType of activityTypes; trackBy: trackId">
+    <li *ngFor="let activityType of activityTypes; trackBy: trackId">
         <div class="card mx-md-3">
             <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
                 <button type="submit" class="btn btn-icon btn-primary"

@@ -27,49 +27,118 @@ Main page styles
 :host {
   text-align: right;
 
+  .logo-img {
+    display: block;
+    width: 100px;
+    height: auto;
+    margin: auto;
+  }
+
   ul {
     margin: 5vmin 0 10vmin 0;
     padding: 0;
     list-style: none;
 
-    .card {
-      margin: 6vmin 0;
-      padding: 5vmin 7.5vmin;
-      border: none;
-      background-color: $mv-navbar;
-      box-shadow: 0 0 25px 0 $mv-shadow-primary;
+    li {
+      width: 100%;
 
-      .card-header {
-        position: absolute;
-        top: calc(50% - 1em);
-        left: 0;
-        border: 0;
-        width: 100%;
-        color: #fff;
-        font-size: 1.8rem;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0);
+      @media (min-width: 769px) {
+        width: 50%;
       }
 
-      .card-img {
-        margin: -7.5vmin 0;
-        padding: 5vmin;
-        border: solid 3px #000;
+      @media (min-width: 1400px) {
+        width: 33%;
+      }
 
-        img.activity-img {
-          width: inherit;
-          border: solid 10px #fff;
+      .card {
+        margin: 25px 0;
+        padding: 20px 30px;
+        border: none;
+        background-color: $mv-navbar;
+        box-shadow: 0 0 25px 0 $mv-shadow-primary;
+
+        @media (min-width: 426px) {
+          margin: 50px 0;
+          padding: 40px 60px;
+        }
+
+        @media (min-width: 769px) {
+          margin: 50px 0;
+          padding: 20px 30px;
+        }
+
+        @media (min-width: 950px) {
+          margin: 50px 0;
+          padding: 40px 60px;
+        }
+
+        @media (min-width: 1200px) {
+          top: calc(50% - 0.85em - 12px);
+          font-size: 1.8rem;
+        }
+
+        .card-header {
+          position: absolute;
+          top: calc(50% - 0.7em - 12px);
+          left: 0;
+          border: 0;
+          width: 100%;
+          color: $mv-text-light;
+          font-size: 1.4rem;
+          text-align: center;
+          background-color: rgba(0, 0, 0, 0);
+
+          @media (min-width: 426px) {
+            top: calc(50% - 0.85em - 12px);
+            font-size: 1.8rem;
+          }
+
+          @media (min-width: 769px) {
+            top: calc(50% - 0.7em - 12px);
+            font-size: 1.4rem;
+          }
+
+          @media (min-width: 950px) {
+            top: calc(50% - 0.85em - 12px);
+            font-size: 1.8rem;
+          }
+        }
+
+        .card-img {
+          margin: -35px 0;
+          padding: 20px;
+          border: solid 3px #000;
+
+          @media (min-width: 426px) {
+            margin: -60px 0;
+            padding: 40px;
+          }
+
+          @media (min-width: 769px) {
+            margin: -30px 0;
+            padding: 20px;
+          }
+
+          @media (min-width: 950px) {
+            margin: -60px 0;
+            padding: 40px;
+          }
+
+          img.activity-img {
+            width: inherit;
+            border: solid 10px #fff;
+          }
         }
       }
-    }
 
-    .card-edit {
-      position: absolute;
-      right: 0;
-      top: 0;
+      .card-edit {
+        position: absolute;
+        right: 0;
+        top: 0;
 
-      button.btn-icon {
-        margin-top: 0.2rem;
+        button.btn-icon {
+          margin-top: 0.2rem;
+        }
       }
     }
   }
