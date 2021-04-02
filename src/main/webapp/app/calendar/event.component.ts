@@ -37,12 +37,14 @@ export class EventComponent implements OnInit, OnDestroy {
     protected userService: UserService
   ) {
     const date = new Date();
-    if (date.getDay() !== 1) {
-      this.datePickerFirstDate = new Date((this.getDayByDate(date) - ((date.getDay() + 6) % 7)) * this.DAY_TO_MS);
-    } else {
-      this.datePickerFirstDate = new Date(this.getDayByDate(date) * this.DAY_TO_MS);
-    }
+    const dateOffset = this.getCalendarFirstDayOffset(date);
+    this.datePickerFirstDate = new Date((this.getDayByDate(date) - dateOffset) * this.DAY_TO_MS);
 
+    const days = this.getCalendarLastDayOffset();
+    this.datePickerLastDate = new Date(this.datePickerFirstDate.getTime() + days * this.DAY_TO_MS);
+  }
+
+  private getCalendarLastDayOffset(): number {
     let days = 0;
     if (this.isMultiDate()) {
       days = 6;
@@ -53,7 +55,21 @@ export class EventComponent implements OnInit, OnDestroy {
         days = 3;
       }
     }
-    this.datePickerLastDate = new Date(this.datePickerFirstDate.getTime() + days * this.DAY_TO_MS);
+    return days;
+  }
+
+  private getCalendarFirstDayOffset(date: Date): number {
+    let dateOffset = 0;
+    if (this.isFourDayCalendar()) {
+      dateOffset = 1;
+    }
+    if (this.isFiveDayCalendar()) {
+      dateOffset = 2;
+    }
+    if (this.isMultiDate() && date.getDay() !== 1 && !this.isFourDayCalendar() && !this.isFiveDayCalendar()) {
+      dateOffset = (date.getDay() + 6) % 7;
+    }
+    return dateOffset;
   }
 
   loadAll(): void {

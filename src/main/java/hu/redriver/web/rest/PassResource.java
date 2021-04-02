@@ -18,6 +18,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -82,12 +84,12 @@ public class PassResource {
             .body(objectMapper.writeValueAsString(result));
     }
 
-    @PostMapping( value = "/passes/payment-callback",
-        consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-        produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Void> paymentCallback(@RequestBody BarionCallBackRequestDTO requestDTO) throws IOException, URISyntaxException {
+    @RequestMapping(value = "/passes/payment-callback", method = RequestMethod.POST,
+                    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
+                    produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Void> paymentCallback(@RequestParam Map<String,String> paramMap) throws IOException, URISyntaxException {
         log.debug("REST request to update Payment for Pass");
-        barionService.checkPayment(requestDTO.getPaymentId());
+        barionService.checkPayment(paramMap.get("paymentId"));
         return ResponseEntity.ok()
             .build();
     }
