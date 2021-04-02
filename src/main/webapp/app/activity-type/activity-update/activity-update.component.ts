@@ -11,6 +11,8 @@ import { ActivityService } from '../../shared/services/activity.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { IActivityType } from 'app/shared/model/activity-type.model';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
+import { IAppUser } from 'app/shared/model/application-user.model';
 
 @Component({
   selector: 'jhi-activity-update',
@@ -18,7 +20,8 @@ import { ActivityTypeService } from 'app/shared/services/activity-type.service';
 })
 export class ActivityUpdateComponent implements OnInit {
   isSaving = false;
-  activitytypes: IActivityType[] = [];
+  activityTypes: IActivityType[] = [];
+  appUsers: IAppUser[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -27,6 +30,8 @@ export class ActivityUpdateComponent implements OnInit {
     image: [null, [Validators.required]],
     imageContentType: [],
     activityTypeId: [null, Validators.required],
+    externalLink: [],
+    trainer: [],
   });
 
   constructor(
@@ -36,14 +41,16 @@ export class ActivityUpdateComponent implements OnInit {
     protected activityTypeService: ActivityTypeService,
     protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    protected fb: FormBuilder,
+    protected appUserService: ApplicationUserService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ activity }) => {
       this.updateForm(activity);
 
-      this.activityTypeService.query().subscribe((res: HttpResponse<IActivityType[]>) => (this.activitytypes = res.body || []));
+      this.activityTypeService.query().subscribe((res: HttpResponse<IActivityType[]>) => (this.activityTypes = res.body || []));
+      this.appUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.appUsers = res.body || []));
     });
   }
 
@@ -55,6 +62,8 @@ export class ActivityUpdateComponent implements OnInit {
       image: activity.image,
       imageContentType: activity.imageContentType,
       activityTypeId: activity.activityTypeId,
+      externalLink: activity.externalLink,
+      trainer: activity.trainer,
     });
   }
 
@@ -110,6 +119,8 @@ export class ActivityUpdateComponent implements OnInit {
       imageContentType: this.editForm.get(['imageContentType'])!.value,
       image: this.editForm.get(['image'])!.value,
       activityTypeId: this.editForm.get(['activityTypeId'])!.value,
+      externalLink: this.editForm.get(['externalLink'])!.value,
+      trainer: this.appUsers.find(appUser => appUser.id === this.editForm.get(['trainer'])!.value),
     };
   }
 
@@ -130,6 +141,10 @@ export class ActivityUpdateComponent implements OnInit {
   }
 
   trackById(index: number, item: IActivityType): any {
+    return item.id;
+  }
+
+  trackByUserId(index: number, item: IAppUser): any {
     return item.id;
   }
 }

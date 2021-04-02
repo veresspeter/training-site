@@ -27,7 +27,6 @@ public class ActivityType implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    
     @Lob
     @Column(name = "image", nullable = false)
     private byte[] image;

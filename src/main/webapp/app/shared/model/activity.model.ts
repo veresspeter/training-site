@@ -1,3 +1,5 @@
+import { IAppUser } from 'app/shared/model/application-user.model';
+
 export interface IActivity {
   id?: number;
   name?: string;
@@ -5,6 +7,8 @@ export interface IActivity {
   imageContentType?: string;
   image?: any;
   activityTypeId?: number;
+  externalLink?: string;
+  trainer?: IAppUser;
 }
 
 export class Activity implements IActivity {
@@ -14,6 +18,8 @@ export class Activity implements IActivity {
     public description?: string,
     public imageContentType?: string,
     public image?: any,
-    public activityTypeId?: number
+    public activityTypeId?: number,
+    public externalLink?: string,
+    public trainer?: IAppUser
   ) {}
 }

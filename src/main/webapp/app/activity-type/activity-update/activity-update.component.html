@@ -72,7 +72,7 @@
                             formControlName="activityTypeId">
                         <option *ngIf="!editForm.get('activityTypeId')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="activityTypeOption.id"
-                                *ngFor="let activityTypeOption of activitytypes; trackBy: trackById">{{ activityTypeOption.name }}</option>
+                                *ngFor="let activityTypeOption of activityTypes; trackBy: trackById">{{ activityTypeOption.name }}</option>
                     </select>
                 </div>
                 <div
@@ -82,6 +82,20 @@
                         A mező kitöltése kötelező
                     </small>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_external_link">Külső link jelentkezéshez</label>
+                    <input type="text" class="form-control" name="externalLink" id="field_external_link" formControlName="externalLink"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trainer">Oktató</label>
+                    <select type="text" class="form-control" name="trainer" id="field_trainer" formControlName="trainer">
+                        <option *ngIf="!editForm.get('trainer')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="appUser.id" *ngFor="let appUser of appUsers; trackBy: trackByUserId">{{ appUser?.internalUser?.lastName + " " + appUser?.internalUser?.lastName }}</option>
+                    </select>
+                </div>
+
             </div>
 
             <div class=" text-center text-md-right">
