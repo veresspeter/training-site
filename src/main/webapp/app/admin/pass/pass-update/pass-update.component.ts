@@ -14,6 +14,7 @@ import { PassService } from 'app/shared/services/pass.service';
 import { formatNumber } from '@angular/common';
 import * as moment from 'moment/moment';
 import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { PaymentStatus } from 'app/shared/model/enumerations/payment-status.model';
 
 type SelectableEntity = IPassType | IAppUser;
 
@@ -34,10 +35,14 @@ export class PassUpdateComponent implements OnInit {
     id: [],
     purchased: [null, [Validators.required]],
     usageNo: [null, [Validators.required]],
+    paymentStatus: [null, [Validators.required]],
     validFrom: [],
     validTo: [],
     passTypeId: [null, Validators.required],
     userId: [null, Validators.required],
+    paymentId: [],
+    paymentBarionStatus: [],
+    paymentBarionTimestamp: [],
   });
 
   constructor(
@@ -61,10 +66,14 @@ export class PassUpdateComponent implements OnInit {
       id: pass.id,
       purchased: pass.purchased ? pass.purchased : moment(new Date(), DATE_TIME_FORMAT),
       usageNo: pass.usageNo ? pass.usageNo : 0,
+      paymentStatus: pass.paymentStatus ? pass.paymentStatus : this.paymentStatus.NEW,
       validFrom: pass.validFrom ? pass.validFrom : moment(new Date(), DATE_FORMAT),
       validTo: pass.validTo,
       passTypeId: pass.passTypeId,
       userId: pass.userId,
+      paymentId: pass.paymentId,
+      paymentBarionStatus: pass.paymentBarionStatus,
+      paymentBarionTimestamp: pass.paymentBarionTimestamp,
     });
 
     if (pass.id === undefined) {
@@ -98,10 +107,14 @@ export class PassUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       purchased: this.editForm.get(['purchased'])!.value,
       usageNo: this.editForm.get(['usageNo'])!.value,
+      paymentStatus: this.editForm.get(['paymentStatus'])!.value,
       validFrom: this.editForm.get(['validFrom'])!.value,
       validTo: this.editForm.get(['validTo'])!.value,
       passTypeId: this.editForm.get(['passTypeId'])!.value,
       userId: this.editForm.get(['userId'])!.value,
+      paymentId: this.editForm.get(['paymentId'])!.value,
+      paymentBarionStatus: this.editForm.get(['paymentBarionStatus'])!.value,
+      paymentBarionTimestamp: this.editForm.get(['paymentBarionTimestamp'])!.value,
     };
   }
 
@@ -140,5 +153,9 @@ export class PassUpdateComponent implements OnInit {
   enableEdit(): void {
     this.isEdit = true;
     this.editForm.enable();
+  }
+
+  public get paymentStatus(): typeof PaymentStatus {
+    return PaymentStatus;
   }
 }

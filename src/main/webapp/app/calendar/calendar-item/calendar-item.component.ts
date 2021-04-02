@@ -69,7 +69,7 @@ export class CalendarItemComponent implements OnInit {
       return false;
     }
 
-    return this.getMomentAndNowDiff(event.start) < 180;
+    return this.getMomentAndNowDiff(event.start) < 120;
   }
 
   isEventClosed(event: IEvent | undefined): boolean {
@@ -77,7 +77,7 @@ export class CalendarItemComponent implements OnInit {
       return false;
     }
 
-    return this.getMomentAndNowDiff(event.start) < 180 && this.getMomentAndNowDiff(event.end) > -15;
+    return this.getMomentAndNowDiff(event.start) < 120 && this.getMomentAndNowDiff(event.end) > -15;
   }
 
   isStartEnabled(event: IEvent): boolean {

@@ -29,13 +29,11 @@ export class AccountService {
   authenticate(identity: AppUser | null): void {
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);
-    /*
     if (identity) {
       this.trackerService.connect();
     } else {
       this.trackerService.disconnect();
     }
-     */
   }
 
   hasAnyAuthority(authorities: string[] | string): boolean {

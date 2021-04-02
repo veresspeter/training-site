@@ -60,7 +60,7 @@ export class SettingsComponent implements OnInit {
           firstName: appUser.internalUser?.firstName,
           sex: appUser.sex,
           email: appUser.internalUser?.email,
-          userBirthDay: moment(appUser.birthDay),
+          userBirthDay: appUser.birthDay ? moment(appUser.birthDay) : '',
           googleToken: appUser.googleToken,
           facebookToken: appUser.facebookToken,
           image: appUser.image,

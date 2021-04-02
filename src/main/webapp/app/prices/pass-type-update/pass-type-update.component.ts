@@ -26,6 +26,7 @@ export class PassTypeUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
+    billingName: [null, [Validators.required]],
     description: [],
     durationDays: [],
     price: [null, [Validators.required]],
@@ -57,6 +58,7 @@ export class PassTypeUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: passType.id,
       name: passType.name,
+      billingName: passType.billingName,
       description: passType.description,
       durationDays: passType.durationDays,
       price: passType.price,
@@ -72,12 +74,16 @@ export class PassTypeUpdateComponent implements OnInit {
   }
 
   save(): void {
-    this.isSaving = true;
-    const passType = this.createFromForm();
-    if (passType.id !== undefined) {
-      this.subscribeToSaveResponse(this.passTypeService.update(passType));
-    } else {
-      this.subscribeToSaveResponse(this.passTypeService.create(passType));
+    this.editForm.markAllAsTouched();
+
+    if (this.editForm.valid) {
+      this.isSaving = true;
+      const passType = this.createFromForm();
+      if (passType.id !== undefined) {
+        this.subscribeToSaveResponse(this.passTypeService.update(passType));
+      } else {
+        this.subscribeToSaveResponse(this.passTypeService.create(passType));
+      }
     }
   }
 
@@ -86,6 +92,7 @@ export class PassTypeUpdateComponent implements OnInit {
       ...new PassType(),
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
+      billingName: this.editForm.get(['billingName'])!.value,
       description: this.editForm.get(['description'])!.value,
       durationDays: this.editForm.get(['durationDays'])!.value,
       price: this.editForm.get(['price'])!.value,

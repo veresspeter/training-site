@@ -12,6 +12,7 @@ import { IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { IActivity } from 'app/shared/model/activity.model';
 import { ActivityService } from 'app/shared/services/activity.service';
+import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 
 type SelectableEntity = IAppUser | IActivity;
 
@@ -146,5 +147,9 @@ export class EventUpdateComponent implements OnInit {
       }
     }
     return option;
+  }
+
+  public get linkType(): typeof LinkType {
+    return LinkType;
   }
 }

@@ -15,7 +15,7 @@
 
     <h2>{{ event.name }}</h2>
 
-    <div *ngIf="event.streamLinkType === 'ONLINE'" class="videoContainer">
+    <div *ngIf="isEventOnline(event.streamLinkType)" class="videoContainer">
         <div #myVideoContainer id="myVideoContainer" class="row text-center justify-content-center mainVideoContainer">
             <div *ngIf="!inMeeting">
                 <button type="button" class="btn btn-success btn-icon" (click)="join()">
@@ -31,9 +31,9 @@
     <div class="w-100 row mx-0">
         <dl class="text-center col-12 mx-auto px-0 jh-entity-details">
             <ng-container *ngIf="!isEventOnline(event.streamLinkType)">
-                <dt><span>Link típusa</span></dt>
+                <dt><span>Óra helyszíne</span></dt>
                 <dd>
-                    <span>{{ event.streamLinkType }}</span>
+                    <span>{{ getLinkTypeName(event.streamLinkType?.toString()) }}</span>
                 </dd>
                 <dt><span>Link</span></dt>
                 <dd>

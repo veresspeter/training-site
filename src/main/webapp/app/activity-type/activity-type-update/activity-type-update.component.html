@@ -7,10 +7,10 @@
         </button>
     </div>
 
-    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-activity-type-heading"
-                class="text-center">{{!editForm.get('id')?.value ? "Foglalkozás típus létrehozása" : "Foglalkozás típus szerkesztése" }}</h2>
+                class="text-center">{{!editForm.get('id')?.value ? "Foglalkozás típus létrehozása" : "Foglalkozás típus áttekintése" }}</h2>
 
             <div class="my-4">
                 <div class="form-group">

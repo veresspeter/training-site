@@ -66,8 +66,8 @@
                             Mező kitöltése kötelező
                         </small>
                     </div>
-                    <div *ngIf="!isEdit" class="px-3 font-weight-bold">
-                        <p>{{ !editForm.get('userBirthDay')?.value ? "" : editForm.get('userBirthDay')!.value | date:'longDate' }}</p>
+                    <div *ngIf="!isEdit" class="px-3 font-weight-bold my-3">
+                        <p>{{ editForm.get('userBirthDay')?.value ? (editForm.get('userBirthDay')!.value | date:'longDate') : "" }}</p>
                     </div>
                 </div>
 

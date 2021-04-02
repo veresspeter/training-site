@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { PaymentStatus } from 'app/shared/model/enumerations/payment-status.model';
 
 export interface IPass {
   id?: number;
@@ -9,7 +10,7 @@ export interface IPass {
   passTypeId?: number;
   userId?: number;
   paymentId?: string;
-  paymentStatus?: string;
+  paymentStatus?: PaymentStatus;
   paymentBarionStatus?: string;
   paymentBarionTimestamp?: Moment;
 }
@@ -24,7 +25,7 @@ export class Pass implements IPass {
     public passTypeId?: number,
     public userId?: number,
     public paymentId?: string,
-    public paymentStatus?: string,
+    public paymentStatus?: PaymentStatus,
     public paymentBarionStatus?: string,
     public paymentBarionTimestamp?: Moment
   ) {}

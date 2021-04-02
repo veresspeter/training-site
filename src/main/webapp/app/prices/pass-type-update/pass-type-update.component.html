@@ -7,9 +7,9 @@
         </button>
     </div>
 
-    <div class="col-12 col-sm-10 col-lg-7 col-xl-4">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
         <form name="editForm" role="form" class="text-center text-md-right" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-pass-type-heading" class="text-center">{{!editForm.get('id')?.value ? "Bérlet típus létrehozása" : "Bérlet típus szerkesztése" }}</h2>
+            <h2 id="jhi-pass-type-heading" class="text-center">{{!editForm.get('id')?.value ? "Bérlet típus létrehozása" : "Bérlet típus áttekintése" }}</h2>
 
             <div class="text-left row justify-content-around my-4">
                 <div class="form-group col-12" hidden>
@@ -17,31 +17,39 @@
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
 
-                <div class="form-group col-md-7">
+                <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_name">Név</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
+                    <input type="text" class="form-control" name="name" id="field_name" formControlName="name"/>
                     <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('name')?.errors?.required">
+                        <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required">
                         Mező kitöltése kötelező
                         </small>
                     </div>
                 </div>
 
-                <div class="form-group col-md-5">
-                    <label class="form-control-label" for="field_description">Leírás</label>
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" for="field_billing_name">Számlázási név</label>
+                    <input type="text" class="form-control" name="name" id="field_billing_name" formControlName="billingName"/>
+                    <div *ngIf="editForm.get('billingName')!.invalid && (editForm.get('billingName')!.dirty || editForm.get('billingName')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('billingName')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" for="field_description">Rövid leírás</label>
                     <input type="text" class="form-control" name="description" maxlength="15" id="field_description"
                            formControlName="description"/>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="form-control-label" for="field_durationDays">Érvényesség (nap)</label>
                     <input type="number" class="form-control" name="durationDays" id="field_durationDays"
                            formControlName="durationDays"/>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-4">
                     <label class="form-control-label" for="field_occasions">Alkalmak (db)</label>
                     <input type="number" class="form-control" name="occasions" id="field_occasions" min="0"
                            formControlName="occasions"/>
@@ -89,12 +97,11 @@
                         <option *ngIf="!editForm.get('availableForType')!.value" [ngValue]="null" selected></option>
                         <option [ngValue]="activityTypeOption.id" *ngFor="let activityTypeOption of activityTypes; trackBy: trackById">{{ activityTypeOption.name }}</option>
                     </select>
-                </div>
-                <div *ngIf="editForm.get('availableForTypeId')?.invalid && (editForm.get('availableForTypeId')?.dirty || editForm.get('availableForTypeId')?.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('availableForTypeId')?.errors?.required">
-                        Mező kitöltése kötelező
-                    </small>
+                    <div *ngIf="editForm.get('availableForType')?.invalid && (editForm.get('availableForType')?.dirty || editForm.get('availableForType')?.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('availableForType')?.errors?.required">
+                            Mező kitöltése kötelező
+                        </small>
+                    </div>
                 </div>
             </div>
 
@@ -103,7 +110,7 @@
                     Mégse
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="isSaving" class="btn btn-primary">
                     Mentés
                 </button>
             </div>

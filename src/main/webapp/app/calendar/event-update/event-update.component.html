@@ -102,11 +102,11 @@
                 <div class="form-group col-12 col-md-6">
                     <label class="form-control-label" for="field_streamLinkType">Óra helyszíne</label>
                     <select class="form-control" name="streamLinkType" formControlName="streamLinkType" id="field_streamLinkType"
-                            [attr.disabled]="editForm.get('streamLinkType')?.value === 'ONLINE' && editForm.get('streamLink')?.value?.length > 0 ? '' : null">
-                        <option value="ONLINE">Online</option>
-                        <option value="STUDIO">Stúdió</option>
-                        <option value="MARGARET_ISLAND">Margit-sziget</option>
-                        <option value="OTHER">Egyéb</option>
+                            [attr.disabled]="editForm.get('streamLinkType')?.value === linkType.ONLINE && editForm.get('streamLink')?.value?.length > 0 ? '' : null">
+                        <option [value]="linkType.ONLINE">{{linkType.ONLINE.Name}}</option>
+                        <option [value]="linkType.STUDIO">{{linkType.STUDIO.Name}}</option>
+                        <option [value]="linkType.MARGARET_ISLAND">{{linkType.MARGARET_ISLAND.Name}}</option>
+                        <option [value]="linkType.OTHER">{{linkType.OTHER.Name}}</option>
                     </select>
                 </div>
 
@@ -137,8 +137,8 @@
 
             <div class="form-group col-12">
                 <label class="form-control-label" for="field_comment">Megjegyzés / leírás</label>
-                <input type="text" class="form-control" name="comment" id="field_comment"
-                       formControlName="comment"/>
+                <textarea type="text" class="form-control" name="comment" id="field_comment" formControlName="comment">
+                </textarea>
             </div>
 
             <div class="text-center text-md-right mt-5">
