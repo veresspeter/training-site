@@ -9,9 +9,7 @@ import hu.redriver.security.SecurityUtils;
 import hu.redriver.service.AppUserService;
 import hu.redriver.service.MailService;
 import hu.redriver.service.UserService;
-import hu.redriver.service.dto.AppUserDTO;
-import hu.redriver.service.dto.PasswordChangeDTO;
-import hu.redriver.service.dto.UserDTO;
+import hu.redriver.service.dto.*;
 import hu.redriver.service.mapper.UserMapper;
 import hu.redriver.web.rest.errors.*;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
@@ -139,6 +137,20 @@ public class AccountResource {
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
     }
 
+    @GetMapping("/my-passes")
+    public List<PassDTO> getAccount() {
+        AppUserDTO appUserDTO = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
+            .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
+
+
+    }
+
+    @GetMapping("/my-events")
+    public List<EventDTO> getAccount() {
+        AppUserDTO appUserDTO = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
+            .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
+    }
+
     @GetMapping("/agora-token")
     public String getAgoraToken(String timeStamp, String channelName) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -182,6 +194,9 @@ public class AccountResource {
         existingAppUserDTO.setRespiratoryDisease(appUserDTO.getRespiratoryDisease());
         existingAppUserDTO.setSpineProblem(appUserDTO.getSpineProblem());
         existingAppUserDTO.setSurgery(appUserDTO.getSurgery());
+
+        existingAppUserDTO.setGdprAccepted(appUserDTO.getGdprAccepted());
+        existingAppUserDTO.setSelfResponsibility(appUserDTO.getSelfResponsibility());
 
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(appUserDTO.getInternalUserDTO().getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {

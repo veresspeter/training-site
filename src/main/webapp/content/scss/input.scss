@@ -13,7 +13,7 @@
   }
 }
 
-:not(.input-group) > input,
+:not(.input-group, [type='radio'], [type='checkbox']) > input:not([type='radio'], [type='checkbox']),
 textarea {
   border: solid 0 $mv-pastel !important;
   box-shadow: 0 0 10px $mv-shadow-primary !important;
@@ -25,7 +25,7 @@ textarea {
   min-height: 125px;
 }
 
-input:not([type='checkbox']) {
+input:not([type='checkbox'], [type='radio']) {
   height: 50px !important;
   padding: 15px !important;
 

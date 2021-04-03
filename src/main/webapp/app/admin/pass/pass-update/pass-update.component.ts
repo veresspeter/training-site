@@ -33,13 +33,13 @@ export class PassUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    purchased: [null, [Validators.required]],
-    usageNo: [null, [Validators.required]],
-    paymentStatus: [null, [Validators.required]],
+    purchased: [undefined, [Validators.required]],
+    usageNo: [undefined, [Validators.required]],
+    paymentStatus: [undefined, [Validators.required]],
     validFrom: [],
     validTo: [],
-    passTypeId: [null, Validators.required],
-    userId: [null, Validators.required],
+    passTypeId: [undefined, Validators.required],
+    userId: [undefined, Validators.required],
     paymentId: [],
     paymentBarionStatus: [],
     paymentBarionTimestamp: [],

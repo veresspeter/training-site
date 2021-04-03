@@ -23,6 +23,8 @@ export interface IAppUser {
   regularPain?: string;
   medicine?: string;
   otherProblem?: string;
+  gdprAccepted?: boolean;
+  selfResponsibility?: boolean;
 }
 
 export class AppUser implements IAppUser {
@@ -45,7 +47,9 @@ export class AppUser implements IAppUser {
     public spineProblem?: string,
     public regularPain?: string,
     public medicine?: string,
-    public otherProblem?: string
+    public otherProblem?: string,
+    public gdprAccepted?: boolean,
+    public selfResponsibility?: boolean
   ) {
     this.isTrainer = this.isTrainer || false;
   }

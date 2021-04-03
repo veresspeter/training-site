@@ -7,6 +7,9 @@ import { passwordResetInitRoute } from './password-reset/init/password-reset-ini
 import { registerRoute } from './register/register.route';
 import { sessionsRoute } from './sessions/sessions.route';
 import { settingsRoute } from './settings/settings.route';
+import { ActivateComponent } from 'app/account/activate/activate.component';
+import { MyEventsComponent } from 'app/account/my-events/my-events.component';
+import { MyPassesComponent } from 'app/account/my-passes/my-passes.component';
 
 const ACCOUNT_ROUTES = [
   activateRoute,
@@ -22,5 +25,21 @@ export const accountState: Routes = [
   {
     path: '',
     children: ACCOUNT_ROUTES,
+  },
+  {
+    path: 'my-events',
+    component: MyEventsComponent,
+    data: {
+      authorities: [],
+      pageTitle: 'Közelgő óráim',
+    },
+  },
+  {
+    path: 'my-passes',
+    component: MyPassesComponent,
+    data: {
+      authorities: [],
+      pageTitle: 'Bérleteim',
+    },
   },
 ];

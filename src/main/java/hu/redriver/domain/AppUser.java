@@ -90,6 +90,12 @@ public class AppUser implements Serializable {
     @JsonIgnore
     private Set<Event> events = new HashSet<>();
 
+    @Column(name = "self_responsibility")
+    private Boolean selfResponsibility;
+
+    @Column(name = "gdpr_accepted")
+    private Boolean gdprAccepted;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -312,6 +318,23 @@ public class AppUser implements Serializable {
     public void setEvents(Set<Event> events) {
         this.events = events;
     }
+
+    public Boolean getSelfResponsibility() {
+        return selfResponsibility;
+    }
+
+    public void setSelfResponsibility(Boolean selfResponsibility) {
+        this.selfResponsibility = selfResponsibility;
+    }
+
+    public Boolean getGdprAccepted() {
+        return gdprAccepted;
+    }
+
+    public void setGdprAccepted(Boolean gdprAccepted) {
+        this.gdprAccepted = gdprAccepted;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

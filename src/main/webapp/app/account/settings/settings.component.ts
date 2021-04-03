@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { AccountService } from 'app/core/auth/account.service';
@@ -13,6 +13,8 @@ import * as moment from 'moment';
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit {
+  readonly NONE = 'Nincs';
+
   currentAccount!: AppUser;
   authorities: string[] = [];
   isSaving = false;
@@ -20,6 +22,15 @@ export class SettingsComponent implements OnInit {
   users: IUser[] = [];
   userBirthDayDp: any;
   success = false;
+
+  injuryText: string | undefined;
+  surgeryText: string | undefined;
+  heartProblemText: string | undefined;
+  respiratoryDiseaseText: string | undefined;
+  spineProblemText: string | undefined;
+  regularPainText: string | undefined;
+  medicineText: string | undefined;
+  otherProblemText: string | undefined;
 
   editForm = this.fb.group({
     stepper: [],
@@ -32,14 +43,24 @@ export class SettingsComponent implements OnInit {
     userBirthDay: [{ year: 2018, month: 3, day: 28 }, [Validators.required]],
     image: [],
     imageContentType: [],
-    injury: [],
-    surgery: [],
-    heartProblem: [],
-    respiratoryDisease: [],
-    spineProblem: [],
-    regularPain: [],
-    medicine: [],
-    otherProblem: [],
+    injury: [undefined, [Validators.required]],
+    injuryText: [],
+    surgery: [undefined, [Validators.required]],
+    surgeryText: [],
+    heartProblem: [undefined, [Validators.required]],
+    heartProblemText: [],
+    respiratoryDisease: [undefined, [Validators.required]],
+    respiratoryDiseaseText: [],
+    spineProblem: [undefined, [Validators.required]],
+    spineProblemText: [],
+    regularPain: [undefined, [Validators.required]],
+    regularPainText: [],
+    medicine: [undefined, [Validators.required]],
+    medicineText: [],
+    otherProblem: [undefined, [Validators.required]],
+    otherProblemText: [],
+    gdprAccepted: [undefined, [Validators.required]],
+    selfResponsibility: [undefined, [Validators.required]],
   });
 
   constructor(
@@ -47,12 +68,17 @@ export class SettingsComponent implements OnInit {
     protected elementRef: ElementRef,
     protected eventManager: JhiEventManager,
     private accountService: AccountService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    this.setUpEventListeners();
+
     this.accountService.identity().subscribe(appUser => {
       if (appUser) {
+        this.initTextValues(appUser);
+
         this.editForm.patchValue({
           stepper: 1,
           id: appUser.id,
@@ -67,20 +93,135 @@ export class SettingsComponent implements OnInit {
           imageContentType: appUser.imageContentType,
           introduction: appUser.introduction,
           injury: appUser.injury,
+          injuryText: appUser.injury && appUser.injury !== this.NONE ? appUser.injury : undefined,
           surgery: appUser.surgery,
+          surgeryText: appUser.surgery && appUser.surgery !== this.NONE ? appUser.surgery : undefined,
           heartProblem: appUser.heartProblem,
+          heartProblemText: appUser.heartProblem && appUser.heartProblem !== this.NONE ? appUser.heartProblem : undefined,
           respiratoryDisease: appUser.respiratoryDisease,
+          respiratoryDiseaseText:
+            appUser.respiratoryDisease && appUser.respiratoryDisease !== this.NONE ? appUser.respiratoryDisease : undefined,
           spineProblem: appUser.spineProblem,
+          spineProblemText: appUser.spineProblem && appUser.spineProblem !== this.NONE ? appUser.spineProblem : undefined,
           regularPain: appUser.regularPain,
+          regularPainText: appUser.regularPain && appUser.regularPain !== this.NONE ? appUser.regularPain : undefined,
           medicine: appUser.medicine,
+          medicineText: appUser.medicine && appUser.medicine !== this.NONE ? appUser.medicine : undefined,
           otherProblem: appUser.otherProblem,
+          otherProblemText: appUser.otherProblem && appUser.otherProblem !== this.NONE ? appUser.otherProblem : undefined,
+          gdprAccepted: appUser.gdprAccepted,
+          selfResponsibility: appUser.selfResponsibility,
         });
 
         this.currentAccount = appUser;
-      }
 
-      this.editForm.disable();
-      this.editForm.get(['stepper'])!.enable();
+        if (this.isAllDataGiven()) {
+          this.editForm.disable();
+          this.editForm.get(['stepper'])!.enable();
+        } else {
+          this.isEdit = true;
+        }
+      }
+    });
+  }
+
+  private initTextValues(appUser: AppUser): void {
+    if (appUser.injury && appUser.injury !== this.NONE) {
+      this.injuryText = appUser.injury;
+    }
+    if (appUser.surgery && appUser.surgery !== this.NONE) {
+      this.surgeryText = appUser.surgery;
+    }
+    if (appUser.heartProblem && appUser.heartProblem !== this.NONE) {
+      this.heartProblemText = appUser.heartProblem;
+    }
+    if (appUser.respiratoryDisease && appUser.respiratoryDisease !== this.NONE) {
+      this.respiratoryDiseaseText = appUser.respiratoryDisease;
+    }
+    if (appUser.spineProblem && appUser.spineProblem !== this.NONE) {
+      this.spineProblemText = appUser.spineProblem;
+    }
+    if (appUser.regularPain && appUser.regularPain !== this.NONE) {
+      this.regularPainText = appUser.regularPain;
+    }
+    if (appUser.medicine && appUser.medicine !== this.NONE) {
+      this.medicineText = appUser.medicine;
+    }
+    if (appUser.otherProblem && appUser.otherProblem !== this.NONE) {
+      this.otherProblemText = appUser.otherProblem;
+    }
+  }
+
+  private setUpEventListeners(): void {
+    this.editForm.get('injuryText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        this.injuryText = val;
+        this.editForm.get('injury')?.setValue(val);
+        this.cd.detectChanges();
+      }
+    });
+    this.editForm.get('surgeryText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.surgeryText = val;
+          this.editForm.get('surgery')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
+    });
+    this.editForm.get('heartProblemText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.heartProblemText = val;
+          this.editForm.get('heartProblem')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
+    });
+    this.editForm.get('respiratoryDiseaseText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.respiratoryDiseaseText = val;
+          this.editForm.get('respiratoryDisease')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
+    });
+    this.editForm.get('spineProblemText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.spineProblemText = val;
+          this.editForm.get('spineProblem')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
+    });
+    this.editForm.get('regularPainText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.regularPainText = val;
+          this.editForm.get('regularPain')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
+    });
+    this.editForm.get('medicineText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.medicineText = val;
+          this.editForm.get('medicine')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
+    });
+    this.editForm.get('otherProblemText')?.valueChanges.subscribe(val => {
+      if (val !== undefined) {
+        setTimeout(() => {
+          this.otherProblemText = val;
+          this.editForm.get('otherProblem')?.setValue(val);
+          this.cd.detectChanges();
+        });
+      }
     });
   }
 
@@ -131,7 +272,6 @@ export class SettingsComponent implements OnInit {
           this.isEdit = false;
           this.editForm.disable();
           this.editForm.get(['stepper'])!.enable();
-
           this.accountService.authenticate(this.currentAccount);
         },
         () => (this.isSaving = false)
@@ -152,6 +292,8 @@ export class SettingsComponent implements OnInit {
     this.currentAccount.regularPain = this.editForm.get(['regularPain'])!.value;
     this.currentAccount.medicine = this.editForm.get(['medicine'])!.value;
     this.currentAccount.otherProblem = this.editForm.get(['otherProblem'])!.value;
+    this.currentAccount.gdprAccepted = this.editForm.get(['gdprAccepted'])!.value;
+    this.currentAccount.selfResponsibility = this.editForm.get(['selfResponsibility'])!.value;
 
     if (this.currentAccount.internalUser !== undefined) {
       this.currentAccount.internalUser.firstName = this.editForm.get(['firstName'])!.value;
@@ -159,5 +301,26 @@ export class SettingsComponent implements OnInit {
       this.currentAccount.internalUser.email = this.editForm.get(['email'])!.value;
       this.currentAccount.internalUser.login = this.editForm.get(['email'])!.value;
     }
+  }
+
+  isAllDataGiven(): boolean {
+    this.editForm.markAllAsTouched();
+    return (
+      this.currentAccount?.internalUser?.lastName !== undefined &&
+      this.currentAccount?.internalUser?.firstName !== undefined &&
+      this.currentAccount?.birthDay !== undefined &&
+      this.currentAccount?.sex !== undefined &&
+      this.currentAccount?.internalUser?.email !== undefined &&
+      this.currentAccount?.injury !== undefined &&
+      this.currentAccount?.surgery !== undefined &&
+      this.currentAccount?.heartProblem !== undefined &&
+      this.currentAccount?.respiratoryDisease !== undefined &&
+      this.currentAccount?.spineProblem !== undefined &&
+      this.currentAccount?.regularPain !== undefined &&
+      this.currentAccount?.medicine !== undefined &&
+      this.currentAccount?.otherProblem !== undefined &&
+      this.currentAccount?.gdprAccepted === true &&
+      this.currentAccount?.selfResponsibility === true
+    );
   }
 }

@@ -25,11 +25,11 @@ export class ActivityUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    name: [null, [Validators.required]],
-    description: [null, [Validators.required]],
-    image: [null, [Validators.required]],
+    name: [undefined, [Validators.required]],
+    description: [undefined, [Validators.required]],
+    image: [undefined, [Validators.required]],
     imageContentType: [],
-    activityTypeId: [null, Validators.required],
+    activityTypeId: [undefined, Validators.required],
     externalLink: [],
     trainer: [],
   });

@@ -144,6 +144,18 @@
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item" routerLink="account/my-events" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            Közelgő óráim
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="account/my-passes" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            Bérleteim
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" (click)="logout()" id="logout">
                             Kijelentkezés
                         </a>

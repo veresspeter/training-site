@@ -18,6 +18,8 @@ public interface AppUserMapper extends EntityMapper<AppUserDTO, AppUser> {
     AppUserDTO toDto(AppUser appUser);
 
     @Mapping(source = "internalUserDTO", target = "internalUser")
+    @Mapping(source = "selfResponsibility", target = "selfResponsibility")
+    @Mapping(source = "gdprAccepted", target = "gdprAccepted")
     @Mapping(target = "events", ignore = true)
     @Mapping(target = "removeEvents", ignore = true)
     AppUser toEntity(AppUserDTO appUserDTO);

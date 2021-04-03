@@ -1,0 +1,28 @@
+<h2 id="page-heading" class="text-center mb-4">Közelgő óráim</h2>
+
+<div *ngIf="loading" class="app-loading">
+    <div class="lds-css ng-scope">
+        <div class="lds-pacman">
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-warning text-center w-50 mx-auto my-2" id="no-result"
+     *ngIf="!loading && events?.length === 0">
+    <span class="text-light">Még nincsenek árak feltöltve</span>
+</div>
+
+<div class="w-100 m-0 px-2 mb-4 row">
+    <div class="container col-12 col-md-10 col-lg-8 col-xl-6" id="entities" *ngIf="!loading && events && events.length > 0">
+    </div>
+</div>

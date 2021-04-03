@@ -35,6 +35,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           loadChildren: () => import('./prices/prices.module').then(m => m.PricesModule),
         },
         {
+          path: 'contact',
+          loadChildren: () => import('./contact/contact.module').then(m => m.ContactModule),
+        },
+        {
           path: 'admin',
           data: {
             authorities: [Authority.ADMIN],
