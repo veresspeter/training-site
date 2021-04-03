@@ -8,6 +8,8 @@ import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { SERVER_API_URL } from 'app/app.constants';
 import { TrackerService } from '../tracker/tracker.service';
 import { AppUser } from 'app/shared/model/application-user.model';
+import { IEvent } from 'app/shared/model/event.model';
+import { IPass } from 'app/shared/model/pass.model';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
@@ -83,6 +85,14 @@ export class AccountService {
 
   getAgoraToken(channelName: string, timeStamp: string): Observable<string> {
     return this.http.get<string>(SERVER_API_URL + 'api/agora-token', { params: { timeStamp, channelName } });
+  }
+
+  getMyEvents(): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(SERVER_API_URL + 'api/account/my-events', {});
+  }
+
+  getMyPasses(): Observable<IPass[]> {
+    return this.http.get<IPass[]>(SERVER_API_URL + 'api/account/my-passes', {});
   }
 
   private navigateToStoredUrl(): void {

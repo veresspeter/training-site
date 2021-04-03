@@ -6,12 +6,12 @@ import hu.redriver.repository.PersistentTokenRepository;
 import hu.redriver.domain.User;
 import hu.redriver.repository.UserRepository;
 import hu.redriver.security.SecurityUtils;
-import hu.redriver.service.AppUserService;
-import hu.redriver.service.MailService;
-import hu.redriver.service.UserService;
+import hu.redriver.service.*;
 import hu.redriver.service.dto.*;
 import hu.redriver.service.mapper.UserMapper;
 import hu.redriver.web.rest.errors.*;
+import hu.redriver.web.rest.errors.EmailAlreadyUsedException;
+import hu.redriver.web.rest.errors.InvalidPasswordException;
 import hu.redriver.web.rest.vm.KeyAndPasswordVM;
 import hu.redriver.web.rest.vm.ManagedUserVM;
 
@@ -53,19 +53,25 @@ public class AccountResource {
     private final PersistentTokenRepository persistentTokenRepository;
     private final UserMapper userMapper;
     private final RtcTokenBuilder tokenBuilder;
+    private final EventService eventService;
+    private final PassService passService;
 
     public AccountResource(UserRepository userRepository,
                            AppUserService appUserService,
                            UserService userService,
                            MailService mailService,
                            PersistentTokenRepository persistentTokenRepository,
-                           UserMapper userMapper) {
+                           UserMapper userMapper,
+                           EventService eventService,
+                           PassService passService) {
         this.userRepository = userRepository;
         this.appUserService = appUserService;
         this.userService = userService;
         this.mailService = mailService;
         this.persistentTokenRepository = persistentTokenRepository;
         this.userMapper = userMapper;
+        this.eventService = eventService;
+        this.passService = passService;
         this.tokenBuilder = new RtcTokenBuilder();
     }
 
@@ -73,7 +79,7 @@ public class AccountResource {
      * {@code POST  /register} : register the user.
      *
      * @param managedUserVM the managed user View Model.
-     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
+     * @throws InvalidPasswordException  {@code 400 (Bad Request)} if the password is incorrect.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
@@ -137,18 +143,20 @@ public class AccountResource {
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
     }
 
-    @GetMapping("/my-passes")
-    public List<PassDTO> getAccount() {
+    @GetMapping("/account//my-passes")
+    public List<PassDTO> getMyPasses() {
         AppUserDTO appUserDTO = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
 
-
+        return passService.findAllByAppUser(appUserDTO);
     }
 
-    @GetMapping("/my-events")
-    public List<EventDTO> getAccount() {
+    @GetMapping("/account/my-events")
+    public List<EventDTO> getMyEvents() {
         AppUserDTO appUserDTO = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
+
+        return eventService.findAllByParticipant(appUserDTO);
     }
 
     @GetMapping("/agora-token")
@@ -169,13 +177,13 @@ public class AccountResource {
      *
      * @param appUserDTO the current user information.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user login wasn't found.
+     * @throws RuntimeException          {@code 500 (Internal Server Error)} if the user login wasn't found.
      */
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody AppUserDTO appUserDTO) {
         String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("A jelenlegi felhasználó nem található"));
 
-        AppUserDTO existingAppUserDTO =  appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
+        AppUserDTO existingAppUserDTO = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
 
         if (!appUserDTO.getInternalUserDTO().getId().equals(existingAppUserDTO.getInternalUserDTO().getId())) {
@@ -237,22 +245,22 @@ public class AccountResource {
         return persistentTokenRepository.findByUser(
             userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()
                 .orElseThrow(() -> new AccountResourceException("Az aktuális felhasználó bejelentkezési adata nem található")))
-                    .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"))
+                .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"))
         );
     }
 
     /**
      * {@code DELETE  /account/sessions?series={series}} : invalidate an existing session.
-     *
+     * <p>
      * - You can only delete your own sessions, not any other user's session
      * - If you delete one of your existing sessions, and that you are currently logged in on that session, you will
-     *   still be able to use that session, until you quit your browser: it does not work in real time (there is
-     *   no API for that), it only removes the "remember me" cookie
+     * still be able to use that session, until you quit your browser: it does not work in real time (there is
+     * no API for that), it only removes the "remember me" cookie
      * - This is also true if you invalidate your current session: you will still be able to use it until you close
-     *   your browser or that the session times out. But automatic login (the "remember me" cookie) will not work
-     *   anymore.
-     *   There is an API to invalidate the current session, but there is no API to check which session uses which
-     *   cookie.
+     * your browser or that the session times out. But automatic login (the "remember me" cookie) will not work
+     * anymore.
+     * There is an API to invalidate the current session, but there is no API to check which session uses which
+     * cookie.
      *
      * @param series the series of an existing session.
      * @throws UnsupportedEncodingException if the series couldn't be URL decoded.
@@ -290,7 +298,7 @@ public class AccountResource {
      *
      * @param keyAndPassword the generated key and the new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the password could not be reset.
+     * @throws RuntimeException         {@code 500 (Internal Server Error)} if the password could not be reset.
      */
     @PostMapping(path = "/account/reset-password/finish")
     public void finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {

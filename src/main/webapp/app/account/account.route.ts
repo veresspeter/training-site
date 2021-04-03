@@ -7,7 +7,6 @@ import { passwordResetInitRoute } from './password-reset/init/password-reset-ini
 import { registerRoute } from './register/register.route';
 import { sessionsRoute } from './sessions/sessions.route';
 import { settingsRoute } from './settings/settings.route';
-import { ActivateComponent } from 'app/account/activate/activate.component';
 import { MyEventsComponent } from 'app/account/my-events/my-events.component';
 import { MyPassesComponent } from 'app/account/my-passes/my-passes.component';
 

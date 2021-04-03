@@ -1,10 +1,11 @@
 package hu.redriver.service;
 
+import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Event;
-import hu.redriver.domain.enumeration.LinkType;
 import hu.redriver.repository.EventRepository;
 import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.EventDTO;
+import hu.redriver.service.mapper.AppUserMapper;
 import hu.redriver.service.mapper.EventMapper;
 import io.undertow.util.BadRequestException;
 import org.slf4j.Logger;
@@ -16,10 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -34,14 +32,20 @@ public class EventService {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
+    private final AppUserMapper appUserMapper;
     private final UserService userService;
     private final AppUserService appUserService;
 
-    public EventService(EventRepository eventRepository, EventMapper eventMapper, UserService userService, AppUserService appUserService) {
+    public EventService(EventRepository eventRepository,
+                        EventMapper eventMapper,
+                        UserService userService,
+                        AppUserService appUserService,
+                        AppUserMapper appUserMapper) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.userService = userService;
         this.appUserService = appUserService;
+        this.appUserMapper = appUserMapper;
     }
 
     /**
@@ -66,6 +70,16 @@ public class EventService {
     public List<EventDTO> findAll() {
         log.debug("Request to get all Events");
         return eventRepository.findAllWithEagerRelationships().stream()
+            .map(eventMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Transactional(readOnly = true)
+    public List<EventDTO> findAllByParticipant(AppUserDTO appUserDTO) {
+        log.debug("Request to get all Events by User: {}", appUserDTO);
+        Set<AppUser> participantSet = new HashSet<AppUser>();
+        participantSet.add(appUserMapper.toEntity(appUserDTO));
+        return eventRepository.findAllByParticipantsIn(participantSet).stream()
             .map(eventMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

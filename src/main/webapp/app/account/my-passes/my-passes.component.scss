@@ -1,0 +1,7 @@
+@import '../../../content/scss/variables';
+
+:host {
+  .card {
+    background-color: $mv-pastel;
+  }
+}
