@@ -1,6 +1,7 @@
 package hu.redriver.service.dto;
 
 import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import javax.persistence.Lob;
@@ -29,6 +30,8 @@ public class AppUserDTO implements Serializable {
     private String regularPain;
     private String medicine;
     private String otherProblem;
+    private Boolean selfResponsibility;
+    private Boolean gdprAccepted;
 
     @Lob
     private byte[] image;
@@ -190,6 +193,22 @@ public class AppUserDTO implements Serializable {
 
     public void setTrainer(Boolean trainer) {
         isTrainer = trainer;
+    }
+
+    public Boolean getSelfResponsibility() {
+        return selfResponsibility;
+    }
+
+    public void setSelfResponsibility(Boolean selfResponsibility) {
+        this.selfResponsibility = selfResponsibility;
+    }
+
+    public Boolean getGdprAccepted() {
+        return gdprAccepted;
+    }
+
+    public void setGdprAccepted(Boolean gdprAccepted) {
+        this.gdprAccepted = gdprAccepted;
     }
 
     @Override

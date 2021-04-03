@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md">
+<nav class="navbar navbar-expand-lg">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
         <span class="logo-img"></span>
     </a>
@@ -9,7 +9,7 @@
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed"
          [ngSwitch]="isAuthenticated()">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav mx-auto">
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link" routerLink="/activity-type" (click)="collapseNavbar()">
                     <span>
@@ -38,7 +38,7 @@
                     </span>
                 </a>
             </li>
-            <li class="nav-item mr-md-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <li class="nav-item mr-lg-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link" routerLink="/contact" (click)="collapseNavbar()">
                     <span>
                         <span>Kapcsolat</span>
@@ -126,7 +126,7 @@
             </li>
             <li ngbDropdown class="nav-item dropdown pointer" *ngSwitchCase="true" display="dynamic"
                 routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link dropdown-toggle ml-md-2 mr-md-4" ngbDropdownToggle href="javascript:void(0);"
+                <a class="nav-link dropdown-toggle ml-lg-2 mr-lg-4" ngbDropdownToggle href="javascript:void(0);"
                    id="account-menu">
                     Profilom
                 </a>
@@ -144,6 +144,18 @@
                         </a>
                     </li>
                     <li>
+                        <a class="dropdown-item" routerLink="account/my-events" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            Közelgő óráim
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="account/my-passes" routerLinkActive="active"
+                           (click)="collapseNavbar()">
+                            Bérleteim
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" (click)="logout()" id="logout">
                             Kijelentkezés
                         </a>
@@ -156,7 +168,7 @@
                 </a>
             </li>
             <li *ngSwitchCase="false" class="nav-item">
-                <a class="nav-link mr-md-4" routerLink="account/register" routerLinkActive="active"
+                <a class="nav-link mr-lg-4" routerLink="account/register" routerLinkActive="active"
                    (click)="collapseNavbar()">
                     Regisztráció
                 </a>

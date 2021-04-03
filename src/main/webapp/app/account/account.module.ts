@@ -12,6 +12,8 @@ import { PasswordResetInitComponent } from './password-reset/init/password-reset
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
 import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
+import { MyEventsComponent } from './my-events/my-events.component';
+import { MyPassesComponent } from './my-passes/my-passes.component';
 
 @NgModule({
   imports: [MaxmoveSharedModule, RouterModule.forChild(accountState)],
@@ -24,6 +26,8 @@ import { accountState } from './account.route';
     PasswordResetFinishComponent,
     SessionsComponent,
     SettingsComponent,
+    MyEventsComponent,
+    MyPassesComponent,
   ],
 })
 export class AccountModule {}

@@ -1,5 +1,6 @@
 package hu.redriver.repository;
 
+import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Event;
 
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Spring Data  repository for the Event entity.
@@ -26,4 +28,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     @Query("select event from Event event left join fetch event.participants where event.id =:id")
     Optional<Event> findOneWithEagerRelationships(@Param("id") Long id);
+
+    List<Event> findAllByParticipantsIn(Set<AppUser> participants);
 }

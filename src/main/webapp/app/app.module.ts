@@ -17,6 +17,9 @@ import { CalendarModule } from './calendar/calendar.module';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { NavigationStart, Router } from '@angular/router';
+import { AccountService } from 'app/core/auth/account.service';
+import { ApplicationUserService } from 'app/shared/services/application-user.service';
 
 @NgModule({
   imports: [
@@ -34,7 +37,37 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
   bootstrap: [MainComponent],
 })
 export class MaxmoveAppModule {
-  constructor(library: FaIconLibrary) {
+  constructor(library: FaIconLibrary, router: Router, accountService: AccountService, applicationUserService: ApplicationUserService) {
     library.addIconPacks(fas, fab);
+
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        accountService.identity().subscribe(account => {
+          if (account !== null && account.internalUser!.id !== null) {
+            applicationUserService.findByInternalId(account.internalUser!.id).subscribe(res => {
+              if (
+                !res.body!.internalUser!.lastName ||
+                !res.body!.internalUser!.firstName ||
+                !res.body!.birthDay ||
+                !res.body!.sex ||
+                !res.body!.internalUser!.email ||
+                !res.body!.injury ||
+                !res.body!.surgery ||
+                !res.body!.heartProblem ||
+                !res.body!.respiratoryDisease ||
+                !res.body!.spineProblem ||
+                !res.body!.regularPain ||
+                !res.body!.medicine ||
+                !res.body!.otherProblem ||
+                !res.body!.gdprAccepted ||
+                !res.body!.selfResponsibility
+              ) {
+                router.navigate(['/account/settings']);
+              }
+            });
+          }
+        });
+      }
+    });
   }
 }

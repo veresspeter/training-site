@@ -1,5 +1,5 @@
 .input-group {
-  border: solid 1px $mv-pastel;
+  border: solid 0 $mv-pastel;
   box-shadow: 0 0 10px $mv-shadow-primary;
   background-color: $mv-pastel-light;
   padding-right: 5px;
@@ -13,13 +13,19 @@
   }
 }
 
-:not(.input-group) > input {
-  border: solid 1px $mv-pastel !important;
+:not(.input-group, [type='radio'], [type='checkbox']) > input:not([type='radio'], [type='checkbox']),
+textarea {
+  border: solid 0 $mv-pastel !important;
   box-shadow: 0 0 10px $mv-shadow-primary !important;
   background-color: $mv-pastel-light !important;
+  border-radius: 0 !important;
 }
 
-input:not([type='checkbox']) {
+textarea {
+  min-height: 125px;
+}
+
+input:not([type='checkbox'], [type='radio']) {
   height: 50px !important;
   padding: 15px !important;
 
@@ -45,10 +51,10 @@ input[type='checkbox'] {
 }
 
 select.form-control {
-  border: solid 1px $mv-pastel !important;
+  border: solid 0 $mv-pastel !important;
   box-shadow: 0 0 10px $mv-shadow-primary;
   background-color: $mv-pastel-light;
-  border-radius: 0.15em;
+  border-radius: 0;
   height: 50px !important;
   padding: 15px !important;
   overflow-y: auto;

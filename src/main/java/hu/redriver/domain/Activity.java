@@ -32,7 +32,7 @@ public class Activity implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
-    
+
     @Lob
     @Column(name = "image", nullable = false)
     private byte[] image;
@@ -44,6 +44,12 @@ public class Activity implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "activities", allowSetters = true)
     private ActivityType activityType;
+
+    @ManyToOne(optional = false)
+    private AppUser trainer;
+
+    @Column(name = "external_link")
+    private String externalLink;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -118,6 +124,32 @@ public class Activity implements Serializable {
     public void setActivityType(ActivityType activityType) {
         this.activityType = activityType;
     }
+
+    public AppUser getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(AppUser trainer) {
+        this.trainer = trainer;
+    }
+
+    public Activity trainer(AppUser trainer) {
+        this.trainer = trainer;
+        return this;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+    public void setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
+    }
+
+    public Activity externalLink(String externalLink) {
+        this.externalLink = externalLink;
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override

@@ -14,6 +14,7 @@ import { AppUser } from 'app/shared/model/application-user.model';
 import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { PassType } from 'app/shared/model/pass-type.model';
 import { formatNumber } from '@angular/common';
+import { PaymentStatus } from 'app/shared/model/enumerations/payment-status.model';
 
 @Component({
   selector: 'jhi-pass',
@@ -44,7 +45,9 @@ export class PassComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.eventSubscriber = this.eventManager.subscribe('passListModification', () => this.loadAll());
     this.appUserService.query().subscribe(res => (this.appUsers = res.body || []));
-    this.passTypeService.query().subscribe(res => (this.passTypes = res.body || []));
+    this.passTypeService.query().subscribe(res => {
+      this.passTypes = res.body || [];
+    });
     this.handleNavigation();
   }
 
@@ -122,5 +125,13 @@ export class PassComponent implements OnInit, OnDestroy {
   getPassOccasionsById(id: number | undefined): string {
     const result = this.passTypes?.find(passType => passType.id === id);
     return result?.occasions?.toString() || '?';
+  }
+
+  getPaymentStatusName(status: string | undefined): string {
+    if (status) {
+      return PaymentStatus.parse(status).Name;
+    } else {
+      return '';
+    }
   }
 }

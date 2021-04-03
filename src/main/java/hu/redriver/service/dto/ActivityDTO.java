@@ -1,5 +1,9 @@
 package hu.redriver.service.dto;
 
+import hu.redriver.domain.AppUser;
+
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import javax.persistence.Lob;
@@ -8,8 +12,12 @@ import javax.persistence.Lob;
  * A DTO for the {@link hu.redriver.domain.Activity} entity.
  */
 public class ActivityDTO implements Serializable {
-    
+
     private Long id;
+    private String imageContentType;
+    private Long activityTypeId;
+    private AppUser trainer;
+    private String externalLink;
 
     @NotNull
     private String name;
@@ -17,14 +25,9 @@ public class ActivityDTO implements Serializable {
     @NotNull
     private String description;
 
-    
     @Lob
     private byte[] image;
 
-    private String imageContentType;
-
-    private Long activityTypeId;
-    
     public Long getId() {
         return id;
     }
@@ -71,6 +74,22 @@ public class ActivityDTO implements Serializable {
 
     public void setActivityTypeId(Long activityTypeId) {
         this.activityTypeId = activityTypeId;
+    }
+
+    public AppUser getTrainer() {
+        return trainer;
+    }
+
+    public void setTrainer(AppUser trainer) {
+        this.trainer = trainer;
+    }
+
+    public String getExternalLink() {
+        return externalLink;
+    }
+
+    public void setExternalLink(String externalLink) {
+        this.externalLink = externalLink;
     }
 
     @Override

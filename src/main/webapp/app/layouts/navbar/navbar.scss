@@ -28,6 +28,7 @@ Navbar
   }
 
   .nav-item {
+    position: relative;
     &.active {
       a.nav-link {
         padding: 7px;
@@ -38,8 +39,36 @@ Navbar
     a.nav-link {
       padding: 10px;
       font-weight: 700;
-      @media (min-width: 768px) {
+
+      @media (min-width: 992px) {
         width: 125px;
+      }
+    }
+
+    ul.dropdown-menu {
+      background-color: $mv-pastel-light;
+      border-radius: 0;
+      border: 0;
+      box-shadow: 0 0 5px 5px $mv-shadow-primary;
+      transform: translate(-49px, 50px) !important;
+      color: $mv-text-dark;
+
+      a.dropdown-item.active {
+        background-color: $mv-navbar;
+        color: $mv-text-dark;
+
+        &:hover {
+          background-color: #343a40;
+          color: white;
+        }
+      }
+
+      @media (max-width: 991px) {
+        position: inherit !important;
+        transform: none !important;
+        box-shadow: none;
+        text-align: center;
+        width: 100%;
       }
     }
   }
@@ -78,6 +107,6 @@ Logo styles
   margin: -3px 15px 0 15px;
   display: inline-block;
   vertical-align: middle;
-  background: url('../../../content/images/maxmove-logo.png') no-repeat center center;
+  background: url('../../../content/images/maxmove-logo-navbar.png') no-repeat center center;
   background-size: contain;
 }

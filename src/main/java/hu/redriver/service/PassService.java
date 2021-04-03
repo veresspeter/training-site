@@ -1,11 +1,14 @@
 package hu.redriver.service;
 
+import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Pass;
 import hu.redriver.domain.enumeration.PaymentStatus;
 import hu.redriver.repository.PassRepository;
+import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.PassDTO;
 import hu.redriver.service.dto.PassTypeDTO;
 import hu.redriver.service.dto.UserDTO;
+import hu.redriver.service.mapper.AppUserMapper;
 import hu.redriver.service.mapper.PassMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +39,20 @@ public class PassService {
     private final AppUserService appUserService;
     private final PassRepository passRepository;
     private final PassMapper passMapper;
+    private final AppUserMapper appUserMapper;
 
-    public PassService(PassTypeService passTypeService, UserService userService, AppUserService appUserService, PassRepository passRepository, PassMapper passMapper) {
+    public PassService(PassTypeService passTypeService,
+                       UserService userService,
+                       AppUserService appUserService,
+                       PassRepository passRepository,
+                       PassMapper passMapper,
+                       AppUserMapper appUserMapper) {
         this.passTypeService = passTypeService;
         this.userService = userService;
         this.appUserService = appUserService;
         this.passRepository = passRepository;
         this.passMapper = passMapper;
+        this.appUserMapper = appUserMapper;
     }
 
     /**
@@ -108,6 +118,14 @@ public class PassService {
         return passRepository.findAll(pageable).map(PassDTO::new);
     }
 
+    @Transactional(readOnly = true)
+    public List<PassDTO> findAllByAppUser(AppUserDTO appUserDTO) {
+        log.debug("Request to get all Passes by User: {}", appUserDTO);
+
+        return passRepository.findAllByUser(appUserMapper.toEntity(appUserDTO)).stream()
+            .map(passMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      * Get one pass by id.

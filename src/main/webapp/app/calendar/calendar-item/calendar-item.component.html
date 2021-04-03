@@ -8,7 +8,7 @@
         Jelentkezés
     </button>
 
-    <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event?.id)" class="btn btn-sm btn-primary"
+    <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event?.id)" class="btn btn-sm btn-outline-primary"
             [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
         Lejelentkezés
     </button>

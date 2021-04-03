@@ -26,12 +26,13 @@
     </div>
 
     <div class="card" *ngFor="let activity of activities; trackBy: trackId">
+        <img *ngIf="activity.image" class="card-img" [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" alt="foglalkozás képe"/>
         <div class="card-body">
             <h3>{{activity.name}}</h3>
             <p>{{activity.description}}</p>
+            <a *ngIf="activity.externalLink" [href]="activity.externalLink">Jelentkezés</a>
+            <a *ngIf="activity.trainer" [routerLink]="['/trainers']">{{activity.trainer?.internalUser?.lastName + " " + activity.trainer?.internalUser?.firstName }}</a>
         </div>
-        <img *ngIf="activity.image" class="card-img" [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" alt="foglalkozás képe"/>
-
         <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
             <button type="submit" class="btn btn-icon btn-primary"
                     [routerLink]="['/activity-type', activityType?.id, 'activity', activity?.id, 'edit']">
