@@ -27,7 +27,7 @@ export class MyPassesComponent implements OnInit {
     });
   }
 
-  findPassTypeById(id: number): IPassType | undefined {
+  findPassTypeById(id: number | undefined): IPassType | undefined {
     return this.passTypes?.find(type => type.id === id);
   }
 
