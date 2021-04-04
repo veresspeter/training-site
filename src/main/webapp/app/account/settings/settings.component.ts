@@ -7,6 +7,7 @@ import { IUser } from 'app/core/user/user.model';
 import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } from 'ng-jhipster';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import * as moment from 'moment';
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 
 @Component({
   selector: 'jhi-settings',
@@ -86,7 +87,7 @@ export class SettingsComponent implements OnInit {
           firstName: appUser.internalUser?.firstName,
           sex: appUser.sex,
           email: appUser.internalUser?.email,
-          userBirthDay: appUser.birthDay ? moment(appUser.birthDay) : '',
+          userBirthDay: appUser.birthDay ? moment(appUser.birthDay, DATE_FORMAT) : null,
           googleToken: appUser.googleToken,
           facebookToken: appUser.facebookToken,
           image: appUser.image,
@@ -281,7 +282,9 @@ export class SettingsComponent implements OnInit {
 
   private updateAccountWithFormData(): void {
     this.currentAccount.sex = this.editForm.get(['sex'])!.value;
-    this.currentAccount.birthDay = this.editForm.get(['userBirthDay'])!.value;
+    this.currentAccount.birthDay = this.editForm.get(['userBirthDay'])!.value
+      ? moment(this.editForm.get(['userBirthDay'])!.value, DATE_FORMAT).utc(true)
+      : undefined;
     this.currentAccount.imageContentType = this.editForm.get(['imageContentType'])!.value;
     this.currentAccount.image = this.editForm.get(['image'])!.value;
     this.currentAccount.injury = this.editForm.get(['injury'])!.value;

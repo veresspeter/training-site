@@ -200,7 +200,7 @@ public class BarionService {
         paymentDTO.setPaymentRequestId(paymentId);
         paymentDTO.setPayerHint(user.getInternalUserDTO().getEmail());
         paymentDTO.setCardHolderNameHint(user.getInternalUserDTO().getLastName() + " " + user.getInternalUserDTO().getFirstName());
-        paymentDTO.setRedirectUrl(serverAddress + ":" + serverPort + "/payment-redirect");
+        paymentDTO.setRedirectUrl(serverAddress + ":" + serverPort + "/account/my-passes");
         paymentDTO.setCallbackUrl(serverAddress + ":" + serverPort + "/api/passes/payment-callback");
         paymentDTO.setTransactions(new BarionPaymentTransactionDTO[]{paymentTransaction});
         return paymentDTO;

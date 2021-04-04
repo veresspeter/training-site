@@ -9,6 +9,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class AppUser implements Serializable {
     private Sex sex;
 
     @Column(name = "birth_day")
-    private LocalDate birthDay;
+    private ZonedDateTime birthDay;
 
     @Column(name = "google_token")
     private String googleToken;
@@ -118,16 +119,16 @@ public class AppUser implements Serializable {
         this.sex = sex;
     }
 
-    public LocalDate getBirthDay() {
+    public ZonedDateTime getBirthDay() {
         return birthDay;
     }
 
-    public AppUser birthDay(LocalDate birthDay) {
+    public AppUser birthDay(ZonedDateTime birthDay) {
         this.birthDay = birthDay;
         return this;
     }
 
-    public void setBirthDay(LocalDate birthDay) {
+    public void setBirthDay(ZonedDateTime birthDay) {
         this.birthDay = birthDay;
     }
 

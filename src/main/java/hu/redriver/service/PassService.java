@@ -91,7 +91,7 @@ public class PassService {
         passDTO.setUserId(userId);
         passDTO.setPaymentStatus(PaymentStatus.NEW);
         passDTO.setPurchased(ZonedDateTime.now());
-        passDTO.setValidFrom(LocalDate.now());
+        passDTO.setValidFrom(ZonedDateTime.now());
         if (passTypeDTO.getDurationDays() != null) {
             passDTO.setValidTo(passDTO.getValidFrom().plusDays(passTypeDTO.getDurationDays()));
         }

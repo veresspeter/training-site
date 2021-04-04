@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { IPass, Pass } from 'app/shared/model/pass.model';
 import { IPassType } from 'app/shared/model/pass-type.model';
@@ -30,6 +30,7 @@ export class PassUpdateComponent implements OnInit {
   validFromDp: any;
   validToDp: any;
   isEdit = false;
+  subs: Subscription[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -56,19 +57,27 @@ export class PassUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ pass }) => {
       this.updateForm(pass);
+
       this.passTypeService.query().subscribe((res: HttpResponse<IPassType[]>) => (this.passTypes = res.body || []));
       this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.appUsers = res.body || []));
     });
   }
 
   updateForm(pass: IPass): void {
+    if (!pass.purchased) {
+      const today = moment().startOf('day');
+      const now = moment();
+      pass.purchased = now;
+      pass.validFrom = today;
+    }
+
     this.editForm.patchValue({
       id: pass.id,
-      purchased: pass.purchased ? pass.purchased : moment(new Date(), DATE_TIME_FORMAT),
+      purchased: moment(pass.purchased, DATE_TIME_FORMAT),
       usageNo: pass.usageNo ? pass.usageNo : 0,
-      paymentStatus: pass.paymentStatus ? pass.paymentStatus : this.paymentStatus.NEW,
-      validFrom: pass.validFrom ? pass.validFrom : moment(new Date(), DATE_FORMAT),
-      validTo: pass.validTo,
+      paymentStatus: pass.paymentStatus ? pass.paymentStatus : this.paymentStatus.PAID.Value,
+      validFrom: moment(pass.validFrom, DATE_FORMAT),
+      validTo: pass.validTo ? moment(pass.validTo, DATE_FORMAT) : null,
       passTypeId: pass.passTypeId,
       userId: pass.userId,
       paymentId: pass.paymentId,
@@ -77,7 +86,7 @@ export class PassUpdateComponent implements OnInit {
     });
 
     if (pass.id === undefined) {
-      this.isEdit = true;
+      this.enableEdit();
     } else {
       this.editForm.disable();
     }
@@ -105,11 +114,15 @@ export class PassUpdateComponent implements OnInit {
     return {
       ...new Pass(),
       id: this.editForm.get(['id'])!.value,
-      purchased: this.editForm.get(['purchased'])!.value,
+      purchased: this.editForm.get(['purchased'])!.value ? moment(this.editForm.get(['purchased'])!.value, DATE_FORMAT) : undefined,
       usageNo: this.editForm.get(['usageNo'])!.value,
       paymentStatus: this.editForm.get(['paymentStatus'])!.value,
-      validFrom: this.editForm.get(['validFrom'])!.value,
-      validTo: this.editForm.get(['validTo'])!.value,
+      validFrom: this.editForm.get(['validFrom'])!.value
+        ? moment(this.editForm.get(['validFrom'])!.value, DATE_TIME_FORMAT).utc(true)
+        : undefined,
+      validTo: this.editForm.get(['validTo'])!.value
+        ? moment(this.editForm.get(['validTo'])!.value, DATE_TIME_FORMAT).utc(true)
+        : undefined,
       passTypeId: this.editForm.get(['passTypeId'])!.value,
       userId: this.editForm.get(['userId'])!.value,
       paymentId: this.editForm.get(['paymentId'])!.value,
@@ -153,6 +166,35 @@ export class PassUpdateComponent implements OnInit {
   enableEdit(): void {
     this.isEdit = true;
     this.editForm.enable();
+
+    const passTypeIdValueChanges = this.editForm.get('passTypeId')?.valueChanges;
+    if (passTypeIdValueChanges) {
+      this.subs.push(
+        passTypeIdValueChanges.subscribe(passTypeId => {
+          const validFrom = moment(this.editForm.get('validFrom')?.value, DATE_FORMAT);
+          const durationDays = this.passTypes.find(passType => passType.id === passTypeId)?.durationDays;
+
+          if (validFrom && durationDays) {
+            this.editForm.get('validTo')?.setValue(validFrom.add(durationDays, 'days'));
+          }
+        })
+      );
+    }
+
+    const validFromValueChanges = this.editForm.get('validFrom')?.valueChanges;
+    if (validFromValueChanges) {
+      this.subs.push(
+        validFromValueChanges.subscribe(validFrom => {
+          const validFromMoment = moment(validFrom, DATE_FORMAT);
+          const passTypeId = this.editForm.get('passTypeId')?.value;
+
+          if (passTypeId) {
+            const durationDays = this.passTypes.find(passType => passType.id === passTypeId)?.durationDays;
+            this.editForm.get('validTo')?.setValue(validFromMoment.add(durationDays, 'days'));
+          }
+        })
+      );
+    }
   }
 
   public get paymentStatus(): typeof PaymentStatus {

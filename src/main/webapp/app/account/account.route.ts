@@ -9,6 +9,8 @@ import { sessionsRoute } from './sessions/sessions.route';
 import { settingsRoute } from './settings/settings.route';
 import { MyEventsComponent } from 'app/account/my-events/my-events.component';
 import { MyPassesComponent } from 'app/account/my-passes/my-passes.component';
+import { Authority } from 'app/shared/constants/authority.constants';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 
 const ACCOUNT_ROUTES = [
   activateRoute,
@@ -29,16 +31,18 @@ export const accountState: Routes = [
     path: 'my-events',
     component: MyEventsComponent,
     data: {
-      authorities: [],
+      authorities: [Authority.USER],
       pageTitle: 'Közelgő óráim',
     },
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'my-passes',
     component: MyPassesComponent,
     data: {
-      authorities: [],
+      authorities: [Authority.USER],
       pageTitle: 'Bérleteim',
     },
+    canActivate: [UserRouteAccessService],
   },
 ];

@@ -9,15 +9,15 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Event} and its DTO {@link EventDTO}.
  */
-@Mapper(componentModel = "spring", uses = {AppUserMapper.class, ActivityMapper.class})
+@Mapper(componentModel = "spring", uses = {AppUserMapper.class})
 public interface EventMapper extends EntityMapper<EventDTO, Event> {
 
     @Mapping(source = "organizer", target = "organizer")
-    @Mapping(source = "activity.id", target = "activityId")
+    @Mapping(source = "activityId", target = "activityId")
     EventDTO toDto(Event event);
 
     @Mapping(source = "organizer", target = "organizer")
-    @Mapping(source = "activityId", target = "activity")
+    @Mapping(source = "activityId", target = "activityId")
     @Mapping(target = "removeParticipants", ignore = true)
     Event toEntity(EventDTO eventDTO);
 
