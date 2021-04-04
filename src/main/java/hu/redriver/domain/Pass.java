@@ -10,7 +10,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 /**
@@ -37,10 +36,10 @@ public class Pass implements Serializable {
     private Integer usageNo;
 
     @Column(name = "valid_from")
-    private LocalDate validFrom;
+    private ZonedDateTime validFrom;
 
     @Column(name = "valid_to")
-    private LocalDate validTo;
+    private ZonedDateTime validTo;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -100,29 +99,29 @@ public class Pass implements Serializable {
         this.usageNo = usageNo;
     }
 
-    public LocalDate getValidFrom() {
+    public ZonedDateTime getValidFrom() {
         return validFrom;
     }
 
-    public Pass validFrom(LocalDate validFrom) {
+    public Pass validFrom(ZonedDateTime validFrom) {
         this.validFrom = validFrom;
         return this;
     }
 
-    public void setValidFrom(LocalDate validFrom) {
+    public void setValidFrom(ZonedDateTime validFrom) {
         this.validFrom = validFrom;
     }
 
-    public LocalDate getValidTo() {
+    public ZonedDateTime getValidTo() {
         return validTo;
     }
 
-    public Pass validTo(LocalDate validTo) {
+    public Pass validTo(ZonedDateTime validTo) {
         this.validTo = validTo;
         return this;
     }
 
-    public void setValidTo(LocalDate validTo) {
+    public void setValidTo(ZonedDateTime validTo) {
         this.validTo = validTo;
     }
 

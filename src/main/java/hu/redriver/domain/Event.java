@@ -68,10 +68,8 @@ public class Event implements Serializable {
     @JsonIgnoreProperties(value = "events", allowSetters = true)
     private AppUser organizer;
 
-    @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = "events", allowSetters = true)
-    private Activity activity;
+    private Long activityId;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -232,17 +230,17 @@ public class Event implements Serializable {
         this.organizer = appUser;
     }
 
-    public Activity getActivity() {
-        return activity;
+    public Long getActivityId() {
+        return activityId;
     }
 
-    public Event activity(Activity activity) {
-        this.activity = activity;
+    public Event activityId(Long activityId) {
+        this.activityId = activityId;
         return this;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setActivityId(Long activityId) {
+        this.activityId = activityId;
     }
 
     public Set<AppUser> getParticipants() {

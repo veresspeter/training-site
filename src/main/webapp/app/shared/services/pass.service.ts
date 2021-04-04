@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPass } from 'app/shared/model/pass.model';
@@ -59,9 +58,9 @@ export class PassService {
 
   protected convertDateFromClient(pass: IPass): IPass {
     const copy: IPass = Object.assign({}, pass, {
-      purchased: pass.purchased && pass.purchased.isValid() ? pass.purchased.format(DATE_TIME_FORMAT) : undefined,
-      validFrom: pass.validFrom && pass.validFrom.isValid() ? pass.validFrom.format(DATE_FORMAT) : undefined,
-      validTo: pass.validTo && pass.validTo.isValid() ? pass.validTo.format(DATE_FORMAT) : undefined,
+      purchased: pass.purchased && pass.purchased.isValid() ? pass.purchased.toJSON() : undefined,
+      validFrom: pass.validFrom && pass.validFrom.isValid() ? pass.validFrom.toJSON() : undefined,
+      validTo: pass.validTo && pass.validTo.isValid() ? pass.validTo.toJSON() : undefined,
     });
     return copy;
   }

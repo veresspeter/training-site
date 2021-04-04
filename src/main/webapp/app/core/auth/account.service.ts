@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject, of } from 'rxjs';
-import { shareReplay, tap, catchError } from 'rxjs/operators';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, shareReplay, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { TrackerService } from '../tracker/tracker.service';
-import { AppUser } from 'app/shared/model/application-user.model';
+import { IAppUser } from 'app/shared/model/application-user.model';
 import { IEvent } from 'app/shared/model/event.model';
 import { IPass } from 'app/shared/model/pass.model';
+import * as moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-  private userIdentity: AppUser | null = null;
-  private authenticationState = new ReplaySubject<AppUser | null>(1);
-  private accountCache$?: Observable<AppUser | null>;
+  private userIdentity: IAppUser | null = null;
+  private authenticationState = new ReplaySubject<IAppUser | null>(1);
+  private accountCache$?: Observable<IAppUser | null>;
 
   constructor(
     private http: HttpClient,
@@ -24,11 +26,12 @@ export class AccountService {
     private router: Router
   ) {}
 
-  save(account: AppUser): Observable<{}> {
-    return this.http.post(SERVER_API_URL + 'api/account', account);
+  save(account: IAppUser): Observable<{}> {
+    const copy = this.convertDateFromClient(account);
+    return this.http.post(SERVER_API_URL + 'api/account', copy);
   }
 
-  authenticate(identity: AppUser | null): void {
+  authenticate(identity: IAppUser | null): void {
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);
     if (identity) {
@@ -48,13 +51,13 @@ export class AccountService {
     return this.userIdentity.internalUser!.authorities.some((authority: string) => authorities.includes(authority));
   }
 
-  identity(force?: boolean): Observable<AppUser | null> {
+  identity(force?: boolean): Observable<IAppUser | null> {
     if (!this.accountCache$ || force || !this.isAuthenticated()) {
       this.accountCache$ = this.fetch().pipe(
         catchError(() => {
           return of(null);
         }),
-        tap((appUser: AppUser | null) => {
+        tap((appUser: IAppUser | null) => {
           this.authenticate(appUser);
 
           if (appUser) {
@@ -71,7 +74,7 @@ export class AccountService {
     return this.userIdentity !== null;
   }
 
-  getAuthenticationState(): Observable<AppUser | null> {
+  getAuthenticationState(): Observable<IAppUser | null> {
     return this.authenticationState.asObservable();
   }
 
@@ -79,8 +82,8 @@ export class AccountService {
     return this.userIdentity!.internalUser!.imageUrl ? this.userIdentity!.internalUser!.imageUrl : '';
   }
 
-  private fetch(): Observable<AppUser> {
-    return this.http.get<AppUser>(SERVER_API_URL + 'api/account');
+  private fetch(): Observable<IAppUser> {
+    return this.http.get<IAppUser>(SERVER_API_URL + 'api/account').pipe(map((app: IAppUser) => this.convertDateFromServer(app)));
   }
 
   getAgoraToken(channelName: string, timeStamp: string): Observable<string> {
@@ -103,5 +106,18 @@ export class AccountService {
       this.stateStorageService.clearUrl();
       this.router.navigateByUrl(previousUrl);
     }
+  }
+
+  protected convertDateFromClient(appUser: IAppUser): IAppUser {
+    return Object.assign({}, appUser, {
+      start: appUser.birthDay && appUser.birthDay.isValid() ? appUser.birthDay.toJSON() : undefined,
+    });
+  }
+
+  protected convertDateFromServer(appUser: IAppUser): IAppUser {
+    if (appUser) {
+      appUser.birthDay = appUser.birthDay ? moment(appUser.birthDay) : undefined;
+    }
+    return appUser;
   }
 }

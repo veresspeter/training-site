@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import javax.persistence.Lob;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +18,7 @@ public class AppUserDTO implements Serializable {
 
     private Long id;
     private Sex sex;
-    private LocalDate birthDay;
+    private ZonedDateTime birthDay;
     private String googleToken;
     private String facebookToken;
     private String imageContentType;
@@ -59,11 +60,11 @@ public class AppUserDTO implements Serializable {
         this.sex = sex;
     }
 
-    public LocalDate getBirthDay() {
+    public ZonedDateTime getBirthDay() {
         return birthDay;
     }
 
-    public void setBirthDay(LocalDate birthDay) {
+    public void setBirthDay(ZonedDateTime birthDay) {
         this.birthDay = birthDay;
     }
 

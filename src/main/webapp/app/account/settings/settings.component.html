@@ -51,12 +51,9 @@
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_user_birthDay">Születési idő</label>
                     <div *ngIf="isEdit" class="input-group pr-0">
-                        <input id="field_user_birthDay" type="text" class="form-control" name="userBirthDay" ngbDatepicker
-                               #userBirthDayDp="ngbDatepicker" formControlName="userBirthDay"/>
+                        <input id="field_user_birthDay" type="text" class="form-control" name="userBirthDay" ngbDatepicker #validToDp="ngbDatepicker" formControlName="userBirthDay"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-primary btn-icon" (click)="userBirthDayDp.toggle()">
-                                <fa-icon icon="calendar-alt"></fa-icon>
-                            </button>
+                            <button type="button" class="btn btn-primary btn-icon" (click)="validToDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
                     <div *ngIf="editForm.get('userBirthDay')!.invalid && (editForm.get('userBirthDay')!.dirty || editForm.get('userBirthDay')!.touched)">
