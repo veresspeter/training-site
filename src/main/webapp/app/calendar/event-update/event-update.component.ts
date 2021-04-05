@@ -59,7 +59,11 @@ export class EventUpdateComponent implements OnInit {
 
       this.applicationUserService.query().subscribe((res: HttpResponse<IAppUser[]>) => (this.applicationUsers = res.body || []));
 
-      this.activityService.query().subscribe((res: HttpResponse<IActivity[]>) => (this.activities = res.body || []));
+      this.activityService
+        .query()
+        .subscribe(
+          (res: HttpResponse<IActivity[]>) => (this.activities = res.body?.filter(activity => activity.activityTypeId === 1151) || [])
+        );
     });
   }
 

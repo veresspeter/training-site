@@ -108,7 +108,7 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-6 pt-3 text-center">
+                <div *ngIf="isAdmin()" class="form-group col-md-6 pt-3 text-center">
                     <div>
                         <label class="form-control-label" for="field_isTrainer">
                             <input type="checkbox" class="form-check-input" name="isTrainer" id="field_isTrainer"
@@ -146,14 +146,14 @@
                            formControlName="imageContentType"/>
                 </div>
 
-                <div class="form-group col-md-6">
+                <div *ngIf="isAdmin()" class="form-group col-md-6">
                     <label for="field_authorities" >Jogosultságok</label>
                     <select class="form-control" multiple name="authority" formControlName="authorities"  id="field_authorities">
                         <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
                     </select>
                 </div>
 
-                <div class="form-group col-12">
+                <div *ngIf="isAdmin()" class="form-group col-12">
                     <label class="form-control-label" for="field_introduction">Bemutatkozás</label>
                     <input type="text" class="form-control" name="introduction" id="field_introduction"
                            formControlName="introduction"/>
@@ -167,13 +167,13 @@
                     </small>
                 </div>
 
-                <div class="form-group col-12">
+                <div *ngIf="isAdmin()" class="form-group col-12">
                     <label class="form-control-label" for="field_googleToken">Google Token</label>
                     <input type="text" class="form-control" name="googleToken" id="field_googleToken"
                            formControlName="googleToken"/>
                 </div>
 
-                <div class="form-group col-12">
+                <div *ngIf="isAdmin()" class="form-group col-12">
                     <label class="form-control-label" for="field_facebookToken">Facebook Token</label>
                     <input type="text" class="form-control" name="facebookToken" id="field_facebookToken"
                            formControlName="facebookToken"/>
@@ -235,12 +235,12 @@
                     Mégse
                 </button>
 
-                <button *ngIf="isEdit" type="submit" id="save-entity" [disabled]="isSaving"
+                <button *ngIf="isEdit && isAdmin()" type="submit" id="save-entity" [disabled]="isSaving"
                         class="btn btn-primary">
                     Mentés
                 </button>
 
-                <button *ngIf="!isEdit" type="button" id="edit-entity" class="btn btn-primary" (click)="enableEdit()">
+                <button *ngIf="!isEdit && isAdmin()" type="button" id="edit-entity" class="btn btn-primary" (click)="enableEdit()">
                     Szerkesztés
                 </button>
             </div>

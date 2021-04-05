@@ -14,6 +14,7 @@ import { ApplicationUserService } from 'app/shared/services/application-user.ser
 import { AccountService } from 'app/core/auth/account.service';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { Authority } from 'app/shared/constants/authority.constants';
 
 @Component({
   selector: 'jhi-application-user-update',
@@ -74,9 +75,12 @@ export class ApplicationUserUpdateComponent implements OnInit {
       this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
     this.accountService.identity().subscribe(account => (this.currentAccount = account));
-    this.userService.authorities().subscribe(authorities => {
-      this.authorities = authorities;
-    });
+
+    if (this.currentAccount?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN)) {
+      this.userService.authorities().subscribe(authorities => {
+        this.authorities = authorities;
+      });
+    }
   }
 
   updateForm(appUser: IAppUser): void {
@@ -212,5 +216,9 @@ export class ApplicationUserUpdateComponent implements OnInit {
   enableEdit(): void {
     this.isEdit = true;
     this.editForm.enable();
+  }
+
+  isAdmin(): boolean {
+    return this.authorities.find(auth => auth === Authority.ADMIN) !== undefined;
   }
 }

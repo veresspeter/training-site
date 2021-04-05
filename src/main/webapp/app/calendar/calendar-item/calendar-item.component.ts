@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { IAppUser } from 'app/shared/model/application-user.model';
 import { EventService } from 'app/shared/services/event.service';
 import { JhiEventManager } from 'ng-jhipster';
+import { Authority } from 'app/shared/constants/authority.constants';
 
 @Component({
   selector: 'jhi-calendar-item',
@@ -26,7 +27,15 @@ export class CalendarItemComponent implements OnInit {
   ngOnInit(): void {}
 
   isAdmin(): boolean {
-    return this.authorities?.find(auth => auth === 'ROLE_ADMIN') !== undefined;
+    return this.authorities?.find(auth => auth === Authority.ADMIN) !== undefined;
+  }
+
+  isEditor(): boolean {
+    return this.authorities?.find(auth => auth === Authority.EDITOR) !== undefined;
+  }
+
+  isMyClass(id: number | undefined): boolean {
+    return this.activeUserId === id;
   }
 
   delete(event: IEvent | undefined): void {

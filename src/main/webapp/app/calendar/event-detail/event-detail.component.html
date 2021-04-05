@@ -54,11 +54,14 @@
                     </div>
                 </dd>
             </ng-container>
-            <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <ng-container *jhiHasAnyAuthority="['ROLE_EDITOR']">
                 <dt><span>Jelentkezők</span></dt>
                 <dd>
                     <span *ngFor="let participant of event.participants; let last = last">
-                        <a [routerLink]="['/user-management', participant?.id, 'view']">{{ participant?.internalUser?.lastName }} {{ participant?.internalUser?.firstName }}</a>{{ last ? '' : ', ' }}
+                        <a [routerLink]="['/admin/user-management', participant?.id, 'view']" [class.text-red]="isParticipantHaveProblem(participant)">
+                            {{ participant?.internalUser?.lastName }} {{ participant?.internalUser?.firstName }}
+                            <fa-icon *ngIf="isParticipantHaveProblem(participant)" icon="exclamation-circle" class="red"></fa-icon>
+                        </a>{{ last ? '' : ', ' }}
                     </span>
                 </dd>
             </ng-container>

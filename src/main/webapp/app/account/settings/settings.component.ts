@@ -14,7 +14,7 @@ import { DATE_FORMAT } from 'app/shared/constants/input.constants';
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit {
-  readonly NONE = 'Nincs';
+  public static readonly NONE = 'Nincs';
 
   currentAccount!: AppUser;
   authorities: string[] = [];
@@ -94,22 +94,22 @@ export class SettingsComponent implements OnInit {
           imageContentType: appUser.imageContentType,
           introduction: appUser.introduction,
           injury: appUser.injury,
-          injuryText: appUser.injury && appUser.injury !== this.NONE ? appUser.injury : undefined,
+          injuryText: appUser.injury && appUser.injury !== SettingsComponent.NONE ? appUser.injury : undefined,
           surgery: appUser.surgery,
-          surgeryText: appUser.surgery && appUser.surgery !== this.NONE ? appUser.surgery : undefined,
+          surgeryText: appUser.surgery && appUser.surgery !== SettingsComponent.NONE ? appUser.surgery : undefined,
           heartProblem: appUser.heartProblem,
-          heartProblemText: appUser.heartProblem && appUser.heartProblem !== this.NONE ? appUser.heartProblem : undefined,
+          heartProblemText: appUser.heartProblem && appUser.heartProblem !== SettingsComponent.NONE ? appUser.heartProblem : undefined,
           respiratoryDisease: appUser.respiratoryDisease,
           respiratoryDiseaseText:
-            appUser.respiratoryDisease && appUser.respiratoryDisease !== this.NONE ? appUser.respiratoryDisease : undefined,
+            appUser.respiratoryDisease && appUser.respiratoryDisease !== SettingsComponent.NONE ? appUser.respiratoryDisease : undefined,
           spineProblem: appUser.spineProblem,
-          spineProblemText: appUser.spineProblem && appUser.spineProblem !== this.NONE ? appUser.spineProblem : undefined,
+          spineProblemText: appUser.spineProblem && appUser.spineProblem !== SettingsComponent.NONE ? appUser.spineProblem : undefined,
           regularPain: appUser.regularPain,
-          regularPainText: appUser.regularPain && appUser.regularPain !== this.NONE ? appUser.regularPain : undefined,
+          regularPainText: appUser.regularPain && appUser.regularPain !== SettingsComponent.NONE ? appUser.regularPain : undefined,
           medicine: appUser.medicine,
-          medicineText: appUser.medicine && appUser.medicine !== this.NONE ? appUser.medicine : undefined,
+          medicineText: appUser.medicine && appUser.medicine !== SettingsComponent.NONE ? appUser.medicine : undefined,
           otherProblem: appUser.otherProblem,
-          otherProblemText: appUser.otherProblem && appUser.otherProblem !== this.NONE ? appUser.otherProblem : undefined,
+          otherProblemText: appUser.otherProblem && appUser.otherProblem !== SettingsComponent.NONE ? appUser.otherProblem : undefined,
           gdprAccepted: appUser.gdprAccepted,
           selfResponsibility: appUser.selfResponsibility,
         });
@@ -127,28 +127,28 @@ export class SettingsComponent implements OnInit {
   }
 
   private initTextValues(appUser: AppUser): void {
-    if (appUser.injury && appUser.injury !== this.NONE) {
+    if (appUser.injury && appUser.injury !== SettingsComponent.NONE) {
       this.injuryText = appUser.injury;
     }
-    if (appUser.surgery && appUser.surgery !== this.NONE) {
+    if (appUser.surgery && appUser.surgery !== SettingsComponent.NONE) {
       this.surgeryText = appUser.surgery;
     }
-    if (appUser.heartProblem && appUser.heartProblem !== this.NONE) {
+    if (appUser.heartProblem && appUser.heartProblem !== SettingsComponent.NONE) {
       this.heartProblemText = appUser.heartProblem;
     }
-    if (appUser.respiratoryDisease && appUser.respiratoryDisease !== this.NONE) {
+    if (appUser.respiratoryDisease && appUser.respiratoryDisease !== SettingsComponent.NONE) {
       this.respiratoryDiseaseText = appUser.respiratoryDisease;
     }
-    if (appUser.spineProblem && appUser.spineProblem !== this.NONE) {
+    if (appUser.spineProblem && appUser.spineProblem !== SettingsComponent.NONE) {
       this.spineProblemText = appUser.spineProblem;
     }
-    if (appUser.regularPain && appUser.regularPain !== this.NONE) {
+    if (appUser.regularPain && appUser.regularPain !== SettingsComponent.NONE) {
       this.regularPainText = appUser.regularPain;
     }
-    if (appUser.medicine && appUser.medicine !== this.NONE) {
+    if (appUser.medicine && appUser.medicine !== SettingsComponent.NONE) {
       this.medicineText = appUser.medicine;
     }
-    if (appUser.otherProblem && appUser.otherProblem !== this.NONE) {
+    if (appUser.otherProblem && appUser.otherProblem !== SettingsComponent.NONE) {
       this.otherProblemText = appUser.otherProblem;
     }
   }
@@ -325,5 +325,9 @@ export class SettingsComponent implements OnInit {
       this.currentAccount?.gdprAccepted === true &&
       this.currentAccount?.selfResponsibility === true
     );
+  }
+
+  getNone(): string {
+    return SettingsComponent.NONE;
   }
 }

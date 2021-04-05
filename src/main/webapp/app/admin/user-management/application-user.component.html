@@ -67,7 +67,7 @@
                         <fa-icon icon="eye"></fa-icon>
                     </button>
 
-                    <button type="button" (click)="delete(appUser)"
+                    <button *ngIf="isAdmin()" type="button" (click)="delete(appUser)"
                             class="btn btn-primary btn-icon"
                             [disabled]="!currentAccount || currentAccount.id === appUser.internalUser?.id">
                         <fa-icon icon="trash"></fa-icon>
