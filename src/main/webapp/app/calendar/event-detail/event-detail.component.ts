@@ -135,7 +135,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   private joinAgoraChannel(token: string, channelName: string, timeStamp: number): void {
-    const tS = timeStamp.toString().substring(4);
+    const tS = timeStamp.toString().substring(6);
     const customUid = this.currentUser?.id ? this.currentUser.id + tS : tS;
 
     this.agoraClient.join(

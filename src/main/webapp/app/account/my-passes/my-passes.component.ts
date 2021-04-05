@@ -46,7 +46,7 @@ export class MyPassesComponent implements OnInit {
   }
 
   isPassExpired(validFrom: Moment | undefined, validTo: Moment | undefined): boolean {
-    return validFrom!.isAfter(moment.now()) && validTo!.isBefore(moment.now());
+    return validFrom!.isAfter(moment.now()) && validTo !== undefined && validTo.isBefore(moment.now());
   }
 
   isPassUnpaid(paymentStatus: PaymentStatus | undefined): boolean {
