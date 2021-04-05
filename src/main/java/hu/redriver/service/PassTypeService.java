@@ -59,6 +59,12 @@ public class PassTypeService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Transactional(readOnly = true)
+    public List<PassType> findAllByActivityTypeId(Long activityTypeId) {
+        log.debug("Request to get all PassTypes by ActivityTypeId: {}", activityTypeId);
+        return passTypeRepository.findAllByAvailableForTypeId(activityTypeId);
+    }
+
 
     /**
      * Get one passType by id.

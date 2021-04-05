@@ -125,7 +125,7 @@ public class EventResource {
             eventService.join(id);
             return ResponseEntity.ok().headers(CustomHeaderUtil.createEntitySuccessAlert(applicationName, ENTITY_NAME,"Sikeres jelentkezés", id.toString())).build();
         } catch (BadRequestException e) {
-            return ResponseEntity.badRequest().headers(CustomHeaderUtil.createCustomFailureAlert(applicationName, ENTITY_NAME, "Az eseményre a helyek beteltek")).build();
+            return ResponseEntity.badRequest().headers(CustomHeaderUtil.createCustomFailureAlert(applicationName, ENTITY_NAME, e.getMessage())).build();
         }
     }
 

@@ -109,7 +109,7 @@ public class AppUserResource {
         AppUserDTO result = appUserService.save(appUserDTO);
 
         return ResponseEntity.ok()
-            .headers(CustomHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, result.getId().toString(), result.getInternalUserDTO().getLastName() + " " + appUserDTO.getInternalUserDTO().getLastName()))
+            .headers(CustomHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, result.getId().toString(), result.getInternalUserDTO().getLastName() + " " + appUserDTO.getInternalUserDTO().getFirstName()))
             .body(result);
     }
 

@@ -73,9 +73,9 @@ public class Event implements Serializable {
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JoinTable(name = "event_participants",
+    @JoinTable(name = "event_participant",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "participants_id", referencedColumnName = "id"))
+               inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
     private Set<AppUser> participants = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

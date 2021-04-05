@@ -2,9 +2,15 @@ package hu.redriver.service;
 
 import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Event;
+import hu.redriver.domain.EventParticipant;
+import hu.redriver.repository.ActivityRepository;
+import hu.redriver.repository.EventParticipantRepository;
 import hu.redriver.repository.EventRepository;
+import hu.redriver.service.dto.ActivityDTO;
 import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.EventDTO;
+import hu.redriver.service.dto.PassDTO;
+import hu.redriver.service.mapper.ActivityMapper;
 import hu.redriver.service.mapper.AppUserMapper;
 import hu.redriver.service.mapper.EventMapper;
 import io.undertow.util.BadRequestException;
@@ -31,21 +37,33 @@ public class EventService {
     private final Logger log = LoggerFactory.getLogger(EventService.class);
 
     private final EventRepository eventRepository;
+    private final EventParticipantRepository eventParticipantRepository;
     private final EventMapper eventMapper;
     private final AppUserMapper appUserMapper;
+    private final ActivityMapper activityMapper;
     private final UserService userService;
     private final AppUserService appUserService;
+    private final PassService passService;
+    private final ActivityRepository activityRepository;
 
     public EventService(EventRepository eventRepository,
+                        EventParticipantRepository eventParticipantRepository,
                         EventMapper eventMapper,
                         UserService userService,
                         AppUserService appUserService,
-                        AppUserMapper appUserMapper) {
+                        AppUserMapper appUserMapper,
+                        PassService passService,
+                        ActivityRepository activityRepository,
+                        ActivityMapper activityMapper) {
         this.eventRepository = eventRepository;
+        this.eventParticipantRepository = eventParticipantRepository;
         this.eventMapper = eventMapper;
+        this.appUserMapper = appUserMapper;
         this.userService = userService;
         this.appUserService = appUserService;
-        this.appUserMapper = appUserMapper;
+        this.passService = passService;
+        this.activityRepository = activityRepository;
+        this.activityMapper = activityMapper;
     }
 
     /**
@@ -117,16 +135,38 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
+    @Transactional
     public void join(Long id) throws BadRequestException {
         log.debug("Request to join Event : {}", id);
         EventDTO eventDTO = findOne(id).orElseThrow(getNotFoundException());
 
         if (eventDTO.getLimit() != null && eventDTO.getLimit().compareTo(eventDTO.getParticipants().size() + 1) < 0) {
-            throw new BadRequestException();
+            throw new BadRequestException("Az eseményre a helyek beteltek");
         }
 
-        eventDTO.getParticipants().add(getCurrentAppUser());
-        save(eventDTO);
+        ActivityDTO activityDTO = activityRepository.findAll().stream()
+            .filter(activity -> activity.getId().equals(eventDTO.getActivityId()))
+            .findFirst()
+            .map(activityMapper::toDto)
+            .orElseThrow(() -> new BadRequestException("A foglalkozás nem található"));
+        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId());
+        PassDTO result;
+
+        if (passDTOs.size() == 0) {
+            throw new BadRequestException("Nem található aktív bérlet");
+        }
+
+        if (passDTOs.size() != 1) {
+            Collections.sort(passDTOs);
+        }
+        result = passDTOs.get(0);
+
+        EventParticipant eventParticipant = new EventParticipant();
+        eventParticipant.setEventId(eventDTO.getId());
+        eventParticipant.setParticipantId(getCurrentAppUser().getId());
+        eventParticipant.setPassId(result.getId());
+
+        eventParticipantRepository.save(eventParticipant);
     }
 
     public void quit(Long id) {
