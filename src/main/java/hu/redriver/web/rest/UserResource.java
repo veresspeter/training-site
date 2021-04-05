@@ -167,13 +167,7 @@ public class UserResource {
     @GetMapping("/users/authorities")
     @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public List<String> getAuthorities() {
-        List<String> authoritires = userService.getAuthorities();
-        if (authoritires.stream().filter(auth -> auth.equals(AuthoritiesConstants.EDITOR)).findFirst().isEmpty()) {
-            authoritires.add(AuthoritiesConstants.EDITOR);
-            userService.saveNewAuthority(AuthoritiesConstants.EDITOR);
-        }
-
-        return authoritires;
+        return userService.getAuthorities();
     }
 
     /**

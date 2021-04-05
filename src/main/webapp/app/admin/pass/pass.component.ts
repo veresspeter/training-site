@@ -114,17 +114,21 @@ export class PassComponent implements OnInit, OnDestroy {
 
   getUserNameById(id: number | undefined): string {
     const result = this.appUsers?.find(appUser => appUser.id === id);
-    return result?.internalUser?.lastName + ' ' + result?.internalUser?.firstName;
+    return result?.internalUser?.lastName ? result.internalUser.lastName + ' ' + result.internalUser.firstName : '';
   }
 
   getPassTypeNameById(id: number | undefined): string {
     const result = this.passTypes?.find(passType => passType.id === id);
-    return `${result?.name} (${result?.price ? formatNumber(result.price, 'hu', '1.0') : '?'} ${result?.unit})`;
+    return result?.name
+      ? `${result?.name ? result.name : ''} (${result?.price ? formatNumber(result.price, 'hu', '1.0') : ''} ${
+          result?.unit ? result.unit : ''
+        })`
+      : '';
   }
 
   getPassOccasionsById(id: number | undefined): string {
     const result = this.passTypes?.find(passType => passType.id === id);
-    return result?.occasions?.toString() || '?';
+    return result?.occasions?.toString() || '';
   }
 
   getPaymentStatusName(status: string | undefined): string {
