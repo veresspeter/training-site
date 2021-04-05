@@ -92,7 +92,7 @@
                     <label class="form-control-label" for="field_trainer">Oktató</label>
                     <select type="text" class="form-control" name="trainer" id="field_trainer" formControlName="trainer">
                         <option *ngIf="!editForm.get('trainer')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="appUser.id" *ngFor="let appUser of appUsers; trackBy: trackByUserId">{{ appUser?.internalUser?.lastName + " " + appUser?.internalUser?.lastName }}</option>
+                        <option [ngValue]="appUser.id" *ngFor="let appUser of appUsers; trackBy: trackByUserId">{{ appUser?.internalUser?.lastName + " " + appUser?.internalUser?.firstName }}</option>
                     </select>
                 </div>
 
