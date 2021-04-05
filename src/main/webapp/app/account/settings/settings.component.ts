@@ -41,7 +41,7 @@ export class SettingsComponent implements OnInit {
     email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [],
     sex: [],
-    userBirthDay: [{ year: 2018, month: 3, day: 28 }, [Validators.required]],
+    userBirthDay: [undefined, [Validators.required]],
     image: [],
     imageContentType: [],
     injury: [undefined, [Validators.required]],

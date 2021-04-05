@@ -10,6 +10,7 @@ import hu.redriver.service.dto.AppUserDTO;
 
 import hu.redriver.web.rest.errors.EmailAlreadyUsedException;
 import hu.redriver.web.rest.errors.LoginAlreadyUsedException;
+import hu.redriver.web.utils.CustomHeaderUtil;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.undertow.util.BadRequestException;
@@ -35,7 +36,7 @@ public class AppUserResource {
 
     private final Logger log = LoggerFactory.getLogger(AppUserResource.class);
 
-    private static final String ENTITY_NAME = "appUser";
+    private static final String ENTITY_NAME = "felhasználó";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -65,7 +66,7 @@ public class AppUserResource {
         }
         AppUserDTO result = appUserService.save(appUserDTO);
         return ResponseEntity.created(new URI("/api/application-users/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(CustomHeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString(), result.getInternalUserDTO().getLastName() + " " + appUserDTO.getInternalUserDTO().getLastName()))
             .body(result);
     }
 
@@ -99,11 +100,16 @@ public class AppUserResource {
             throw new LoginAlreadyUsedException();
         }
 
+        AppUserDTO existingAppUser = appUserService.findOne(appUserDTO.getId())
+            .orElseThrow(() -> new BadRequestAlertException("Felhasználó nem található", ENTITY_NAME, "notfound"));
+        appUserDTO.setGdprAccepted(existingAppUser.getGdprAccepted());
+        appUserDTO.setSelfResponsibility(existingAppUser.getSelfResponsibility());
+
         userService.updateUser(appUserDTO.getInternalUserDTO());
         AppUserDTO result = appUserService.save(appUserDTO);
 
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, appUserDTO.getId().toString()))
+            .headers(CustomHeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, result.getId().toString(), result.getInternalUserDTO().getLastName() + " " + appUserDTO.getInternalUserDTO().getLastName()))
             .body(result);
     }
 

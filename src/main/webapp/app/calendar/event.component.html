@@ -3,6 +3,10 @@
     Létrehozás
 </button>
 
+<h2 id="page-heading" class="mb-4">
+    Órarend
+</h2>
+
 <div *ngIf="loading" class="app-loading">
     <div class="lds-css ng-scope">
         <div class="lds-pacman">
@@ -13,10 +17,6 @@
 </div>
 
 <ng-container *ngIf="!loading">
-    <h2 id="page-heading" class="mb-4">
-        Órarend
-    </h2>
-
     <div id="entities" class="text-left row justify-content-around text-center">
         <div class="col-12 px-0">
             <button type="button" class="btn btn-link mr-3" [class.disabled]="isLeftDatePickerDisabled()" (click)="decreaseDatePicker()"><fa-icon icon="chevron-left"></fa-icon></button>
