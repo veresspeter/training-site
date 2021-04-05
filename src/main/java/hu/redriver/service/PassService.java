@@ -1,9 +1,10 @@
 package hu.redriver.service;
 
-import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Pass;
+import hu.redriver.domain.PassType;
 import hu.redriver.domain.enumeration.PaymentStatus;
 import hu.redriver.repository.PassRepository;
+import hu.redriver.repository.PassTypeRepository;
 import hu.redriver.service.dto.AppUserDTO;
 import hu.redriver.service.dto.PassDTO;
 import hu.redriver.service.dto.PassTypeDTO;
@@ -18,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,19 +34,22 @@ public class PassService {
 
     private final Logger log = LoggerFactory.getLogger(PassService.class);
 
+    private final PassRepository passRepository;
+    private final PassTypeRepository passTypeRepository;
+    private final PassMapper passMapper;
+    private final AppUserMapper appUserMapper;
     private final PassTypeService passTypeService;
     private final UserService userService;
     private final AppUserService appUserService;
-    private final PassRepository passRepository;
-    private final PassMapper passMapper;
-    private final AppUserMapper appUserMapper;
 
-    public PassService(PassTypeService passTypeService,
-                       UserService userService,
-                       AppUserService appUserService,
-                       PassRepository passRepository,
+    public PassService(PassRepository passRepository,
+                       PassTypeRepository passTypeRepository,
                        PassMapper passMapper,
-                       AppUserMapper appUserMapper) {
+                       AppUserMapper appUserMapper,
+                       PassTypeService passTypeService,
+                       UserService userService,
+                       AppUserService appUserService) {
+        this.passTypeRepository = passTypeRepository;
         this.passTypeService = passTypeService;
         this.userService = userService;
         this.appUserService = appUserService;
@@ -145,6 +148,16 @@ public class PassService {
         log.debug("Request to get Pass by PaymentId : {}", paymentId);
         return passRepository.findByPaymentId(paymentId)
             .map(passMapper::toDto);
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<PassDTO> findOneByActivityTypeId(Long activityTypeId, Long userId) {
+        log.debug("Request to get all Pass by ActivityTypeId : {}", activityTypeId);
+        List<PassType> passTypes = passTypeService.findAllByActivityTypeId(activityTypeId);
+        return passRepository.findAllByUserIdAndPassTypeIn(userId, passTypes).stream()
+            .map(passMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

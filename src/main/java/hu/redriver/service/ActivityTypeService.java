@@ -59,7 +59,6 @@ public class ActivityTypeService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-
     /**
      * Get one activityType by id.
      *
@@ -68,6 +67,13 @@ public class ActivityTypeService {
      */
     @Transactional(readOnly = true)
     public Optional<ActivityTypeDTO> findOne(Long id) {
+        log.debug("Request to get ActivityType : {}", id);
+        return activityTypeRepository.findById(id)
+            .map(activityTypeMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<ActivityTypeDTO> findOneByActivityId(Long id) {
         log.debug("Request to get ActivityType : {}", id);
         return activityTypeRepository.findById(id)
             .map(activityTypeMapper::toDto);

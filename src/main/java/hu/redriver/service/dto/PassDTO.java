@@ -12,7 +12,7 @@ import java.time.ZonedDateTime;
 /**
  * A DTO for the {@link hu.redriver.domain.Pass} entity.
  */
-public class PassDTO implements Serializable {
+public class PassDTO implements Serializable, Comparable<PassDTO> {
 
     private Long id;
     private ZonedDateTime validFrom;
@@ -170,5 +170,22 @@ public class PassDTO implements Serializable {
             ", passTypeId=" + getPassTypeId() +
             ", userId=" + getUserId() +
             "}";
+    }
+
+    @Override
+    public int compareTo(PassDTO o) {
+        if (this.validTo == null && o.validTo == null){
+            return 0;
+        }
+
+        if (this.validTo == null) {
+            return 1;
+        }
+
+        if (o.validTo == null) {
+            return -1;
+        }
+
+        return this.validTo.compareTo(o.validTo);
     }
 }
