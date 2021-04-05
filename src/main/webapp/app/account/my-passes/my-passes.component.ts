@@ -4,6 +4,8 @@ import { AccountService } from 'app/core/auth/account.service';
 import { PaymentStatus } from 'app/shared/model/enumerations/payment-status.model';
 import { PassTypeService } from 'app/shared/services/pass-type.service';
 import { IPassType } from 'app/shared/model/pass-type.model';
+import { Moment } from 'moment';
+import * as moment from 'moment/moment';
 
 @Component({
   selector: 'jhi-my-passes',
@@ -37,5 +39,23 @@ export class MyPassesComponent implements OnInit {
     } else {
       return '';
     }
+  }
+
+  isPassPaid(paymentStatus: PaymentStatus | undefined): boolean {
+    return paymentStatus?.toString() === PaymentStatus.PAID.toString();
+  }
+
+  isPassExpired(validFrom: Moment | undefined, validTo: Moment | undefined): boolean {
+    return validFrom!.isAfter(moment.now()) && validTo!.isBefore(moment.now());
+  }
+
+  isPassUnpaid(paymentStatus: PaymentStatus | undefined): boolean {
+    return paymentStatus?.toString() === PaymentStatus.UNPAID.toString() || paymentStatus?.toString() === PaymentStatus.NEW.toString();
+  }
+
+  isPassInProgress(paymentStatus: PaymentStatus | undefined): boolean {
+    return (
+      paymentStatus?.toString() === PaymentStatus.WAITING.toString() || paymentStatus?.toString() === PaymentStatus.APPROVED.toString()
+    );
   }
 }

@@ -2,6 +2,66 @@
 
 :host {
   .card {
-    background-color: $mv-pastel;
+    background-color: $mv-pastel-gray;
+    max-width: 800px;
+
+    * {
+      color: $mv-gray;
+    }
+
+    fa-icon {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 120px;
+      opacity: 10%;
+
+      svg {
+        margin: auto;
+      }
+    }
+
+    .pass-display-container {
+      background-color: $mv-light-gray;
+      padding: 15px;
+      min-height: 107px;
+
+      .pass-container {
+        height: 75px;
+
+        .pass-occasion {
+          background-color: $mv-gray;
+          width: 8px;
+          height: 8px;
+          margin: 0 4px;
+
+          &.used {
+            height: 75px;
+          }
+        }
+      }
+    }
+
+    &.active {
+      background-color: $mv-pastel;
+
+      * {
+        color: $mv-text-dark;
+      }
+
+      .pass-display-container {
+        background-color: $mv-pastel-light;
+
+        .pass-occasion {
+          background-color: $mv-dark-gray;
+
+          &.used {
+            background-color: $mv-btn-primary;
+          }
+        }
+      }
+    }
   }
 }

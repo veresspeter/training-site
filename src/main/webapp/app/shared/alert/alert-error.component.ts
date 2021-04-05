@@ -66,8 +66,20 @@ export class AlertErrorComponent implements OnDestroy {
           break;
         }
 
+        case 401:
+          this.addErrorAlert('Jogosulatlan tartalom kérés');
+          break;
+
+        case 403:
+          this.addErrorAlert('Tiltott tartalom kérés');
+          break;
+
         case 404:
           this.addErrorAlert('A keresett oldal nem található');
+          break;
+
+        case 500:
+          this.addErrorAlert('Szerver hiba');
           break;
 
         default:
