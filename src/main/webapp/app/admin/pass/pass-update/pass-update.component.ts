@@ -36,6 +36,7 @@ export class PassUpdateComponent implements OnInit {
     id: [],
     purchased: [undefined, [Validators.required]],
     usageNo: [undefined, [Validators.required]],
+    dynamicUsageNo: [],
     paymentStatus: [undefined, [Validators.required]],
     validFrom: [],
     validTo: [],
@@ -71,10 +72,14 @@ export class PassUpdateComponent implements OnInit {
       pass.validFrom = today;
     }
 
+    const usage = pass.usageNo ? pass.usageNo : 0;
+    const dynamicNo = pass.totalUsageNo ? pass.totalUsageNo - usage : 0;
+
     this.editForm.patchValue({
       id: pass.id,
       purchased: moment(pass.purchased, DATE_TIME_FORMAT),
       usageNo: pass.usageNo ? pass.usageNo : 0,
+      dynamicUsageNo: dynamicNo,
       paymentStatus: pass.paymentStatus ? pass.paymentStatus : this.paymentStatus.PAID.Value,
       validFrom: moment(pass.validFrom, DATE_FORMAT),
       validTo: pass.validTo ? moment(pass.validTo, DATE_FORMAT) : null,
@@ -166,6 +171,7 @@ export class PassUpdateComponent implements OnInit {
   enableEdit(): void {
     this.isEdit = true;
     this.editForm.enable();
+    this.editForm.get('dynamicUsageNo')?.disable();
 
     const passTypeIdValueChanges = this.editForm.get('passTypeId')?.valueChanges;
     if (passTypeIdValueChanges) {
@@ -187,9 +193,9 @@ export class PassUpdateComponent implements OnInit {
         validFromValueChanges.subscribe(validFrom => {
           const validFromMoment = moment(validFrom, DATE_FORMAT);
           const passTypeId = this.editForm.get('passTypeId')?.value;
+          const durationDays = this.passTypes.find(passType => passType.id === passTypeId)?.durationDays;
 
-          if (passTypeId) {
-            const durationDays = this.passTypes.find(passType => passType.id === passTypeId)?.durationDays;
+          if (passTypeId && durationDays) {
             this.editForm.get('validTo')?.setValue(validFromMoment.add(durationDays, 'days'));
           }
         })

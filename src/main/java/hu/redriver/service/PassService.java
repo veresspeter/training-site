@@ -35,7 +35,6 @@ public class PassService {
     private final Logger log = LoggerFactory.getLogger(PassService.class);
 
     private final PassRepository passRepository;
-    private final PassTypeRepository passTypeRepository;
     private final PassMapper passMapper;
     private final AppUserMapper appUserMapper;
     private final PassTypeService passTypeService;
@@ -43,13 +42,11 @@ public class PassService {
     private final AppUserService appUserService;
 
     public PassService(PassRepository passRepository,
-                       PassTypeRepository passTypeRepository,
                        PassMapper passMapper,
                        AppUserMapper appUserMapper,
                        PassTypeService passTypeService,
                        UserService userService,
                        AppUserService appUserService) {
-        this.passTypeRepository = passTypeRepository;
         this.passTypeService = passTypeService;
         this.userService = userService;
         this.appUserService = appUserService;
@@ -118,14 +115,15 @@ public class PassService {
     @Transactional(readOnly = true)
     public Page<PassDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Passes");
-        return passRepository.findAll(pageable).map(PassDTO::new);
+        return passRepository.findAll(pageable).map(passMapper::toDto);
     }
 
     @Transactional(readOnly = true)
     public List<PassDTO> findAllByAppUser(AppUserDTO appUserDTO) {
         log.debug("Request to get all Passes by User: {}", appUserDTO);
 
-        return passRepository.findAllByUser(appUserMapper.toEntity(appUserDTO)).stream()
+        List<Pass> passes = passRepository.findAllByUser(appUserMapper.toEntity(appUserDTO));
+        return passes.stream()
             .map(passMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
