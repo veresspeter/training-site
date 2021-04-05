@@ -12,6 +12,8 @@ import { IUser, User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { AccountService } from 'app/core/auth/account.service';
+import * as moment from 'moment';
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 
 @Component({
   selector: 'jhi-application-user-update',
@@ -87,7 +89,7 @@ export class ApplicationUserUpdateComponent implements OnInit {
       email: appUser.internalUser?.email,
       activated: appUser.internalUser?.activated,
       authorities: appUser.internalUser?.authorities,
-      birthDay: appUser.birthDay,
+      birthDay: appUser.birthDay ? moment(appUser.birthDay, DATE_FORMAT) : null,
       googleToken: appUser.googleToken,
       facebookToken: appUser.facebookToken,
       image: appUser.image,
@@ -165,7 +167,7 @@ export class ApplicationUserUpdateComponent implements OnInit {
       ...new AppUser(),
       id: this.editForm.get(['id'])!.value,
       sex: this.editForm.get(['sex'])!.value,
-      birthDay: this.editForm.get(['birthDay'])!.value,
+      birthDay: this.editForm.get(['birthDay'])!.value ? moment(this.editForm.get(['birthDay'])!.value, DATE_FORMAT).utc(true) : undefined,
       googleToken: this.editForm.get(['googleToken'])!.value,
       facebookToken: this.editForm.get(['facebookToken'])!.value,
       imageContentType: this.editForm.get(['imageContentType'])!.value,

@@ -87,12 +87,11 @@
 
 .app-loading {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  top: 10em;
+  margin: 75px 0;
 }
 .app-loading p {
   display: block;
@@ -103,7 +102,6 @@
 }
 
 .app-loading .lds-pacman {
-  position: relative;
   margin: auto;
   width: 200px !important;
   height: 200px !important;
