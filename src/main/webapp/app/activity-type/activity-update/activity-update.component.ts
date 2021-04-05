@@ -63,7 +63,7 @@ export class ActivityUpdateComponent implements OnInit {
       imageContentType: activity.imageContentType,
       activityTypeId: activity.activityTypeId,
       externalLink: activity.externalLink,
-      trainer: activity.trainer,
+      trainer: activity.trainer?.id,
     });
   }
 
