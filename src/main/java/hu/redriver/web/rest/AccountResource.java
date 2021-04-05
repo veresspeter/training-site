@@ -166,7 +166,7 @@ public class AccountResource {
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"))
             .getId()
             .intValue();
-        int customUid = Integer.parseInt(userId.toString() + timeStamp.substring(4));
+        int customUid = Integer.parseInt(userId.toString() + timeStamp.substring(6));
         int tS = Integer.parseInt(timeStamp) + 6 * 60 * 60;
         String token = tokenBuilder.buildTokenWithUid(APP_ID, APP_CERTIFICATE, channelName, customUid, RtcTokenBuilder.Role.Role_Admin, tS);
         return objectMapper.writeValueAsString(token);

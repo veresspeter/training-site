@@ -38,7 +38,7 @@ export class PassUpdateComponent implements OnInit {
     usageNo: [undefined, [Validators.required]],
     dynamicUsageNo: [],
     paymentStatus: [undefined, [Validators.required]],
-    validFrom: [],
+    validFrom: [undefined, [Validators.required]],
     validTo: [],
     passTypeId: [undefined, Validators.required],
     userId: [undefined, Validators.required],
@@ -66,10 +66,8 @@ export class PassUpdateComponent implements OnInit {
 
   updateForm(pass: IPass): void {
     if (!pass.purchased) {
-      const today = moment().startOf('day');
-      const now = moment();
-      pass.purchased = now;
-      pass.validFrom = today;
+      pass.purchased = moment();
+      pass.validFrom = moment().startOf('day');
     }
 
     const usage = pass.usageNo ? pass.usageNo : 0;
@@ -103,6 +101,9 @@ export class PassUpdateComponent implements OnInit {
 
   save(): void {
     this.editForm.markAllAsTouched();
+
+    // eslint-disable-next-line no-console
+    console.log(this.editForm.valid);
 
     if (this.editForm.valid) {
       this.isSaving = true;

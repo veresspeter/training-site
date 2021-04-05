@@ -4,6 +4,7 @@
   .card {
     background-color: $mv-pastel-gray;
     max-width: 800px;
+    opacity: 50%;
 
     * {
       color: $mv-gray;
@@ -46,6 +47,7 @@
 
     &.active {
       background-color: $mv-pastel;
+      opacity: 100%;
 
       * {
         color: $mv-text-dark;
