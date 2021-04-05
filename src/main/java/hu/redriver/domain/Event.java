@@ -72,7 +72,6 @@ public class Event implements Serializable {
     private Long activityId;
 
     @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JoinTable(name = "event_participant",
                joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "participant_id", referencedColumnName = "id"))
