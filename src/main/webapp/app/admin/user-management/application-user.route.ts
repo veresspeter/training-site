@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
-import { Observable, of, EMPTY } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
+import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IAppUser, AppUser } from 'app/shared/model/application-user.model';
+import { AppUser, IAppUser } from 'app/shared/model/application-user.model';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { ApplicationUserComponent } from './application-user.component';
 import { ApplicationUserUpdateComponent } from './update/application-user-update.component';
@@ -38,7 +38,7 @@ export const applicationUserRoute: Routes = [
     path: '',
     component: ApplicationUserComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.EDITOR, Authority.ADMIN],
       pageTitle: 'Felhasználók',
     },
     canActivate: [UserRouteAccessService],
@@ -50,7 +50,7 @@ export const applicationUserRoute: Routes = [
       appUser: ApplicationUserResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.EDITOR, Authority.ADMIN],
       pageTitle: 'Felhasználói adatlap',
     },
     canActivate: [UserRouteAccessService],

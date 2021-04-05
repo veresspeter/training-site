@@ -5,8 +5,9 @@ import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
 import * as AgoraRTC from 'agora-rtc-sdk';
-import { AppUser } from 'app/shared/model/application-user.model';
+import { AppUser, IAppUser } from 'app/shared/model/application-user.model';
 import { Stream } from 'agora-rtc-sdk';
+import { SettingsComponent } from 'app/account/settings/settings.component';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -349,5 +350,18 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     } else {
       return '';
     }
+  }
+
+  isParticipantHaveProblem(user: IAppUser): boolean {
+    return (
+      (user.injury !== undefined && user.injury !== SettingsComponent.NONE) ||
+      (user.surgery !== undefined && user.surgery !== SettingsComponent.NONE) ||
+      (user.heartProblem !== undefined && user.heartProblem !== SettingsComponent.NONE) ||
+      (user.respiratoryDisease !== undefined && user.respiratoryDisease !== SettingsComponent.NONE) ||
+      (user.spineProblem !== undefined && user.spineProblem !== SettingsComponent.NONE) ||
+      (user.regularPain !== undefined && user.regularPain !== SettingsComponent.NONE) ||
+      (user.medicine !== undefined && user.medicine !== SettingsComponent.NONE) ||
+      (user.otherProblem !== undefined && user.otherProblem !== SettingsComponent.NONE)
+    );
   }
 }

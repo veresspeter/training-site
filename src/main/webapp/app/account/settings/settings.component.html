@@ -143,13 +143,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Korábbi sérülések</label>
                     <label for="field_injury_none" class="col-md-2 px-0">
-                        <input type="radio" name="injury" id="field_injury_none" formControlName="injury" [value]="NONE" [checked]="this.editForm.get('injury')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="injury" id="field_injury_none" formControlName="injury" [value]="getNone()" [checked]="this.editForm.get('injury')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_injury" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="injury" id="field_injury" formControlName="injury" class="col-1"
                                [value]="this.editForm.get('injuryText')?.value"
-                               [checked]="this.editForm.get('injury')?.value !== undefined && this.editForm.get('injury')?.value !== NONE" />
+                               [checked]="this.editForm.get('injury')?.value !== undefined && this.editForm.get('injury')?.value !== getNone()" />
                         <input type="text" class="col-11" name="injuryText" id="field_injury_text" formControlName="injuryText" [(ngModel)]="injuryText" />
                     </label>
                     <div *ngIf="editForm.get('injury')!.invalid && (editForm.get('injury')!.dirty || editForm.get('injury')!.touched)">
@@ -162,13 +162,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Műtéti beavatkozások</label>
                     <label for="field_surgery_none" class="col-md-2 px-0">
-                        <input type="radio" name="surgery" id="field_surgery_none" formControlName="surgery" [value]="NONE" [checked]="this.editForm.get('surgery')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="surgery" id="field_surgery_none" formControlName="surgery" [value]="getNone()" [checked]="this.editForm.get('surgery')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_surgery" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="surgery" id="field_surgery" formControlName="surgery" class="col-1"
                                [value]="this.editForm.get('surgeryText')?.value"
-                               [checked]="this.editForm.get('surgery')?.value !== undefined && this.editForm.get('surgery')?.value !== NONE" />
+                               [checked]="this.editForm.get('surgery')?.value !== undefined && this.editForm.get('surgery')?.value !== getNone()" />
                         <input type="text" class="col-11" name="surgeryText" id="field_surgery_text" formControlName="surgeryText"/>
                     </label>
                     <div *ngIf="editForm.get('surgery')!.invalid && (editForm.get('surgery')!.dirty || editForm.get('surgery')!.touched)">
@@ -181,13 +181,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Szív- vagy vérnyomásproblémák</label>
                     <label for="field_heartProblem_none" class="col-md-2 px-0">
-                        <input type="radio" name="heartProblem" id="field_heartProblem_none" formControlName="heartProblem" [value]="NONE" [checked]="this.editForm.get('heartProblem')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="heartProblem" id="field_heartProblem_none" formControlName="heartProblem" [value]="getNone()" [checked]="this.editForm.get('heartProblem')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_heartProblem" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="heartProblem" id="field_heartProblem" formControlName="heartProblem" class="col-1"
                                [value]="this.editForm.get('heartProblemText')?.value"
-                               [checked]="this.editForm.get('heartProblem')?.value !== undefined && this.editForm.get('heartProblem')?.value !== NONE" />
+                               [checked]="this.editForm.get('heartProblem')?.value !== undefined && this.editForm.get('heartProblem')?.value !== getNone()" />
                         <input type="text" class="col-11" name="heartProblemText" id="field_heartProblem_text" formControlName="heartProblemText"/>
                     </label>
                     <div *ngIf="editForm.get('heartProblem')!.invalid && (editForm.get('heartProblem')!.dirty || editForm.get('heartProblem')!.touched)">
@@ -201,13 +201,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Légzőszervi megbetegedések</label>
                     <label for="field_respiratoryDisease_none" class="col-md-2 px-0">
-                        <input type="radio" name="respiratoryDisease" id="field_respiratoryDisease_none" formControlName="respiratoryDisease" [value]="NONE" [checked]="this.editForm.get('respiratoryDisease')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="respiratoryDisease" id="field_respiratoryDisease_none" formControlName="respiratoryDisease" [value]="getNone()" [checked]="this.editForm.get('respiratoryDisease')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_respiratoryDisease" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="respiratoryDisease" id="field_respiratoryDisease" formControlName="respiratoryDisease" class="col-1"
                                [value]="this.editForm.get('respiratoryDiseaseText')?.value"
-                               [checked]="this.editForm.get('respiratoryDisease')?.value !== undefined && this.editForm.get('respiratoryDisease')?.value !== NONE" />
+                               [checked]="this.editForm.get('respiratoryDisease')?.value !== undefined && this.editForm.get('respiratoryDisease')?.value !== getNone()" />
                         <input type="text" class="col-11" name="respiratoryDiseaseText" id="field_respiratoryDisease_text" formControlName="respiratoryDiseaseText"/>
                     </label>
                     <div *ngIf="editForm.get('respiratoryDisease')!.invalid && (editForm.get('respiratoryDisease')!.dirty || editForm.get('respiratoryDisease')!.touched)">
@@ -221,13 +221,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Gerinc- vagy egyéb izületi problémák</label>
                     <label for="field_spineProblem_none" class="col-md-2 px-0">
-                        <input type="radio" name="spineProblem" id="field_spineProblem_none" formControlName="spineProblem" [value]="NONE" [checked]="this.editForm.get('spineProblem')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="spineProblem" id="field_spineProblem_none" formControlName="spineProblem" [value]="getNone()" [checked]="this.editForm.get('spineProblem')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_spineProblem" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="spineProblem" id="field_spineProblem" formControlName="spineProblem" class="col-1"
                                [value]="this.editForm.get('spineProblemText')?.value"
-                               [checked]="this.editForm.get('spineProblem')?.value !== undefined && this.editForm.get('spineProblem')?.value !== NONE" />
+                               [checked]="this.editForm.get('spineProblem')?.value !== undefined && this.editForm.get('spineProblem')?.value !== getNone()" />
                         <input type="text" class="col-11" name="spineProblemText" id="field_spineProblem_text" formControlName="spineProblemText"/>
                     </label>
                     <div *ngIf="editForm.get('spineProblem')!.invalid && (editForm.get('spineProblem')!.dirty || editForm.get('spineProblem')!.touched)">
@@ -241,13 +241,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Rendszeres fájdalmak</label>
                     <label for="field_regularPain_none" class="col-md-2 px-0">
-                        <input type="radio" name="regularPain" id="field_regularPain_none" formControlName="regularPain" [value]="NONE" [checked]="this.editForm.get('regularPain')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="regularPain" id="field_regularPain_none" formControlName="regularPain" [value]="getNone()" [checked]="this.editForm.get('regularPain')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_regularPain" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="regularPain" id="field_regularPain" formControlName="regularPain" class="col-1"
                                [value]="this.editForm.get('regularPainText')?.value"
-                               [checked]="this.editForm.get('regularPain')?.value !== undefined && this.editForm.get('regularPain')?.value !== NONE" />
+                               [checked]="this.editForm.get('regularPain')?.value !== undefined && this.editForm.get('regularPain')?.value !== getNone()" />
                         <input type="text" class="col-11" name="regularPainText" id="field_regularPain_text" formControlName="regularPainText"/>
                     </label>
                     <div *ngIf="editForm.get('regularPain')!.invalid && (editForm.get('regularPain')!.dirty || editForm.get('regularPain')!.touched)">
@@ -261,13 +261,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Rendszeresen szedett gyógyszerek</label>
                     <label for="field_medicine_none" class="col-md-2 px-0">
-                        <input type="radio" name="medicine" id="field_medicine_none" formControlName="medicine" [value]="NONE" [checked]="this.editForm.get('medicine')?.value === NONE" class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="medicine" id="field_medicine_none" formControlName="medicine" [value]="getNone()" [checked]="this.editForm.get('medicine')?.value === getNone()" class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_medicine" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="medicine" id="field_medicine" formControlName="medicine" class="col-1"
                                [value]="this.editForm.get('medicineText')?.value"
-                               [checked]="this.editForm.get('medicine')?.value !== undefined && this.editForm.get('medicine')?.value !== NONE" />
+                               [checked]="this.editForm.get('medicine')?.value !== undefined && this.editForm.get('medicine')?.value !== getNone()" />
                         <input type="text" class="col-11" name="medicineText" id="field_medicine_text" formControlName="medicineText"/>
                     </label>
                     <div *ngIf="editForm.get('medicine')!.invalid && (editForm.get('medicine')!.dirty || editForm.get('medicine')!.touched)">
@@ -281,13 +281,13 @@
                 <div class="form-group mx-0 col-12 row align-items-center justify-content-center">
                     <label class="col-12 px-0">Bármi egyéb</label>
                     <label for="field_otherProblem_none" class="col-md-2 px-0">
-                        <input type="radio" name="otherProblem" id="field_otherProblem_none" formControlName="otherProblem" [value]="NONE" [checked]="this.editForm.get('otherProblem')?.value === NONE"  class="col-1 col-md-2 mr-2" />
+                        <input type="radio" name="otherProblem" id="field_otherProblem_none" formControlName="otherProblem" [value]="getNone()" [checked]="this.editForm.get('otherProblem')?.value === getNone()"  class="col-1 col-md-2 mr-2" />
                         Nincs
                     </label>
                     <label for="field_otherProblem" class="col-md-10 px-0 row align-items-center">
                         <input type="radio" name="otherProblem" id="field_otherProblem" formControlName="otherProblem" class="col-1"
                                [value]="this.editForm.get('otherProblemText')?.value"
-                               [checked]="this.editForm.get('otherProblem')?.value !== undefined && this.editForm.get('otherProblem')?.value !== NONE" />
+                               [checked]="this.editForm.get('otherProblem')?.value !== undefined && this.editForm.get('otherProblem')?.value !== getNone()" />
                         <input type="text" class="col-11" name="otherProblemText" id="field_otherProblem_text" formControlName="otherProblemText"/>
                     </label>
                     <div *ngIf="editForm.get('otherProblem')!.invalid && (editForm.get('otherProblem')!.dirty || editForm.get('otherProblem')!.touched)">

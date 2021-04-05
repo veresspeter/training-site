@@ -133,6 +133,12 @@ Custom alerts for notification
   }
 }
 
+fa-icon.red {
+  svg > path {
+    color: $mv-danger !important;
+  }
+}
+
 @media screen and (min-width: 480px) {
   .alerts .jhi-toast {
     width: 50%;

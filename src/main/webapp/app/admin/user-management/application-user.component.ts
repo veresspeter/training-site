@@ -10,6 +10,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { ApplicationUserDeleteDialogComponent } from 'app/admin/user-management/delete/application-user-delete-dialog.component';
+import { Authority } from 'app/shared/constants/authority.constants';
 
 @Component({
   selector: 'jhi-application-user',
@@ -74,5 +75,9 @@ export class ApplicationUserComponent implements OnInit, OnDestroy {
 
   setActive(user: User | undefined, isActivated: boolean): void {
     this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
+  }
+
+  isAdmin(): boolean {
+    return this.currentAccount?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN) !== undefined;
   }
 }

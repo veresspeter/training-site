@@ -316,6 +316,13 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
+    @Transactional
+    public void saveNewAuthority(String name) {
+        Authority authority = new Authority();
+        authority.setName(name);
+        authorityRepository.save(authority);
+    }
+
 
     private void clearUserCaches(User user) {
         Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
