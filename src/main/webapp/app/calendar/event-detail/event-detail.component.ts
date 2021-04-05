@@ -341,7 +341,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   isEventOnline(linkType: LinkType | undefined): boolean {
-    return linkType === LinkType.ONLINE;
+    return linkType?.Value === LinkType.ONLINE.Value;
   }
 
   getLinkTypeName(type: string | undefined): string {
