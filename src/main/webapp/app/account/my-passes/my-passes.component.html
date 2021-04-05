@@ -24,14 +24,23 @@
 
 <div class="w-100 m-0 px-2 mb-4 row">
     <div class="container col-12 col-md-10 col-lg-8 col-xl-6" id="entities" *ngIf="!loading && passes && passes.length > 0">
-        <div *ngFor="let pass of passes" class="card">
-            <div class="card-body text-center">
-                <div>{{ findPassTypeById(pass.passTypeId)?.name }}</div>
-                <div>{{ pass.validFrom | date: 'yyyy.MM.dd.' }} - {{ pass.validTo | date: 'yyyy.MM.dd.' }}</div>
-                <div>{{getPaymentName(pass.paymentStatus)}}</div>
-                <p class="mt-2 mb-0">Bérletalkalmak</p>
-                <div>{{ pass.totalUsageNo }} / {{ findPassTypeById(pass.passTypeId)?.occasions }}</div>
+        <div *ngFor="let pass of passes" class="card my-5 mx-auto" [class.active]="isPassPaid(pass.paymentStatus) && !isPassExpired(pass.validFrom, pass.validTo)">
+            <div class="card-body text-center mx-0 row align-items-center">
+                <div class="col-12 col-md-5 px-0">
+                    <div>{{ findPassTypeById(pass.passTypeId)?.name }}</div>
+                    <div>{{ pass.validFrom | date: 'yyyy.MM.dd.' }} - {{ pass.validTo | date: 'yyyy.MM.dd.' }}</div>
+                </div>
+                <div class="col-12 col-md-7 pass-display-container">
+                    <div class="mb-2 h4">Bérletalkalmak</div>
+                    <div class="pass-container mx-0 row justify-content-center align-items-end">
+                        <div *ngFor="let ia of [].constructor(findPassTypeById(pass.passTypeId)?.occasions); let i = index"
+                             class="pass-occasion" [class.used]="pass.totalUsageNo ? i < pass.totalUsageNo : false"></div>
+                    </div>
+                </div>
             </div>
+            <fa-icon *ngIf="isPassPaid(pass.paymentStatus) && isPassExpired(pass.validFrom, pass.validTo)" icon="times" class="pass-icon"></fa-icon>
+            <fa-icon *ngIf="isPassUnpaid(pass.paymentStatus)" icon="exclamation-circle" class="pass-icon"></fa-icon>
+            <fa-icon *ngIf="isPassInProgress(pass.paymentStatus)" icon="clock" class="pass-icon"></fa-icon>
         </div>
     </div>
 </div>

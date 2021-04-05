@@ -95,7 +95,9 @@ export class AccountService {
   }
 
   getMyPasses(): Observable<IPass[]> {
-    return this.http.get<IPass[]>(SERVER_API_URL + 'api/account/my-passes', {});
+    return this.http
+      .get<IPass[]>(SERVER_API_URL + 'api/account/my-passes', {})
+      .pipe(map((passes: IPass[]) => this.convertPassArrayDateFromServer(passes)));
   }
 
   private navigateToStoredUrl(): void {
@@ -119,5 +121,16 @@ export class AccountService {
       appUser.birthDay = appUser.birthDay ? moment(appUser.birthDay) : undefined;
     }
     return appUser;
+  }
+
+  protected convertPassArrayDateFromServer(passes: IPass[]): IPass[] {
+    if (passes && passes.length > 0) {
+      passes.forEach(pass => {
+        pass.purchased = pass.purchased ? moment(pass.purchased) : undefined;
+        pass.validFrom = pass.validFrom ? moment(pass.validFrom) : undefined;
+        pass.validTo = pass.validTo ? moment(pass.validTo) : undefined;
+      });
+    }
+    return passes;
   }
 }
