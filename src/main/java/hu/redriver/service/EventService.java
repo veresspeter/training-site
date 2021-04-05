@@ -44,6 +44,7 @@ public class EventService {
     private final UserService userService;
     private final AppUserService appUserService;
     private final PassService passService;
+    private final PassTypeService passTypeService;
     private final ActivityRepository activityRepository;
 
     public EventService(EventRepository eventRepository,
@@ -53,6 +54,7 @@ public class EventService {
                         AppUserService appUserService,
                         AppUserMapper appUserMapper,
                         PassService passService,
+                        PassTypeService passTypeService,
                         ActivityRepository activityRepository,
                         ActivityMapper activityMapper) {
         this.eventRepository = eventRepository;
@@ -62,6 +64,7 @@ public class EventService {
         this.userService = userService;
         this.appUserService = appUserService;
         this.passService = passService;
+        this.passTypeService = passTypeService;
         this.activityRepository = activityRepository;
         this.activityMapper = activityMapper;
     }
@@ -148,8 +151,15 @@ public class EventService {
             .filter(activity -> activity.getId().equals(eventDTO.getActivityId()))
             .findFirst()
             .map(activityMapper::toDto)
-            .orElseThrow(() -> new BadRequestException("A foglalkozás nem található"));
-        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId());
+            .orElseThrow(() -> new BadRequestException("Foglalkozás nem található"));
+        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId())
+            .stream()
+            .filter(pass -> passTypeService.findOne(pass.getPassTypeId())
+                .orElseThrow()
+                .getOccasions() > pass.getTotalUsageNo())
+            .filter(pass -> pass.getValidFrom() == null || pass.getValidFrom().isBefore(eventDTO.getStart()))
+            .filter(pass -> pass.getValidTo() == null || pass.getValidTo().isAfter(eventDTO.getEnd()))
+            .collect(Collectors.toList());
         PassDTO result;
 
         if (passDTOs.size() == 0) {

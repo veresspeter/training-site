@@ -14,6 +14,7 @@ public interface PassMapper extends EntityMapper<PassDTO, Pass> {
 
     @Mapping(source = "passType.id", target = "passTypeId")
     @Mapping(source = "user.id", target = "userId")
+    @Mapping(target = "totalUsageNo", expression = "java( pass.getUsageNo() + pass.getEvents().size() )")
     PassDTO toDto(Pass pass);
 
     @Mapping(source = "passTypeId", target = "passType")

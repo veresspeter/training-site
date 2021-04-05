@@ -5,6 +5,7 @@ export interface IPass {
   id?: number;
   purchased?: Moment;
   usageNo?: number;
+  totalUsageNo?: number;
   validFrom?: Moment;
   validTo?: Moment;
   passTypeId?: number;
@@ -20,6 +21,7 @@ export class Pass implements IPass {
     public id?: number,
     public purchased?: Moment,
     public usageNo?: number,
+    public totalUsageNo?: number,
     public validFrom?: Moment,
     public validTo?: Moment,
     public passTypeId?: number,

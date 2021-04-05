@@ -55,7 +55,7 @@
                         <a [routerLink]="['/admin/user-management', pass.userId , 'view']">{{ getUserNameById(pass.userId) }}</a>
                     </div>
                 </td>
-                <td>{{ pass.usageNo }} / {{ getPassOccasionsById(pass.passTypeId) }}</td>
+                <td>{{ pass.totalUsageNo }} / {{ getPassOccasionsById(pass.passTypeId) }}</td>
                 <td>{{ pass.validFrom | date:'mediumDate' }} - {{ pass.validTo | date:'mediumDate' }}</td>
                 <td>{{ getPaymentStatusName(pass.paymentStatus?.toString()) }}</td>
                 <td class="text-right">

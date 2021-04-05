@@ -20,6 +20,7 @@ public class PassDTO implements Serializable, Comparable<PassDTO> {
     private String paymentId;
     private ZonedDateTime paymentBarionTimestamp;
     private BarionPaymentStatus paymentBarionStatus;
+    private Integer totalUsageNo;
 
     @NotNull
     private ZonedDateTime purchased;
@@ -139,6 +140,14 @@ public class PassDTO implements Serializable, Comparable<PassDTO> {
 
     public void setPaymentBarionStatus(BarionPaymentStatus paymentBarionStatus) {
         this.paymentBarionStatus = paymentBarionStatus;
+    }
+
+    public Integer getTotalUsageNo() {
+        return totalUsageNo;
+    }
+
+    public void setTotalUsageNo(Integer totalUsageNo) {
+        this.totalUsageNo = totalUsageNo;
     }
 
     @Override

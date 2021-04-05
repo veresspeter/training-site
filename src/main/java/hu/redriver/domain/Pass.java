@@ -1,16 +1,21 @@
 package hu.redriver.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import hu.redriver.domain.enumeration.BarionPaymentStatus;
 import hu.redriver.domain.enumeration.PaymentStatus;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Pass.
@@ -63,6 +68,10 @@ public class Pass implements Serializable {
     @Column(name = "payment_barion_timestamp")
     private ZonedDateTime paymentBarionTimestamp;
 
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = EventParticipant.class, mappedBy = "passId")
+    @Fetch(value = FetchMode.SUBSELECT)
+    @Cascade(value = CascadeType.ALL)
+    private Set<EventParticipant> events = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -194,6 +203,10 @@ public class Pass implements Serializable {
             return false;
         }
         return id != null && id.equals(((Pass) o).id);
+    }
+
+    public Set<EventParticipant> getEvents() {
+        return events;
     }
 
     @Override

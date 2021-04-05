@@ -30,7 +30,7 @@
                 <div>{{ pass.validFrom | date: 'yyyy.MM.dd.' }} - {{ pass.validTo | date: 'yyyy.MM.dd.' }}</div>
                 <div>{{getPaymentName(pass.paymentStatus)}}</div>
                 <p class="mt-2 mb-0">Bérletalkalmak</p>
-                <div>{{ pass.usageNo }} / {{ findPassTypeById(pass.passTypeId)?.occasions }}</div>
+                <div>{{ pass.totalUsageNo }} / {{ findPassTypeById(pass.passTypeId)?.occasions }}</div>
             </div>
         </div>
     </div>
