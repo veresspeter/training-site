@@ -46,6 +46,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     if (this.localStream?.getId()) {
       this.removeVideoStream(this.localStream.getId().toString());
     }
+    if (this.pinnedStream?.getId()) {
+      this.removeVideoStream(this.pinnedStream.getId().toString());
+    }
     this.localStream?.close();
     this.localStream?.stop();
     this.agoraClient.leave();
