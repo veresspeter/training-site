@@ -34,7 +34,7 @@
                     <div class="mb-2 h4">Bérletalkalmak</div>
                     <div class="pass-container mx-0 row justify-content-center align-items-end">
                         <div *ngFor="let ia of [].constructor(findPassTypeById(pass.passTypeId)?.occasions); let i = index"
-                             class="pass-occasion" [class.used]="pass.totalUsageNo ? i < pass.totalUsageNo : false"></div>
+                             class="pass-occasion" [class.used]="pass.totalUsageNo !== undefined ? i > pass.totalUsageNo - 1 : false"></div>
                     </div>
                 </div>
             </div>

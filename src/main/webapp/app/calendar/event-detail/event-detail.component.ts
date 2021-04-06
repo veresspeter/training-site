@@ -78,8 +78,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         remoteStream.play('myVideoContainer');
         this.addVideoStream(remoteStream);
       } else {
+        remoteStream.play('remoteVideoContainer');
         if (this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN)) {
-          remoteStream.play('remoteVideoContainer');
           this.addVideoStream(remoteStream, true);
         }
       }
