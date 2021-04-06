@@ -46,4 +46,13 @@ public class EventParticipant implements Serializable {
     public void setPassId(Long passId) {
         this.passId = passId;
     }
+
+    @Override
+    public String toString() {
+        return "EventParticipant{" +
+            "participantId=" + participantId +
+            ", eventId=" + eventId +
+            ", passId=" + passId +
+            '}';
+    }
 }

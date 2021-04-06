@@ -117,7 +117,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     return stream
       .getId()
       .toString()
-      .substring(0, stream.getId().toString().length - 6);
+      .substring(0, stream.getId().toString().length - 4);
   }
 
   private joinChannel(): void {

@@ -150,10 +150,10 @@ public class PassService {
 
 
     @Transactional(readOnly = true)
-    public List<PassDTO> findOneByActivityTypeId(Long activityTypeId, Long userId) {
+    public List<PassDTO> findOneByActivityTypeId(Long activityTypeId, Long userId, PaymentStatus status) {
         log.debug("Request to get all Pass by ActivityTypeId : {}", activityTypeId);
         List<PassType> passTypes = passTypeService.findAllByActivityTypeId(activityTypeId);
-        return passRepository.findAllByUserIdAndPassTypeIn(userId, passTypes).stream()
+        return passRepository.findAllByUserIdAndPassTypeInAndPaymentStatus(userId, passTypes, status).stream()
             .map(passMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

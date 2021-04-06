@@ -156,7 +156,7 @@ public class AccountResource {
         AppUserDTO appUserDTO = appUserService.findOneByInternalUserId(getLoggedInUserDTO().getId())
             .orElseThrow(() -> new AccountResourceException("Felhasználó nem található"));
 
-        return eventService.findAllByParticipant(appUserDTO);
+        return eventService.findAllByParticipantAndFromToday(appUserDTO);
     }
 
     @GetMapping("/agora-token")

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,5 +30,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("select event from Event event left join fetch event.participants where event.id =:id")
     Optional<Event> findOneWithEagerRelationships(@Param("id") Long id);
 
-    List<Event> findAllByParticipantsIn(Set<AppUser> participants);
+    List<Event> findAllByParticipantsInAndEndIsAfter(Set<AppUser> participants, ZonedDateTime dateTime);
 }

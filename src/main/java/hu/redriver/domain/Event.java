@@ -19,7 +19,6 @@ import hu.redriver.domain.enumeration.LinkType;
  */
 @Entity
 @Table(name = "event")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
