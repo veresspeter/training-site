@@ -8,6 +8,7 @@ import * as AgoraRTC from 'agora-rtc-sdk';
 import { AppUser, IAppUser } from 'app/shared/model/application-user.model';
 import { Stream } from 'agora-rtc-sdk';
 import { SettingsComponent } from 'app/account/settings/settings.component';
+import { Authority } from 'app/shared/constants/authority.constants';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -74,7 +75,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         remoteStream.play('myVideoContainer');
         this.addVideoStream(remoteStream);
       } else {
-        if (this.currentUser?.internalUser?.authorities?.find(auth => auth === 'ROLE_ADMIN')) {
+        if (this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN)) {
           remoteStream.play('remoteVideoContainer');
           this.addVideoStream(remoteStream, true);
         }
