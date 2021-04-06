@@ -33,7 +33,7 @@
             <a *ngIf="activity.externalLink" [href]="activity.externalLink">Jelentkezés</a>
             <a *ngIf="activity.trainer" [routerLink]="['/trainers']">{{activity.trainer?.internalUser?.lastName + " " + activity.trainer?.internalUser?.firstName }}</a>
         </div>
-        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
+        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit px-1">
             <button type="submit" class="btn btn-icon btn-primary"
                     [routerLink]="['/activity-type', activityType?.id, 'activity', activity?.id, 'edit']">
                 <fa-icon icon="pen"></fa-icon>

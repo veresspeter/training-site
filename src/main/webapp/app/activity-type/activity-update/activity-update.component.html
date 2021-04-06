@@ -27,7 +27,8 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_description">Leírás</label>
-                    <textarea type="text" class="form-control" name="description" id="field_description" formControlName="description"></textarea>
+                    <textarea type="text" class="form-control" name="description" id="field_description"
+                              formControlName="description" maxlength="255"></textarea>
                     <div
                         *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
                         <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.required">

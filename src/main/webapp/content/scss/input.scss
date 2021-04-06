@@ -23,6 +23,15 @@ textarea {
 
 textarea {
   min-height: 125px;
+
+  &[disabled] {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: solid 1px $mv-pastel !important;
+    color: $mv-text-dark !important;
+    font-weight: 700;
+    overflow-y: auto;
+  }
 }
 
 input:not([type='checkbox'], [type='radio']) {
