@@ -142,30 +142,34 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     const tS = timeStamp.toString().substring(6);
     const customUid = this.currentUser?.id ? this.currentUser.id + tS : tS;
 
-    this.agoraClient.join(
-      token,
-      channelName,
-      customUid,
-      undefined,
-      (uid: any) => {
-        this.localStream = AgoraRTC.createStream({
-          streamID: uid,
-          audio: true,
-          video: true,
-        });
-        this.localStream.init(() => {
-          if (this.localStream) {
-            this.localStream.play('myVideoContainer');
-            this.addVideoStream(this.localStream, false);
-            this.agoraClient.publish(this.localStream, this.handleFail);
-          }
-        }, this.handleFail);
-      },
-      err => {
-        this.handleFail(err);
-        this.leaveChannel();
-      }
-    );
+    AgoraRTC.getDevices((devices: AgoraRTC.MediaDeviceInfo[]) => {
+      // eslint-disable-next-line no-console
+      console.log(devices);
+      this.agoraClient.join(
+        token,
+        channelName,
+        customUid,
+        undefined,
+        (uid: any) => {
+          this.localStream = AgoraRTC.createStream({
+            streamID: uid,
+            audio: devices.find(device => device.kind === 'audioinput') !== undefined,
+            video: devices.find(device => device.kind === 'videoinput') !== undefined,
+          });
+          this.localStream.init(() => {
+            if (this.localStream) {
+              this.localStream.play('myVideoContainer');
+              this.addVideoStream(this.localStream, false);
+              this.agoraClient.publish(this.localStream, this.handleFail);
+            }
+          }, this.handleFail);
+        },
+        err => {
+          this.handleFail(err);
+          this.leaveChannel();
+        }
+      );
+    }, this.handleFail);
   }
 
   private initAgora(): void {
@@ -320,6 +324,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       videoDiv.style.width = '100%';
       videoDiv.style.height = '100%';
       videoDiv.style.position = 'relative';
+      videoDiv.style.backgroundColor = '#000';
     }
   }
 
