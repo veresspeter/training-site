@@ -20,7 +20,7 @@ import java.util.Optional;
 public interface PassRepository extends JpaRepository<Pass, Long> {
     Optional<Pass> findByPaymentId(String paymentId);
 
-    List<Pass> findAllByUserIdAndPassTypeInAndPaymentStatus(Long user_id, List<PassType> passTypes, PaymentStatus status);
+    List<Pass> findAllByUserIdAndPassTypeInAndPaymentStatus(Long user_id, List<PassType> passTypes, String status);
 
     List<Pass> findAllByUser(AppUser appUser);
 }

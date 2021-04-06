@@ -150,7 +150,7 @@ public class PassService {
 
 
     @Transactional(readOnly = true)
-    public List<PassDTO> findOneByActivityTypeId(Long activityTypeId, Long userId, PaymentStatus status) {
+    public List<PassDTO> findOneByActivityTypeId(Long activityTypeId, Long userId, String status) {
         log.debug("Request to get all Pass by ActivityTypeId : {}", activityTypeId);
         List<PassType> passTypes = passTypeService.findAllByActivityTypeId(activityTypeId);
         return passRepository.findAllByUserIdAndPassTypeInAndPaymentStatus(userId, passTypes, status).stream()
