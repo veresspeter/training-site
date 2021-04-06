@@ -17,7 +17,7 @@
     <span class="text-light">Még nincsenek foglalkozás típusok feltöltve</span>
 </div>
 
-<ul *ngIf="!loading && activityTypes!.length > 0" class="row justify-content-center align-items-center">
+<ul *ngIf="!loading && activityTypes!.length > 0" class="row justify-content-center align-items-center my-5">
     <li *ngFor="let activityType of activityTypes; trackBy: trackId">
         <div class="card mx-md-3">
             <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">

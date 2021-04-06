@@ -50,11 +50,11 @@
                 <dt><span>Oktató</span></dt>
                 <dd>
                     <div>
-                        <a [routerLink]="['/trainers', event.organizer.id, 'view']">{{ event.organizer?.internalUser?.lastName }} {{ event.organizer?.internalUser?.firstName }}</a>
+                        <a [routerLink]="['/trainers']">{{ event.organizer?.internalUser?.lastName }} {{ event.organizer?.internalUser?.firstName }}</a>
                     </div>
                 </dd>
             </ng-container>
-            <ng-container *jhiHasAnyAuthority="['ROLE_EDITOR']">
+            <ng-container *jhiHasAnyAuthority="['ROLE_EDITOR', 'ROLE_ADMIN']">
                 <dt><span>Jelentkezők</span></dt>
                 <dd>
                     <span *ngFor="let participant of event.participants; let last = last">
