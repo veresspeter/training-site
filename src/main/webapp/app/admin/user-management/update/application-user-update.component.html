@@ -155,8 +155,8 @@
 
                 <div *ngIf="isAdmin()" class="form-group col-12">
                     <label class="form-control-label" for="field_introduction">Bemutatkozás</label>
-                    <input type="text" class="form-control" name="introduction" id="field_introduction"
-                           formControlName="introduction"/>
+                    <textarea type="text" class="form-control" name="introduction" id="field_introduction"
+                              formControlName="introduction" maxlength="255"></textarea>
                 </div>
 
                 <div
