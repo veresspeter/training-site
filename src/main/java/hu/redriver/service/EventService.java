@@ -159,7 +159,7 @@ public class EventService {
             .findFirst()
             .map(activityMapper::toDto)
             .orElseThrow(() -> new BadRequestException("Foglalkozás nem található"));
-        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId(), "3")
+        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId(), PaymentStatus.PAID)
             .stream()
             .filter(pass -> passTypeService.findOne(pass.getPassTypeId())
                 .orElseThrow()
