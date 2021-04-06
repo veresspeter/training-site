@@ -3,6 +3,8 @@ package hu.redriver.service;
 import hu.redriver.domain.AppUser;
 import hu.redriver.domain.Event;
 import hu.redriver.domain.EventParticipant;
+import hu.redriver.domain.EventParticipantId;
+import hu.redriver.domain.enumeration.PaymentStatus;
 import hu.redriver.repository.ActivityRepository;
 import hu.redriver.repository.EventParticipantRepository;
 import hu.redriver.repository.EventRepository;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -96,11 +99,11 @@ public class EventService {
     }
 
     @Transactional(readOnly = true)
-    public List<EventDTO> findAllByParticipant(AppUserDTO appUserDTO) {
+    public List<EventDTO> findAllByParticipantAndFromToday(AppUserDTO appUserDTO) {
         log.debug("Request to get all Events by User: {}", appUserDTO);
         Set<AppUser> participantSet = new HashSet<AppUser>();
         participantSet.add(appUserMapper.toEntity(appUserDTO));
-        return eventRepository.findAllByParticipantsIn(participantSet).stream()
+        return eventRepository.findAllByParticipantsInAndEndIsAfter(participantSet, ZonedDateTime.now()).stream()
             .map(eventMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
@@ -138,10 +141,14 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional()
     public void join(Long id) throws BadRequestException {
         log.debug("Request to join Event : {}", id);
         EventDTO eventDTO = findOne(id).orElseThrow(getNotFoundException());
+
+        if (eventDTO.getParticipants().stream().anyMatch(user -> user.getId().equals(getCurrentAppUser().getId()))) {
+            throw new BadRequestException("Az eseményre már jelentkezve van");
+        }
 
         if (eventDTO.getLimit() != null && eventDTO.getLimit().compareTo(eventDTO.getParticipants().size() + 1) < 0) {
             throw new BadRequestException("Az eseményre a helyek beteltek");
@@ -152,13 +159,13 @@ public class EventService {
             .findFirst()
             .map(activityMapper::toDto)
             .orElseThrow(() -> new BadRequestException("Foglalkozás nem található"));
-        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId())
+        List<PassDTO> passDTOs = passService.findOneByActivityTypeId(activityDTO.getActivityTypeId(), getCurrentAppUser().getId(), PaymentStatus.PAID)
             .stream()
             .filter(pass -> passTypeService.findOne(pass.getPassTypeId())
                 .orElseThrow()
                 .getOccasions() > pass.getTotalUsageNo())
             .filter(pass -> pass.getValidFrom() == null || pass.getValidFrom().isBefore(eventDTO.getStart()))
-            .filter(pass -> pass.getValidTo() == null || pass.getValidTo().isAfter(eventDTO.getEnd()))
+            .filter(pass -> pass.getValidTo() == null || pass.getValidTo().plusDays(1).isAfter(eventDTO.getEnd()))
             .collect(Collectors.toList());
         PassDTO result;
 
@@ -176,14 +183,21 @@ public class EventService {
         eventParticipant.setParticipantId(getCurrentAppUser().getId());
         eventParticipant.setPassId(result.getId());
 
-        eventParticipantRepository.save(eventParticipant);
+        System.out.println(eventParticipantRepository.save(eventParticipant).toString());
     }
 
     public void quit(Long id) {
         log.debug("Request to quit Event : {}", id);
         EventDTO eventDTO = findOne(id).orElseThrow(getNotFoundException());
-        eventDTO.getParticipants().remove(getCurrentAppUser());
-        save(eventDTO);
+
+        Optional<EventParticipant> eventParticipantOptional = eventParticipantRepository.findById(new EventParticipantId(getCurrentAppUser().getId(), id));
+
+        if (eventParticipantOptional.isPresent()) {
+            eventParticipantRepository.delete(eventParticipantOptional.get());
+        } else {
+            eventDTO.getParticipants().remove(getCurrentAppUser());
+            save(eventDTO);
+        }
     }
 
     private AppUserDTO getCurrentAppUser() {

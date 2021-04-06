@@ -184,7 +184,7 @@ public class PassDTO implements Serializable, Comparable<PassDTO> {
     @Override
     public int compareTo(PassDTO o) {
         if (this.validTo == null && o.validTo == null){
-            return 0;
+            return this.validFrom.compareTo(o.validFrom);
         }
 
         if (this.validTo == null) {
