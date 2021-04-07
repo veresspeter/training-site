@@ -78,7 +78,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         // auto echo
         AEC: true,
         // auto gain
-        AGC: false,
+        AGC: true,
         // auto noise
         ANS: false,
         encoderConfig: 'high_quality_stereo',
@@ -118,28 +118,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     });
 
     this.agora.client.leave().then(() => (this.inMeeting = false));
-
-    AgoraRTC.createMicrophoneAudioTrack({
-      AEC: true,
-      AGC: false,
-      ANS: false,
-      encoderConfig: 'high_quality_stereo',
-      microphoneId: this.editForm.get('audioSource')?.value,
-    })
-      .then(res => (this.agora.localAudioTrack = res))
-      .catch(err => {
-        this.handleFail(err);
-      });
-
-    AgoraRTC.createCameraVideoTrack({
-      encoderConfig: '720p_2',
-      optimizationMode: 'motion',
-      cameraId: this.editForm.get('videoSource')?.value,
-    })
-      .then(res => (this.agora.localVideoTrack = res))
-      .catch(err => {
-        this.handleFail(err);
-      });
   }
 
   join(): void {
