@@ -217,7 +217,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     });
     streamDiv?.appendChild(muteButton);
 
-    if (this.localUID !== trackId && this.pinnedUID !== trackId && trackId !== this.event?.organizer?.id?.toString()) {
+    if (
+      this.localUID !== trackId &&
+      this.pinnedUID !== trackId &&
+      this.currentUser?.id !== this.event?.organizer?.id &&
+      trackId !== this.agora.localVideoTrack?.getTrackId()
+    ) {
       const pinButton = this.showPinButton(trackId);
 
       streamDiv?.appendChild(pinButton);
