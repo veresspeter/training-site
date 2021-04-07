@@ -185,9 +185,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   private joinChannel(): void {
     const timeStamp = Math.floor(Number(new Date()) / 1000);
 
+    /*
     if (this.event?.id && this.event.start) {
       this.agora.options.channel = this.event.id + this.event.start.format('yyyyyMMddHHmm');
     }
+    */
 
     this.accountService.getAgoraToken(this.agora.options.channel, timeStamp.toString()).subscribe(
       res => {
