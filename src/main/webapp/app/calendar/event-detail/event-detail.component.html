@@ -3,7 +3,7 @@
         <button type="submit" (click)="previousState()" class="btn btn-link">
             <fa-icon icon="chevron-left"></fa-icon> Vissza
         </button>
-        <form class="col-12 col-md-8 row text-center px-0" [formGroup]="editForm">
+        <form class="col-12 col-md-8 row text-center px-0 justify-content-center" [formGroup]="editForm">
             <div class="form-group col-12 col-md-4">
                 <label class="form-control-label" for="video_input">Videó forrás kiválasztása</label>
                 <select class="form-control" name="video_input" id="video_input" formControlName="videoSource" [attr.disabled]="videoDevices.length ? null : ''">
@@ -20,16 +20,6 @@
                         {{ audioDevice.label.length ? audioDevice.label : 'Hang forrás ' + i + 1}}
                     </option>
                 </select>
-            </div>
-
-            <div class="form-group col-12 col-md-4 row" *jhiHasAnyAuthority="['ROLE_EDITOR','ROLE_ADMIN']">
-                <label class="form-control-label col-12" for="music">Zene lejátszás</label>
-                <input type="file" class="form-control col-10" name="video_input_select" id="music" formControlName="musicSource" />
-                <div class="col-2">
-                    <button class="btn btn-primary btn-icon">
-                        <fa-icon icon="play"></fa-icon>
-                    </button>
-                </div>
             </div>
         </form>
         <div>

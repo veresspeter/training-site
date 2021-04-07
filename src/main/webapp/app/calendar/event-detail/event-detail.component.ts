@@ -4,7 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { IEvent } from 'app/shared/model/event.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { LinkType } from 'app/shared/model/enumerations/link-type.model';
-import AgoraRTC, { IAgoraRTCClient, ICameraVideoTrack, ILocalTrack, IMicrophoneAudioTrack } from 'agora-rtc-sdk-ng';
+import AgoraRTC, {
+  IAgoraRTCClient,
+  IAgoraRTCRemoteUser,
+  ICameraVideoTrack,
+  ILocalTrack,
+  IMicrophoneAudioTrack,
+  IRemoteVideoTrack,
+} from 'agora-rtc-sdk-ng';
 import { AppUser, IAppUser } from 'app/shared/model/application-user.model';
 import { SettingsComponent } from 'app/account/settings/settings.component';
 import { Authority } from 'app/shared/constants/authority.constants';
@@ -83,7 +90,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         .then(res => {
           this.agora.localVideoTrack = res;
           this.agora.localVideoTrack.play('myVideoContainer');
-          this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
+          this.addVideoTrack(this.agora.localVideoTrack.getTrackId(), 'Én');
+          if (this.localUID) this.addAudioTrack(this.localUID, this.agora.localVideoTrack?.getTrackId());
         })
         .catch(err => {
           this.handleFail(err);
@@ -141,20 +149,66 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         if (mediaType === 'video') {
           const remoteVideoTrack = user.videoTrack;
 
-          if (remoteVideoTrack && this.agora.localVideoTrack?.getTrackId() === remoteVideoTrack.getTrackId()) {
+          if (remoteVideoTrack && EventDetailComponent.getUserIdFromUID(user.uid) === this.event?.organizer?.id?.toString()) {
             remoteVideoTrack.play('myVideoContainer');
-            this.addVideoStream(remoteVideoTrack.getTrackId());
+            this.addVideoTrack(remoteVideoTrack.getTrackId(), this.event?.organizer?.internalUser?.firstName);
+            // this.removeBlackVideo(user, remoteVideoTrack);
           } else {
             if (remoteVideoTrack) {
               remoteVideoTrack?.play('remoteVideoContainer');
               if (this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN)) {
-                this.addVideoStream(remoteVideoTrack.getTrackId(), true);
+                const name = this.event?.participants?.find(p => p.id?.toString() === EventDetailComponent.getUserIdFromUID(user.uid))
+                  ?.internalUser?.firstName;
+                this.addVideoTrack(remoteVideoTrack.getTrackId(), name, true);
+                // this.removeBlackVideo(user, remoteVideoTrack);
               }
             }
           }
         }
 
         if (mediaType === 'audio') {
+          setTimeout(() => {
+            if (
+              this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN) ||
+              EventDetailComponent.getUserIdFromUID(user.uid) === this.event?.organizer?.id?.toString()
+            ) {
+              const videoTrack = this.agora.client.remoteUsers.find(rUser => rUser.uid === user.uid && rUser.videoTrack !== undefined)
+                ?.videoTrack;
+
+              if (
+                videoTrack === undefined &&
+                user.audioTrack?.getTrackId() &&
+                document.getElementById('agora-video-player-' + user.audioTrack?.getTrackId()) === null
+              ) {
+                const blankDiv = document.createElement('div');
+                blankDiv.id = 'agora-video-player-' + user.audioTrack?.getTrackId();
+                const video = document.createElement('video');
+                video.id = 'video_' + user.audioTrack?.getTrackId();
+
+                blankDiv.appendChild(video);
+                document.getElementById('remoteVideoContainer')!.appendChild(blankDiv);
+                const name = this.event?.participants?.find(p => p.id?.toString() === EventDetailComponent.getUserIdFromUID(user.uid))
+                  ?.internalUser?.firstName;
+                this.addVideoTrack(user.audioTrack?.getTrackId(), name, true);
+                if (user.uid) {
+                  this.addAudioTrack(user.uid.toString(), user.uid.toString());
+                }
+              } else {
+                if (user.audioTrack && videoTrack) {
+                  this.addAudioTrack(videoTrack.getTrackId(), user.uid.toString());
+
+                  const muteButton = document.getElementById('mute_' + user.uid.toString())!;
+                  muteButton.removeAttribute('disabled');
+
+                  if (!muteButton.classList.contains('muted')) {
+                    muteButton.classList.remove('btn-primary');
+                    muteButton.classList.add('btn-outline-primary');
+                  }
+                }
+              }
+            }
+          }, 500);
+
           user.audioTrack?.play();
         }
       });
@@ -164,7 +218,25 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       if (mediaType === 'video') {
         this.removeVideo(EventDetailComponent.getUserIdFromUID(user.uid));
       }
+
+      // eslint-disable-next-line no-console
+      console.log(this.agora.client.remoteUsers);
+
+      if (mediaType === 'audio') {
+        const muteButton = document.getElementById('mute_' + user.uid)!;
+        muteButton.setAttribute('disabled', '');
+        muteButton.classList.add('btn-primary');
+        muteButton.classList.remove('btn-outline-primary');
+      }
     });
+  }
+
+  private removeBlackVideo(user: IAgoraRTCRemoteUser, remoteVideoTrack: IRemoteVideoTrack): void {
+    const blankDiv = document.getElementById('agora-video-player-' + user.uid.toString());
+    if (remoteVideoTrack && blankDiv) {
+      blankDiv.parentNode?.removeChild(blankDiv);
+      this.addAudioTrack(remoteVideoTrack.getTrackId(), user.uid.toString());
+    }
   }
 
   private joinChannel(): void {
@@ -190,10 +262,10 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private joinAgoraChannel(timeStamp: number): void {
     const tS = timeStamp.toString().substring(6);
-    const customUid = this.currentUser?.id ? this.currentUser.id + tS : tS;
+    this.localUID = this.currentUser?.id ? this.currentUser.id + tS : tS;
 
     this.agora.client
-      .join(this.agora.options.appId, this.agora.options.channel, this.agora.options.token, customUid)
+      .join(this.agora.options.appId, this.agora.options.channel, this.agora.options.token, this.localUID)
       .then(() => {
         const publishOptions: ILocalTrack[] = [];
 
@@ -215,35 +287,51 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       });
   }
 
-  addVideoStream(trackId: string, small?: boolean, skipRotate?: boolean): void {
-    const streamDiv = document.getElementById('agora-video-player-' + trackId);
+  addVideoTrack(userId: string, name?: string, small?: boolean, skipRotate?: boolean): void {
+    const streamDiv = document.getElementById('agora-video-player-' + userId);
     this.setPlayerStyle(streamDiv, small);
 
-    const videoDiv = document.getElementById('video_' + trackId);
+    const videoDiv = document.getElementById('video_' + userId);
     this.setVideoStyle(videoDiv, skipRotate);
 
+    const nameP = document.createElement('p');
+    nameP.innerText = name ? name : '';
+    nameP.style.position = 'absolute';
+    nameP.style.left = '0';
+    nameP.style.bottom = '0';
+    nameP.style.margin = '0';
+    nameP.style.padding = '0 5px';
+    nameP.style.color = '#e17f3d';
+    nameP.style.backgroundColor = '#ecd0ab';
+    nameP.style.opacity = '0.9';
+    nameP.style.fontSize = '12px';
+    streamDiv?.appendChild(nameP);
+
+    if (
+      this.localUID !== userId &&
+      this.pinnedUID !== userId &&
+      this.currentUser?.id !== this.event?.organizer?.id &&
+      userId !== this.agora.localVideoTrack?.getTrackId()
+    ) {
+      const pinButton = this.showPinButton(userId);
+      streamDiv?.appendChild(pinButton);
+    }
+  }
+
+  addAudioTrack(videoTrackId: string, userId: string): void {
+    const streamDiv = document.getElementById('agora-video-player-' + videoTrackId);
+
     const muteButton = this.createButton(5);
-    muteButton.id = 'mute_' + trackId.toString();
+    muteButton.id = 'mute_' + userId;
     muteButton.classList.add('btn-outline-primary');
     muteButton.classList.remove('btn-primary');
     muteButton.innerHTML =
       '<fa-icon icon="microphone-slash" class="ng-fa-icon"><svg role="img" focusable="false" data-prefix="fas" data-icon="microphone-slash" class="svg-inline--fa fa-microphone-slash fa-w-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M633.82 458.1l-157.8-121.96C488.61 312.13 496 285.01 496 256v-48c0-8.84-7.16-16-16-16h-16c-8.84 0-16 7.16-16 16v48c0 17.92-3.96 34.8-10.72 50.2l-26.55-20.52c3.1-9.4 5.28-19.22 5.28-29.67V96c0-53.02-42.98-96-96-96s-96 42.98-96 96v45.36L45.47 3.37C38.49-2.05 28.43-.8 23.01 6.18L3.37 31.45C-2.05 38.42-.8 48.47 6.18 53.9l588.36 454.73c6.98 5.43 17.03 4.17 22.46-2.81l19.64-25.27c5.41-6.97 4.16-17.02-2.82-22.45zM400 464h-56v-33.77c11.66-1.6 22.85-4.54 33.67-8.31l-50.11-38.73c-6.71.4-13.41.87-20.35.2-55.85-5.45-98.74-48.63-111.18-101.85L144 241.31v6.85c0 89.64 63.97 169.55 152 181.69V464h-56c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h160c8.84 0 16-7.16 16-16v-16c0-8.84-7.16-16-16-16z"></path></svg></fa-icon>';
 
     muteButton.addEventListener('click', () => {
-      this.switchMuteButton(trackId);
+      this.switchMuteButton(userId);
     });
     streamDiv?.appendChild(muteButton);
-
-    if (
-      this.localUID !== trackId &&
-      this.pinnedUID !== trackId &&
-      this.currentUser?.id !== this.event?.organizer?.id &&
-      trackId !== this.agora.localVideoTrack?.getTrackId()
-    ) {
-      const pinButton = this.showPinButton(trackId);
-
-      streamDiv?.appendChild(pinButton);
-    }
   }
 
   private showPinButton(uid: string, unPinButton?: HTMLElement): HTMLElement {
@@ -307,21 +395,26 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   switchMuteButton(uid: string): void {
     const muteButton = document.getElementById('mute_' + uid)!;
     if (muteButton?.classList.contains('muted')) {
-      if (this.agora.localVideoTrack?.getTrackId() === uid) {
-        this.agora.localAudioTrack?.setVolume(100);
-        this.agora.localAudioTrack?.setEnabled(true);
+      if (this.agora.localAudioTrack?.getTrackId() === uid) {
+        this.agora.localAudioTrack.setVolume(100);
+        this.agora.client.sendCustomReportMessage({
+          reportId: Math.random().toString(),
+          category: 'info',
+          event: 'unmute',
+          label: this.agora.localAudioTrack.getTrackId(),
+          value: 100,
+        });
       } else {
-        this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
+        this.agora.client?.remoteUsers?.find(user => user.audioTrack?.getTrackId() === uid)?.audioTrack?.play();
       }
       muteButton.classList.add('btn-outline-primary');
       muteButton.classList.remove('muted');
       muteButton.classList.remove('btn-primary');
     } else {
-      if (this.agora.localVideoTrack?.getTrackId() === uid) {
-        this.agora.localAudioTrack?.setVolume(0);
-        this.agora.localAudioTrack?.setEnabled(false);
+      if (this.agora.localAudioTrack?.getTrackId() === uid) {
+        this.agora.localAudioTrack.setVolume(0);
       } else {
-        this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
+        this.agora.client?.remoteUsers?.find(user => user.audioTrack?.getTrackId() === uid)?.audioTrack?.stop();
       }
       muteButton.classList.add('btn-primary');
       muteButton.classList.add('muted');
@@ -349,6 +442,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         streamDiv.style.width = '10vw';
       }
 
+      streamDiv.style.position = 'relative';
       streamDiv.style.minWidth = '240px';
       streamDiv.style.height = 'auto';
       streamDiv.style.margin = '12px';
