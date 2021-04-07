@@ -57,7 +57,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       this.event = event;
     });
     this.authenticate();
-
+    this.subscribeFromEvents();
     AgoraRTC.getDevices().then((devices: MediaDeviceInfo[]) => {
       this.audioDevices = devices.filter(device => device.kind === 'audioinput');
       this.videoDevices = devices.filter(device => device.kind === 'videoinput');
@@ -70,7 +70,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         this.editForm.get('audioSource')?.setValue(this.audioDevices[0].deviceId);
       }
     });
+  }
 
+  private subscribeFromEvents() {
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
       AgoraRTC.createMicrophoneAudioTrack({
         // auto echo
@@ -93,7 +95,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         optimizationMode: 'motion',
         cameraId: value,
       })
-        .then(res => (this.agora.localVideoTrack = res))
+        .then(res => {
+          this.agora.localVideoTrack = res;
+          this.agora.localVideoTrack.play('myVideoContainer');
+          this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
+        })
         .catch(err => {
           this.handleFail(err);
         });
@@ -118,7 +124,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.agora.client.leave().then(() => (this.inMeeting = false));
 
     AgoraRTC.createMicrophoneAudioTrack({
-      AEC: true,
+      AEC: false,
       AGC: false,
       ANS: false,
       encoderConfig: 'high_quality_stereo',
@@ -134,11 +140,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       optimizationMode: 'motion',
       cameraId: this.editForm.get('videoSource')?.value,
     })
-      .then(res => {
-        this.agora.localVideoTrack = res;
-        this.agora.localVideoTrack.play('myVideoContainer');
-        this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
-      })
+      .then(res => (this.agora.localVideoTrack = res))
       .catch(err => {
         this.handleFail(err);
       });
@@ -185,11 +187,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   private joinChannel(): void {
     const timeStamp = Math.floor(Number(new Date()) / 1000);
 
-    /*
     if (this.event?.id && this.event.start) {
       this.agora.options.channel = this.event.id + this.event.start.format('yyyyyMMddHHmm');
     }
-    */
 
     this.accountService.getAgoraToken(this.agora.options.channel, timeStamp.toString()).subscribe(
       res => {
