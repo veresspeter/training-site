@@ -18,12 +18,6 @@
 
 <ng-container *ngIf="!loading">
     <div id="entities" class="text-left row justify-content-around text-center">
-        <div class="col-12 col-md-10 col-lg-8 col-xl-5 alert alert-warning text-center" *jhiHasAnyAuthority="'ROLE_USER'">
-            <strong>Jelentkezésedet legkésőbb az órakezdés előtt 2 órával módosíthatod.</strong>
-        </div>
-
-        <div class="w-100"></div>
-
         <div class="col-12 px-0">
             <button type="button" class="btn btn-link mr-3" [class.disabled]="isLeftDatePickerDisabled()" (click)="decreaseDatePicker()"><fa-icon icon="chevron-left"></fa-icon></button>
             <div class="date-range">
@@ -50,7 +44,11 @@
             </jhi-calendar-day-column>
         </div>
 
+        <div class="w-100"></div>
 
+        <div class="col-12 col-md-10 col-lg-8 col-xl-5 alert alert-warning text-center mt-5" *jhiHasAnyAuthority="'ROLE_USER'">
+            <strong>Jelentkezésedet legkésőbb az órakezdés előtt 2 órával módosíthatod.</strong>
+        </div>
     </div>
 </ng-container>
 
