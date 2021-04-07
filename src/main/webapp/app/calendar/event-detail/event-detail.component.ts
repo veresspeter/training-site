@@ -309,6 +309,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     if (muteButton?.classList.contains('muted')) {
       if (this.agora.localVideoTrack?.getTrackId() === uid) {
         this.agora.localAudioTrack?.setVolume(100);
+        this.agora.localAudioTrack?.setEnabled(true);
       } else {
         this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
       }
@@ -318,6 +319,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     } else {
       if (this.agora.localVideoTrack?.getTrackId() === uid) {
         this.agora.localAudioTrack?.setVolume(0);
+        this.agora.localAudioTrack?.setEnabled(false);
       } else {
         this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
       }
