@@ -73,22 +73,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   private subscribeFromEvents(): void {
-    this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
-      AgoraRTC.createMicrophoneAudioTrack({
-        // auto echo
-        AEC: true,
-        // auto gain
-        AGC: true,
-        // auto noise
-        ANS: false,
-        encoderConfig: 'high_quality_stereo',
-        microphoneId: value,
-      })
-        .then(res => (this.agora.localAudioTrack = res))
-        .catch(err => {
-          this.handleFail(err);
-        });
-    });
+    this.createLocaleMicrophoneTrack();
     this.editForm.get('videoSource')?.valueChanges.subscribe(value => {
       AgoraRTC.createCameraVideoTrack({
         encoderConfig: '720p_2',
@@ -99,6 +84,30 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           this.agora.localVideoTrack = res;
           this.agora.localVideoTrack.play('myVideoContainer');
           this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
+        })
+        .catch(err => {
+          this.handleFail(err);
+        });
+    });
+  }
+
+  private createLocaleMicrophoneTrack(cb?: Function): void {
+    this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
+      AgoraRTC.createMicrophoneAudioTrack({
+        // auto echo
+        AEC: true,
+        // auto gain
+        AGC: false,
+        // auto noise
+        ANS: false,
+        encoderConfig: 'high_quality_stereo',
+        microphoneId: value,
+      })
+        .then(res => {
+          this.agora.localAudioTrack = res;
+          if (cb) {
+            cb();
+          }
         })
         .catch(err => {
           this.handleFail(err);
@@ -299,7 +308,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     const muteButton = document.getElementById('mute_' + uid)!;
     if (muteButton?.classList.contains('muted')) {
       if (this.agora.localVideoTrack?.getTrackId() === uid) {
-        this.agora.localAudioTrack?.play();
+        this.createLocaleMicrophoneTrack(() => {
+          if (this.agora.localAudioTrack) {
+            this.agora.client.publish(this.agora.localAudioTrack);
+          }
+        });
       } else {
         this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
       }
@@ -308,7 +321,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       muteButton.classList.remove('btn-primary');
     } else {
       if (this.agora.localVideoTrack?.getTrackId() === uid) {
-        this.agora.localAudioTrack?.stop();
+        this.agora.localAudioTrack?.close();
       } else {
         this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
       }
