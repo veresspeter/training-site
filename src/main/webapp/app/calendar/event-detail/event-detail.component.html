@@ -7,7 +7,7 @@
             <div class="form-group col-12 col-md-3">
                 <label class="form-control-label" for="video_input">Videó forrás kiválasztása</label>
                 <select class="form-control" name="video_input" id="video_input" formControlName="videoSource" [attr.disabled]="videoDevices.length ? null : ''">
-                    <option *ngFor="let videoDevice of videoDevices; let i = index" [ngValue]="videoDevice.deviceId">
+                    <option *ngFor="let videoDevice of videoDevices; let i = index" [ngValue]="videoDevice.deviceId" [attr.selected]="i === 0 ? null : ''">
                         {{ videoDevice.label.length ? videoDevice.label : 'Videó forrás ' + i + 1}}
                     </option>
                 </select>
@@ -16,7 +16,7 @@
             <div class="form-group col-12 col-md-3">
                 <label class="form-control-label" for="audio_input">Hang forrás kiválasztása</label>
                 <select class="form-control" name="audio_input" id="audio_input" formControlName="audioSource" [attr.disabled]="audioDevices.length ? null : ''">
-                    <option *ngFor="let audioDevice of audioDevices; let i = index" [ngValue]="audioDevice.deviceId">
+                    <option *ngFor="let audioDevice of audioDevices; let i = index" [ngValue]="audioDevice.deviceId" [attr.selected]="i === 0 ? null : ''">
                         {{ audioDevice.label.length ? audioDevice.label : 'Hang forrás ' + i + 1}}
                     </option>
                 </select>
