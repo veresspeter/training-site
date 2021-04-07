@@ -91,7 +91,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           this.agora.localVideoTrack = res;
           this.agora.localVideoTrack.play('myVideoContainer');
           this.addVideoTrack(this.agora.localVideoTrack.getTrackId(), 'Én');
-          if (this.localUID) this.addAudioTrack(this.localUID, this.agora.localVideoTrack?.getTrackId());
+          if (this.localUID) this.addAudioTrack(this.agora.localVideoTrack?.getTrackId(), this.localUID);
         })
         .catch(err => {
           this.handleFail(err);
