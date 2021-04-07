@@ -108,15 +108,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.leaveChannel();
+    this.agora.localVideoTrack?.close();
+    this.agora.localAudioTrack?.close();
   }
 
   leaveChannel(): void {
-    this.agora.localAudioTrack?.close();
-    this.agora.localVideoTrack?.close();
-    if (this.localUID) {
-      this.removeVideo(this.localUID);
-    }
-
     this.agora.client.remoteUsers.forEach(user => {
       this.removeVideo(EventDetailComponent.getUserIdFromUID(user.uid));
     });
