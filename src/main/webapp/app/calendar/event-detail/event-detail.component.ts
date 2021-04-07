@@ -134,7 +134,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       optimizationMode: 'motion',
       cameraId: this.editForm.get('videoSource')?.value,
     })
-      .then(res => (this.agora.localVideoTrack = res))
+      .then(res => {
+        this.agora.localVideoTrack = res;
+        this.agora.localVideoTrack.play('myVideoContainer');
+        this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
+      })
       .catch(err => {
         this.handleFail(err);
       });
@@ -214,10 +218,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           publishOptions.push(this.agora.localVideoTrack);
         }
 
-        if (this.agora.localVideoTrack?.getTrackId()) {
-          this.agora.localVideoTrack?.play('myVideoContainer');
-          this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
-        }
         if (publishOptions.length > 0) {
           this.agora.client.publish(publishOptions).catch(err => this.handleFail(err));
         }
