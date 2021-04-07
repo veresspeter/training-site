@@ -61,6 +61,14 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     AgoraRTC.getDevices().then((devices: MediaDeviceInfo[]) => {
       this.audioDevices = devices.filter(device => device.kind === 'audioinput');
       this.videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+      if (this.videoDevices.length > 0) {
+        this.editForm.get('videoSource')?.setValue(this.videoDevices[0].deviceId);
+      }
+
+      if (this.audioDevices.length > 0) {
+        this.editForm.get('audioSource')?.setValue(this.audioDevices[0].deviceId);
+      }
     });
 
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
@@ -115,13 +123,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private subscribeAgoraEvents(): void {
     this.agora.client.on('user-published', (user, mediaType) => {
-      const uid = EventDetailComponent.getUserIdFromUID(user.uid);
-
       this.agora.client.subscribe(user, mediaType).then(() => {
         if (mediaType === 'video') {
           const remoteVideoTrack = user.videoTrack;
 
-          if (remoteVideoTrack && this.event?.organizer?.id?.toString() === uid) {
+          if (remoteVideoTrack && this.agora.localVideoTrack?.getTrackId() === remoteVideoTrack.getTrackId()) {
             remoteVideoTrack.play('myVideoContainer');
             this.addVideoStream(remoteVideoTrack.getTrackId());
           } else {
