@@ -312,12 +312,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   switchMuteButton(uid: string): void {
     const muteButton = document.getElementById('mute_' + uid)!;
     if (muteButton?.classList.contains('muted')) {
-      this.agora.client?.remoteUsers?.find(user => user.audioTrack?.getTrackId() === uid)?.audioTrack?.play();
+      this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
       muteButton.classList.add('btn-outline-primary');
       muteButton.classList.remove('muted');
       muteButton.classList.remove('btn-primary');
     } else {
-      this.agora.client?.remoteUsers?.find(user => user.audioTrack?.getTrackId() === uid)?.audioTrack?.stop();
+      this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
       muteButton.classList.add('btn-primary');
       muteButton.classList.add('muted');
       muteButton.classList.remove('btn-outline-primary');
