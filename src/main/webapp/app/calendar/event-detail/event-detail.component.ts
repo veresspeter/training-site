@@ -178,8 +178,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           publishOptions.push(this.agora.localVideoTrack);
         }
 
-        if (this.currentUser !== null && this.currentUser?.id) {
-          this.addVideoStream(this.currentUser.id.toString());
+        if (this.agora.localVideoTrack?.getTrackId()) {
+          this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
         }
         if (publishOptions.length > 0) {
           this.agora.client.publish(publishOptions).catch(err => this.handleFail(err));

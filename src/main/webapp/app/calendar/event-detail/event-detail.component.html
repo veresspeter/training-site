@@ -3,8 +3,8 @@
         <button type="submit" (click)="previousState()" class="btn btn-link">
             <fa-icon icon="chevron-left"></fa-icon> Vissza
         </button>
-        <form class="col-8 row text-center" [formGroup]="editForm">
-            <div class="form-group col-3">
+        <form class="col-12 col-md-8 row text-center px-0" [formGroup]="editForm">
+            <div class="form-group col-12 col-md-3">
                 <label class="form-control-label" for="video_input">Videó forrás kiválasztása</label>
                 <select class="form-control" name="video_input" id="video_input" formControlName="videoSource" [attr.disabled]="videoDevices.length ? null : ''">
                     <option *ngFor="let videoDevice of videoDevices; let i = index" [ngValue]="videoDevice.deviceId">
@@ -13,7 +13,7 @@
                 </select>
             </div>
 
-            <div class="form-group col-3">
+            <div class="form-group col-12 col-md-3">
                 <label class="form-control-label" for="audio_input">Hang forrás kiválasztása</label>
                 <select class="form-control" name="audio_input" id="audio_input" formControlName="audioSource" [attr.disabled]="audioDevices.length ? null : ''">
                     <option *ngFor="let audioDevice of audioDevices; let i = index" [ngValue]="audioDevice.deviceId">
@@ -22,7 +22,7 @@
                 </select>
             </div>
 
-            <div class="form-group col-3 row" *jhiHasAnyAuthority="['ROLE_EDITOR','ROLE_ADMIN']">
+            <div class="form-group col-12 col-md-3 row" *jhiHasAnyAuthority="['ROLE_EDITOR','ROLE_ADMIN']">
                 <label class="form-control-label col-12" for="music">Zene lejátszás</label>
                 <input type="file" class="form-control col-10" name="video_input_select" id="music" formControlName="musicSource" />
                 <div class="col-2">
