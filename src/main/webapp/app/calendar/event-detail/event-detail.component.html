@@ -16,6 +16,7 @@
             <div class="form-group col-12 col-md-4">
                 <label class="form-control-label" for="audio_input">Hang forrás kiválasztása</label>
                 <select class="form-control" name="audio_input" id="audio_input" formControlName="audioSource" [attr.disabled]="audioDevices.length ? null : ''">
+                    <option
                     <option *ngFor="let audioDevice of audioDevices; let i = index" [ngValue]="audioDevice.deviceId">
                         {{ audioDevice.label.length ? audioDevice.label : 'Hang forrás ' + i + 1}}
                     </option>
