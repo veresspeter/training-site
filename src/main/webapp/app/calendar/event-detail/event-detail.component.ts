@@ -124,7 +124,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.agora.client.leave().then(() => (this.inMeeting = false));
 
     AgoraRTC.createMicrophoneAudioTrack({
-      AEC: false,
+      AEC: true,
       AGC: false,
       ANS: false,
       encoderConfig: 'high_quality_stereo',
