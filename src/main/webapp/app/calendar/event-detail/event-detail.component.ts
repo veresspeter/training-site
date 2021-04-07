@@ -72,7 +72,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  private subscribeFromEvents() {
+  private subscribeFromEvents(): void {
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
       AgoraRTC.createMicrophoneAudioTrack({
         // auto echo
