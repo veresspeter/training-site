@@ -185,6 +185,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         }
 
         if (this.agora.localVideoTrack?.getTrackId()) {
+          this.agora.localVideoTrack?.play('myVideoContainer');
           this.addVideoStream(this.agora.localVideoTrack?.getTrackId());
         }
         if (publishOptions.length > 0) {
