@@ -73,8 +73,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
       AgoraRTC.createMicrophoneAudioTrack({
-        AEC: false,
+        // auto echo
+        AEC: true,
+        // auto gain
         AGC: false,
+        // auto noise
         ANS: false,
         encoderConfig: 'high_quality_stereo',
         microphoneId: value,
@@ -177,6 +180,11 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private joinChannel(): void {
     const timeStamp = Math.floor(Number(new Date()) / 1000);
+
+    if (this.event?.id && this.event.start) {
+      this.agora.options.channel = this.event.id + this.event.start.format('yyyyyMMddHHmm');
+    }
+
     this.accountService.getAgoraToken(this.agora.options.channel, timeStamp.toString()).subscribe(
       res => {
         this.agora.options.token = res;
@@ -312,12 +320,20 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   switchMuteButton(uid: string): void {
     const muteButton = document.getElementById('mute_' + uid)!;
     if (muteButton?.classList.contains('muted')) {
-      this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
+      if (this.agora.localVideoTrack?.getTrackId() === uid) {
+        this.agora.localAudioTrack?.play();
+      } else {
+        this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
+      }
       muteButton.classList.add('btn-outline-primary');
       muteButton.classList.remove('muted');
       muteButton.classList.remove('btn-primary');
     } else {
-      this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
+      if (this.agora.localVideoTrack?.getTrackId() === uid) {
+        this.agora.localAudioTrack?.stop();
+      } else {
+        this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
+      }
       muteButton.classList.add('btn-primary');
       muteButton.classList.add('muted');
       muteButton.classList.remove('btn-outline-primary');
@@ -339,7 +355,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   private setPlayerStyle(streamDiv: HTMLElement | null, small?: boolean): void {
     if (streamDiv != null) {
       if (!small) {
-        streamDiv.style.width = '40vw';
+        streamDiv.style.width = '45vw';
       } else {
         streamDiv.style.width = '10vw';
       }
