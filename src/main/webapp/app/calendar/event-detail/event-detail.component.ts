@@ -308,11 +308,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     const muteButton = document.getElementById('mute_' + uid)!;
     if (muteButton?.classList.contains('muted')) {
       if (this.agora.localVideoTrack?.getTrackId() === uid) {
-        this.createLocaleMicrophoneTrack(() => {
-          if (this.agora.localAudioTrack) {
-            this.agora.client.publish(this.agora.localAudioTrack);
-          }
-        });
+        this.agora.localAudioTrack?.setVolume(100);
       } else {
         this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.play();
       }
@@ -321,7 +317,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       muteButton.classList.remove('btn-primary');
     } else {
       if (this.agora.localVideoTrack?.getTrackId() === uid) {
-        this.agora.localAudioTrack?.close();
+        this.agora.localAudioTrack?.setVolume(0);
       } else {
         this.agora.client?.remoteUsers?.find(user => user.videoTrack?.getTrackId() === uid)?.audioTrack?.stop();
       }
