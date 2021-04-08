@@ -137,7 +137,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         // auto gain
         AGC: false,
         // auto noise
-        ANS: false,
+        ANS: true,
         encoderConfig: 'high_quality_stereo',
         microphoneId: value,
       })
@@ -466,7 +466,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   private setPlayerStyle(streamDiv: HTMLElement | null, small?: boolean): void {
     if (streamDiv != null) {
       if (!small) {
-        streamDiv.style.width = '45vw';
+        streamDiv.style.width = '40vw';
       } else {
         streamDiv.style.width = '10vw';
       }
