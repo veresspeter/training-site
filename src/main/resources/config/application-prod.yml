@@ -29,11 +29,11 @@ szamlazzhu:
   apiKey: 5a2jp2qsuyfxmn2jp2qsg266ax2jp2qss28rdh2jp2
 
 barion:
-  baseUrl: https://api.test.barion.com
-  publicKey: cb05a0248471412b84f3339d94ccf913
-  POSKey: e7f8ca987aed41b99581111ed0216c95
-  pixelId: BPT-11w3RsuB6d-22
-  walletAddress: veress.peter@redriver.hu
+  baseUrl: https://api.barion.com/
+  publicKey: 0e8b7404d3eb43d2b60e836f7df9c397
+  POSKey: 73b69aeb20ec4377beea2e7c3016e811
+  pixelId: BP-krMOdRU9Ul-7E
+  walletAddress: maxmovestudio@gmail.com
 
 spring:
   devtools:

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, OnDestroy } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,6 +7,7 @@ import { MaxmoveSharedModule } from 'app/shared/shared.module';
 import { MaxmoveCoreModule } from 'app/core/core.module';
 import { MaxmoveAppRoutingModule } from './app-routing.module';
 import { MaxmoveActivityTypeModule } from './activity-type/activity-type.module';
+import 'cookieconsent/build/cookieconsent.min';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
@@ -20,6 +21,12 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { NavigationStart, Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
+import { GdprComponent } from './gdpr/gdpr.component';
+import { GoogleTagManagerModule, GoogleTagManagerService } from 'angular-google-tag-manager';
+import { CookieService } from 'ngx-cookie-service';
+import { NgcCookieConsentService, NgcStatusChangeEvent } from 'ngx-cookieconsent';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @NgModule({
   imports: [
@@ -32,12 +39,28 @@ import { ApplicationUserService } from 'app/shared/services/application-user.ser
     MaxmoveAppRoutingModule,
     CalendarModule,
     NgbModule,
+    GoogleTagManagerModule.forRoot({
+      id: 'GTM-N9SD87Z',
+    }),
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, GdprComponent],
   bootstrap: [MainComponent],
 })
-export class MaxmoveAppModule {
-  constructor(library: FaIconLibrary, router: Router, accountService: AccountService, applicationUserService: ApplicationUserService) {
+export class MaxmoveAppModule implements OnDestroy {
+  cookieConsent: boolean;
+  private endSubscriptions: Subject<void> = new Subject<void>();
+
+  constructor(
+    library: FaIconLibrary,
+    router: Router,
+    accountService: AccountService,
+    applicationUserService: ApplicationUserService,
+    protected gtmService: GoogleTagManagerService,
+    cookieService: CookieService,
+    ngcCookieConsentService: NgcCookieConsentService
+  ) {
+    this.cookieConsent = cookieService.get('cookieconsent_status') === 'allow';
+
     library.addIconPacks(fas, fab);
 
     router.events.subscribe(event => {
@@ -69,5 +92,16 @@ export class MaxmoveAppModule {
         });
       }
     });
+
+    ngcCookieConsentService.statusChange$.pipe(takeUntil(this.endSubscriptions)).subscribe((event: NgcStatusChangeEvent) => {
+      if (event.status === 'allow' && !event.chosenBefore) {
+        this.gtmService.addGtmToDom();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.endSubscriptions.next();
+    this.endSubscriptions.complete();
   }
 }

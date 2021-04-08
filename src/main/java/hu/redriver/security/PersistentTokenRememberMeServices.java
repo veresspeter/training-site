@@ -52,8 +52,7 @@ import java.util.*;
  * couldn't be cleanly extended.
  */
 @Service
-public class PersistentTokenRememberMeServices extends
-    AbstractRememberMeServices {
+public class PersistentTokenRememberMeServices extends AbstractRememberMeServices {
 
     private final Logger log = LoggerFactory.getLogger(PersistentTokenRememberMeServices.class);
 
