@@ -97,6 +97,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         .then(res => {
           if (this.agora.localVideoTrack) {
             if (this.inMeeting) {
+              this.agora.client.unpublish(this.agora.localVideoTrack);
               this.agora.localVideoTrack?.close();
             }
             this.removeVideo(this.agora.localVideoTrack.getTrackId());
@@ -110,7 +111,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           }
 
           if (this.inMeeting) {
-            this.agora.client.publish(this.agora.localVideoTrack);
+            setTimeout(() => {
+              if (this.agora.localVideoTrack) this.agora.client.publish(this.agora.localVideoTrack);
+            }, 1000);
           }
         })
         .catch(err => {
@@ -124,6 +127,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       if (this.localUID && !this.agora.localVideoTrack && this.agora.localAudioTrack) {
         this.removeVideo(this.agora.localAudioTrack.getTrackId());
         if (this.inMeeting) {
+          this.agora.client.unpublish(this.agora.localAudioTrack).then();
           this.agora.localAudioTrack.stop();
         }
       }
@@ -144,7 +148,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
             this.setUpBlankVideo(this.agora.localAudioTrack.getTrackId(), this.localUID, true);
           }
           if (this.inMeeting) {
-            this.agora.client.publish(this.agora.localAudioTrack);
+            setTimeout(() => {
+              if (this.agora.localAudioTrack) this.agora.client.publish(this.agora.localAudioTrack);
+            }, 1000);
           }
         })
         .catch(err => {
