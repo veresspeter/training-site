@@ -103,11 +103,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private createLocaleMicrophoneTrack(): void {
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
-      // eslint-disable-next-line no-console
-      console.log(this.localUID);
-      // eslint-disable-next-line no-console
-      console.log(this.agora.localVideoTrack);
-
       AgoraRTC.createMicrophoneAudioTrack({
         // auto echo
         AEC: true,
@@ -223,10 +218,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       if (mediaType === 'video') {
         this.removeVideo(EventDetailComponent.getUserIdFromUID(user.uid));
       }
-
-      // eslint-disable-next-line no-console
-      console.log(this.agora.client.remoteUsers);
-
       if (mediaType === 'audio') {
         const muteButton = document.getElementById('mute_' + user.uid)!;
         muteButton.setAttribute('disabled', '');
@@ -320,10 +311,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   addAudioTrack(videoTrackId: string, userId: string): void {
     const streamDiv = document.getElementById('agora-video-player-' + videoTrackId);
-
-    // eslint-disable-next-line no-console
-    console.log(streamDiv);
-
     const muteButton = this.createButton(5);
     muteButton.id = 'mute_' + userId;
     muteButton.classList.add('btn-outline-primary');
