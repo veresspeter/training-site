@@ -133,7 +133,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       }
       AgoraRTC.createMicrophoneAudioTrack({
         // auto echo
-        AEC: false,
+        AEC: true,
         // auto gain
         AGC: false,
         // auto noise
