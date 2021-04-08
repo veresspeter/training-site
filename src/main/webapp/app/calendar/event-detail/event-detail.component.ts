@@ -132,13 +132,15 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         }
       }
       AgoraRTC.createMicrophoneAudioTrack({
+        /*
         // auto echo
-        AEC: false,
+        AEC: true,
         // auto gain
         AGC: false,
         // auto noise
         ANS: true,
-        encoderConfig: 'high_quality_stereo',
+         */
+        encoderConfig: 'high_quality',
         microphoneId: value,
       })
         .then(res => {
