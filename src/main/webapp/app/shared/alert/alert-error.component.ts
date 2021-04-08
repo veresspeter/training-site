@@ -67,11 +67,11 @@ export class AlertErrorComponent implements OnDestroy {
         }
 
         case 401:
-          this.addErrorAlert('Jogosulatlan tartalom kérés');
+          this.addErrorAlert('Bejelentkezés szükséges');
           break;
 
         case 403:
-          this.addErrorAlert('Tiltott tartalom kérés');
+          this.addErrorAlert('Tartalom nem kérhető');
           break;
 
         case 404:

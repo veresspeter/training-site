@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, NavigationEnd, Event } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription, ReplaySubject, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
 
 import { CSRFService } from 'app/core/auth/csrf.service';
@@ -26,6 +24,7 @@ export class TrackerService {
     }
 
     // building absolute path so that websocket doesn't fail when deploying with a context path
+    /*
     let url = '/websocket/tracker';
     url = this.location.prepareExternalUrl(url);
     const socket: WebSocket = new SockJS(url);
@@ -41,6 +40,7 @@ export class TrackerService {
         .pipe(filter((event: Event) => event instanceof NavigationEnd))
         .subscribe(() => this.sendActivity());
     });
+    */
   }
 
   disconnect(): void {

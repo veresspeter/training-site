@@ -34,11 +34,14 @@ export class AccountService {
   authenticate(identity: IAppUser | null): void {
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);
+    // disable websocket
+    /*
     if (identity) {
       this.trackerService.connect();
     } else {
       this.trackerService.disconnect();
     }
+     */
   }
 
   hasAnyAuthority(authorities: string[] | string): boolean {

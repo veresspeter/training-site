@@ -34,10 +34,13 @@ export class TrackerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // disable websocket
+    /*
     this.trackerService.subscribe();
     this.subscription = this.trackerService.receive().subscribe((activity: TrackerActivity) => {
       this.showActivity(activity);
     });
+     */
   }
 
   ngOnDestroy(): void {
