@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { AppUser } from 'app/shared/model/application-user.model';
@@ -8,6 +8,13 @@ import { JhiDataUtils, JhiEventManager, JhiEventWithContent, JhiFileLoadError } 
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+
+export function momentValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const error = control.value === null || control.value._isAMomentObject === undefined || control.value._isAMomentObject === false;
+    return error ? { moment: { value: control.value } } : null;
+  };
+}
 
 @Component({
   selector: 'jhi-settings',
@@ -41,7 +48,8 @@ export class SettingsComponent implements OnInit {
     email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [],
     sex: [],
-    userBirthDay: [undefined, [Validators.required]],
+    // eslint-disable-next-line no-useless-escape
+    userBirthDay: [undefined, [Validators.required, momentValidator()]],
     image: [],
     imageContentType: [],
     injury: [undefined, [Validators.required]],
@@ -75,7 +83,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setUpEventListeners();
-
     this.accountService.identity().subscribe(appUser => {
       if (appUser) {
         this.initTextValues(appUser);

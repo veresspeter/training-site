@@ -245,7 +245,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     this.accountService.getAgoraToken(this.agora.options.channel, this.timeStamp.toString()).subscribe(
       res => {
         this.agora.options.token = res;
-        this.joinAgoraChannel(this.timeStamp);
+        this.joinAgoraChannel();
       },
       err => {
         this.handleFail(err);
@@ -254,7 +254,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  private joinAgoraChannel(timeStamp: number): void {
+  private joinAgoraChannel(): void {
     this.agora.client
       .join(this.agora.options.appId, this.agora.options.channel, this.agora.options.token, this.localUID)
       .then(() => {
