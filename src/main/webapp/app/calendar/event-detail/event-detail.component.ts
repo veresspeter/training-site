@@ -41,6 +41,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   audioDevices: MediaDeviceInfo[] = [];
   videoDevices: MediaDeviceInfo[] = [];
 
+  timeStamp = Math.floor(Number(new Date()) / 1000);
   localUID: string | undefined;
   pinnedUID: string | undefined;
 
@@ -77,6 +78,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         this.editForm.get('audioSource')?.setValue(this.audioDevices[0].deviceId);
       }
     });
+    const tS = this.timeStamp.toString().substring(6);
+    this.localUID = this.currentUser?.id ? this.currentUser.id + tS : tS;
   }
 
   private subscribeFromEvents(): void {
@@ -91,7 +94,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           this.agora.localVideoTrack = res;
           this.agora.localVideoTrack.play('myVideoContainer');
           this.addVideoTrack(this.agora.localVideoTrack.getTrackId(), 'Én');
-          if (this.localUID) this.addAudioTrack(this.agora.localVideoTrack?.getTrackId(), this.localUID);
         })
         .catch(err => {
           this.handleFail(err);
@@ -99,8 +101,13 @@ export class EventDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  private createLocaleMicrophoneTrack(cb?: Function): void {
+  private createLocaleMicrophoneTrack(): void {
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
+      // eslint-disable-next-line no-console
+      console.log(this.localUID);
+      // eslint-disable-next-line no-console
+      console.log(this.agora.localVideoTrack);
+
       AgoraRTC.createMicrophoneAudioTrack({
         // auto echo
         AEC: true,
@@ -113,9 +120,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
       })
         .then(res => {
           this.agora.localAudioTrack = res;
-          if (cb) {
-            cb();
-          }
+          if (this.localUID && this.agora.localVideoTrack) this.addAudioTrack(this.agora.localVideoTrack.getTrackId(), this.localUID);
         })
         .catch(err => {
           this.handleFail(err);
@@ -240,18 +245,16 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   private joinChannel(): void {
-    const timeStamp = Math.floor(Number(new Date()) / 1000);
-
     /*
     if (this.event?.id && this.event.start) {
       this.agora.options.channel = this.event.id + this.event.start.format('yyyyyMMddHHmm');
     }
      */
 
-    this.accountService.getAgoraToken(this.agora.options.channel, timeStamp.toString()).subscribe(
+    this.accountService.getAgoraToken(this.agora.options.channel, this.timeStamp.toString()).subscribe(
       res => {
         this.agora.options.token = res;
-        this.joinAgoraChannel(timeStamp);
+        this.joinAgoraChannel(this.timeStamp);
       },
       err => {
         this.handleFail(err);
@@ -261,9 +264,6 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   }
 
   private joinAgoraChannel(timeStamp: number): void {
-    const tS = timeStamp.toString().substring(6);
-    this.localUID = this.currentUser?.id ? this.currentUser.id + tS : tS;
-
     this.agora.client
       .join(this.agora.options.appId, this.agora.options.channel, this.agora.options.token, this.localUID)
       .then(() => {
@@ -320,6 +320,9 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   addAudioTrack(videoTrackId: string, userId: string): void {
     const streamDiv = document.getElementById('agora-video-player-' + videoTrackId);
+
+    // eslint-disable-next-line no-console
+    console.log(streamDiv);
 
     const muteButton = this.createButton(5);
     muteButton.id = 'mute_' + userId;
@@ -395,26 +398,19 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   switchMuteButton(uid: string): void {
     const muteButton = document.getElementById('mute_' + uid)!;
     if (muteButton?.classList.contains('muted')) {
-      if (this.agora.localAudioTrack?.getTrackId() === uid) {
+      if (this.localUID === uid && this.agora.localAudioTrack) {
         this.agora.localAudioTrack.setVolume(100);
-        this.agora.client.sendCustomReportMessage({
-          reportId: Math.random().toString(),
-          category: 'info',
-          event: 'unmute',
-          label: this.agora.localAudioTrack.getTrackId(),
-          value: 100,
-        });
       } else {
-        this.agora.client?.remoteUsers?.find(user => user.audioTrack?.getTrackId() === uid)?.audioTrack?.play();
+        this.agora.client?.remoteUsers?.find(user => user.uid.toString() === uid)?.audioTrack?.play();
       }
       muteButton.classList.add('btn-outline-primary');
       muteButton.classList.remove('muted');
       muteButton.classList.remove('btn-primary');
     } else {
-      if (this.agora.localAudioTrack?.getTrackId() === uid) {
+      if (this.agora.localAudioTrack && this.localUID === uid) {
         this.agora.localAudioTrack.setVolume(0);
       } else {
-        this.agora.client?.remoteUsers?.find(user => user.audioTrack?.getTrackId() === uid)?.audioTrack?.stop();
+        this.agora.client?.remoteUsers?.find(user => user.uid.toString() === uid)?.audioTrack?.stop();
       }
       muteButton.classList.add('btn-primary');
       muteButton.classList.add('muted');
