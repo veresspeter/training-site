@@ -51,15 +51,18 @@
                 <div class="form-group col-md-6">
                     <label class="form-control-label" for="field_user_birthDay">Születési idő</label>
                     <div *ngIf="isEdit" class="input-group pr-0">
-                        <input id="field_user_birthDay" type="text" class="form-control" name="userBirthDay" ngbDatepicker #validToDp="ngbDatepicker" formControlName="userBirthDay"/>
+                        <input id="field_user_birthDay" type="text" class="form-control" name="userBirthDay" ngbDatepicker #validToDp="ngbDatepicker" formControlName="userBirthDay"
+                        placeholder="YYYY-MM-DD"/>
                         <span class="input-group-append">
                             <button type="button" class="btn btn-primary btn-icon" (click)="validToDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
                     <div *ngIf="editForm.get('userBirthDay')!.invalid && (editForm.get('userBirthDay')!.dirty || editForm.get('userBirthDay')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('userBirthDay')?.errors?.required">
+                        <small class="form-text text-danger" *ngIf="editForm.get('userBirthDay')?.errors?.required">
                             Mező kitöltése kötelező
+                        </small>
+                        <small class="form-text text-danger" *ngIf="editForm.get('userBirthDay')?.errors?.moment">
+                            Helyes dátum formátum: YYYY-MM-DD
                         </small>
                     </div>
                     <div *ngIf="!isEdit" class="px-3 font-weight-bold my-3">
@@ -312,7 +315,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="text-center text-md-right mt-3">
                 <button *ngIf="isEdit && this.editForm.get(['stepper'])?.value === 1" type="button" id="next-page" class="btn btn-primary" (click)="stepToNextTab()">
