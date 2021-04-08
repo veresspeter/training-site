@@ -84,6 +84,10 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private subscribeFromEvents(): void {
     this.createLocaleMicrophoneTrack();
+    this.createLocaleVideoTrack();
+  }
+
+  private createLocaleVideoTrack(): void {
     this.editForm.get('videoSource')?.valueChanges.subscribe(value => {
       AgoraRTC.createCameraVideoTrack({
         encoderConfig: '720p_2',
@@ -91,9 +95,23 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         cameraId: value,
       })
         .then(res => {
+          if (this.agora.localVideoTrack) {
+            if (this.inMeeting) {
+              this.agora.localVideoTrack?.close();
+            }
+            this.removeVideo(this.agora.localVideoTrack.getTrackId());
+          }
+
           this.agora.localVideoTrack = res;
           this.agora.localVideoTrack.play('myVideoContainer');
           this.addVideoTrack(this.agora.localVideoTrack.getTrackId(), 'Én');
+          if (this.agora.localAudioTrack && this.localUID && !document.getElementById('mute_' + this.localUID)) {
+            this.addAudioTrack(this.agora.localVideoTrack.getTrackId(), this.localUID);
+          }
+
+          if (this.inMeeting) {
+            this.agora.client.publish(this.agora.localVideoTrack);
+          }
         })
         .catch(err => {
           this.handleFail(err);
@@ -103,6 +121,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
   private createLocaleMicrophoneTrack(): void {
     this.editForm.get('audioSource')?.valueChanges.subscribe(value => {
+      if (this.localUID && !this.agora.localVideoTrack && this.agora.localAudioTrack) {
+        this.removeVideo(this.agora.localAudioTrack.getTrackId());
+        if (this.inMeeting) {
+          this.agora.localAudioTrack.stop();
+        }
+      }
       AgoraRTC.createMicrophoneAudioTrack({
         // auto echo
         AEC: true,
@@ -116,6 +140,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         .then(res => {
           this.agora.localAudioTrack = res;
           if (this.localUID && this.agora.localVideoTrack) this.addAudioTrack(this.agora.localVideoTrack.getTrackId(), this.localUID);
+          if (this.localUID && !this.agora.localVideoTrack) {
+            this.setUpBlankVideo(this.agora.localAudioTrack.getTrackId(), this.localUID, true);
+          }
+          if (this.inMeeting) {
+            this.agora.client.publish(this.agora.localAudioTrack);
+          }
         })
         .catch(err => {
           this.handleFail(err);
@@ -180,19 +210,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
                 user.audioTrack?.getTrackId() &&
                 document.getElementById('agora-video-player-' + user.audioTrack?.getTrackId()) === null
               ) {
-                const blankDiv = document.createElement('div');
-                blankDiv.id = 'agora-video-player-' + user.audioTrack?.getTrackId();
-                const video = document.createElement('video');
-                video.id = 'video_' + user.audioTrack?.getTrackId();
-
-                blankDiv.appendChild(video);
-                document.getElementById('remoteVideoContainer')!.appendChild(blankDiv);
-                const name = this.event?.participants?.find(p => p.id?.toString() === EventDetailComponent.getUserIdFromUID(user.uid))
-                  ?.internalUser?.firstName;
-                this.addVideoTrack(user.audioTrack?.getTrackId(), name, true);
-                if (user.uid) {
-                  this.addAudioTrack(user.uid.toString(), user.uid.toString());
-                }
+                this.setUpBlankVideo(user.audioTrack?.getTrackId(), user.uid.toString());
               } else {
                 if (user.audioTrack && videoTrack) {
                   this.addAudioTrack(videoTrack.getTrackId(), user.uid.toString());
@@ -225,6 +243,26 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         muteButton.classList.remove('btn-outline-primary');
       }
     });
+  }
+
+  private setUpBlankVideo(audioTrackId: string, userId: string, local?: boolean): void {
+    const blankDiv = document.createElement('div');
+    blankDiv.id = 'agora-video-player-' + audioTrackId;
+    const video = document.createElement('video');
+    video.id = 'video_' + audioTrackId;
+    blankDiv.appendChild(video);
+
+    if (local) {
+      document.getElementById('myVideoContainer')!.appendChild(blankDiv);
+      this.addVideoTrack(audioTrackId, 'Én', false);
+    } else {
+      const name = this.event?.participants?.find(p => p.id?.toString() === EventDetailComponent.getUserIdFromUID(userId))?.internalUser
+        ?.firstName;
+      document.getElementById('remoteVideoContainer')!.appendChild(blankDiv);
+      this.addVideoTrack(audioTrackId, name, true);
+    }
+
+    this.addAudioTrack(audioTrackId, userId);
   }
 
   private removeBlackVideo(user: IAgoraRTCRemoteUser, remoteVideoTrack: IRemoteVideoTrack): void {
@@ -300,6 +338,8 @@ export class EventDetailComponent implements OnInit, OnDestroy {
 
     if (
       this.localUID !== userId &&
+      this.agora.localVideoTrack?.getTrackId().toString() !== userId &&
+      this.agora.localAudioTrack?.getTrackId().toString() !== userId &&
       this.pinnedUID !== userId &&
       this.currentUser?.id !== this.event?.organizer?.id &&
       userId !== this.agora.localVideoTrack?.getTrackId()
