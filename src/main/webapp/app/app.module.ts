@@ -47,7 +47,6 @@ import { Subject } from 'rxjs';
   bootstrap: [MainComponent],
 })
 export class MaxmoveAppModule implements OnDestroy {
-  cookieConsent: boolean;
   private endSubscriptions: Subject<void> = new Subject<void>();
 
   constructor(
@@ -59,7 +58,9 @@ export class MaxmoveAppModule implements OnDestroy {
     cookieService: CookieService,
     ngcCookieConsentService: NgcCookieConsentService
   ) {
-    this.cookieConsent = cookieService.get('cookieconsent_status') === 'allow';
+    if (cookieService.get('cookieconsent_status') === 'allow') {
+      this.gtmService.addGtmToDom();
+    }
 
     library.addIconPacks(fas, fab);
 
