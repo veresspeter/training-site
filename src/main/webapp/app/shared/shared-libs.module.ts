@@ -6,7 +6,18 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { JhiCookieConsentModule } from 'app/shared/cookie-consent/cookie-consent.module';
+
 @NgModule({
-  exports: [FormsModule, CommonModule, NgbModule, NgJhipsterModule, InfiniteScrollModule, FontAwesomeModule, ReactiveFormsModule],
+  exports: [
+    JhiCookieConsentModule,
+    FormsModule,
+    CommonModule,
+    NgbModule,
+    NgJhipsterModule,
+    InfiniteScrollModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+  ],
 })
 export class MaxmoveSharedLibsModule {}
