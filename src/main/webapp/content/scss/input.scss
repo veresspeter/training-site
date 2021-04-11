@@ -1,6 +1,6 @@
 .input-group {
   border: solid 0 $mv-pastel;
-  box-shadow: 0 0 10px $mv-shadow-primary;
+  box-shadow: 0 0 5px $mv-shadow-primary;
   background-color: $mv-pastel-light;
   padding-right: 5px;
   border-radius: 0;
@@ -16,7 +16,7 @@
 :not(.input-group, [type='radio'], [type='checkbox']) > input:not([type='radio'], [type='checkbox']),
 textarea {
   border: solid 0 $mv-pastel !important;
-  box-shadow: 0 0 10px $mv-shadow-primary !important;
+  box-shadow: 0 0 5px $mv-shadow-primary !important;
   background-color: $mv-pastel-light !important;
   border-radius: 0 !important;
 }
@@ -61,7 +61,7 @@ input[type='checkbox'] {
 
 select.form-control {
   border: solid 0 $mv-pastel !important;
-  box-shadow: 0 0 10px $mv-shadow-primary;
+  box-shadow: 0 0 5px $mv-shadow-primary;
   background-color: $mv-pastel-light;
   border-radius: 0;
   height: 50px !important;

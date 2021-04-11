@@ -32,6 +32,8 @@
     <include file="config/liquibase/changelog/20210402224900_modify_Activity.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210403053300_modify_AppUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210405022100_modify_EventParticipant.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210411132200_modify_AppUser.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210411133700_modify_Activity.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

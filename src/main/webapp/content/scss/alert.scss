@@ -34,12 +34,13 @@ Custom alerts for notification
     max-width: calc(100% - 150px);
     width: max-content !important;
     z-index: 1055;
-    box-shadow: 0 4px 15px #555;
+    box-shadow: 0 0 5px #555;
     border-radius: 0;
     animation: slide-in 1s forwards;
 
     ngb-alert {
       max-width: 100%;
+      border-radius: 0;
     }
 
     .alert {
