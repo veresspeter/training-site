@@ -131,7 +131,7 @@
                     <label class="col-12 px-0">Nyilatkozat</label>
                     <label for="field_gdprAccepted" class="col-12 px-0 row">
                         <input type="checkbox" name="gdprAccepted" id="field_gdprAccepted" formControlName="gdprAccepted" class="col-1 col-xs-2 pr-2" />
-                        <div class="col-11 col-xs-10 px-0">Nyilatkozom, hogy az adatkezelési tájékoztatót (GDPR) elolvastam és elfogadom</div>
+                        <div class="col-11 col-xs-10 px-0">Nyilatkozom, hogy <a [routerLink]="'/gdpr'">az adatkezelési nyilatkozatot és tájékoztatót, az ÁSzF-t és az adatvédelmi tájékoztatót</a> elolvastam és elfogadom.</div>
                     </label>
                     <div *ngIf="editForm.get('gdprAccepted')!.invalid && (editForm.get('gdprAccepted')!.dirty || editForm.get('gdprAccepted')!.touched)">
                         <small class="form-text text-danger"
