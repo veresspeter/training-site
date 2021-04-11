@@ -55,6 +55,10 @@
         margin-bottom: 5px;
       }
 
+      p {
+        white-space: pre-wrap;
+      }
+
       @media (max-width: 740px) {
         width: 100%;
         min-height: 0;
