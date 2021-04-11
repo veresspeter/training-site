@@ -110,6 +110,11 @@ export class AlertErrorComponent implements OnDestroy {
   }
 
   addErrorAlert(message: string): void {
+    // eslint-disable-next-line no-console
+    console.log('addErrorAlert');
+    // eslint-disable-next-line no-console
+    console.log(message);
+
     const newAlert: JhiAlert = {
       type: 'danger',
       msg: message,

@@ -16,6 +16,7 @@ import { AppUser, IAppUser } from 'app/shared/model/application-user.model';
 import { SettingsComponent } from 'app/account/settings/settings.component';
 import { Authority } from 'app/shared/constants/authority.constants';
 import { FormBuilder } from '@angular/forms';
+import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-event-detail',
@@ -54,7 +55,12 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   event: IEvent | null = null;
   inMeeting = false;
 
-  constructor(protected activatedRoute: ActivatedRoute, protected fb: FormBuilder, protected accountService: AccountService) {}
+  constructor(
+    protected activatedRoute: ActivatedRoute,
+    protected fb: FormBuilder,
+    protected accountService: AccountService,
+    protected eventManager: JhiEventManager
+  ) {}
 
   private static getUserIdFromUID(uid: number | string): string {
     return uid.toString().substring(0, uid.toString().length - 4);
@@ -501,6 +507,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   handleFail(err: any): void {
     // eslint-disable-next-line no-console
     console.log(err);
+    this.eventManager.broadcast({ name: 'maxmoveApp.error', content: { message: err.toString() } });
   }
 
   previousState(): void {
