@@ -15,7 +15,7 @@
     width: 100%;
     max-width: 1000px;
     border: none;
-    box-shadow: 0 0 25px 0 $mv-shadow-primary;
+    box-shadow: 0 0 5px $mv-shadow-primary;
 
     &:nth-child(odd) {
       flex-direction: row-reverse;

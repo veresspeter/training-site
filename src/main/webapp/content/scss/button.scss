@@ -3,7 +3,7 @@
   height: 35px;
   border-radius: 0;
   margin: 5px 0;
-  box-shadow: 0 0 0.4rem $mv-shadow-primary;
+  box-shadow: 0 0 5px $mv-shadow-primary;
 
   &.btn-icon {
     width: auto;
@@ -24,7 +24,7 @@
     }
 
     &:focus {
-      box-shadow: 0 0 0.1rem 0.1rem opacify($mv-dark, 0.5);
+      box-shadow: 0 0 5px opacify($mv-dark, 0.5);
     }
 
     &:active,
@@ -50,7 +50,7 @@
     }
 
     &:focus {
-      box-shadow: 0 0 0.1rem 0.1rem opacify($mv-dark, 0.5);
+      box-shadow: 0 0 5px opacify($mv-dark, 0.5);
     }
 
     &:active {

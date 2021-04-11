@@ -21,7 +21,7 @@ Navbar
   padding: 1px 0;
   height: 32px;
   background-color: $mv-navbar;
-  box-shadow: 0 0 5px 3px $mv-shadow-primary;
+  box-shadow: 0 0 5px $mv-shadow-primary;
 
   & > .navbar-collapse > ul {
     width: 100%;
@@ -49,7 +49,7 @@ Navbar
       background-color: $mv-pastel-light;
       border-radius: 0;
       border: 0;
-      box-shadow: 0 0 5px 5px $mv-shadow-primary;
+      box-shadow: 0 0 5px $mv-shadow-primary;
       transform: translate(-49px, 50px) !important;
       color: $mv-text-dark;
 
@@ -89,7 +89,7 @@ Navbar
     }
 
     &.show {
-      box-shadow: 0 5px 5px 0px $mv-shadow-primary;
+      box-shadow: 0 2px 2px $mv-shadow-primary;
     }
   }
 

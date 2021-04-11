@@ -54,7 +54,7 @@ Main page styles
         padding: 20px 30px;
         border: none;
         background-color: $mv-navbar;
-        box-shadow: 0 0 25px 0 $mv-shadow-primary;
+        box-shadow: 0 0 5px $mv-shadow-primary;
 
         @media (min-width: 426px) {
           margin: 50px 0;
