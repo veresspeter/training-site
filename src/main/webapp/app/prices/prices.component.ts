@@ -8,6 +8,9 @@ import { HttpResponse } from '@angular/common/http';
 import { PassTypeDeleteDialogComponent } from 'app/prices/pass-type-delete/pass-type-delete-dialog.component';
 import { IActivityType } from 'app/shared/model/activity-type.model';
 import { PassService } from 'app/shared/services/pass.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { IAppUser } from 'app/shared/model/application-user.model';
+import { LoginModalService } from 'app/core/login/login-modal.service';
 
 @Component({
   selector: 'jhi-prices',
@@ -19,13 +22,27 @@ export class PricesComponent implements OnInit, OnDestroy {
   activityTypes?: IActivityType[];
   eventSubscriber?: Subscription;
   loading = true;
+  account: IAppUser | undefined;
 
   constructor(
     protected passTypeService: PassTypeService,
     protected passService: PassService,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService,
+    protected loginModalService: LoginModalService
   ) {}
+
+  ngOnInit(): void {
+    this.loadAll();
+    this.registerChangeInPassTypes();
+  }
+
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
+  }
 
   loadAll(): void {
     this.passTypeService.query().subscribe((res: HttpResponse<IPassType[]>) => {
@@ -45,6 +62,12 @@ export class PricesComponent implements OnInit, OnDestroy {
 
       this.loading = false;
     });
+
+    this.accountService.identity().subscribe(account => {
+      if (account !== null) {
+        this.account = account;
+      }
+    });
   }
 
   getPassTypesByActivityType(activityType: IActivityType): IPassType[] {
@@ -57,17 +80,6 @@ export class PricesComponent implements OnInit, OnDestroy {
     }
 
     return duration + ' napig';
-  }
-
-  ngOnInit(): void {
-    this.loadAll();
-    this.registerChangeInPassTypes();
-  }
-
-  ngOnDestroy(): void {
-    if (this.eventSubscriber) {
-      this.eventManager.destroy(this.eventSubscriber);
-    }
   }
 
   trackId(index: number, item: IPassType): number {
@@ -85,6 +97,11 @@ export class PricesComponent implements OnInit, OnDestroy {
   }
 
   purchase(passTypeId: number | undefined): void {
+    if (!this.account) {
+      this.loginModalService.open();
+      return;
+    }
+
     if (passTypeId) {
       this.passService.purchase(passTypeId).subscribe(res => {
         if (res.body) {

@@ -55,11 +55,11 @@
                 <div class="col-md-4 category-price">
                     <h4 class="mt-0">
                         {{passType.price | number: '1.0':'hu'}} {{passType.unit}}
-                        <button type="button" *jhiHasAnyAuthority="'ROLE_USER'" (click)="purchase(passType.id)" disabled
+                        <button type="button" (click)="purchase(passType.id)" disabled
                                 class="btn btn-outline-primary btn-icon ml-2">
                             <fa-icon icon="cart-plus"></fa-icon>
                         </button>
-                    </h4>
+                    </h4>s
                 </div>
             </div>
         </div>

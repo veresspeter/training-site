@@ -8,6 +8,7 @@ import { IAppUser } from 'app/shared/model/application-user.model';
 import { EventService } from 'app/shared/services/event.service';
 import { JhiEventManager } from 'ng-jhipster';
 import { Authority } from 'app/shared/constants/authority.constants';
+import { LoginModalService } from 'app/core/login/login-modal.service';
 
 @Component({
   selector: 'jhi-calendar-item',
@@ -22,7 +23,12 @@ export class CalendarItemComponent implements OnInit {
 
   saving = false;
 
-  constructor(protected modalService: NgbModal, protected eventService: EventService, protected eventManager: JhiEventManager) {}
+  constructor(
+    protected modalService: NgbModal,
+    protected eventService: EventService,
+    protected eventManager: JhiEventManager,
+    protected loginModalService: LoginModalService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -46,7 +52,7 @@ export class CalendarItemComponent implements OnInit {
   }
 
   isJoinShown(event: IEvent | undefined): boolean {
-    return this.isUserAuthenticated() && !this.isUserRegistered(event?.participants);
+    return !this.isUserRegistered(event?.participants);
   }
 
   isRegisteredShown(event: IEvent | undefined): boolean {
@@ -95,6 +101,11 @@ export class CalendarItemComponent implements OnInit {
   }
 
   joinEvent(eventId: number | undefined): void {
+    if (!this.isUserAuthenticated()) {
+      this.loginModalService.open();
+      return;
+    }
+
     this.saving = true;
     if (eventId !== undefined) {
       this.eventService.join(eventId).subscribe(
