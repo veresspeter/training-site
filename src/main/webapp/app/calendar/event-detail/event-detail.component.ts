@@ -200,7 +200,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           } else {
             if (remoteVideoTrack) {
               remoteVideoTrack?.play('remoteVideoContainer');
-              if (this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN)) {
+              if (this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN || auth === Authority.EDITOR)) {
                 const name = this.event?.participants?.find(p => p.id?.toString() === EventDetailComponent.getUserIdFromUID(user.uid))
                   ?.internalUser?.firstName;
                 this.addVideoTrack(remoteVideoTrack.getTrackId(), name, true);
@@ -213,7 +213,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
         if (mediaType === 'audio') {
           setTimeout(() => {
             if (
-              this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN) ||
+              this.currentUser?.internalUser?.authorities?.find(auth => auth === Authority.ADMIN || auth === Authority.EDITOR) ||
               EventDetailComponent.getUserIdFromUID(user.uid) === this.event?.organizer?.id?.toString()
             ) {
               const videoTrack = this.agora.client.remoteUsers.find(rUser => rUser.uid === user.uid && rUser.videoTrack !== undefined)
