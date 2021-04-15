@@ -158,7 +158,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
           if (this.inMeeting) {
             setTimeout(() => {
               if (this.agora.localAudioTrack) this.agora.client.publish(this.agora.localAudioTrack);
-            }, 1000);
+            }, 5000);
           }
         })
         .catch(err => {
@@ -239,7 +239,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
                 }
               }
             }
-          }, 500);
+          }, 5000);
 
           user.audioTrack?.play();
         }
