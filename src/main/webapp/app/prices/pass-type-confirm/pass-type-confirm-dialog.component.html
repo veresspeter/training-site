@@ -1,0 +1,23 @@
+<form *ngIf="passType" name="deleteForm" (ngSubmit)="confirmPurchase(passType?.id)">
+    <div class="modal-header">
+        <h4 class="modal-title">Vásárlás megerősítése</h4>
+    </div>
+
+    <div class="modal-body">
+        <p id="jhi-delete-activityType-heading">
+            Biztosan meg szeretnéd vásárolni a(z) <span class="font-weight-bold">{{passType.name}}</span>-(e)t
+            <span class="font-weight-bold">{{passType.price | number: '1.0':'hu'}} {{passType.unit}}</span>-ért?
+        </p>
+        <p class="small">Az "Igen" gombra kattintva a weboldal átirányít a Barion oldalára. A fizetés befejezését követően a Profilom > Bérleteim menüpont alatt ellenőrizheted a vásárolt termék állapotát. </p>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" (click)="cancel()">
+            Nem
+        </button>
+
+        <button id="jhi-confirm-delete-activityType" type="submit" class="btn btn-danger">
+            Igen
+        </button>
+    </div>
+</form>

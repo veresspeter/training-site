@@ -11,6 +11,7 @@ import { PassService } from 'app/shared/services/pass.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { IAppUser } from 'app/shared/model/application-user.model';
 import { LoginModalService } from 'app/core/login/login-modal.service';
+import { PassTypeConfirmDialogComponent } from 'app/prices/pass-type-confirm/pass-type-confirm-dialog.component';
 
 @Component({
   selector: 'jhi-prices',
@@ -96,18 +97,18 @@ export class PricesComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.passType = passType;
   }
 
-  purchase(passTypeId: number | undefined): void {
+  purchase(passType: IPassType): void {
     if (!this.account) {
       this.loginModalService.open();
       return;
     }
 
-    if (passTypeId) {
-      this.passService.purchase(passTypeId).subscribe(res => {
-        if (res.body) {
-          window.location.href = res.body;
-        }
-      });
-    }
+    const modalRef = this.modalService.open(PassTypeConfirmDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.passType = passType;
+  }
+
+  // TODO: remove
+  isPaymentEnabledForTest(): boolean {
+    return this.account?.id === 115;
   }
 }

@@ -24,8 +24,8 @@ export class JhiCookieConsentComponent implements OnInit, OnDestroy {
   private updateCookieConsentOnLanguageChange(): void {
     this.cookieConsentService.updateCookieConsentContent({
       message: 'Weboldalunk sütiket használ, hogy a biztonságos böngészés mellett a legjobb felhasználói élményt nyújtsuk.',
-      deny: 'Elutasítom',
-      allow: 'Elfogadom',
+      deny: undefined,
+      allow: 'Megértettem',
       href: './gdpr',
       link: 'GDPR oldalunk',
       policy: 'Adatvédelem',
