@@ -23,9 +23,6 @@ import { AccountService } from 'app/core/auth/account.service';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { GdprComponent } from './gdpr/gdpr.component';
 import { GoogleTagManagerModule, GoogleTagManagerService } from 'angular-google-tag-manager';
-import { CookieService } from 'ngx-cookie-service';
-import { NgcCookieConsentService, NgcStatusChangeEvent } from 'ngx-cookieconsent';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @NgModule({
@@ -54,13 +51,9 @@ export class MaxmoveAppModule implements OnDestroy {
     router: Router,
     accountService: AccountService,
     applicationUserService: ApplicationUserService,
-    protected gtmService: GoogleTagManagerService,
-    cookieService: CookieService,
-    ngcCookieConsentService: NgcCookieConsentService
+    protected gtmService: GoogleTagManagerService
   ) {
-    if (cookieService.get('cookieconsent_status') === 'allow') {
-      this.gtmService.addGtmToDom();
-    }
+    this.gtmService.addGtmToDom();
 
     library.addIconPacks(fas, fab);
 
@@ -91,12 +84,6 @@ export class MaxmoveAppModule implements OnDestroy {
             });
           }
         });
-      }
-    });
-
-    ngcCookieConsentService.statusChange$.pipe(takeUntil(this.endSubscriptions)).subscribe((event: NgcStatusChangeEvent) => {
-      if (event.status === 'allow' && !event.chosenBefore) {
-        this.gtmService.addGtmToDom();
       }
     });
   }
