@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { MaxmoveTestModule } from '../../test.module';
+import { TrainingsiteTestModule } from '../../test.module';
 import { ActivityTypeComponent } from 'app/activity-type/activity-type.component';
 import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -15,7 +15,7 @@ describe('Component Tests', () => {
 
     beforeEach(async(() => {
       TestBed.configureTestingModule({
-        imports: [MaxmoveTestModule],
+        imports: [TrainingsiteTestModule],
         declarations: [ActivityTypeComponent],
       })
         .overrideTemplate(ActivityTypeComponent, '')

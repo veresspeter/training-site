@@ -21,7 +21,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         },
         {
           path: 'activity-type',
-          loadChildren: () => import('./activity-type/activity-type.module').then(m => m.MaxmoveActivityTypeModule),
+          loadChildren: () => import('./activity-type/activity-type.module').then(m => m.TrainingsiteActivityTypeModule),
         },
         {
           path: 'calendar',
@@ -66,4 +66,4 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
   ],
   exports: [RouterModule],
 })
-export class MaxmoveAppRoutingModule {}
+export class TrainingsiteAppRoutingModule {}

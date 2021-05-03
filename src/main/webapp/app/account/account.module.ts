@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MaxmoveSharedModule } from 'app/shared/shared.module';
+import { TrainingsiteSharedModule } from 'app/shared/shared.module';
 
 import { SessionsComponent } from './sessions/sessions.component';
 import { PasswordStrengthBarComponent } from './password/password-strength-bar.component';
@@ -16,7 +16,7 @@ import { MyEventsComponent } from './my-events/my-events.component';
 import { MyPassesComponent } from './my-passes/my-passes.component';
 
 @NgModule({
-  imports: [MaxmoveSharedModule, RouterModule.forChild(accountState)],
+  imports: [TrainingsiteSharedModule, RouterModule.forChild(accountState)],
   declarations: [
     ActivateComponent,
     RegisterComponent,

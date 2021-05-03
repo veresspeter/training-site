@@ -20,4 +20,4 @@ import { JhiCookieConsentModule } from 'app/shared/cookie-consent/cookie-consent
     ReactiveFormsModule,
   ],
 })
-export class MaxmoveSharedLibsModule {}
+export class TrainingsiteSharedLibsModule {}

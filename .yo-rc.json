@@ -5,7 +5,7 @@
     },
     "jhipsterVersion": "6.10.5",
     "applicationType": "monolith",
-    "baseName": "maxmove",
+    "baseName": "trainingsite",
     "packageName": "hu.redriver",
     "packageFolder": "hu/redriver",
     "serverPort": "8080",

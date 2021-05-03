@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import './vendor';
-import { MaxmoveSharedModule } from 'app/shared/shared.module';
-import { MaxmoveCoreModule } from 'app/core/core.module';
-import { MaxmoveAppRoutingModule } from './app-routing.module';
-import { MaxmoveActivityTypeModule } from './activity-type/activity-type.module';
+import { TrainingsiteSharedModule } from 'app/shared/shared.module';
+import { TrainingsiteCoreModule } from 'app/core/core.module';
+import { TrainingsiteAppRoutingModule } from './app-routing.module';
+import { TrainingsiteActivityTypeModule } from './activity-type/activity-type.module';
 import 'cookieconsent/build/cookieconsent.min';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
@@ -24,26 +24,28 @@ import { ApplicationUserService } from 'app/shared/services/application-user.ser
 import { GdprComponent } from './gdpr/gdpr.component';
 import { GoogleTagManagerModule, GoogleTagManagerService } from 'angular-google-tag-manager';
 import { Subject } from 'rxjs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   imports: [
     BrowserModule,
     FontAwesomeModule,
-    MaxmoveSharedModule,
-    MaxmoveCoreModule,
-    MaxmoveActivityTypeModule,
+    TrainingsiteSharedModule,
+    TrainingsiteCoreModule,
+    TrainingsiteActivityTypeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    MaxmoveAppRoutingModule,
+    TrainingsiteAppRoutingModule,
     CalendarModule,
     NgbModule,
     GoogleTagManagerModule.forRoot({
       id: 'GTM-N9SD87Z',
     }),
+    MatToolbarModule,
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, GdprComponent],
   bootstrap: [MainComponent],
 })
-export class MaxmoveAppModule implements OnDestroy {
+export class TrainingsiteAppModule implements OnDestroy {
   private endSubscriptions: Subject<void> = new Subject<void>();
 
   constructor(

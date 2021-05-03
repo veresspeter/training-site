@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'user-management',
-        loadChildren: () => import('./user-management/application-user.module').then(m => m.MaxmoveApplicationUserModule),
+        loadChildren: () => import('./user-management/application-user.module').then(m => m.TrainingsiteApplicationUserModule),
         data: {
           pageTitle: 'Users',
         },
@@ -43,7 +43,7 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'pass',
-        loadChildren: () => import('./pass/pass.module').then(m => m.MaxmovePassModule),
+        loadChildren: () => import('./pass/pass.module').then(m => m.TrainingsitePassModule),
       },
       /* jhipster-needle-add-admin-route - JHipster will add admin routes here */
     ]),

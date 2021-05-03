@@ -507,7 +507,7 @@ export class EventDetailComponent implements OnInit, OnDestroy {
   handleFail(err: any): void {
     // eslint-disable-next-line no-console
     console.log(err);
-    this.eventManager.broadcast({ name: 'maxmoveApp.error', content: { message: err.toString() } });
+    this.eventManager.broadcast({ name: 'trainingsiteApp.error', content: { message: err.toString() } });
   }
 
   previousState(): void {

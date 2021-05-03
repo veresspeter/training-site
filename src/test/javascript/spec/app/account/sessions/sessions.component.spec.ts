@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 
-import { MaxmoveTestModule } from '../../../test.module';
+import { TrainingsiteTestModule } from '../../../test.module';
 import { Session } from 'app/account/sessions/session.model';
 import { SessionsComponent } from 'app/account/sessions/sessions.component';
 import { SessionsService } from 'app/account/sessions/sessions.service';
@@ -18,7 +18,7 @@ describe('Component Tests', () => {
       sessions = [new Session('xxxxxx==', new Date(2015, 10, 15), '0:0:0:0:0:0:0:1', 'Mozilla/5.0')];
 
       fixture = TestBed.configureTestingModule({
-        imports: [MaxmoveTestModule],
+        imports: [TrainingsiteTestModule],
         declarations: [SessionsComponent],
       })
         .overrideTemplate(SessionsComponent, '')

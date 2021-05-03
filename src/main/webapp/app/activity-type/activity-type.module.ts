@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { MaxmoveSharedModule } from 'app/shared/shared.module';
+import { TrainingsiteSharedModule } from 'app/shared/shared.module';
 import { activityTypeRoutes } from './activity-type.route';
 import { ActivityTypeComponent } from './activity-type.component';
 import { ActivityTypeUpdateComponent } from 'app/activity-type/activity-type-update/activity-type-update.component';
@@ -11,7 +11,7 @@ import { ActivityUpdateComponent } from 'app/activity-type/activity-update/activ
 import { ActivityListComponent } from 'app/activity-type/activity-list/activity-list.component';
 
 @NgModule({
-  imports: [MaxmoveSharedModule, RouterModule.forChild(activityTypeRoutes)],
+  imports: [TrainingsiteSharedModule, RouterModule.forChild(activityTypeRoutes)],
   declarations: [
     ActivityTypeComponent,
     ActivityTypeUpdateComponent,
@@ -22,4 +22,4 @@ import { ActivityListComponent } from 'app/activity-type/activity-list/activity-
   ],
   entryComponents: [ActivityTypeDeleteDialogComponent, ActivityDeleteDialogComponent],
 })
-export class MaxmoveActivityTypeModule {}
+export class TrainingsiteActivityTypeModule {}

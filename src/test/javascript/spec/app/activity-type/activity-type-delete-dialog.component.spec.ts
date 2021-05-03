@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { of } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { MaxmoveTestModule } from '../../test.module';
+import { TrainingsiteTestModule } from '../../test.module';
 import { MockEventManager } from '../../helpers/mock-event-manager.service';
 import { MockActiveModal } from '../../helpers/mock-active-modal.service';
 import { ActivityTypeService } from 'app/shared/services/activity-type.service';
@@ -19,7 +19,7 @@ describe('Component Tests', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [MaxmoveTestModule],
+        imports: [TrainingsiteTestModule],
         declarations: [ActivityTypeDeleteDialogComponent],
       })
         .overrideTemplate(ActivityTypeDeleteDialogComponent, '')
