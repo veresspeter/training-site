@@ -1,7 +1,3 @@
-import { NgModule, OnDestroy } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import './vendor';
 import { TrainingsiteSharedModule } from 'app/shared/shared.module';
 import { TrainingsiteCoreModule } from 'app/core/core.module';
@@ -15,20 +11,27 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { CalendarModule } from './calendar/calendar.module';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { NavigationStart, Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { ApplicationUserService } from 'app/shared/services/application-user.service';
 import { GdprComponent } from './gdpr/gdpr.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GoogleTagManagerModule, GoogleTagManagerService } from 'angular-google-tag-manager';
-import { Subject } from 'rxjs';
+import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+import { NgModule, OnDestroy } from '@angular/core';
+import { NavigationStart, Router } from '@angular/router';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { Subject } from 'rxjs';
 
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FontAwesomeModule,
     TrainingsiteSharedModule,
     TrainingsiteCoreModule,
@@ -40,7 +43,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     GoogleTagManagerModule.forRoot({
       id: 'GTM-N9SD87Z',
     }),
+    MatButtonModule,
     MatToolbarModule,
+    MatMenuModule,
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent, GdprComponent],
   bootstrap: [MainComponent],

@@ -1,5 +1,3 @@
-@import '../../content/scss/variables';
-
 /* ==========================================================================
 Main page styles
 ========================================================================== */
@@ -30,19 +28,18 @@ Main page styles
   .container {
     padding: 35px 25px 0 25px;
     text-align: left;
-    border: solid 2px $mv-dark;
+    border: solid 2px gray;
 
     .category-header {
-      background-color: $mv-rose;
+      background-color: lightgray;
       margin: 0 -50px;
       padding: 10px 50px;
-      box-shadow: 0 0 5px $mv-shadow-primary;
     }
 
     .category-item {
       margin: 15px 15px 0 15px;
       padding-bottom: 15px;
-      border-bottom: solid 2px $mv-dark;
+      border-bottom: solid 2px gray;
 
       h4 {
         margin: 0 -25px;

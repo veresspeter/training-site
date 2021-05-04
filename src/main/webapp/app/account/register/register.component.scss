@@ -1,9 +1,7 @@
-@import '../../../content/scss/variables';
-
 :host {
   .card {
     text-align: center;
-    background-color: $mv-bg;
+    background-color: white;
     border: none;
 
     .form-group {

@@ -1,13 +1,11 @@
-@import '../../../content/scss/variables';
-
 :host {
   .card {
-    background-color: $mv-pastel-gray;
+    background-color: gray;
     max-width: 800px;
     opacity: 50%;
 
     * {
-      color: $mv-gray;
+      color: gray;
     }
 
     fa-icon {
@@ -25,7 +23,7 @@
     }
 
     .pass-display-container {
-      background-color: $mv-light-gray;
+      background-color: lightgray;
       padding: 15px;
       min-height: 107px;
 
@@ -33,7 +31,7 @@
         height: 75px;
 
         .pass-occasion {
-          background-color: $mv-gray;
+          background-color: gray;
           width: 8px;
           height: 8px;
           margin: 0 4px;
@@ -46,21 +44,21 @@
     }
 
     &.active {
-      background-color: $mv-pastel;
+      background-color: lightgray;
       opacity: 100%;
 
       * {
-        color: $mv-text-dark;
+        color: black;
       }
 
       .pass-display-container {
-        background-color: $mv-pastel-light;
+        background-color: lightgray;
 
         .pass-occasion {
-          background-color: $mv-dark-gray;
+          background-color: gray;
 
           &.used {
-            background-color: $mv-btn-primary;
+            background-color: white;
           }
         }
       }

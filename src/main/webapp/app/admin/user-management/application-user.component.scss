@@ -1,8 +1,6 @@
-@import '../../../content/scss/variables';
-
 :host {
   .card {
     margin: 15px 0;
-    background-color: $mv-navbar;
+    background-color: gray;
   }
 }

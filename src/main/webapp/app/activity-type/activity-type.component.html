@@ -1,40 +1,50 @@
-<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary" [routerLink]="['/activity-type', 'new']">
+<button mat-raised-button color="primary" class="mt-3" *jhiHasAnyAuthority="'ROLE_ADMIN'" [routerLink]="['/activity-type', 'new']">
     Létrehozás
 </button>
 
 <div *ngIf="loading" class="app-loading">
     <div class="lds-css ng-scope">
         <div class="lds-pacman">
-            <div><div></div><div></div><div></div></div>
-            <div><div></div><div></div><div></div></div>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="alert alert-warning text-center w-50 mx-auto mt-5" id="no-result" *ngIf="!loading && activityTypes?.length === 0">
+<div id="no-result" *ngIf="!loading && activityTypes?.length === 0">
     <span class="text-light">Még nincsenek foglalkozás típusok feltöltve</span>
 </div>
 
-<ul *ngIf="!loading && activityTypes!.length > 0" class="row justify-content-center align-items-center my-5">
-    <li *ngFor="let activityType of activityTypes; trackBy: trackId">
-        <div class="card mx-md-3">
-            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit pr-1">
-                <button type="submit" class="btn btn-icon btn-primary"
-                        [routerLink]="['/activity-type', activityType.id, 'edit']">
+<div *ngIf="!loading && activityTypes!.length > 0" class="row justify-content-center align-items-center my-5">
+    <div *ngFor="let activityType of activityTypes; trackBy: trackId">
+        <mat-card class="m-5">
+            <mat-card-header>
+                <mat-card-title>
+                    <a routerLink="/activity-type/{{activityType.id}}/activity">
+                        <span>{{activityType.name}}</span>
+                        <span class="pl-3">
+                            <fa-icon icon="chevron-right"></fa-icon>
+                        </span>
+                    </a>
+                </mat-card-title>
+            </mat-card-header>
+            <img mat-card-image src="data:{{activityType.imageContentType}};base64,{{activityType.image}}" alt="">
+            <mat-card-actions>
+                <button type="submit" mat-icon-button [routerLink]="['/activity-type', activityType.id, 'edit']">
                     <fa-icon icon="pen"></fa-icon>
                 </button>
-                <button class="btn btn-icon btn-primary" (click)="delete(activityType)">
+                <button mat-icon-button color="warn" (click)="delete(activityType)">
                     <fa-icon icon="trash"></fa-icon>
                 </button>
-            </div>
-            <a routerLink="/activity-type/{{activityType.id}}/activity">
-                <div class="card-header">{{activityType.name}}</div>
-                <div class="card-img">
-                    <img class="activity-img"
-                         src="data:{{activityType.imageContentType}};base64,{{activityType.image}}"
-                         alt="">
-                </div>
-            </a>
-        </div>
-    </li>
-</ul>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

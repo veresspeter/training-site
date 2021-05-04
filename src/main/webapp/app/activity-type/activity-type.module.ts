@@ -9,9 +9,11 @@ import { ActivityTypeDeleteDialogComponent } from 'app/activity-type/activity-ty
 import { ActivityDeleteDialogComponent } from 'app/activity-type/activity-delete/activity-delete-dialog.component';
 import { ActivityUpdateComponent } from 'app/activity-type/activity-update/activity-update.component';
 import { ActivityListComponent } from 'app/activity-type/activity-list/activity-list.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  imports: [TrainingsiteSharedModule, RouterModule.forChild(activityTypeRoutes)],
+  imports: [TrainingsiteSharedModule, RouterModule.forChild(activityTypeRoutes), MatCardModule, MatButtonModule],
   declarations: [
     ActivityTypeComponent,
     ActivityTypeUpdateComponent,

@@ -1,15 +1,11 @@
-@import '../../content/scss/variables';
-
 :host {
   .contact-container {
     margin: 35px 30px;
-    border: 2px solid $mv-dark;
+    border: 2px solid black;
 
     div {
       margin: 25px -50px;
       padding: 25px;
-      background-color: $mv-pastel;
-      box-shadow: 0 0 5px $mv-shadow-primary;
 
       h3 {
         font-size: 17px;

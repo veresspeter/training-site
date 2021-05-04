@@ -27,7 +27,6 @@
 </div>
 
 <div class="w-100 m-0 px-2 mb-4 row justify-content-center" *ngIf="!loading && passTypes && passTypes.length > 0">
-    <div class="alert alert-danger col-12 col-md-10 col-lg-8 col-xl-6 text-center">Online fizetés hamarosan</div>
     <div class="w-100"></div>
     <div class="container col-12 col-md-10 col-lg-8 col-xl-6" id="entities">
         <div *ngFor="let activityType of activityTypes">
@@ -55,10 +54,6 @@
                 <div class="col-md-4 category-price">
                     <h4 class="mt-0">
                         {{passType.price | number: '1.0':'hu'}} {{passType.unit}}
-                        <button type="button" (click)="purchase(passType)" [disabled]="!isPaymentEnabledForTest()"
-                                class="btn btn-outline-primary btn-icon ml-2">
-                            <fa-icon icon="cart-plus"></fa-icon>
-                        </button>
                     </h4>
                 </div>
             </div>
