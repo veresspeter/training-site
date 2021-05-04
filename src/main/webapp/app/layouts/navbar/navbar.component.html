@@ -1,23 +1,23 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
     <mat-toolbar-row [ngSwitch]="isAuthenticated()">
-        <a mat-button class="nav-link" routerLink="/activity-type">
+        <a mat-flat-button color="primary" class="nav-link" routerLink="/activity-type">
             Kezdőlap
         </a>
-        <a mat-button class="nav-link" routerLink="/calendar">
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/calendar">
             Órarend
         </a>
-        <a mat-button class="nav-link" routerLink="/trainers">
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/trainers">
             Oktatók
         </a>
-        <a mat-button class="nav-link" routerLink="/prices">
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/prices">
             Árak
         </a>
-        <a mat-button class="nav-link" routerLink="/contact">
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/contact">
             Kapcsolat
         </a>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
-            <a mat-button [matMenuTriggerFor]="adminMenu" class="admin-button">
+            <a  mat-flat-button color="primary" [matMenuTriggerFor]="adminMenu" class="admin-button">
                 Admin
             </a>
             <mat-menu #adminMenu="matMenu" xPosition="after">
@@ -71,7 +71,7 @@
             </mat-menu>
         </ng-container>
         <ng-container *ngSwitchCase="true">
-            <a mat-button [matMenuTriggerFor]="profileMenu">
+            <a  mat-flat-button color="primary" [matMenuTriggerFor]="profileMenu">
                 Profilom
             </a>
             <mat-menu #profileMenu="matMenu" xPosition="after">
@@ -93,10 +93,10 @@
             </mat-menu>
         </ng-container>
         <ng-container *ngSwitchCase="false" class="nav-item">
-            <a mat-button (click)="login()" id="login" class="ml-auto">
+            <a  mat-flat-button color="primary" (click)="login()" id="login" class="ml-auto">
                 Bejelentkezés
             </a>
-            <a mat-button routerLink="account/register" routerLinkActive="active">
+            <a  mat-flat-button color="primary" routerLink="account/register" routerLinkActive="active">
                 Regisztráció
             </a>
         </ng-container>
