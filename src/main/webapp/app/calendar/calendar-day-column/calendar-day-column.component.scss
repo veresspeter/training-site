@@ -2,9 +2,8 @@
   position: relative;
   height: 800px;
   width: 175px;
-  margin: 0 -2px;
-  border-left: 4px solid gray;
-  border-right: 4px solid gray;
+  margin: 0 -1px;
+  border: 2px solid lightgray;
 
   h3 {
     width: fit-content;
@@ -20,16 +19,13 @@
   }
 
   .day {
-    background: lightgray;
-    margin: 15px auto 10px auto;
+    margin: 0 auto;
     max-width: 120px;
     padding: 7px 6px;
 
     p {
-      margin: -14px 6px;
-      padding: 2px 0;
       height: fit-content;
-      border: 3px solid gray;
+      border-bottom: 1px solid darkgray;
       font-size: 1.2rem;
     }
   }

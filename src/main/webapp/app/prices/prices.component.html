@@ -1,4 +1,4 @@
-<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary" [routerLink]="['/prices/new']">
+<button mat-raised-button color="primary" class="mt-3"  *jhiHasAnyAuthority="'ROLE_ADMIN'" [routerLink]="['/prices/new']">
     Létrehozás
 </button>
 
@@ -39,15 +39,13 @@
                     <p>Érvényes: {{passType.durationDays ? durationToString(passType.durationDays) : 'felhasználásig'}}</p>
                 </div>
                 <div class="col-md-4 text-center my-2">
-                    <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                            [routerLink]="['/prices', passType.id, 'view']"
-                            class="btn btn-primary btn-icon">
+                    <button mat-mini-fab color="primary" type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                            [routerLink]="['/prices', passType.id, 'view']">
                         <fa-icon icon="eye"></fa-icon>
                     </button>
 
-                    <button type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
-                            (click)="delete(passType)"
-                            class="btn btn-primary btn-icon">
+                    <button mat-mini-fab color="primary" type="submit" *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                            (click)="delete(passType)">
                         <fa-icon icon="trash"></fa-icon>
                     </button>
                 </div>

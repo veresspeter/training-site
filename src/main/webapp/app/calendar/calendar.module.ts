@@ -9,9 +9,11 @@ import { EventDetailComponent } from 'app/calendar/event-detail/event-detail.com
 import { EventDeleteDialogComponent } from 'app/calendar/event-delete/event-delete-dialog.component';
 import { CalendarDayColumnComponent } from './calendar-day-column/calendar-day-column.component';
 import { CalendarItemComponent } from './calendar-item/calendar-item.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  imports: [TrainingsiteSharedModule, RouterModule.forChild(calendarRoutes)],
+  imports: [TrainingsiteSharedModule, RouterModule.forChild(calendarRoutes), MatButtonModule, MatChipsModule],
   declarations: [
     EventComponent,
     EventDetailComponent,

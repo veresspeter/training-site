@@ -23,8 +23,7 @@
             <p>{{applicationUser.introduction}}</p>
         </div>
         <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit px-1">
-            <button type="submit" class="btn btn-icon btn-primary"
-                    [routerLink]="['/admin/user-management/', applicationUser?.id, 'view']">
+            <button mat-mini-fab color="primary" type="submit" [routerLink]="['/admin/user-management/', applicationUser?.id, 'view']">
                 <fa-icon icon="eye"></fa-icon>
             </button>
         </div>

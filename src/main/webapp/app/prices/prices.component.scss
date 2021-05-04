@@ -26,20 +26,19 @@ Main page styles
   text-align: right;
 
   .container {
-    padding: 35px 25px 0 25px;
     text-align: left;
-    border: solid 2px gray;
+    padding: 0 25px 25px 25px;
 
     .category-header {
-      background-color: lightgray;
-      margin: 0 -50px;
+      margin: 5px -25px 25px -25px;
       padding: 10px 50px;
+      border-bottom: 2px solid gray;
     }
 
     .category-item {
       margin: 15px 15px 0 15px;
       padding-bottom: 15px;
-      border-bottom: solid 2px gray;
+      border-bottom: solid 1px darkgray;
 
       h4 {
         margin: 0 -25px;

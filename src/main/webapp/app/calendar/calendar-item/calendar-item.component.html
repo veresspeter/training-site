@@ -3,12 +3,12 @@
 <div class="organizer">{{event?.organizer?.internalUser?.lastName}} {{event?.organizer?.internalUser?.firstName}}</div>
 
 <div>
-    <button *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event?.id)" class="btn btn-sm btn-primary"
+    <button mat-raised-button color="primary" *ngIf="!isEventClosed(event) && isJoinShown(event)" type="button" (click)="joinEvent(event?.id)"
             [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
         Jelentkezés
     </button>
 
-    <button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event?.id)" class="btn btn-sm btn-outline-primary"
+    <button mat-raised-button *ngIf="!isEventClosed(event) && isRegisteredShown(event)" type="button" (click)="quitEvent(event?.id)"
             [attr.disabled]="isEventEditable(event) || saving ? '' : null" [class.disabled]="isEventEditable(event) || saving">
         Lejelentkezés
     </button>
@@ -18,11 +18,10 @@
         Csatlakozás
     </button>
 
-    <button *ngIf="isEditor() && isMyClass(event?.organizer?.id) || isAdmin()" type="submit" [routerLink]="['/calendar', event?.id, 'view']"
-            class="btn btn-sm btn-primary btn-icon">
+    <button mat-icon-button *ngIf="isEditor() && isMyClass(event?.organizer?.id) || isAdmin()" type="submit" [routerLink]="['/calendar', event?.id, 'view']">
         <fa-icon icon="eye"></fa-icon>
     </button>
-    <button *ngIf="isAdmin()" type="submit" (click)="delete(event)" class="btn btn-sm btn-primary btn-icon">
+    <button mat-icon-button *ngIf="isAdmin()" type="submit" (click)="delete(event)">
         <fa-icon icon="trash"></fa-icon>
     </button>
 </div>

@@ -12,11 +12,11 @@
     margin: 50px auto;
     width: 100%;
     max-width: 1000px;
-    border: none;
+    border: 1px solid lightgray;
 
     &:nth-child(odd) {
       flex-direction: row-reverse;
-      background-color: gray;
+      background-color: white;
 
       .card-edit {
         top: 0.5rem;
@@ -30,7 +30,7 @@
 
     &:nth-child(even) {
       flex-direction: row;
-      background-color: gray;
+      background-color: white;
       text-align: left;
 
       .card-edit {
