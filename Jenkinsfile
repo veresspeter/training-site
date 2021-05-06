@@ -28,8 +28,12 @@ pipeline {
         agent any
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'aws-frankfurt-default-kp', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USR')]) {
-                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker stop maxmove'
-                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
+                catchError {
+                    sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker stop maxmove'
+                }
+                catchError {
+                    sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
+                }
                 sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker pull veresspeter/maxmove'
                 sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker run -d --rm --name maxmove --network host veresspeter/maxmove'
             }
