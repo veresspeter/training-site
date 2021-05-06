@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { MaxmoveSharedLibsModule } from './shared-libs.module';
+import { TrainingsiteSharedLibsModule } from './shared-libs.module';
 import { AlertComponent } from './alert/alert.component';
 import { AlertErrorComponent } from './alert/alert-error.component';
 import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 @NgModule({
-  imports: [MaxmoveSharedLibsModule],
+  imports: [TrainingsiteSharedLibsModule],
   declarations: [AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
   entryComponents: [LoginModalComponent],
-  exports: [MaxmoveSharedLibsModule, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
+  exports: [TrainingsiteSharedLibsModule, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
 })
-export class MaxmoveSharedModule {}
+export class TrainingsiteSharedModule {}

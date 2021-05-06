@@ -1,12 +1,9 @@
-@import '../../../content/scss/variables';
-
 :host {
   position: relative;
   height: 800px;
   width: 175px;
-  margin: 0 -2px;
-  border-left: 4px solid $mv-border;
-  border-right: 4px solid $mv-border;
+  margin: 0 -1px;
+  border: 2px solid lightgray;
 
   h3 {
     width: fit-content;
@@ -17,21 +14,18 @@
     border-radius: 25px;
 
     &.active {
-      background-color: $mv-navbar;
+      background-color: lightgray;
     }
   }
 
   .day {
-    background: $mv-navbar;
-    margin: 15px auto 10px auto;
+    margin: 0 auto;
     max-width: 120px;
     padding: 7px 6px;
 
     p {
-      margin: -14px 6px;
-      padding: 2px 0;
       height: fit-content;
-      border: 3px solid $mv-dark;
+      border-bottom: 1px solid darkgray;
       font-size: 1.2rem;
     }
   }

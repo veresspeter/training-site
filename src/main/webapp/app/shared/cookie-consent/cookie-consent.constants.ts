@@ -3,7 +3,7 @@ import { NgcCookieConsentConfig } from 'ngx-cookieconsent';
 
 export const COOKIE_CONFIG: NgcCookieConsentConfig = {
   cookie: {
-    domain: DEBUG_INFO_ENABLED ? 'localhost' : 'maxmove.hu', // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
+    domain: DEBUG_INFO_ENABLED ? 'localhost' : 'trainingsite.hu', // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
   },
   palette: {
     popup: {

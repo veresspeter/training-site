@@ -59,7 +59,7 @@ management:
 
 spring:
   application:
-    name: maxmove
+    name: trainingsite
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
     # Otherwise, it will be filled in by maven when building the JAR file
@@ -97,13 +97,13 @@ spring:
     allow-bean-definition-overriding: true
   task:
     execution:
-      thread-name-prefix: maxmove-task-
+      thread-name-prefix: trainingsite-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: maxmove-scheduling-
+      thread-name-prefix: trainingsite-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -139,7 +139,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'maxmoveApp'
+    name: 'trainingsiteApp'
   # By default CORS is disabled. Uncomment to enable.
   cors:
     allowed-origins: '*'
@@ -149,11 +149,11 @@ jhipster:
   #     exposed-headers: "Link,X-Total-Count"
   #     max-age: 1800
   mail:
-    from: maxmove@redriver.hu
+    from: trainingsite@redriver.hu
   swagger:
     default-include-pattern: /api/.*
-    title: maxmove API
-    description: maxmove API documentation
+    title: trainingsite API
+    description: trainingsite API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

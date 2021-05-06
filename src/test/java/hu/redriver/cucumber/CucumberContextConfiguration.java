@@ -1,6 +1,6 @@
 package hu.redriver.cucumber;
 
-import hu.redriver.MaxmoveApp;
+import hu.redriver.TrainingsiteApp;
 import io.cucumber.java.Before;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,7 +8,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @SpringBootTest
 @WebAppConfiguration
-@ContextConfiguration(classes = MaxmoveApp.class)
+@ContextConfiguration(classes = TrainingsiteApp.class)
 public class CucumberContextConfiguration {
 
     @Before

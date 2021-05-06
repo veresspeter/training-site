@@ -34,7 +34,7 @@ Custom alerts for notification
     max-width: calc(100% - 150px);
     width: max-content !important;
     z-index: 1055;
-    box-shadow: 0 0 5px #555;
+    box-shadow: 0 0 5px #ccc;
     border-radius: 0;
     animation: slide-in 1s forwards;
 
@@ -60,7 +60,7 @@ Custom alerts for notification
         }
 
         &:hover {
-          color: $mv-btn-light;
+          color: gray;
         }
       }
 
@@ -73,8 +73,8 @@ Custom alerts for notification
       }
 
       &.alert-success {
-        background: $mv-alert-bg;
-        color: #ffffff;
+        background: white;
+        color: gray;
 
         fa-icon {
           display: inline;
@@ -82,14 +82,13 @@ Custom alerts for notification
           font-size: 20px;
 
           svg > path {
-            color: $mv-success !important;
+            color: green !important;
           }
         }
       }
 
       &.alert-danger {
-        background: $mv-alert-bg;
-        color: #ffffff;
+        color: gray;
 
         fa-icon {
           display: inline;
@@ -97,19 +96,18 @@ Custom alerts for notification
           font-size: 20px;
 
           svg > path {
-            color: $mv-danger !important;
+            color: red !important;
           }
         }
       }
 
       &.alert-warning {
-        background: $mv-alert-bg;
-        color: #ffffff;
+        color: gray;
       }
 
       &.alert-info {
-        background: $mv-alert-bg;
-        color: #ffffff;
+        background: white;
+        color: gray;
       }
     }
 
@@ -129,14 +127,14 @@ Custom alerts for notification
 
 .alert {
   &.alert-warning {
-    background: $mv-alert-bg;
-    color: #ffffff;
+    background: white;
+    color: gray;
   }
 }
 
 fa-icon.red {
   svg > path {
-    color: $mv-danger !important;
+    color: red !important;
   }
 }
 

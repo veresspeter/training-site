@@ -24,12 +24,12 @@ export class AlertErrorComponent implements OnDestroy {
   httpErrorListener: Subscription;
 
   constructor(private alertService: JhiAlertService, private eventManager: JhiEventManager) {
-    this.errorListener = eventManager.subscribe('maxmoveApp.error', (response: JhiEventWithContent<AlertError>) => {
+    this.errorListener = eventManager.subscribe('trainingsiteApp.error', (response: JhiEventWithContent<AlertError>) => {
       const errorResponse = response.content;
       this.addErrorAlert(errorResponse.message);
     });
 
-    this.httpErrorListener = eventManager.subscribe('maxmoveApp.httpError', (response: JhiEventWithContent<HttpErrorResponse>) => {
+    this.httpErrorListener = eventManager.subscribe('trainingsiteApp.httpError', (response: JhiEventWithContent<HttpErrorResponse>) => {
       const httpErrorResponse = response.content;
       switch (httpErrorResponse.status) {
         // connection refused, server not reachable

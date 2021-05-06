@@ -1,9 +1,8 @@
-<button class="btn btn-link" (click)="previousState()">
+<button mat-button color="primary" class="mt-3" (click)="previousState()">
     <fa-icon icon="chevron-left"></fa-icon> Vissza
 </button>
 
-<button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary"
-        [routerLink]="['/activity-type', activityType?.id, 'activity', 'new']">
+<button mat-raised-button color="primary" class="mt-3" *jhiHasAnyAuthority="'ROLE_ADMIN'" [routerLink]="['/activity-type', activityType?.id, 'activity', 'new']">
     Létrehozás
 </button>
 
@@ -25,23 +24,28 @@
         <span class="text-light">Még nincsenek foglalkozások feltöltve</span>
     </div>
 
-    <div class="card" *ngFor="let activity of activities; trackBy: trackId">
-        <img *ngIf="activity.image" class="card-img" [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" alt="foglalkozás képe"/>
-        <div class="card-body">
-            <h3>{{activity.name}}</h3>
-            <p>{{activity.description}}</p>
-            <a *ngIf="activity.externalLink" [href]="activity.externalLink">Jelentkezés</a>
-            <a *ngIf="activity.trainer" [routerLink]="['/trainers']">{{activity.trainer?.internalUser?.lastName + " " + activity.trainer?.internalUser?.firstName }}</a>
-        </div>
-        <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit px-1">
-            <button type="submit" class="btn btn-icon btn-primary"
-                    [routerLink]="['/activity-type', activityType?.id, 'activity', activity?.id, 'edit']">
-                <fa-icon icon="pen"></fa-icon>
-            </button>
-            <button class="btn btn-icon btn-primary" (click)="delete(activity)">
-                <fa-icon icon="trash"></fa-icon>
-            </button>
-        </div>
+    <div class="row justify-content-center align-items-center my-5">
+        <mat-card *ngFor="let activity of activities; trackBy: trackId" class="m-3">
+            <mat-card-header>
+                <mat-card-title>{{activity.name}}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image *ngIf="activity.image" class="card-img" [src]="'data:' + activity.imageContentType + ';base64,' + activity.image" alt="foglalkozás képe"/>
+            <mat-card-content>
+                <p>{{activity.description}}</p>
+                <a *ngIf="activity.trainer" [routerLink]="['/trainers']">{{activity.trainer?.internalUser?.lastName + " " + activity.trainer?.internalUser?.firstName }}</a>
+            </mat-card-content>
+            <mat-card-actions>
+                <a *ngIf="activity.externalLink" [href]="activity.externalLink">Jelentkezés</a>
+                <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'" class="card-edit px-1">
+                    <button mat-icon-button type="submit" [routerLink]="['/activity-type', activityType?.id, 'activity', activity?.id, 'edit']">
+                        <fa-icon icon="pen"></fa-icon>
+                    </button>
+                    <button mat-icon-button color="warn" (click)="delete(activity)">
+                        <fa-icon icon="trash"></fa-icon>
+                    </button>
+                </ng-container>
+            </mat-card-actions>
+        </mat-card>
     </div>
 </ng-container>
 

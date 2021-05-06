@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ContactComponent } from './contact.component';
-import { MaxmoveSharedModule } from 'app/shared/shared.module';
+import { TrainingsiteSharedModule } from 'app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { contactRoutes } from 'app/contact/contact.routes';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  imports: [MaxmoveSharedModule, RouterModule.forChild(contactRoutes)],
+  imports: [TrainingsiteSharedModule, RouterModule.forChild(contactRoutes), MatCardModule],
   declarations: [ContactComponent],
 })
 export class ContactModule {}

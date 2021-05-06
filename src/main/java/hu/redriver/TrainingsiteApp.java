@@ -22,18 +22,18 @@ import java.util.Collection;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
-public class MaxmoveApp {
+public class TrainingsiteApp {
 
-    private static final Logger log = LoggerFactory.getLogger(MaxmoveApp.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainingsiteApp.class);
 
     private final Environment env;
 
-    public MaxmoveApp(Environment env) {
+    public TrainingsiteApp(Environment env) {
         this.env = env;
     }
 
     /**
-     * Initializes maxmove.
+     * Initializes trainingsite.
      * <p>
      * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
      * <p>
@@ -58,7 +58,7 @@ public class MaxmoveApp {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(MaxmoveApp.class);
+        SpringApplication app = new SpringApplication(TrainingsiteApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);

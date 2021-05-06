@@ -12,8 +12,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:postgresql:latest:///maxmove?TC_TMPFS=/testtmpfs:rw
-    username: maxmove
+    url: jdbc:tc:postgresql:latest:///trainingsite?TC_TMPFS=/testtmpfs:rw
+    username: trainingsite
     password:
     hikari:
       poolName: Hikari

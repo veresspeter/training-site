@@ -1,8 +1,8 @@
 {
-  "name": "maxmove",
+  "name": "trainingsite",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "description": "Description for maxmove",
+  "description": "Description for trainingsite",
   "license": "UNLICENSED",
   "scripts": {
     "prettier:format": "prettier --write \"{,src/**/}*.{md,json,ts,css,scss,yml}\"",
@@ -30,11 +30,14 @@
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js"
   },
   "dependencies": {
-    "@angular/common": "^10.0.0",
+    "@angular/animations": "^11.2.12",
+    "@angular/cdk": "^11.2.11",
+    "@angular/common": "^10.2.5",
     "@angular/compiler": "10.0.0",
-    "@angular/core": "10.0.0",
+    "@angular/core": "^10.0.0",
     "@angular/forms": "10.0.0",
     "@angular/localize": "10.0.0",
+    "@angular/material": "^11.2.11",
     "@angular/platform-browser": "10.0.0",
     "@angular/platform-browser-dynamic": "10.0.0",
     "@angular/router": "10.0.0",

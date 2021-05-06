@@ -1,12 +1,10 @@
-@import '../../../content/scss/variables';
-
 :host {
   h3 {
     font-size: 1.3rem;
   }
 
   .card {
-    background-color: $mv-pastel;
+    background-color: lightgray;
 
     .title {
       font-size: 1.1rem;

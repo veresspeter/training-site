@@ -46,29 +46,26 @@
                         <fa-icon *ngIf="appUser.isTrainer" icon="chalkboard-teacher"></fa-icon>
                     </div>
                     <div class="col-lg-6">
-                        <button class="btn btn-outline-primary btn-sm" (click)="setActive(appUser.internalUser, true)"
+                        <button mat-raised-button color="primary" (click)="setActive(appUser.internalUser, true)"
                                 *ngIf="!appUser.internalUser?.activated">Deaktivált
                         </button>
-                        <button class="btn btn-primary btn-sm" (click)="setActive(appUser.internalUser, false)"
+                        <button mat-raised-button color="primary" (click)="setActive(appUser.internalUser, false)"
                                 *ngIf="appUser.internalUser?.activated"
                                 [disabled]="!currentAccount || currentAccount.id === appUser.internalUser?.id">Aktivált
                         </button>
                     </div>
                     <div class="col-lg-4">
-                        <div *ngFor="let authority of appUser.internalUser?.authorities">
-                            <span class="badge badge-primary">{{ authority }}</span>
-                        </div>
+                        <mat-chip-list *ngFor="let authority of appUser.internalUser?.authorities">
+                            <mat-chip color="primary" disabled>{{ authority }}</mat-chip>
+                        </mat-chip-list>
                     </div>
                 </div>
                 <div class="col-md-2 col-lg-1">
-                    <button type="submit"
-                            [routerLink]="['./', appUser.id, 'view']"
-                            class="btn btn-primary btn-icon">
+                    <button type="submit" [routerLink]="['./', appUser.id, 'view']" mat-mini-fab color="primary">
                         <fa-icon icon="eye"></fa-icon>
                     </button>
 
-                    <button *ngIf="isAdmin()" type="button" (click)="delete(appUser)"
-                            class="btn btn-primary btn-icon"
+                    <button *ngIf="isAdmin()" type="button" (click)="delete(appUser)" mat-mini-fab color="primary" class="mt-1"
                             [disabled]="!currentAccount || currentAccount.id === appUser.internalUser?.id">
                         <fa-icon icon="trash"></fa-icon>
                     </button>

@@ -1,17 +1,3 @@
-/* after changing this file run 'npm run webpack:build' */
-
-/***************************
-put Sass variables here:
-eg $input-color: red;
-****************************/
-// Override Bootstrap variables
-@import 'bootstrap-variables';
-// Import Bootstrap source files from node_modules
-@import '~bootstrap/scss/bootstrap';
-
-/* ==========================================================================
-For more customization see: https://www.npmjs.com/package/ngx-cookieconsent
-========================================================================== */
 @import '~cookieconsent/build/cookieconsent.min.css';
 
 div.cc-window {
@@ -26,5 +12,3 @@ div.cc-revoke {
 a.cc-deny {
   display: none;
 }
-
-/* jhipster-needle-scss-add-vendor JHipster will add new css style */

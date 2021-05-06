@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MaxmoveSharedModule } from 'app/shared/shared.module';
+import { TrainingsiteSharedModule } from 'app/shared/shared.module';
 
 import { LogsComponent } from './logs.component';
 
 import { logsRoute } from './logs.route';
 
 @NgModule({
-  imports: [MaxmoveSharedModule, RouterModule.forChild([logsRoute])],
+  imports: [TrainingsiteSharedModule, RouterModule.forChild([logsRoute])],
   declarations: [LogsComponent],
 })
 export class LogsModule {}

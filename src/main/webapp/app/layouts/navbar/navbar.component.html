@@ -1,178 +1,104 @@
-<nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <span class="logo-img"></span>
-    </a>
-    <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse"
-       data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-       aria-label="Toggle navigation" (click)="toggleNavbar()">
-        <fa-icon icon="bars"></fa-icon>
-    </a>
-    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed"
-         [ngSwitch]="isAuthenticated()">
-        <ul class="navbar-nav mx-auto">
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" routerLink="/activity-type" (click)="collapseNavbar()">
-                    <span>
-                        <span>Kezdőlap</span>
-                    </span>
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    <mat-toolbar-row [ngSwitch]="isAuthenticated()">
+        <a mat-flat-button color="primary" class="nav-link" routerLink="/activity-type">
+            Kezdőlap
+        </a>
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/calendar">
+            Órarend
+        </a>
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/trainers">
+            Oktatók
+        </a>
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/prices">
+            Árak
+        </a>
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/contact">
+            Kapcsolat
+        </a>
+        <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+        <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
+            <a  mat-flat-button color="primary" [matMenuTriggerFor]="adminMenu" class="admin-button">
+                Admin
+            </a>
+            <mat-menu #adminMenu="matMenu" xPosition="after">
+                <a mat-menu-item routerLink="admin/user-management" routerLinkActive="active">
+                    <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
+                    <span>Felhasználók</span>
                 </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" routerLink="/calendar" (click)="collapseNavbar()">
-                    <span>
-                        <span>Órarend</span>
-                    </span>
+                <a mat-menu-item routerLink="admin/pass" routerLinkActive="active">
+                    <fa-icon icon="ticket-alt" [fixedWidth]="true"></fa-icon>
+                    <span>Bérletek</span>
                 </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" routerLink="/trainers" (click)="collapseNavbar()">
-                    <span>
-                        <span>Oktatók</span>
-                    </span>
+                <ng-container *ngIf="!inProduction">
+                    <a mat-menu-item routerLink="admin/tracker" routerLinkActive="active">
+                        <fa-icon icon="eye" [fixedWidth]="true"></fa-icon>
+                        <span>Aktivitások</span>
+                    </a>
+                </ng-container>
+                <a mat-menu-item routerLink="admin/metrics" routerLinkActive="active">
+                    <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+                    <span>Metrikák</span>
                 </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" routerLink="/prices" (click)="collapseNavbar()">
-                    <span>
-                        <span>Árak</span>
-                    </span>
+                <a mat-menu-item routerLink="admin/health" routerLinkActive="active">
+                    <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
+                    <span>Egészség</span>
                 </a>
-            </li>
-            <li class="nav-item mr-lg-auto" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link" routerLink="/contact" (click)="collapseNavbar()">
-                    <span>
-                        <span>Kapcsolat</span>
-                    </span>
+                <a mat-menu-item routerLink="admin/configuration" routerLinkActive="active">
+                    <fa-icon icon="list" [fixedWidth]="true"></fa-icon>
+                    <span>Konfiguráció</span>
                 </a>
-            </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
-                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
-                    Admin
+                <a mat-menu-item routerLink="admin/audits" routerLinkActive="active">
+                    <fa-icon icon="bell" [fixedWidth]="true"></fa-icon>
+                    <span>Események</span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
-                            <span>Felhasználók</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/pass" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="ticket-alt" [fixedWidth]="true"></fa-icon>
-                            <span>Bérletek</span>
-                        </a>
-                    </li>
-                    <li *ngIf="!inProduction">
-                        <a class="dropdown-item" routerLink="admin/tracker" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="eye" [fixedWidth]="true"></fa-icon>
-                            <span>Aktivitások</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
-                            <span>Metrikák</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
-                            <span>Egészség</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="list" [fixedWidth]="true"></fa-icon>
-                            <span>Konfiguráció</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/audits" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="bell" [fixedWidth]="true"></fa-icon>
-                            <span>Események</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
-                            <span>Naplózás</span>
-                        </a>
-                    </li>
-                    <li *ngIf="swaggerEnabled">
-                        <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
-                            <span>API</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                    <li *ngIf="!inProduction">
-                        <a class="dropdown-item" href='./h2-console' target="_tab" (click)="collapseNavbar()">
-                            <fa-icon icon="hdd" [fixedWidth]="true"></fa-icon>
-                            <span>Adatbázis</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li ngbDropdown class="nav-item dropdown pointer" *ngSwitchCase="true" display="dynamic"
-                routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link dropdown-toggle ml-lg-2 mr-lg-4" ngbDropdownToggle href="javascript:void(0);"
-                   id="account-menu">
-                    Profilom
+                <a mat-menu-item routerLink="admin/logs" routerLinkActive="active">
+                    <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
+                    <span>Naplózás</span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            Profil szerkesztése
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="account/password" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            Jelszó változtatás
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="account/my-events" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            Közelgő óráim
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="account/my-passes" routerLinkActive="active"
-                           (click)="collapseNavbar()">
-                            Bérleteim
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" (click)="logout()" id="logout">
-                            Kijelentkezés
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li *ngSwitchCase="false" class="nav-item">
-                <a class="nav-link" (click)="login()" id="login">
-                    Bejelentkezés
+                <ng-container *ngIf="swaggerEnabled">
+                    <a mat-menu-item routerLink="admin/docs" routerLinkActive="active">
+                        <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+                        <span>API</span>
+                    </a>
+                </ng-container>
+                <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+                <ng-container *ngIf="!inProduction">
+                    <a mat-menu-item href='./h2-console' target="_tab">
+                        <fa-icon icon="hdd" [fixedWidth]="true"></fa-icon>
+                        <span>Adatbázis</span>
+                    </a>
+                </ng-container>
+            </mat-menu>
+        </ng-container>
+        <ng-container *ngSwitchCase="true">
+            <a  mat-flat-button color="primary" [matMenuTriggerFor]="profileMenu">
+                Profilom
+            </a>
+            <mat-menu #profileMenu="matMenu" xPosition="after">
+                <a mat-menu-item routerLink="account/settings" routerLinkActive="active">
+                    Profil szerkesztése
                 </a>
-            </li>
-            <li *ngSwitchCase="false" class="nav-item">
-                <a class="nav-link mr-lg-4" routerLink="account/register" routerLinkActive="active"
-                   (click)="collapseNavbar()">
-                    Regisztráció
+                <a mat-menu-item routerLink="account/password" routerLinkActive="active">
+                    Jelszó változtatás
                 </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+                <a mat-menu-item routerLink="account/my-events" routerLinkActive="active">
+                    Közelgő óráim
+                </a>
+                <a mat-menu-item routerLink="account/my-passes" routerLinkActive="active">
+                    Bérleteim
+                </a>
+                <a mat-menu-item (click)="logout()" id="logout">
+                    Kijelentkezés
+                </a>
+            </mat-menu>
+        </ng-container>
+        <ng-container *ngSwitchCase="false" class="nav-item">
+            <a  mat-flat-button color="primary" (click)="login()" id="login" class="ml-auto">
+                Bejelentkezés
+            </a>
+            <a  mat-flat-button color="primary" routerLink="account/register" routerLinkActive="active">
+                Regisztráció
+            </a>
+        </ng-container>
+    </mat-toolbar-row>
+</mat-toolbar>

@@ -1,52 +1,64 @@
-@import 'bootstrap-variables';
+@import 'vendor';
+@import 'alert';
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
-@import './variables';
-@import 'alert';
-@import 'input';
-@import 'button';
-@import 'global-custom';
-@import 'pagination';
+@import '~bootstrap/scss/bootstrap-grid';
+@import '~bootstrap/scss/bootstrap';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-/* ======================== ======================================
-Bootstrap tweaks
-===============================================================*/
+html {
+  overflow: auto !important;
+  min-width: 320px !important;
 
-body,
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 300;
-}
+  body {
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    background-color: rgba(0, 0, 0, 0.04);
+    overflow: hidden !important;
+    height: auto !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    position: relative;
+    margin: 0;
 
-/* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
-a {
-  color: #533f03;
-  font-weight: bold;
-}
+    jhi-main {
+      nav {
+        z-index: 3;
+      }
 
-a:hover {
-  color: #533f03;
-}
+      .container-fluid {
+        min-height: calc(100vh - 100px);
 
-/* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
-a:not([href]):not([tabindex]):hover.dropdown-item {
-  color: $dropdown-link-hover-color;
-}
+        .jh-card {
+          min-height: calc(100vh - 140px);
+        }
+      }
+    }
 
-/* override .dropdown-item.active background-color on hover */
-.dropdown-item.active:hover {
-  background-color: mix($dropdown-link-hover-bg, $dropdown-link-active-bg, 50%);
-}
+    footer {
+      margin-top: 6px;
+      text-align: center;
 
-a:hover {
-  /* make sure browsers use the pointer cursor for anchors, even with no href */
-  cursor: pointer;
-}
+      a > fa-icon > svg {
+        width: 45px !important;
+        height: 45px !important;
+      }
+    }
 
-.dropdown-item:hover {
-  color: $dropdown-link-hover-color;
+    .modal-content {
+      .modal-header {
+        border: none;
+
+        .modal-title {
+          margin: auto;
+        }
+      }
+
+      .modal-footer {
+        border: none;
+      }
+    }
+  }
 }
 
 /* ==========================================================================
