@@ -29,13 +29,13 @@ pipeline {
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'aws-frankfurt-default-kp', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USR')]) {
                 catchError {
-                    sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker stop maxmove'
+                    sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker stop trainingsite'
                 }
                 catchError {
-                    sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rmi veresspeter/maxmove'
+                    sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker rmi veresspeter/trainingsite'
                 }
-                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker pull veresspeter/maxmove'
-                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker run -d --rm --name maxmove --network host veresspeter/maxmove'
+                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker pull veresspeter/trainingsite'
+                sh 'ssh -i /home/ubuntu/jenkins/kp.pem ${SSH_USR}@maxmove.hu docker run -d --rm --name trainingsite --network host veresspeter/trainingsite'
             }
         }
     }
