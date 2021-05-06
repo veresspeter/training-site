@@ -8,7 +8,7 @@
     "baseName": "trainingsite",
     "packageName": "hu.redriver",
     "packageFolder": "hu/redriver",
-    "serverPort": "8080",
+    "serverPort": "8082",
     "authenticationType": "session",
     "cacheProvider": "ehcache",
     "enableHibernateCache": true,
