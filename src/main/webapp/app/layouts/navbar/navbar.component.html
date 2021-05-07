@@ -12,12 +12,12 @@
         <a  mat-flat-button color="primary" class="nav-link" routerLink="/prices">
             Árak
         </a>
-        <a  mat-flat-button color="primary" class="nav-link" routerLink="/contact">
+        <a  mat-flat-button color="primary" class="nav-link" routerLink="/contact" class="contact-button">
             Kapcsolat
         </a>
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <ng-container *jhiHasAnyAuthority="'ROLE_ADMIN'">
-            <a  mat-flat-button color="primary" [matMenuTriggerFor]="adminMenu" class="admin-button">
+            <a  mat-flat-button color="primary" [matMenuTriggerFor]="adminMenu">
                 Admin
             </a>
             <mat-menu #adminMenu="matMenu" xPosition="after">
